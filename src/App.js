@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+//import axios from './axios';
+//import {useEffect, useState} from 'react'
+import Layout from './Components/Layout/Layout';
 
 function App() {
+
+  /*const [state, setState] = useState("")
+  
+  console.log(state)
+  useEffect(() => {
+    axios.get('/mes')
+    .then(res =>{
+      setState(res.data)
+      
+    })
+   }, []);
+
+   useEffect(() => {
+    axios.post('/post',{
+      message:"hello"
+    })
+    .then(response =>{
+      setState(response.data)
+    })
+   }, []);*/
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  <div className="App">
+    
+    <Layout/>
     </div>
   );
 }
