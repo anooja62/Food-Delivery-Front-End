@@ -48,7 +48,7 @@ const Header =()=>  {
             <div className="navbar__right d-flex align-items-center gap-4">
                 <span className='cart_icon'>
                 <i class="ri-shopping-cart-line"></i>
-                <span className='cart__badge'>2</span>
+                <span className='cart__badge'> 2</span>
                 </span>
                 <span className="user">
                     <Link to='/login'><i class="ri-user-line"></i></Link>

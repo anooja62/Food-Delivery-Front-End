@@ -1,10 +1,78 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Helmet from '../Components/Helmet/Helmet.js'
-import {Container,Row,Col, Button} from 'react-bootstrap'
+import {Container,Row,Col,ListGroup,ListGroupItem} from 'react-bootstrap'
 import heroImg from '../assets/images/hero.png'
 import '../styles/maincontent.css'
 import {Link} from 'react-router-dom'
+import Category from '../Components/UI/category/Category.jsx'
+import '../styles/home.css'
+import featureImg01 from '../assets/images/service-01.png'
+import featureImg02 from '../assets/images/service-02.png'
+import featureImg03 from '../assets/images/service-03.png'
+
+import products from '../assets/data/product.js'
+import foodCategoryImg01 from '../assets/images/hamburger.png'
+import foodCategoryImg02 from '../assets/images/pizza.png'
+import foodCategoryImg03 from '../assets/images/bread.png'
+
+import ProductCard from '../Components/UI/product-card/productCard.jsx'
+
+import whyImg from '../assets/images/location.png'
+
+import networkImg from '../assets/images/network.png'
+
+const featureData = [
+  {
+    title:'Quick Delivery',
+    imgUrl:featureImg01,
+    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+  },
+  {
+    title:'Super Dine In',
+    imgUrl:featureImg02,
+    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+  },
+  {
+    title:'Easy Pick Up',
+    imgUrl:featureImg03,
+    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+  },
+]
 const Home=()=> {
+  const [category,setCategory]=useState('ALL')
+  const [allProducts,setAllProducts]=useState(products)
+
+  const [hotPizza,setHotPizza] = useState([])
+
+  useEffect(()=>{
+    const filteredPizza = products.filter(item=>item.category ==='Pizza')
+    const slicePizza = filteredPizza.slice(0,4)
+    setHotPizza(slicePizza)
+  },[])
+
+  useEffect(() => {
+   if (category==='ALL'){
+   setAllProducts(products)
+  }
+  if (category==='BURGER'){
+  
+  const filteredProducts = products.filter(item=>item.category==='Burger')
+  setAllProducts(filteredProducts)
+ }
+ if (category==='PIZZA'){
+  
+  const filteredProducts = products.filter(item=>item.category==='Pizza')
+  setAllProducts(filteredProducts)
+ }
+ if (category==='BREAD'){
+  
+  const filteredProducts = products.filter(item=>item.category==='Bread')
+  setAllProducts(filteredProducts)
+ }
+  }, [category])
+
+
+
   return <Helmet title="Home">
       <section>
         <Container>
@@ -18,7 +86,7 @@ const Home=()=> {
   <button className='order__btn d-flex align-items-center justify-content-between'>Order now<i class="ri-arrow-right-s-line"></i></button>
   <button className='all__foods-btn'><Link to='/foods'>See all food menu</Link></button>
 </div>
-<div className='d-flex align-items-center gap-5'>
+<div className='hero__service d-flex align-items-center gap-5 mt-5'>
   <p className='d-flex align-items-center gap-2'><span className='delivery__icon'><i class="ri-car-line"></i></span>No delivery charge</p>
   <p className='d-flex align-items-center gap-2'><span className='delivery__icon'><i class="ri-shield-check-line"></i></span>100 % Secure checkout</p>
 </div>
@@ -29,6 +97,132 @@ const Home=()=> {
               <div className="hero__img">
                 <img src={heroImg} alt='mainpic' className='w-100'/>
               </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    
+        <section className='pt-0'>
+        <Category/>
+      </section>
+      <section>
+        <Container>
+          <Row>
+            <Col lg='12' className='text-center'>
+              <h5 className='feature__subtitle mb-4'>What we serve</h5>
+              <h2 className='feature__title'>just sit back at home</h2>
+              <h2 className='feature__title'>we will <span>take care</span></h2>
+              <p className='mb-1 mt-4 feature__text'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the</p>
+              <p className='feature__text'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the.{""}</p>
+            </Col>
+           
+            {
+              featureData.map((item,index)=>(
+                <Col lg='4' md='4' key={index} className='mt-5'>
+                <div className="feature__item text-center px-5 py-3">
+                   <img src={item.imgUrl} alt='features' className='w-25 mb-3'/>
+                   <h5 className='fw-bold mb-3'>{item.title}</h5>
+                   <p>{item.desc}</p>
+                </div>
+              </Col>
+              ))
+            }
+            <Col lg='4' md='4'></Col>
+            <Col lg='4' md='4'></Col>
+          </Row>
+        </Container>
+      </section>
+      <section>
+        <Container>
+          <Row>
+            <Col lg='12' className='text-center'>
+              <h2>Popular Foods</h2>
+            </Col>
+            <Col lg='12'>
+              <div className="food__category d-flex align-items-center justify-content-center gap-4">
+                <button 
+                className={`all__btn ${category === 'ALL' ? 'foodBtnActive' : ''}`}
+                 onClick={()=>setCategory('ALL')}>
+                  All</button>
+                <button className={`d-flex align-items-center gap-2 ${category === 'BURGER' ? 'foodBtnActive' : ''}`}
+                 onClick={()=>setCategory('BURGER')}>
+                  <img src={foodCategoryImg01} alt='product'/>Burger</button>
+                <button className={`d-flex align-items-center gap-2 ${category === 'PIZZA' ? 'foodBtnActive' : ''}`}
+                onClick={()=>setCategory('PIZZA')}>
+                  <img src={foodCategoryImg02} alt='product'/>Pizza</button>
+                <button className={`d-flex align-items-center gap-2 ${category === 'BREAD' ? 'foodBtnActive' : ''}`} 
+                onClick={()=>setCategory('BREAD')}>
+                  <img src={foodCategoryImg03} alt='product'/>Bread</button>
+              </div>
+            </Col>
+            
+              {
+              allProducts.map((item) => (
+                <Col lg='3' md='4' key={item.id} className='mt-5'>
+                <ProductCard item={item}/>
+              </Col>
+              ))}
+            
+           
+          </Row>
+        </Container>
+      </section>
+      <section>
+        <Container>
+          <Row>
+            <Col lg='6' md='6'>
+<img src={whyImg} alt='tasty treat' className='w-100'/>
+            </Col>
+            <Col lg='6' md='6'>
+<div className="why__deliorder">
+  <h2 className='deliorder__title mb-4'>Why <span> Deliorder ?</span></h2>
+  <p className='deliorder__desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+    to demonstrate the visual form of a document or a typeface without relying on meaningful content.</p>
+    <ListGroup className='mt-5'>
+      <ListGroupItem className='border-0 ps-0'>
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Fresh and tasty foods</p>
+      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+    </p>
+      </ListGroupItem>
+      <ListGroupItem className='border-0 ps-0'>
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Quality support</p>
+      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+    </p>
+      </ListGroupItem>
+      <ListGroupItem className='border-0 ps-0'>
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Order from any location</p>
+      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+    </p>
+      </ListGroupItem>
+    </ListGroup>
+</div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className='pt-0'>
+        <Container>
+          <Row>
+            <Col lg='12' className='text-center mb-5'>
+              <h2>Hot Pizza</h2>
+            </Col>
+            {
+              hotPizza.map(item=>(
+                <Col lg='3' md='4' key={item.id}>
+                  <ProductCard item={item}/>
+                </Col>
+              ))
+            }
+          </Row>
+        </Container>
+      </section>
+      <section>
+        <Container>
+          <Row>
+            <Col lg='6' md='6'>
+              <img src={networkImg} alt='network'/>
+            </Col>
+            <Col lg='6' md='6'>
             </Col>
           </Row>
         </Container>
