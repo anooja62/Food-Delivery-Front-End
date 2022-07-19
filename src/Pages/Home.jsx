@@ -21,6 +21,8 @@ import whyImg from '../assets/images/location.png'
 
 import networkImg from '../assets/images/network.png'
 
+import TestimonialSlider from '../Components/UI/slider/TestimonialSlider.jsx'
+
 const featureData = [
   {
     title:'Quick Delivery',
@@ -118,7 +120,7 @@ const Home=()=> {
            
             {
               featureData.map((item,index)=>(
-                <Col lg='4' md='4' key={index} className='mt-5'>
+                <Col lg='4' md='6' sm='6' key={index} className='mt-5'>
                 <div className="feature__item text-center px-5 py-3">
                    <img src={item.imgUrl} alt='features' className='w-25 mb-3'/>
                    <h5 className='fw-bold mb-3'>{item.title}</h5>
@@ -158,7 +160,7 @@ const Home=()=> {
             
               {
               allProducts.map((item) => (
-                <Col lg='3' md='4' key={item.id} className='mt-5'>
+                <Col lg='3' md='4' sm='6' xs='6' key={item.id} className='mt-5'>
                 <ProductCard item={item}/>
               </Col>
               ))}
@@ -167,7 +169,7 @@ const Home=()=> {
           </Row>
         </Container>
       </section>
-      <section>
+      <section className='why__choose-us'>
         <Container>
           <Row>
             <Col lg='6' md='6'>
@@ -178,7 +180,7 @@ const Home=()=> {
   <h2 className='deliorder__title mb-4'>Why <span> Deliorder ?</span></h2>
   <p className='deliorder__desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
     to demonstrate the visual form of a document or a typeface without relying on meaningful content.</p>
-    <ListGroup className='mt-5'>
+    <ListGroup className='mt-4'>
       <ListGroupItem className='border-0 ps-0'>
       <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Fresh and tasty foods</p>
       <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
@@ -219,10 +221,20 @@ const Home=()=> {
       <section>
         <Container>
           <Row>
+           
             <Col lg='6' md='6'>
-              <img src={networkImg} alt='network'/>
+              <div className='testimonial'>
+              <h5 className='testimonial__subtitle mb-4'>Testimonial</h5>
+              <h2 className='testimonial__title mb-4'> What our <span>customers </span>are saying
+              </h2>
+              <p className='testimonial__desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonl
+              the visual form of a document or a typeface</p>
+              <TestimonialSlider/>
+              </div>
             </Col>
             <Col lg='6' md='6'>
+              
+              <img src={networkImg} alt='testimonial-img' className='w-100'/>
             </Col>
           </Row>
         </Container>

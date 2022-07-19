@@ -1,7 +1,7 @@
 .header{
     width: 100%;
-    height: 80px;
-    line-height: 80px;
+    height: 100px;
+    line-height: 100px;
 }
 .logo img{
     
@@ -10,6 +10,7 @@
     left: 30px;
     width: 90px;
     top: 8px;
+    margin-top: -40px;
 }
 .menu a{
     font-weight: 600;
@@ -49,10 +50,12 @@ cursor: pointer;
     font-weight: 600;
     display: none;
 }
-.header__shrink{
+.header__shrink {
     position: sticky;
     top: 0;
     left: 0;
+    background: #fff;
+    z-index: 99999;
     box-shadow: 5px 5px 15px 5px #fde4e4;
 
 
