@@ -15,7 +15,7 @@ import foodCategoryImg01 from '../assets/images/hamburger.png'
 import foodCategoryImg02 from '../assets/images/pizza.png'
 import foodCategoryImg03 from '../assets/images/bread.png'
 
-import ProductCard from '../Components/UI/product-card/productCard.jsx'
+import ProductCard from '../Components/UI/product-card/ProductCard.jsx'
 
 import whyImg from '../assets/images/location.png'
 
