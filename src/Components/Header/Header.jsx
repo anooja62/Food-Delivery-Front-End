@@ -12,6 +12,14 @@ const nav__links =[
        path:'/home'
     },
     {
+        display:'Food',
+        path:'/foods'
+     },
+     {
+        display:'Cart',
+        path:'/cart'
+     },
+    {
         display:'Add restaurant',
         path:'/restaurant'
      },

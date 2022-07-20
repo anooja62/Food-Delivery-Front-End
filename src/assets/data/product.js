@@ -57,7 +57,7 @@ const products = [
     image03: product_03_image_03,
     category: "Pizza",
 
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad et est, fugiat repudiandae neque illo delectus commodi magnam explicabo autem voluptates eaque velit vero facere mollitia. Placeat rem, molestiae error obcaecati enim doloribus impedit aliquam, maiores qui minus neque.",
+    desc: "The first words that come to mind when we say Italian are Margherita pizza.The cheesy goodness is reminiscent of the typical Italian flavors and decadence. It is the perfect solution to all your Italian cravings.  The combined flavors of the sauce, soft dough and cheese, topped with some oregano are bound to put you in a happy mood.  Ordering through the Deliorder has become super simple",
   },
 
   {

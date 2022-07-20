@@ -12,7 +12,7 @@ function Footer() {
             <Col lg='3' md='4' sm='6'>
               <div className=' footer__logo text-start'>
                 <img src={logo} alt='logo'/>
-                      <p>it is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.  </p>
+                      <p>we’ve been empowering our customers in discovering new tastes and experiences across countries.  </p>
                 
               </div>
 

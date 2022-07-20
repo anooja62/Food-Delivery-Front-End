@@ -31,9 +31,9 @@ const featureData = [
     desc:"Experience superfast delivery for food delivered fresh & on time "
   },
   {
-    title:'Super Dine In',
+    title:'Self-Pick-Up',
     imgUrl:featureImg02,
-    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+    desc:"We provides you with a feature that you can order your food online pick it up from the restaurant by yourself "
   },
   {
     title:'No Minimum Order',
@@ -83,7 +83,7 @@ const Home=()=> {
             <Col lg='6' md='6'>
               <div className="hero__content">
 <h5 className='mb-3'>Deliorder</h5>
-<h1 className='mb-4 hero__title' ><span>Hungry ? </span>just wait <br/>food at <span> your door</span></h1>
+<h1 className='mb-4 hero__title' ><span>HUNGRY ? </span>just wait <br/>food at <span> your door</span></h1>
 <p>Order food from your favourite restaurants.</p>
 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
   <button className='order__btn d-flex align-items-center justify-content-between'>Order now<i class="ri-arrow-right-s-line"></i></button>
@@ -115,8 +115,8 @@ const Home=()=> {
               <h5 className='feature__subtitle mb-4'>What we serve</h5>
               <h2 className='feature__title'>just sit back at home</h2>
               <h2 className='feature__title'>we will <span>take care</span></h2>
-              <p className='mb-1 mt-4 feature__text'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the</p>
-              <p className='feature__text'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the.{""}</p>
+              <p className='mb-1 mt-4 feature__text'>Deliorder has lots of unique features that address customer needs.
+               {""}</p>
             </Col>
            
             {
@@ -179,27 +179,29 @@ const Home=()=> {
             <Col lg='6' md='6'>
 <div className="why__deliorder">
   <h2 className='deliorder__title mb-4'>Why <span> Deliorder ?</span></h2>
-  <p className='deliorder__desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
-    to demonstrate the visual form of a document or a typeface without relying on meaningful content.</p>
+  <p className='deliorder__desc'>we’ve been empowering our customers in discovering new tastes and experiences across countries.
+   By putting together meticulous information for our customers, we enable them to make an informed choice..</p>
     <ListGroup className='mt-4'>
       <ListGroupItem className='border-0 ps-0'>
       <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Fresh and tasty foods</p>
-      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+      <p className='choose_us-desc'>Everyone loves to eat their favorite food. Deliorder provides an option for foodies to order their favourite food from nearby resturants. 
     </p>
       </ListGroupItem>
       <ListGroupItem className='border-0 ps-0'>
-      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Quality support</p>
-      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Rating System for Food and Restaurants</p>
+      <p className='choose_us-desc'>The rating system bridges the bond between the on demand food delivery 
+       and the user and the user is provided with enhanced user experience. 
     </p>
       </ListGroupItem>
       <ListGroupItem className='border-0 ps-0'>
-      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Order from any location</p>
-      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Restaurant Profile</p>
+      <p className='choose_us-desc'>The restaurant has full control over their profile in the Deliorder. They can provide useful information to their user to help them out. 
     </p>
       </ListGroupItem>
       <ListGroupItem className='border-0 ps-0'>
-      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Order from any location</p>
-      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Easy and Secure Payment Options</p>
+      <p className='choose_us-desc'>Our payment process highly efficient and easy to use, a customer must have all the payment options available 
+      in the market listed in the On-Demand Food Delivery App for your business. 
     </p>
       </ListGroupItem>
     </ListGroup>
@@ -233,8 +235,8 @@ const Home=()=> {
               <h5 className='testimonial__subtitle mb-4'>Testimonial</h5>
               <h2 className='testimonial__title mb-4'> What our <span>customers </span>are saying
               </h2>
-              <p className='testimonial__desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonl
-              the visual form of a document or a typeface</p>
+              <p className='testimonial__desc'>We provide access to a seemingly endless number of restaurant options that you
+               can order from with just a few clicks. </p>
               <TestimonialSlider/>
               </div>
             </Col>
