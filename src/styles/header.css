@@ -17,10 +17,10 @@
     transition: 0.3s;
 }
 .menu a:hover{
-    color: #df2020;
+    color: #E67E22;
 }
 .active__menu{
-   color: #df2020 !important;
+   color: #E67E22 !important;
 }
 .cart__icon i, .user i,.mobile__menu i{
 font-size: 1rem;
@@ -55,7 +55,7 @@ cursor: pointer;
     left: 0;
     background: #fff;
     z-index: 99999;
-    box-shadow: 5px 5px 15px 5px #fde4e4;
+    box-shadow: 5px 5px 15px 5px #FFDCA5;
 
 
 }

@@ -1,8 +1,8 @@
 .feature__subtitle{
-    color: #df2020;
+    color: #E67E22;
 }
 .feature__title span{
-    color: #df2020;
+    color: #E67E22;
 }
 .feature__text{
     color: #777;
@@ -11,7 +11,7 @@
     color: #777;
 }
 .food__category{
-    background: #df2020;
+    background: #E67E22;
     text-align: center;
     margin-top: 30px;
     padding: 20px 0px;
@@ -23,7 +23,8 @@
     outline: none;
     padding: 7px 20px;
     background: transparent;
-    color: #fff;
+    color: #000;
+    font-weight: 700;
 }
 .food__category button img{
     width: 20px;
@@ -32,10 +33,10 @@
 .foodBtnActive{
     background: #fff !important;
     border-radius: 5px;
-    color: #df2020 !important;
+    color: #E67E22 !important;
 }
 .deliorder__title span{
-color: #df2020;
+color: #E67E22;
 }
 .deliorder__desc{
     color: #777;
@@ -47,20 +48,28 @@ color: #df2020;
 }
 .choose_us-title i{
     font-weight: 500 !important;
-    color: #df2020;
+    color: #E67E22;
 }
 .choose_us-desc{
     color: #777;
 }
 .testimonial__subtitle{
-    color: #df2020;
+    color: #E67E22;
 }
 .testimonial__title span {
-    color: #df2020;
+    color: #E67E22;
 }
 .testimonial__desc{
     color: #777;
     line-height: 30px;
+}
+.whyimg {
+    width: 90%;
+    
+
+}
+.review{
+    width: 90;
 }
 @media only screen and (max-width:768px){
     .hero__content h5 {

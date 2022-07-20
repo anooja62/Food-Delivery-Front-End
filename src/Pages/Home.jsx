@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import Helmet from '../Components/Helmet/Helmet.js'
 import {Container,Row,Col,ListGroup,ListGroupItem} from 'react-bootstrap'
-import heroImg from '../assets/images/hero.png'
+import deliverman from '../assets/images/deliverman.png'
+import whyimg from '../assets/images/whyimg.png'
 import '../styles/maincontent.css'
 import {Link} from 'react-router-dom'
 import Category from '../Components/UI/category/Category.jsx'
@@ -17,9 +18,9 @@ import foodCategoryImg03 from '../assets/images/bread.png'
 
 import ProductCard from '../Components/UI/product-card/ProductCard.jsx'
 
-import whyImg from '../assets/images/location.png'
 
-import networkImg from '../assets/images/network.png'
+
+import review from '../assets/images/review.jpg'
 
 import TestimonialSlider from '../Components/UI/slider/TestimonialSlider.jsx'
 
@@ -27,7 +28,7 @@ const featureData = [
   {
     title:'Quick Delivery',
     imgUrl:featureImg01,
-    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+    desc:"Experience superfast delivery for food delivered fresh & on time "
   },
   {
     title:'Super Dine In',
@@ -35,9 +36,9 @@ const featureData = [
     desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
   },
   {
-    title:'Easy Pick Up',
+    title:'No Minimum Order',
     imgUrl:featureImg03,
-    desc:"In publishing and graphic design, Lorem ipsum is a placeholder text commonly "
+    desc:"Order in for yourself or for the group, with no restrictions on order value "
   },
 ]
 const Home=()=> {
@@ -83,7 +84,7 @@ const Home=()=> {
               <div className="hero__content">
 <h5 className='mb-3'>Deliorder</h5>
 <h1 className='mb-4 hero__title' ><span>Hungry ? </span>just wait <br/>food at <span> your door</span></h1>
-<p>In publishing and graphic design, Lorem ipsum is a placeholder text </p>
+<p>Order food from your favourite restaurants.</p>
 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
   <button className='order__btn d-flex align-items-center justify-content-between'>Order now<i class="ri-arrow-right-s-line"></i></button>
   <button className='all__foods-btn'><Link to='/foods'>See all food menu</Link></button>
@@ -97,7 +98,7 @@ const Home=()=> {
             </Col>
             <Col lg='6' md='6'>
               <div className="hero__img">
-                <img src={heroImg} alt='mainpic' className='w-100'/>
+                <img src={deliverman} alt='mainpic' className='w-100'/>
               </div>
             </Col>
           </Row>
@@ -173,7 +174,7 @@ const Home=()=> {
         <Container>
           <Row>
             <Col lg='6' md='6'>
-<img src={whyImg} alt='tasty treat' className='w-100'/>
+<img src={whyimg} alt='deliorder' className='whyimg'/>
             </Col>
             <Col lg='6' md='6'>
 <div className="why__deliorder">
@@ -188,6 +189,11 @@ const Home=()=> {
       </ListGroupItem>
       <ListGroupItem className='border-0 ps-0'>
       <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Quality support</p>
+      <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
+    </p>
+      </ListGroupItem>
+      <ListGroupItem className='border-0 ps-0'>
+      <p className='choose_us-title d-flex align-items-center gap-2'><i class="ri-checkbox-circle-line"></i>Order from any location</p>
       <p className='choose_us-desc'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used 
     </p>
       </ListGroupItem>
@@ -234,7 +240,7 @@ const Home=()=> {
             </Col>
             <Col lg='6' md='6'>
               
-              <img src={networkImg} alt='testimonial-img' className='w-100'/>
+              <img src={review} alt='testimonial-img' className='review'/>
             </Col>
           </Row>
         </Container>

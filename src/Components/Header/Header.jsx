@@ -3,7 +3,8 @@ import {Container} from 'react-bootstrap'
 import logo from '../../assets/images/deliorderlogo.png'
 import {NavLink,Link} from 'react-router-dom'
 import '../../styles/header.css'
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import { cartUiActions } from '../../store/shopping-cart/cartUiSlice'
 
 const nav__links =[
     {
@@ -11,24 +12,28 @@ const nav__links =[
        path:'/home'
     },
     {
-        display:'Foods',
-        path:'/foods'
-     },
-     {
-        display:'Cart',
-        path:'/cart'
+        display:'Add restaurant',
+        path:'/restaurant'
      },
      {
         display:'Login',
         path:'/login'
+     },
+     {
+        display:'Sign Up',
+        path:'/register'
      },
 ]
 const Header =()=>  {
     const menuRef =useRef(null)
     const headerRef = useRef(null)
     const totalQuantity = useSelector(state=>state.cart.totalQuantity)
+    const dispatch = useDispatch()
     const toggleMenu=()=>menuRef.current.classList.toggle('show__menu')
-
+    
+    const toggleCart = ()=>{
+        dispatch(cartUiActions.toggle())
+    }
    useEffect(() => {
     window.addEventListener('scroll',()=>{
         if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
@@ -62,7 +67,7 @@ const Header =()=>  {
                 </div>
             </div>
             <div className="navbar__right d-flex align-items-center gap-4">
-                <span className='cart_icon'>
+                <span className='cart_icon' onClick={toggleCart}>
                 <i class="ri-shopping-basket-line"></i>
                 <span className='cart__badge'>{totalQuantity}</span>
                 </span>
