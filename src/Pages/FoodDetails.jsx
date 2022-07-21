@@ -33,6 +33,7 @@ const FoodDetails = ()=> {
 
    const submitHandler = e=>{
     e.prevantDefault()
+    console.log(enteredName,enteredEmail,reviewMsg)
    }
 
    useEffect(()=>{

@@ -1,0 +1,8 @@
+.checkout__bill{
+    background: #FFDCA5;
+    padding: 30px;
+}
+.checkout__total {
+    border: 1px solid #ddd;
+    padding-top: 30px;
+}
