@@ -5,7 +5,7 @@ import AllFoods from '../Pages/AllFoods'
 import FoodDetails from '../Pages/FoodDetails'
 import Cart from '../Pages/Cart'
 import Checkout from '../Pages/Checkout'
-import Contact from '../Pages/Contact'
+import RestaurantRegister from '../Pages/RestaurantRegister'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 function Routers() {
@@ -19,7 +19,7 @@ function Routers() {
         <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
-        <Route path='/contact' element={<Contact/>}/>
+        <Route path='/restaurant' element={<RestaurantRegister/>}/>
     </Routes>
   )
 }
