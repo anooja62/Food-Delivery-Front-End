@@ -5,10 +5,10 @@ import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
 import '../styles/checkout.css'
 
+
 const Checkout = ()=> {
 
   const [enterName,setEnterName] = useState('')
-  const [enterEmail,setEnterEmail] = useState('')
   
   const [enterHouseName,setEnterHouseName] = useState('')
   const [enterState,setEnterState] = useState('')
@@ -28,7 +28,7 @@ const Checkout = ()=> {
     const userDeliveryAddress = {
       name:enterName,
       phone:enterPhone,
-      email:enterEmail,
+      
       housename:enterHouseName,
       pincode:enterPincode,
       district:enterDistrict,
@@ -53,9 +53,7 @@ const Checkout = ()=> {
               <div className="form__group">
                 <input type='number' placeholder='Phone number' required onChange={e=> setEnterPhone(e.target.value)}/>
               </div>
-              <div className="form__group">
-                <input type='email' placeholder='Email' required onChange={e=> setEnterEmail(e.target.value)}/>
-              </div>
+              
               <div className="form__group">
                 <input type='text' placeholder='House name' required onChange={e=> setEnterHouseName(e.target.value)}/>
               </div>
@@ -71,7 +69,7 @@ const Checkout = ()=> {
               <div className="form__group">
                 <input type='text' placeholder='Country' required onChange={e=> setEnterCountry(e.target.Country)}/>
               </div>
-              <button className='addToCart__btn'>Payment</button>
+             <button className="addToCart__btn"> Payment</button>
             </form>
            
           </Col>

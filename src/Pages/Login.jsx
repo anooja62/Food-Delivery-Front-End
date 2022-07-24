@@ -37,7 +37,8 @@ const Login = ()=> {
            }
             
         }catch(err){
-            console.log(err)
+            console.log(err);
+            
         }
 
     
@@ -59,12 +60,16 @@ const Login = ()=> {
               <div className="form__group">
                 <input type='password' placeholder='Password' required ref={loginPasswordRef}/>
               </div>
+
+              
               <button type='submit' className='addToCart__btn'>Login</button>
             </form>
            <Link to='/register'>New to Deliorder ? Create an account</Link>
           
           </Col>
-          
+          <Col lg='4' md='4'>
+           
+          </Col>
         </Row>
       </Container>
     </section>

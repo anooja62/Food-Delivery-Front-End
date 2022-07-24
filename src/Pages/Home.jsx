@@ -113,8 +113,8 @@ const Home=()=> {
           <Row>
             <Col lg='12' className='text-center'>
               <h5 className='feature__subtitle mb-4'>What we serve</h5>
-              <h2 className='feature__title'>just sit back at home</h2>
-              <h2 className='feature__title'>we will <span>take care</span></h2>
+              <h2 className='feature__title'>Just sit back at home</h2>
+              <h2 className='feature__title'>We will <span>take care</span></h2>
               <p className='mb-1 mt-4 feature__text'>Deliorder has lots of unique features that address customer needs.
                {""}</p>
             </Col>
