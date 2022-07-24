@@ -1,4 +1,4 @@
-import React,{useRef} from 'react'
+import React,{useRef,useState} from 'react'
 import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
@@ -19,6 +19,7 @@ const initialValues ={
 };
 
 const Register = ()=> {
+  const [disable, setDisable]= useState(0);
 
   const {values,handleBlur,handleChange,errors,touched} = useFormik({
        initialValues,
@@ -43,6 +44,7 @@ const Register = ()=> {
   const handleClick = async (e) => {
     
     e.preventDefault()
+    setDisable(true);
     if(signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value){
       
         // passwordAgain.current.setCustomValidity("passwords don't match")
@@ -66,7 +68,10 @@ const Register = ()=> {
         }
     }
     
-}
+  }
+
+  
+
 
   return <Helmet title='Register'>
     <CommonSection title='Welcome to Deliorder'/>
@@ -119,7 +124,7 @@ const Register = ()=> {
                             )}
                         </div>
                         
-              <button type="submit" className='addToCart__btn' >Register</button>
+              <button type="submit" className='addToCart__btn' disabled={disable}>Register</button>
               
             </form>
             <Link to='/login'>Already have an account ? Login here</Link>

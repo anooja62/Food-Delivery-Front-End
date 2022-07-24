@@ -5,10 +5,10 @@ import Helmet from '../Components/Helmet/Helmet'
 import {useNavigate} from 'react-router-dom'
 import axios from ".././axios"
 import {useCookies} from 'react-cookie'
-
-
+import {  signInWithPopup } from "firebase/auth";
+import { auth,provider } from "./firebase";
 import {Link} from 'react-router-dom'
-
+import GoogleButton from 'react-google-button'
 const Login = ()=> {
   const [cookies, setCookie, removeCookie] = useCookies(null)
 
@@ -37,42 +37,58 @@ const Login = ()=> {
            }
             
         }catch(err){
-            console.log(err);
-            
+            console.log(err)
         }
 
     
 }
+const signIn = () => {
+  console.log("hello i am  inside google signin")
+ signInWithPopup(auth,provider).then((result) =>{
+setCookie('username',result.user.displayName)
+navigate('/home')
+  }).catch((error)=>alert(error.message));    
+  }
+
 
   return (<Helmet title='Login'>
     <CommonSection title='Welcome back!'/>
+  
     <section>
       <Container>
         <Row>
           <Col lg='6' md='6' sm='12' className='m-auto text-center'>
-           
+         
             
             <form className="form mb-5" onSubmit={handleClick}>
               <div className="form__group">
-                <input type='text' placeholder='email' required ref={loginNameRef}/>
+                <input type='text' placeholder='username' required ref={loginNameRef}/>
               </div>
              
               <div className="form__group">
-                <input type='password' placeholder='Password' required ref={loginPasswordRef}/>
+              <input type='password' placeholder='Password' required ref={loginPasswordRef}/>
               </div>
-
-              
-              <button type='submit' className='addToCart__btn'>Login</button>
+              <div> <button type='submit' className='addToCart__btn'>Login</button></div>
+             
+            
+            
             </form>
-           <Link to='/register'>New to Deliorder ? Create an account</Link>
           
-          </Col>
-          <Col lg='4' md='4'>
+           <Link to='/register'>New to Deliorder ? Create an account</Link>
            
+          </Col>
+          <Col lg='4' md='6'>
+            
+            <GoogleButton
+              type="dark" 
+              onClick={signIn}
+            />
           </Col>
         </Row>
       </Container>
+
     </section>
+   
   </Helmet>
 )}
 

@@ -28,10 +28,7 @@ const Header =()=>  {
             display:'Food',
             path:'/foods'
          },
-         {
-            display:'Cart',
-            path:'/cart'
-         },
+         
         {
             display:'Add restaurant',
             path:'/restaurant'

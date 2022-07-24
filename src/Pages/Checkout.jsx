@@ -4,6 +4,8 @@ import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
 import '../styles/checkout.css'
+//import Countrystatecity from '../Components/Countrystatecity/Countrystatecity'
+
 
 
 const Checkout = ()=> {
@@ -11,9 +13,7 @@ const Checkout = ()=> {
   const [enterName,setEnterName] = useState('')
   
   const [enterHouseName,setEnterHouseName] = useState('')
-  const [enterState,setEnterState] = useState('')
-  const [enterDistrict,setEnterDistrict] = useState('')
-  const [enterCountry,setEnterCountry] = useState('')
+  
   const [enterPincode,setEnterPincode] = useState('')
   const [enterPhone,setEnterPhone] = useState('')
 
@@ -31,13 +31,13 @@ const Checkout = ()=> {
       
       housename:enterHouseName,
       pincode:enterPincode,
-      district:enterDistrict,
-      state:enterState,
-      country:enterCountry
+     
     }
     deliveryInfo.push(userDeliveryAddress)
     console.log(deliveryInfo);
   };
+
+
 
   return <Helmet title='Checkout'>
     <CommonSection title='Checkout'/>
@@ -60,15 +60,8 @@ const Checkout = ()=> {
               <div className="form__group">
                 <input type='number' placeholder='Pincode' required onChange={e=> setEnterPincode(e.target.value)}/>
               </div>
-              <div className="form__group">
-                <input type='text' placeholder='District' required onChange={e=> setEnterDistrict(e.target.value)}/>
-              </div>
-              <div className="form__group">
-                <input type='text' placeholder='State' required onChange={e=> setEnterState(e.target.value)}/>
-              </div>
-              <div className="form__group">
-                <input type='text' placeholder='Country' required onChange={e=> setEnterCountry(e.target.Country)}/>
-              </div>
+                        
+            
              <button className="addToCart__btn"> Payment</button>
             </form>
            
