@@ -1,4 +1,4 @@
-import React,{useRef} from 'react'
+import React,{useRef, useState} from 'react'
 import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
@@ -9,19 +9,20 @@ import {  signInWithPopup } from "firebase/auth";
 import { auth,provider } from "./firebase";
 import {Link} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
+import '../styles/login.css'
 const Login = ()=> {
   const [cookies, setCookie, removeCookie] = useCookies(null)
-
-  const loginNameRef = useRef()
+ const [error, setError] = useState("")
+  const loginEmailRef = useRef()
   const loginPasswordRef = useRef()
   const navigate = useNavigate()
 
   const handleClick = async (e) => {
-    console.log("i am inside handle click")
+   
     e.preventDefault()
         const user = {
          
-            email:loginNameRef.current.value,
+            email:loginEmailRef.current.value,
             password: loginPasswordRef.current.value,
             
         }
@@ -29,23 +30,27 @@ const Login = ()=> {
         try{
            const response = await axios.post("/auth/login", user)
            const success = response.status === 200
+           
            if(success) {
             setCookie('userId', response.data._id)
-            setCookie('username',response.data.name)
+            setCookie('name',response.data.name)
             
             navigate('/home')
            }
             
         }catch(err){
             console.log(err)
+            setError(err.response.data,"user response")
+           
         }
 
     
 }
 const signIn = () => {
-  console.log("hello i am  inside google signin")
+  
  signInWithPopup(auth,provider).then((result) =>{
-setCookie('username',result.user.displayName)
+  
+setCookie('name',result.user.displayName)
 navigate('/home')
   }).catch((error)=>alert(error.message));    
   }
@@ -56,34 +61,41 @@ navigate('/home')
   
     <section>
       <Container>
+       
         <Row>
+        
+          <div className='g__btn'>
+          <GoogleButton 
+              type="dark" 
+              onClick={signIn}
+            />
+            </div>
+            
+            </Row>
+              <Row>
           <Col lg='6' md='6' sm='12' className='m-auto text-center'>
          
             
             <form className="form mb-5" onSubmit={handleClick}>
               <div className="form__group">
-                <input type='text' placeholder='username' required ref={loginNameRef}/>
+                <input type='email' placeholder='Email' required ref={loginEmailRef}/>
               </div>
              
               <div className="form__group">
               <input type='password' placeholder='Password' required ref={loginPasswordRef}/>
               </div>
+              <p className='error__txt'>{error}</p>
               <div> <button type='submit' className='addToCart__btn'>Login</button></div>
              
-            
-            
+             
             </form>
           
            <Link to='/register'>New to Deliorder ? Create an account</Link>
            
           </Col>
-          <Col lg='4' md='6'>
+         
+              
             
-            <GoogleButton
-              type="dark" 
-              onClick={signIn}
-            />
-          </Col>
         </Row>
       </Container>
 

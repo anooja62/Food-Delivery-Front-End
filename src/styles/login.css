@@ -1,0 +1,9 @@
+.error__txt {
+    color: red;
+}
+.g__btn {
+
+    padding-bottom: 15px;
+    justify-content: center;
+    display: flex;
+}

@@ -46,6 +46,7 @@ cursor: pointer;
     justify-content: center;
 }
 .mobile__menu{
+   
     font-weight: 600;
     display: none;
 }

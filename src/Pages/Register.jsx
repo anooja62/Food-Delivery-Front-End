@@ -47,8 +47,8 @@ const Register = ()=> {
     setDisable(true);
     if(signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value){
       
-        // passwordAgain.current.setCustomValidity("passwords don't match")
-        console.log("pw did not match")
+       
+        console.log("pwd did not match")
     } else {
         const user = {
             name:signupNameRef.current.value,

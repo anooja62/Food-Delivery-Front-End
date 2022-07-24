@@ -13,10 +13,11 @@ const Header =()=>  {
     const headerRef = useRef(null)
     const totalQuantity = useSelector(state=>state.cart.totalQuantity)
     const dispatch = useDispatch()
-    const toggleMenu=()=>menuRef.current.classList.toggle('show__menu')
+    const toggleMenu=()=>menuRef?.current?.classList?.toggle('show__menu')
 
     const [cookies, setCookie, removeCookie] = useCookies(null)
-    const user = cookies.username
+    const user = cookies.name
+    console.log(cookies)
 
    if(!user){
     var nav__links =[
@@ -44,7 +45,7 @@ const Header =()=>  {
          },
     ]
    }else {
-    var nav__links =[
+    nav__links =[
         {
            display:'Home',
            path:'/home'
@@ -70,10 +71,10 @@ const Header =()=>  {
    useEffect(() => {
     window.addEventListener('scroll',()=>{
         if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
-            headerRef.current.classList.add('header__shrink')
+            headerRef?.current?.classList?.add('header__shrink')
         }
         else{
-            headerRef.current.classList.remove('header__shrink')
+            headerRef?.current?.classList?.remove('header__shrink')
         }
     })
     return ()=> window.removeEventListener('scroll',null)
@@ -98,7 +99,7 @@ const Header =()=>  {
 
                     </NavLink>)
                   }
-                 {user && <NavLink  to="/login"  className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("username")} >
+                 {user && <NavLink  to="/login"  className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("name")} >
                     Sign Out
                   </NavLink>}
                 </div>
@@ -113,7 +114,7 @@ const Header =()=>  {
                     <Link to='/login'><i class="ri-user-line" ></i></Link>
                 </span>
                
-                <span className="mobile_menu" onClick={toggleMenu}>
+                <span className="mobile__menu" onClick={toggleMenu}>
                 <i class="ri-menu-line"></i>
                 </span>
             </div>
