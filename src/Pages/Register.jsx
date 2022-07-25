@@ -82,7 +82,7 @@ const Register = ()=> {
             
             <form className="form mb-5" onSubmit={handleClick}>
               <div className="form__group">
-                <input type='text' placeholder='Name' name="name" required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange}/>
+                <input type='text' placeholder='Name   (Eg. John Doe)' name="name" required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange}/>
               </div>
               <div className='error_container'>
                             {errors.name && touched.name && (
@@ -90,7 +90,7 @@ const Register = ()=> {
                             )}
                         </div>
                         <div className="form__group">
-                <input type='tel' placeholder='phone' name="phone" required ref={signupPhoneRef} value={values.phone} onBlur={handleBlur} onChange={handleChange}/>
+                <input type='tel' placeholder='Mobile Number' name="phone" required ref={signupPhoneRef} value={values.phone} onBlur={handleBlur} onChange={handleChange}/>
               </div>
               <div className='error_container'>
                             {errors.phone && touched.phone && (
