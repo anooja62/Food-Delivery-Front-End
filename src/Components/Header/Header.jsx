@@ -1,4 +1,4 @@
-import React,{useRef,useEffect} from 'react'
+import React,{useRef,useEffect,useState} from 'react'
 import {Container} from 'react-bootstrap'
 import logo from '../../assets/images/deliorderlogo.png'
 import {NavLink,Link} from 'react-router-dom'
@@ -6,6 +6,13 @@ import '../../styles/header.css'
 import {useSelector,useDispatch} from 'react-redux'
 import { cartUiActions } from '../../store/shopping-cart/cartUiSlice'
 import { useCookies } from 'react-cookie'
+
+
+import userimg from '../../assets/images/userimg.png'
+import userpic from '../../assets/images/userpic.png'
+import useredit from '../../assets/images/useredit.png'
+import logout from '../../assets/images/logout.png'
+import bag from '../../assets/images/bag.png'
 
 
 const Header =()=>  {
@@ -18,6 +25,12 @@ const Header =()=>  {
     const [cookies, setCookie, removeCookie] = useCookies(null)
     const user = cookies.name
     console.log(cookies)
+
+    const [toggle, setToggle] = useState(true)
+
+    
+   
+
 
    if(!user){
     var nav__links =[
@@ -105,23 +118,42 @@ const Header =()=>  {
                 </div>
             </div>
             <div className="navbar__right d-flex align-items-center gap-4">
-          {user &&  <span>Hello {user} !</span>}
-                <span className='cart_icon' onClick={toggleCart}>
-                <i class="ri-shopping-basket-line"></i>
+         
+        {user &&  <div className='user'>
+          <span onMouseEnter={() => setToggle(!toggle)}><img src={userimg} alt=''></img> {user}</span>
+      {toggle && (
+        <div className='profile'>
+        <ul>
+         <Link to='./profile'> <li><img src={userpic} alt=''></img>Profile</li></Link>
+         <Link to='./myorder'> <li><img src={bag} alt=''></img>Orders</li></Link>
+         <Link to='./updateprofile'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link>
+         <Link to='/home' className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("name")}> <li><img src={logout} alt=''></img>Logout</li></Link>
+          
+        </ul>
+        </div>
+      )}
+    </div>}
+
+
+    <span className='cart_icon' onClick={toggleCart}>
+                <i class="ri-shopping-basket-fill"></i>
                 <span className='cart__badge'>{totalQuantity}</span>
                 </span>
-                <span className="user">
-                    <Link to='/login'><i class="ri-user-line" ></i></Link>
-                </span>
+                
                
                 <span className="mobile__menu" onClick={toggleMenu}>
                 <i class="ri-menu-line"></i>
                 </span>
             </div>
+
+
+               
         </div>
     </Container>
   </header>
   
 }
+
+
 
 export default Header

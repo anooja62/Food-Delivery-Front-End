@@ -44,7 +44,10 @@ const Register = ()=> {
   const handleClick = async (e) => {
     
     e.preventDefault()
-    setDisable(true);
+   
+      setDisable(true);
+    
+    
     if(signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value){
       
        

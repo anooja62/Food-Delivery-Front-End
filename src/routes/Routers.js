@@ -8,6 +8,8 @@ import Checkout from '../Pages/Checkout'
 import RestaurantRegister from '../Pages/RestaurantRegister'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
+
+
 function Routers() {
   return (
     <Routes>
@@ -18,8 +20,10 @@ function Routers() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/login' element={<Login/>}/>
+       
         <Route path='/register' element={<Register/>}/>
         <Route path='/restaurant' element={<RestaurantRegister/>}/>
+        
     </Routes>
   )
 }

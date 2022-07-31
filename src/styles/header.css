@@ -22,11 +22,91 @@
 .active__menu{
    color: #E67E22 !important;
 }
-.cart__icon i, .user i,.mobile__menu i{
+.cart__icon i,.mobile__menu i{
 font-size: 1rem;
 color: #212245;
 cursor: pointer;
+
 }
+.user i{
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.user img {
+    width: 30px;
+}
+.user {
+    cursor: pointer;
+    color: #212245;
+    font-weight: 200;
+    margin-right: 50px;
+    
+}
+
+.profile{
+    position: absolute;
+    top :80px;
+    right: 50px;
+   
+    background: #fff;
+    border-radius: 15px;
+    width: 200px;
+    transition: 0.5s;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+    list-style: none;
+    
+   
+   
+}
+.profile ul li{
+   list-style: none;
+   
+   padding: 10px 0;
+  display: flex;
+  
+    color: #555;
+    font-weight: 500;
+    transition: 0.5s;
+   align-items: center;
+   
+  
+    
+}
+.profile ul li img{
+    max-width: 20px;
+   
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+}
+.profile ul li:hover img {
+    opacity: 1;
+}
+
+ .profile::before {
+    content: '';
+    position: absolute;
+    top:-5px;
+    left:50px;
+    right: 50px;
+    height: 20px;
+    width: 20px;
+   background: #fff;
+   
+    transform: rotate(45deg);
+}
+
+ .profile li:hover {
+    opacity: 1;
+    color: #E67E22;
+   
+    
+}
+
+
+
+
 .cart__icon{
     position: relative;
 }
@@ -60,6 +140,9 @@ cursor: pointer;
 
 
 }
+
+
+
 @media only screen and (max-width: 992px){
     .logo img{
         width: calc(100% - 70%);
