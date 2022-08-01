@@ -1,0 +1,32 @@
+.profilecard{
+    position: absolute;
+    
+    padding-top: 10px;
+   
+    background: #fff;
+    margin-right: 60%;
+  width: 300px;
+  height: fit-content;
+   
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    
+    
+    
+}
+.profilecard  ul li{
+    list-style: none;
+     color: #555;
+     font-weight: 500;
+     transition: 0.5s;
+    align-items: center;
+    font-size: 1rem;
+    
+   
+     
+ }
+
+.profilecard img{
+   max-width: 50%;
+   
+    padding-bottom: 10px;
+}

@@ -120,7 +120,8 @@ const Header =()=>  {
             <div className="navbar__right d-flex align-items-center gap-4">
          
         {user &&  <div className='user'>
-          <span onMouseEnter={() => setToggle(!toggle)}><img src={userimg} alt=''></img> {user}</span>
+          <span onClick={() => setToggle(!toggle)}><img src={userimg} alt=''></img>  {user}</span>
+          </div>}
       {toggle && (
         <div className='profile'>
         <ul>
@@ -132,7 +133,7 @@ const Header =()=>  {
         </ul>
         </div>
       )}
-    </div>}
+    
 
 
     <span className='cart_icon' onClick={toggleCart}>

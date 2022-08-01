@@ -8,6 +8,7 @@ import Checkout from '../Pages/Checkout'
 import RestaurantRegister from '../Pages/RestaurantRegister'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
+import Profile from '../Pages/Profile'
 
 
 function Routers() {
@@ -20,7 +21,7 @@ function Routers() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/login' element={<Login/>}/>
-       
+       <Route path='/profile' element={<Profile/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/restaurant' element={<RestaurantRegister/>}/>
         

@@ -4,7 +4,7 @@ import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
 import '../styles/checkout.css'
-//import Countrystatecity from '../Components/Countrystatecity/Countrystatecity'
+
 
 
 

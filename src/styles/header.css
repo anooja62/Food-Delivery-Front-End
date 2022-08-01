@@ -62,13 +62,14 @@ cursor: pointer;
 .profile ul li{
    list-style: none;
    
-   padding: 10px 0;
+  
   display: flex;
   
     color: #555;
     font-weight: 500;
     transition: 0.5s;
    align-items: center;
+   
    
   
     

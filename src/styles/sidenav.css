@@ -1,0 +1,45 @@
+
+.sidenav{
+    position: absolute;
+   
+    padding-top: 10px;
+    background: #fff;
+  
+    width: 200px;
+    
+    border: 1px solid #E67E22;
+    cursor: pointer;
+    list-style: none;
+}
+
+.sidenav  ul li{
+    list-style: none;
+    
+   
+ 
+   
+     color: #555;
+     font-weight: 500;
+     transition: 0.5s;
+    align-items: center;
+    
+   
+     
+ }
+
+ .sidenav ul li img{
+    max-width: 20px;
+   
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+}
+.sidenav ul li:hover img {
+    opacity: 1;
+}
+.sidenav li:hover {
+    opacity: 1;
+    color: #E67E22;
+   
+    
+}
