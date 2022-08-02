@@ -26,7 +26,7 @@ const Header =()=>  {
     const user = cookies.name
     console.log(cookies)
 
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
 
     
    
@@ -120,9 +120,9 @@ const Header =()=>  {
             <div className="navbar__right d-flex align-items-center gap-4">
          
         {user &&  <div className='user'>
-          <span onClick={() => setToggle(!toggle)}><img src={userimg} alt=''></img>  {user}</span>
+          <span onClick={() => setToggle(!toggle)}><img src={userimg} alt=''></img>  {user} </span>
           </div>}
-      {toggle && (
+      {user && toggle && (
         <div className='profile'>
         <ul>
          <Link to='./profile'> <li><img src={userpic} alt=''></img>Profile</li></Link>

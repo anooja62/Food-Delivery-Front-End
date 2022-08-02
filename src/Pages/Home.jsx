@@ -18,11 +18,16 @@ import foodCategoryImg03 from '../assets/images/bread.png'
 
 import ProductCard from '../Components/UI/product-card/ProductCard.jsx'
 
+import Button from 'react-bootstrap/Button';
+
 
 
 import review from '../assets/images/review.jpg'
 
 import TestimonialSlider from '../Components/UI/slider/TestimonialSlider.jsx'
+
+import Modal from 'react-bootstrap/Modal';
+
 
 const featureData = [
   {
@@ -42,16 +47,22 @@ const featureData = [
   },
 ]
 const Home=()=> {
+
+  const [show, setShow] = useState(false);
+
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
   const [category,setCategory]=useState('ALL')
   const [allProducts,setAllProducts]=useState(products)
 
-  const [hotPizza,setHotPizza] = useState([])
+  //const [hotPizza,setHotPizza] = useState([])
 
-  useEffect(()=>{
-    const filteredPizza = products.filter(item=>item.category ==='Pizza')
-    const slicePizza = filteredPizza.slice(0,4)
-    setHotPizza(slicePizza)
-  },[])
+ // useEffect(()=>{
+    //const filteredPizza = products.filter(item=>item.category ==='Pizza')
+    //const slicePizza = filteredPizza.slice(0,4)
+    //setHotPizza(slicePizza)
+  //},[])
 
   useEffect(() => {
    if (category==='ALL'){
@@ -224,7 +235,49 @@ const Home=()=> {
            <p className='choose_us-desc'>Now you can make money by delivering food orders that people crave using Deliorder Application —all while exploring your city.</p>
            <Row>
            <Col>
-           <button className='addToCart__btn'>SignUp to Deliver </button>
+           <button className='addToCart__btn' onClick={handleShow}>SignUp to Deliver </button>
+           <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign up now</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <form>
+              <div className="form__group">
+                <input type='text' placeholder='Name   (Eg. John Doe)' name="name" required  />
+              </div>
+             
+                        <div className="form__group">
+                <input type='tel' placeholder='Mobile Number' name="phone" required  />
+              </div>
+              
+             
+              <div className="form__group">
+                <input type='email' placeholder='Email' name="email"  required  />
+              </div>
+              
+              <div className="form__group">
+                <input type='password' placeholder='Password' name="password" required  />
+              </div>
+             
+              <div className="form__group">
+                <input type='password' placeholder='Confirm Password' name="cpassword" required />
+              </div>
+             
+                        
+              
+              
+            </form>
+            <Row >
+              <Col  sm={8}> <button type="submit" className='addToCart__btn'>Signup </button></Col>
+             <Col sm={4}> <Button variant="outline-success" onClick={handleClose}>Close</Button></Col>
+              </Row>
+            </Modal.Body>
+        
+        
+        
+      </Modal>
+
+       
            </Col>
            <Col>
            <Link to='/login'><p className='choose_us-title d-flex align-items-center gap-2'>Already have an account ? Login here</p></Link>

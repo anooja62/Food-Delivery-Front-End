@@ -64,7 +64,7 @@ cursor: pointer;
    
   
   display: flex;
-  
+  height: 50px;
     color: #555;
     font-weight: 500;
     transition: 0.5s;

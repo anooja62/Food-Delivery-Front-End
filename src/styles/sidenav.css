@@ -12,24 +12,20 @@
     list-style: none;
 }
 
-.sidenav  ul li{
+.sidenav ul  li{
     list-style: none;
-    
-   
- 
-   
      color: #555;
      font-weight: 500;
      transition: 0.5s;
     align-items: center;
+  
     
    
      
  }
 
- .sidenav ul li img{
+ .sidenav img{
     max-width: 20px;
-   
     margin-right: 10px;
     opacity: 0.5;
     transition: 0.5s;

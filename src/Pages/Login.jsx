@@ -30,10 +30,12 @@ const Login = ()=> {
         try{
            const response = await axios.post("/auth/login", user)
            const success = response.status === 200
-           
+           console.log("response.data",response.data)
            if(success) {
             setCookie('userId', response.data._id)
             setCookie('name',response.data.name)
+            setCookie('phone',response.data.phone)
+            setCookie('email',response.data.email)
             
             navigate('/home')
            }
