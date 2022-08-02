@@ -9,6 +9,7 @@ import RestaurantRegister from '../Pages/RestaurantRegister'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 import Profile from '../Pages/Profile'
+import UpdateProfile from '../Pages/UpdateProfile'
 
 
 function Routers() {
@@ -24,6 +25,7 @@ function Routers() {
        <Route path='/profile' element={<Profile/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/restaurant' element={<RestaurantRegister/>}/>
+        <Route path='/update' element={<UpdateProfile/>}/>
         
     </Routes>
   )

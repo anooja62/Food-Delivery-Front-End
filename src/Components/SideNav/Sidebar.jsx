@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import '../../styles/sidenav.css'
 
 
+
 const Sidebar = () => {
    
 
@@ -17,7 +18,7 @@ const Sidebar = () => {
         <ul>
          <Link to='./'> <li><img src={userpic} alt=''></img>Profile</li></Link><hr/>
          <Link to='./myorder'> <li><img src={bag} alt=''></img>Orders</li></Link><hr/>
-         <Link to='./updateprofile'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link><hr/>
+         <Link to='/update'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link><hr/>
          <Link to='/home'> <li><img src={logout} alt=''></img>Logout</li></Link>
           
         </ul>

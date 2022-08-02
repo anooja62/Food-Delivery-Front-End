@@ -214,15 +214,69 @@ const Home=()=> {
         <Container>
           <Row>
             <Col lg='12' className='text-center mb-5'>
-              <h2>Hot Pizza</h2>
+              <h2>Deliver with Deliorder</h2>
             </Col>
-            {
-              hotPizza.map(item=>(
-                <Col lg='3' md='4' key={item.id}>
-                  <ProductCard item={item}/>
-                </Col>
-              ))
-            }
+           
+
+
+<Col lg='6' md='6'>
+<h5 className=' mb-4'>No boss. Flexible schedule. Quick pay.</h5>
+           <p className='choose_us-desc'>Now you can make money by delivering food orders that people crave using Deliorder Application —all while exploring your city.</p>
+           <Row>
+           <Col>
+           <button className='addToCart__btn'>SignUp to Deliver </button>
+           </Col>
+           <Col>
+           <Link to='/login'><p className='choose_us-title d-flex align-items-center gap-2'>Already have an account ? Login here</p></Link>
+           
+           </Col>
+           </Row>
+           <br></br><br></br>
+           <Row>
+            <h3>Delivery Requirements*</h3>
+            <p className=' mb-4 choose_us-desc'>Two Wheeler Delivery: </p>
+            <ul className=' choose_us-title req'>
+              
+              <li>Any make or model 2-wheel scooter</li>
+              <li>Valid Driving License</li>
+              <li>Registration Certificate of two wheeler</li>
+              <li>Valid insurance for two wheeler</li>
+              <li>PAN Card</li>
+            </ul>
+           </Row>
+           
+           </Col>
+           <Col>
+           <h3 className=' mb-4 text-center'>How it Works</h3>
+           <div class="timeline-container">
+  
+    <ul className='list-updates'>
+      <li className='update'>
+      
+         
+          <p className='choose_us-title'>1. Log in</p>
+          <p className='choose_us-desc'>Get on the road and log in to the Driver app to begin receiving delivery requests.</p>
+       
+      </li>
+      <li className='update'>
+      
+         
+      <p className='choose_us-title'>2. Deliver orders</p>
+      <p className='choose_us-desc'>Suggested navigation and information from restaurants and your customers is provided in the app to help deliveries run smoothly.</p>
+   
+  </li>
+     
+  <li className='update'>
+      
+         
+  <p className='choose_us-title'>3. Earn money</p>
+      <p className='choose_us-desc'>You can track your earnings and cash out daily or weekly.</p>
+   
+  </li>
+    </ul>
+
+</div>
+           </Col>
           </Row>
         </Container>
       </section>

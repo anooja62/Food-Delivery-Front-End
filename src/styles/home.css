@@ -71,6 +71,62 @@ color: #E67E22;
 .review{
     width: 90;
 }
+
+.timeline-container::before,
+.list-updates::before,
+.list-updates .update::before
+{
+    content: "";
+}
+.timeline-container::before,
+.list-updates::before,
+.list-updates .update::before
+{
+     position: absolute;
+}
+.timeline-container,
+.list-updates .update,
+.list-updates
+{
+    position: relative;
+
+}
+.timeline-container{
+    padding: 1rem 1rem 3rem 4rem;
+}
+.list-updates{
+    list-style: none;
+}
+.list-updates::before{
+    height: 79%;
+    width: 1.5px;
+    background: #000;
+    left: 0.8rem;
+    top:1rem;
+
+} 
+.list-updates .update{
+   
+    padding: 1rem; 
+
+}
+.list-updates .update::before {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #000;
+    top: 19%;
+    transform: translateY(-50%);
+    left: -20px
+}
+
+.req{
+    margin-left: 50px;
+    
+}
+
+ 
+  
 @media only screen and (max-width:768px){
     .hero__content h5 {
         font-size: 1rem;

@@ -127,7 +127,7 @@ const Header =()=>  {
         <ul>
          <Link to='./profile'> <li><img src={userpic} alt=''></img>Profile</li></Link>
          <Link to='./myorder'> <li><img src={bag} alt=''></img>Orders</li></Link>
-         <Link to='./updateprofile'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link>
+         <Link to='./update'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link>
          <Link to='/home' className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("name")}> <li><img src={logout} alt=''></img>Logout</li></Link>
           
         </ul>
