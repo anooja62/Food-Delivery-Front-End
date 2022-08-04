@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Routes,Route,Navigate} from 'react-router-dom'
 import Home from '../Pages/Home'
 import AllFoods from '../Pages/AllFoods'
@@ -12,9 +12,12 @@ import Profile from '../Pages/Profile'
 import UpdateProfile from '../Pages/UpdateProfile'
 import Orders from '../Pages/Orders'
 import Admin from '../Pages/Admin'
-
+import {useCookies} from 'react-cookie'
 
 function Routers() {
+//   const [cookies, setCookie, removeCookie] = useCookies(null)
+//   const [admin, setAdmin] = useState(cookies.isAdmin)
+// console.log(admin)
   return (
     <Routes>
         <Route path='/' element={<Navigate to='/home'/>}/>
@@ -29,7 +32,7 @@ function Routers() {
         <Route path='/restaurant' element={<RestaurantRegister/>}/>
         <Route path='/update' element={<UpdateProfile/>}/>
         <Route path='/orders' element={<Orders/>}/>
-        <Route path='/admin' element={<Admin/>}/>
+     <Route path='/admin' element={<Admin/>}/>
         
 
         

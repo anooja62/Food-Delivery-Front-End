@@ -32,9 +32,7 @@ console.log(touched);
   
   const signupResEmailRef = useRef()
   const signupResAddressRef = useRef()
-  const signupOwnerNameRef = useRef()
-  const signupOwnerEmailRef = useRef()
-  const signupOwnerPhoneRef = useRef()
+ 
 
   const handleClick = async (e) => {
     
@@ -85,30 +83,7 @@ console.log(touched);
             <Link to='/login'>Already registered on Deliorder ? Login here</Link>
            
           </Col>
-          <Col xs='6' className='m-auto text-center'>
-          <h4>Owner Details</h4><br></br>
-            
-            <form className="form mb-5">
-              <div className="form__group">
-                <input type='text' placeholder='Owner Name' required ref={signupOwnerNameRef}/>
-              </div>
-              <div className='error_container'>
-                            {errors.name && touched.name && (
-                                <p className='form_error'>{errors.name}</p>
-                            )}
-                        </div>
-              <div className="form__group">
-                <input type='number' placeholder='Phone' required ref={signupOwnerPhoneRef}/>
-              </div>
-              <div className="form__group">
-                <input type='email' placeholder='Email' required ref={signupOwnerEmailRef}/>
-              </div>
-             
-             
-              <button className='addToCart__btn'>Register</button>
-              
-            </form>
-          </Col>
+      
           
         </Row>
       </Container>

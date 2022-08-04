@@ -12,11 +12,17 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import { useCookies } from 'react-cookie'
+
 
 
 
 
  const Profile = () => {
+
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const user = cookies.name
+  
 
 
     const [show, setShow] = useState(false);
@@ -24,7 +30,7 @@ import Button from 'react-bootstrap/Button';
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return <Helmet title='Profile'>
-        <CommonSection title='My Profile'/>
+        <CommonSection title={user}/>
         
         <section>
         <Container>

@@ -16,9 +16,10 @@ const Login = ()=> {
   const loginEmailRef = useRef()
   const loginPasswordRef = useRef()
   const navigate = useNavigate()
-
+  const isAdmin = cookies.isAdmin 
+  console.log(isAdmin,"consoldsjfdslkjfhsd")
   const handleClick = async (e) => {
-   
+  
     e.preventDefault()
         const user = {
          
@@ -36,8 +37,18 @@ const Login = ()=> {
             setCookie('name',response.data.name)
             setCookie('phone',response.data.phone)
             setCookie('email',response.data.email)
+            setCookie("isAdmin",response.data.isAdmin)
             
-            navigate('/home')
+            setTimeout(() => {
+
+              if(response.data.isAdmin){
+                navigate('/admin')
+                window.location.reload()
+              }else{
+                navigate('/home')
+              }
+            }, 1000)
+          
            }
             
         }catch(err){

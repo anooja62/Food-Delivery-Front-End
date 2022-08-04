@@ -51,7 +51,7 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
-       
+
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Restaurants</h3>
           <ul className="sidebarList">
@@ -71,5 +71,7 @@ export default function Sidebar() {
         </div>
       </div>
     </div>
+  
+   
   );
 }
