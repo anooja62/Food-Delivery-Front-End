@@ -18,11 +18,14 @@
      font-weight: 500;
      transition: 0.5s;
     align-items: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
   
     
    
      
  }
+
 
  .sidenav img{
     max-width: 20px;

@@ -10,6 +10,8 @@ import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 import Profile from '../Pages/Profile'
 import UpdateProfile from '../Pages/UpdateProfile'
+import Orders from '../Pages/Orders'
+import Admin from '../Pages/Admin'
 
 
 function Routers() {
@@ -26,6 +28,10 @@ function Routers() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/restaurant' element={<RestaurantRegister/>}/>
         <Route path='/update' element={<UpdateProfile/>}/>
+        <Route path='/orders' element={<Orders/>}/>
+        <Route path='/admin' element={<Admin/>}/>
+        
+
         
     </Routes>
   )

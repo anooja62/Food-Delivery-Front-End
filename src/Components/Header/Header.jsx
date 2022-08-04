@@ -1,7 +1,7 @@
 import React,{useRef,useEffect,useState} from 'react'
 import {Container} from 'react-bootstrap'
 import logo from '../../assets/images/deliorderlogo.png'
-import {NavLink,Link} from 'react-router-dom'
+import {NavLink,Link,useNavigate} from 'react-router-dom'
 import '../../styles/header.css'
 import {useSelector,useDispatch} from 'react-redux'
 import { cartUiActions } from '../../store/shopping-cart/cartUiSlice'
@@ -28,8 +28,14 @@ const Header =()=>  {
 
     const [toggle, setToggle] = useState(false)
 
+    const navigate = useNavigate()
     
-   
+    const clearCookies = ()=> {
+        removeCookie("name")
+        removeCookie("email")  
+        removeCookie("phone")
+        navigate('/home')
+       }
 
 
    if(!user){
@@ -112,7 +118,7 @@ const Header =()=>  {
 
                     </NavLink>)
                   }
-                 {user && <NavLink  to="/login"  className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("name")} >
+                 {user && <NavLink  to="/login"  className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>clearCookies()} >
                     Sign Out
                   </NavLink>}
                 </div>
@@ -126,7 +132,7 @@ const Header =()=>  {
         <div className='profile'>
         <ul>
          <Link to='./profile'> <li><img src={userpic} alt=''></img>Profile</li></Link>
-         <Link to='./myorder'> <li><img src={bag} alt=''></img>Orders</li></Link>
+         <Link to='./orders'> <li><img src={bag} alt=''></img>Orders</li></Link>
          <Link to='./update'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link>
          <Link to='/home' className={navClass=>navClass.isActive ?'active__menu' :""} onClick={()=>removeCookie("name")}> <li><img src={logout} alt=''></img>Logout</li></Link>
           

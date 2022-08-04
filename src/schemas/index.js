@@ -5,7 +5,7 @@ const nameRegExp = new RegExp(
     "^[A-Z][a-z]*( [A-Z][a-z]*)*$"
 );
 const phoneRegExp = new RegExp(
-    "^[6-9]{1}[)]?[0-9]{3}[0-9]{4,6}$"
+    "^[6-9]{1}[)]?[0-9]{9}$"
 );
 
 

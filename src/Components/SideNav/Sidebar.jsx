@@ -22,9 +22,9 @@ const Sidebar = () => {
   <div>
       <div className='sidenav'>
         <ul>
-         <Link to='./'> <li><img src={userpic} alt=''></img>Profile</li></Link><hr/>
-         <Link to='./myorder'> <li><img src={bag} alt=''></img>Orders</li></Link><hr/>
-         <Link to='/update'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link><hr/>
+         <Link to='./'> <li><img src={userpic} alt=''></img>Profile</li></Link>
+         <Link to='/orders'> <li><img src={bag} alt=''></img>Orders</li></Link>
+         <Link to='/update'> <li><img src={useredit} alt=''></img>Edit Profile</li></Link>
           <li  onClick={()=>clearCookies()}><img src={logout} alt=''></img>Logout</li>
           
         </ul>

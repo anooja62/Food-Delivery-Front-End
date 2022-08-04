@@ -28,7 +28,7 @@ const Register = ()=> {
         console.log(values);
        }
   })
-  console.log(touched);
+  console.log(errors,"eroooooooooooooooooooooooor");
 
   //console.log(formik);
 
@@ -40,7 +40,7 @@ const Register = ()=> {
   const signupConfirmPasswordRef = useRef()
   
   const navigate = useNavigate()
-  console.log(signupNameRef)
+  // console.log(signupNameRef)
   const handleClick = async (e) => {
     
     e.preventDefault()
@@ -127,7 +127,7 @@ const Register = ()=> {
                             )}
                         </div>
                         
-              <button type="submit" className='addToCart__btn' disabled={disable}>Register</button>
+              <button type="submit" className='addToCart__btn' disabled={errors.name || errors.phone || errors.email ? true : false}>Register</button>
               
             </form>
             <Link to='/login'>Already have an account ? Login here</Link>
