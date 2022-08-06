@@ -15,15 +15,8 @@ export default function Sidebar() {
               Home
             </li>
             </Link>
-            <li className="sidebarListItem">
-            <i class="ri-line-chart-line"></i>
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              
-            <i class="ri-shopping-bag-3-line"></i>
-              Sales
-            </li>
+           
+           
           </ul>
         </div>
         <div className="sidebarMenu">
@@ -35,38 +28,24 @@ export default function Sidebar() {
                 Users
               </li>
             </Link>
-            <Link to="/products" className="link">
-              <li className="sidebarListItem">
-              <i class="ri-store-2-line"></i>
-                Products
-              </li>
-            </Link>
-            <li className="sidebarListItem">
-            <i class="ri-bank-card-line"></i>
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-            <i class="ri-file-chart-line"></i>
-              Reports
-            </li>
+            
+        
+            
+          
           </ul>
         </div>
 
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Restaurants</h3>
           <ul className="sidebarList">
+          <Link to="/manage" className="link">
             <li className="sidebarListItem">
             <i class="ri-edit-box-line"></i>
               Manage
             </li>
-            <li className="sidebarListItem">
-            <i class="ri-line-chart-fill"></i>
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-            <i class="ri-file-chart-line"></i>
-              Reports
-            </li>
+            </Link>
+        
+           
           </ul>
         </div>
       </div>

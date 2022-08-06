@@ -4,7 +4,7 @@
     background-color: white;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 9999;
   }
   
   .topbarWrapper {
@@ -27,7 +27,7 @@
       align-items: center;
   }
   .topbar i{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   
   .topbarIconContainer {

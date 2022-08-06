@@ -13,6 +13,7 @@ import UpdateProfile from '../Pages/UpdateProfile'
 import Orders from '../Pages/Orders'
 import Admin from '../Pages/Admin'
 import {useCookies} from 'react-cookie'
+import Manage from '../Components/Admin/Manage/Manage'
 
 function Routers() {
 //   const [cookies, setCookie, removeCookie] = useCookies(null)
@@ -33,6 +34,7 @@ function Routers() {
         <Route path='/update' element={<UpdateProfile/>}/>
         <Route path='/orders' element={<Orders/>}/>
      <Route path='/admin' element={<Admin/>}/>
+     <Route path='/manage' element={<Manage/>}/>
         
 
         

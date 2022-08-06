@@ -6,7 +6,8 @@ import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import { signupSchema } from '../schemas'
 import '../styles/formerror.css'
-
+import {useNavigate} from 'react-router-dom'
+import axios from ".././axios"
 const initialValues ={
   resname:'',
   resphone:'',
@@ -25,7 +26,7 @@ const RestaurantRegister = ()=> {
     }
 })
 console.log(touched);
-
+const navigate = useNavigate()
   const signupResNameRef = useRef()
   
   const signupResPhoneRef = useRef()
@@ -37,7 +38,24 @@ console.log(touched);
   const handleClick = async (e) => {
     
     e.preventDefault()
-  }
+   
+    
+        const restaurant = {
+            name:signupResNameRef.current.value,
+           phone:signupResPhoneRef.current.value,
+            email:signupResEmailRef.current.value,
+            address: signupResAddressRef.current.value
+        }
+
+        try{
+            await axios.post("/rest/add-restaurent",restaurant)
+            navigate('/home')
+        }catch(err){
+            console.log(err)
+        }
+    }
+    
+  
 
   return <Helmet title='Restaurant-Register'>
     <CommonSection title='Register your resturant on Deliorder'/>
@@ -47,7 +65,7 @@ console.log(touched);
           <Col xs='6' className='m-auto text-center'>
             <h4>Restaurant Details</h4><br></br>
             
-            <form className="form mb-5" onClick={handleClick}>
+            <form className="form mb-5" onSubmit={handleClick}>
               <div className="form__group">
                 <input type='text' placeholder='Restaurant name' required ref={signupResNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange}/>
               </div>
