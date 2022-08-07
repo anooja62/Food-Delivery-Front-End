@@ -4,21 +4,15 @@ import Topbar from '../Components/Admin/Topbar/Topbar'
 import { Container, Row, Col } from 'react-bootstrap'
 import Adminhome from '../Components/Admin/Adminhome/Adminhome'
 import Manage from '../Components/Admin/Manage/Manage'
-import axios from ".././axios"
+import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Admin = () => {
-  const [restaurant, setRestaurant] = useState([])
-
+  const restaurantLIst = useSelector((state) => state.restaurant.list);
+  const dispatch = useDispatch()
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/rest/all-restaurent`)
-      setRestaurant(res.data)
-
-    }
-    fetchUser()
-  }, [])
-
-  console.log(restaurant)
+    dispatch(getRestaurants());
+  }, []);
   return (
     <div>
 
@@ -44,7 +38,7 @@ const Admin = () => {
                     </tr>
                   </thead>
 
-                  {restaurant.map((u) => (
+                  {restaurantLIst.map((u) => (
                     <Manage key={u.id} restaurant={u} />
 
                   ))}
