@@ -35,7 +35,7 @@ const Admin = () => {
                 <table className='table table-bordered'>
                   <thead>
                     <tr>
-                      <th>No.</th>
+                      
                       <th>Restaurant Name</th>
                       <th>Email</th>
                       <th>Phone Number</th>

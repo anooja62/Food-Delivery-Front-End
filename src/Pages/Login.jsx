@@ -17,7 +17,7 @@ const Login = ()=> {
   const loginPasswordRef = useRef()
   const navigate = useNavigate()
   const isAdmin = cookies.isAdmin 
-  console.log(isAdmin,"consoldsjfdslkjfhsd")
+  
   const handleClick = async (e) => {
   
     e.preventDefault()
@@ -31,7 +31,7 @@ const Login = ()=> {
         try{
            const response = await axios.post("/auth/login", user)
            const success = response.status === 200
-           console.log("response.data",response.data)
+           
            if(success) {
             setCookie('userId', response.data._id)
             setCookie('name',response.data.name)

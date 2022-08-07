@@ -1,10 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import Helmet from '../Components/Helmet/Helmet.js'
 import {Container,Row,Col,ListGroup,ListGroupItem} from 'react-bootstrap'
+import axios from ".././axios"
 import deliverman from '../assets/images/deliverman.png'
 import whyimg from '../assets/images/whyimg.png'
 import '../styles/maincontent.css'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import Category from '../Components/UI/category/Category.jsx'
 import '../styles/home.css'
 import featureImg01 from '../assets/images/service-01.png'
@@ -28,6 +29,19 @@ import TestimonialSlider from '../Components/UI/slider/TestimonialSlider.jsx'
 
 import Modal from 'react-bootstrap/Modal';
 
+import {useFormik} from 'formik'
+import { signupSchema } from '../schemas'
+
+const initialValues ={
+     name:'',
+     phone:'',
+     email:'',
+     password:'',
+     cpassword:'',
+    
+};
+
+
 
 const featureData = [
   {
@@ -48,6 +62,54 @@ const featureData = [
 ]
 const Home=()=> {
 
+  const {values,handleBlur,handleChange,errors,touched} = useFormik({
+    initialValues,
+    validationSchema:signupSchema,
+    onSubmit:(values) =>{
+     console.log(values);
+    }
+})
+
+const navigate = useNavigate()
+
+
+const signupNameRef = useRef()
+const signupPhoneRef = useRef()
+
+const signupEmailRef = useRef()
+const signupPasswordRef = useRef()
+const signupConfirmPasswordRef = useRef()
+
+const handleClick = async (e) => {
+
+  e.preventDefault()
+
+  if (signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value) {
+
+
+
+  } else {
+    const user = {
+      name: signupNameRef.current.value,
+      phone: signupPhoneRef.current.value,
+      email: signupEmailRef.current.value,
+      password: signupPasswordRef.current.value
+
+
+
+    } 
+    try {
+      await axios.post("/auth/register", user)
+      navigate('/login')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+}
+
+
+
   const [show, setShow] = useState(false);
 
 const handleClose = () => setShow(false);
@@ -56,13 +118,7 @@ const handleShow = () => setShow(true);
   const [category,setCategory]=useState('ALL')
   const [allProducts,setAllProducts]=useState(products)
 
-  //const [hotPizza,setHotPizza] = useState([])
-
- // useEffect(()=>{
-    //const filteredPizza = products.filter(item=>item.category ==='Pizza')
-    //const slicePizza = filteredPizza.slice(0,4)
-    //setHotPizza(slicePizza)
-  //},[])
+  
 
   useEffect(() => {
    if (category==='ALL'){
@@ -97,7 +153,7 @@ const handleShow = () => setShow(true);
 <h1 className='mb-4 hero__title' ><span>HUNGRY ? </span>just wait <br/>food at <span> your door</span></h1>
 <p>Order food from your favourite restaurants.</p>
 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
-  <button className='order__btn d-flex align-items-center justify-content-between'>Order now<i class="ri-arrow-right-s-line"></i></button>
+  <button className='order__btn d-flex align-items-center justify-content-between'><Link to='/foods'>Order now</Link><i class="ri-arrow-right-s-line"></i></button>
   <button className='all__foods-btn'><Link to='/foods'>See all food menu</Link></button>
 </div>
 <div className='hero__service d-flex align-items-center gap-5 mt-5'>
@@ -241,32 +297,50 @@ const handleShow = () => setShow(true);
           <Modal.Title>Sign up now</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <form>
+          <form className=" mb-5" onSubmit={handleClick}>
               <div className="form__group">
-                <input type='text' placeholder='Name   (Eg. John Doe)' name="name" required  />
+                <input type='text' placeholder='Name   (Eg. John Doe)' name="name" required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange} />
               </div>
-             
-                        <div className="form__group">
-                <input type='tel' placeholder='Mobile Number' name="phone" required  />
+              <div className='error_container'>
+                {errors.name && touched.name && (
+                  <p className='form_error'>{errors.name}</p>
+                )}
               </div>
-              
-             
               <div className="form__group">
-                <input type='email' placeholder='Email' name="email"  required  />
+                <input type='tel' placeholder='Mobile Number' name="phone" required ref={signupPhoneRef} value={values.phone} onBlur={handleBlur} onChange={handleChange} />
               </div>
-              
+              <div className='error_container'>
+                {errors.phone && touched.phone && (
+                  <p className='form_error'>{errors.phone}</p>
+                )}
+              </div>
+
               <div className="form__group">
-                <input type='password' placeholder='Password' name="password" required  />
+                <input type='email' placeholder='Email' name="email" required ref={signupEmailRef} value={values.email} onBlur={handleBlur} onChange={handleChange} />
               </div>
-             
+              <div className='error_container'>
+                {errors.email && touched.email && (
+                  <p className='form_error'>{errors.email}</p>
+                )}
+              </div>
+
               <div className="form__group">
-                <input type='password' placeholder='Confirm Password' name="cpassword" required />
+                <input type='password' placeholder='Password' name="password" required ref={signupPasswordRef} value={values.password} onBlur={handleBlur} onChange={handleChange} />
               </div>
-             
-                        
-              
-              
-            </form>
+              <div className='error_container'>
+                {errors.password && touched.password && (
+                  <p className='form_error'>{errors.password}</p>
+                )}
+              </div>
+              <div className="form__group">
+                <input type='password' placeholder='Confirm Password' name="cpassword" required ref={signupConfirmPasswordRef} value={values.cpassword} onBlur={handleBlur} onChange={handleChange} />
+              </div>
+              <div className='error_container'>
+                {errors.cpassword && touched.cpassword && (
+                  <p className='form_error'>{errors.cpassword}</p>
+                )}
+              </div>
+              </form>
             <Row >
               <Col  sm={8}> <button type="submit" className='addToCart__btn'>Signup </button></Col>
              <Col sm={4}> <Button variant="outline-success" onClick={handleClose}>Close</Button></Col>

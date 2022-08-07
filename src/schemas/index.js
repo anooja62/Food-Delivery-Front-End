@@ -17,7 +17,7 @@ export const signupSchema = Yup.object({
          .required("Please enter your name"),
             
     phone: Yup.string()
-         .matches(phoneRegExp,'enter valid phone numbers')
+         .matches(phoneRegExp,'enter valid phone number')
          .required("Please enter Phone Number"),
     email: Yup.string()
         

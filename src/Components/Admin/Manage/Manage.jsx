@@ -1,22 +1,30 @@
 import React from 'react'
 import './manage.css'
 import Button from 'react-bootstrap/Button';
-import Sidebar from '../Sidebar/Sidebar';
+
+import { Row,Col } from 'react-bootstrap';
+
 
 
  const Manage = ({restaurant}) => {
-  console.log(restaurant,"fdsfsdfsdfdsfdsfdfd")
+
+ 
+ 
   return (<>
  
  
  <tbody>
             <tr> 
-    <td className='text-center'></td>
+   
     <td className='text-center'>{restaurant.name}</td>
     <td className='text-center'>{restaurant.email}</td>
     <td className='text-center'>{restaurant.phone}</td>
     <td className='text-center'>{restaurant.address}</td>
-    <td className='text-center'> <Button variant="success">Approve</Button><Button variant="danger">Delete</Button></td>
+    <td className='text-center'> <Row>
+    <Col><Button variant="success">Approve</Button></Col>
+    <Col><Button variant="danger">Delete</Button></Col>
+    </Row>
+    </td>
     </tr>
     </tbody>
     </>

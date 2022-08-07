@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef} from 'react'
 import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
@@ -19,7 +19,7 @@ const initialValues ={
 };
 
 const Register = ()=> {
-  const [disable, setDisable]= useState(0);
+ 
 
   const {values,handleBlur,handleChange,errors,touched} = useFormik({
        initialValues,
@@ -28,9 +28,9 @@ const Register = ()=> {
         console.log(values);
        }
   })
-  console.log(errors,"eroooooooooooooooooooooooor");
+ 
 
-  //console.log(formik);
+ 
 
   const signupNameRef = useRef()
   const signupPhoneRef = useRef()
@@ -40,18 +40,18 @@ const Register = ()=> {
   const signupConfirmPasswordRef = useRef()
   
   const navigate = useNavigate()
-  // console.log(signupNameRef)
+ 
   const handleClick = async (e) => {
     
     e.preventDefault()
    
-      setDisable(true);
+    
     
     
     if(signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value){
       
        
-        console.log("pwd did not match")
+        
     } else {
         const user = {
             name:signupNameRef.current.value,
