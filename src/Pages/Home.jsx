@@ -36,6 +36,7 @@ const initialValues ={
      name:'',
      phone:'',
      email:'',
+     city:'',
      password:'',
      cpassword:'',
     
@@ -77,6 +78,7 @@ const signupNameRef = useRef()
 const signupPhoneRef = useRef()
 
 const signupEmailRef = useRef()
+const signupCityRef = useRef()
 const signupPasswordRef = useRef()
 const signupConfirmPasswordRef = useRef()
 
@@ -89,17 +91,18 @@ const handleClick = async (e) => {
 
 
   } else {
-    const user = {
+    const deliveryboy = {
       name: signupNameRef.current.value,
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
+      city: signupCityRef.current.value,
       password: signupPasswordRef.current.value
 
 
 
     } 
     try {
-      await axios.post("/auth/register", user)
+      await axios.post("deli/delivery", deliveryboy)
       navigate('/login')
     } catch (err) {
       console.log(err)
@@ -323,7 +326,9 @@ const handleShow = () => setShow(true);
                   <p className='form_error'>{errors.email}</p>
                 )}
               </div>
-
+              <div className="form__group">
+                <input type='text' placeholder='City' name="city" required ref={signupCityRef} value={values.city} onBlur={handleBlur} onChange={handleChange} />
+              </div>
               <div className="form__group">
                 <input type='password' placeholder='Password' name="password" required ref={signupPasswordRef} value={values.password} onBlur={handleBlur} onChange={handleChange} />
               </div>
@@ -340,11 +345,12 @@ const handleShow = () => setShow(true);
                   <p className='form_error'>{errors.cpassword}</p>
                 )}
               </div>
-              </form>
-            <Row >
+              <Row >
               <Col  sm={8}> <button type="submit" className='addToCart__btn'>Signup </button></Col>
              <Col sm={4}> <Button variant="outline-success" onClick={handleClose}>Close</Button></Col>
               </Row>
+              </form>
+           
             </Modal.Body>
         
         

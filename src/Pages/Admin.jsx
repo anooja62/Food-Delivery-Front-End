@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../Components/Admin/Sidebar/Sidebar'
 import Topbar from '../Components/Admin/Topbar/Topbar'
 import { Container, Row, Col } from 'react-bootstrap'
-import Adminhome from '../Components/Admin/Adminhome/Adminhome'
+
 import Manage from '../Components/Admin/Manage/Manage'
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";

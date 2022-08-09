@@ -1,18 +1,19 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef} from 'react'
 import {Container,Row,Col} from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
 import {useNavigate} from 'react-router-dom'
-//import axios from ".././axios"
 import '../styles/formerror.css'
-//import { useCookies } from 'react-cookie'
-
+import { useCookies } from 'react-cookie'
+import axios from ".././axios"
 const UpdateProfile = ()=> {
 
+  const [cookies, setCookie] = useCookies(null)
 
-  //const user = cookies.name
-  //const phone = cookies.phone
-  //const email = cookies.email
+  const user = cookies.name
+  const phone = cookies.phone
+  const email = cookies.email
+  const userId = cookies.userId
   const signupNameRef = useRef()
   const signupPhoneRef = useRef()
   
@@ -20,21 +21,32 @@ const UpdateProfile = ()=> {
   const signupPasswordRef = useRef()
   const signupConfirmPasswordRef = useRef()
   
- 
+  const navigate = useNavigate()
+
   const handleClick = async (e) => {
-  
-    
+
     e.preventDefault()
-  }
+
    
-      
-    
-    
-   
-            
+      const user = {
+        name: signupNameRef.current.value,
+        phone: signupPhoneRef.current.value,
+        email: signupEmailRef.current.value,
+        password: signupPasswordRef.current.value
+
+
+
+      }
+
+      try {
+        await axios.put(`/auth/update/${userId}`, user)
+        navigate('/login')
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
   
-
 
   return <Helmet title='Update'>
     <CommonSection title='Edit Your Details'/>
@@ -45,25 +57,25 @@ const UpdateProfile = ()=> {
             
             <form className="form mb-5" onSubmit={handleClick}>
               <div className="form__group">
-                <input type='text' name="name"  required ref={signupNameRef} />
+                <input type='text' name="name" placeholder='Name   (Eg. John Doe)'  ref={signupNameRef} defaultValue={user} />
               </div>
              
                         <div className="form__group">
-                <input type='tel' placeholder='Mobile Number' name="phone" required ref={signupPhoneRef}  />
+                <input type='tel' placeholder='Mobile Number' name="phone"  ref={signupPhoneRef} defaultValue={phone} />
               </div>
               
              
               <div className="form__group">
-                <input type='email' placeholder='Email' name="email"  required ref={signupEmailRef} />
+                <input type='email' placeholder='Email' name="email"   ref={signupEmailRef} defaultValue={email}/>
               </div>
            
              
               <div className="form__group">
-                <input type='password' placeholder='Password' name="password" required ref={signupPasswordRef} />
+                <input type='password' placeholder='Password' name="password"  ref={signupPasswordRef} />
               </div>
               
               <div className="form__group">
-                <input type='password' placeholder='Confirm Password' name="cpassword" required ref={signupConfirmPasswordRef}   />
+                <input type='password' placeholder='Confirm Password' name="cpassword"  ref={signupConfirmPasswordRef}   />
               </div>
              
                         
