@@ -5,6 +5,12 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux';
 import { cartActions } from '../../../store/shopping-cart/cartSlice';
 import {useCookies} from 'react-cookie'
+ import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
+
+
+
 
 const ProductCard = (props) => {
 
@@ -21,6 +27,16 @@ const ProductCard = (props) => {
         image01,
         price
       }))
+      toast.success(' Item added to cart', {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark"
+        });
     }else{
       navigate('/login')
     }
@@ -36,6 +52,17 @@ const ProductCard = (props) => {
 <div className='d-flex align-items-center justify-content-between'>
     <span className='product__price'>₹{price}</span>
     <button className="addToCart__btn"  onClick={()=>addToCart()}>Add to Cart</button>
+    <ToastContainer
+position="bottom-center"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
 </div>
 </div>
     </div>
