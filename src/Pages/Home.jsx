@@ -98,8 +98,6 @@ const handleClick = async (e) => {
       city: signupCityRef.current.value,
       password: signupPasswordRef.current.value
 
-
-
     } 
     try {
       await axios.post("deli/delivery", deliveryboy)

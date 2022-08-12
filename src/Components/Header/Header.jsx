@@ -25,8 +25,7 @@ const Header =()=>  {
     const [cookies, setCookie, removeCookie] = useCookies(null)
     const user = cookies.name
     const isAdmin = cookies.isAdmin 
-    console.log(cookies)
-
+    
     const [toggle, setToggle] = useState(false)
 
     const navigate = useNavigate()

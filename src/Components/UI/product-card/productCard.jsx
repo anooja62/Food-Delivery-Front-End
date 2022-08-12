@@ -29,7 +29,7 @@ const ProductCard = (props) => {
       }))
       toast.success(' Item added to cart', {
         position: "bottom-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

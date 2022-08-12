@@ -10,27 +10,29 @@ import { cartActions } from '../store/shopping-cart/cartSlice';
 import '../styles/product-details.css'
 import axios from "../axios"
 
+
+
+
 const FoodDetails = () => {
 
 
-  const reviewNameRef = useRef()
-  const reviewDescriptionRef = useRef()
-
+  const signupNameRef = useRef()
+  const signupDescriptionRef = useRef()
 
   const handleClick = async (e) => {
-    console.log("iam inside handlieclick");
-    e.prevantDefault()
-
-    const review = {
-      name: reviewNameRef.current.value,
-      description: reviewDescriptionRef.current.value
+    
+    e.preventDefault()
+    const foodreview = {
+      name: signupNameRef.current.value,
+      description: signupDescriptionRef.current.value
     }
-
     try {
-      await axios.post("rev/review", review)
+      await axios.post("revi/review", foodreview)
+      
     } catch (err) {
       console.log(err)
     }
+
   }
 
   const [tab, setTab] = useState('desc');
@@ -61,6 +63,8 @@ const FoodDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [product])
+
+
   return <Helmet title='product-details'>
     <CommonSection title={title} />
     <section>
@@ -118,17 +122,18 @@ const FoodDetails = () => {
                     Great Product
                   </p>
                 </div>
-                <form className='form' onSubmit={handleClick}>
+                <form className="form" onSubmit={handleClick}>
                   <div className='form__group'>
-                    <input type='text' placeholder='Enter your name' name="name" required ref={reviewNameRef} />
+                    <input type='text' placeholder='Enter your name' name="name" required ref={signupNameRef} />
                   </div>
 
                   <div className='form__group'>
                     <textarea
                       rows={5}
-                      type='text' placeholder='Write your review' name="description" required ref={reviewDescriptionRef}></textarea>
+                      type='text' placeholder='Write your review' name="description" required ref={signupDescriptionRef}></textarea>
                   </div>
                   <button type="submit" className='addToCart__btn'>Submit</button>
+                 
                 </form>
 
               </div>
