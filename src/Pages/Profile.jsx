@@ -4,55 +4,37 @@ import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../Components/SideNav/Sidebar'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import ProfileCard from '../Components/Profile/ProfileCard'
-import InputGroup from 'react-bootstrap/InputGroup';
-import axios from 'axios'
-
-
+import axios from "../axios"
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-
-
 import { useCookies } from 'react-cookie'
-
-
-
-
-
 const Profile = () => {
 
-  const addressNameRef = useRef()
-  const addressPhoneRef = useRef()
-
-  const addressPincodeRef = useRef()
-  const addressAddressRef = useRef()
+  const signupNameRef = useRef()
+  const signupPhoneRef = useRef()
+  const signupPincodeRef = useRef()
+  const signupAddressRef = useRef()
 
   const handleClick = async (e) => {
-console.log("hellllllllooooooooooooo")
-    e.preventDefault()
+  
 
-    const customeraddress = {
-      name: addressNameRef.current.value,
-      phone: addressPhoneRef.current.value,
-      pincode: addressPincodeRef.current.value,
-      address: addressAddressRef.current.value,
+    e.preventDefault()
+    const shipping = {
+      name: signupNameRef.current.value,
+      phone: signupPhoneRef.current.value,
+      pincode: signupPincodeRef.current.value,
+      address: signupAddressRef.current.value
     }
     try {
-      await axios.post("add/useraddress", customeraddress)
-
+      await axios.post("addr/address", shipping)
+      
     } catch (err) {
       console.log(err)
     }
 
   }
-
-
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const [cookies, setCookie] = useCookies(null)
   const user = cookies.name
-
-
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return <Helmet title='Profile'>
@@ -88,54 +70,37 @@ console.log("hellllllllooooooooooooo")
             </button>
 
 
-            <form onSubmit={handleClick}>
+           
+             
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Enter Your Address</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <div className="form__group">
-                    <Form.Group className="mb-3" >
-                      <Form.Label>Country</Form.Label>
-                      <Form.Select disabled>
-                        <option>India</option>
-                      </Form.Select>
-                    </Form.Group>
-
-                  </div>
-
+                <form onSubmit={handleClick}>
                   <div className="form__group">
                     <label>Name</label>
-                    <input type='text' placeholder='Ex. John Doe' required ref={addressNameRef} />
+                    <input type='text' name='name' placeholder='Ex. John Doe' required ref={signupNameRef} />
                   </div>
                   <div className="form__group">
                     <label>Mobile Number</label>
-                    <InputGroup className="mb-3">
-                      <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
-                      <Form.Control
-
-                        aria-label="phonenumber"
-                        aria-describedby="basic-addon1"
-                        ref={addressPhoneRef}
-                        required
-                      />
-                    </InputGroup>
+                    <input type="tel" name='phone' required ref={signupPhoneRef} />
                   </div>
                   <div className="form__group">
                     <label>Pincode</label>
-                    <input type='text' required ref={addressPincodeRef} />
+                    <input type='text' name='pincode' required ref={signupPincodeRef} />
                   </div>
                   <div className="form__group">
                     <label>Address</label>
-                    <textarea rows='3' required ref={addressAddressRef}></textarea>
+                    <textarea rows='3' name='address' required ref={signupAddressRef}></textarea>
                   </div>
-                  <button type='submit' className='addToCart__btn' >Save My Address</button>
-                 
+                  <button type="submit" className='addToCart__btn' >Save My Address</button>
+                  </form>
                 </Modal.Body>
 
               </Modal>
-             
-            </form>
+
+           
 
           </Col>
         </Row>
