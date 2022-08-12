@@ -7,7 +7,27 @@ import ProfileCard from '../Components/Profile/ProfileCard'
 import axios from "../axios"
 import Modal from 'react-bootstrap/Modal';
 import { useCookies } from 'react-cookie'
+
+import { useFormik } from 'formik'
+import { signupSchema } from '../schemas'
+
+const initialValues = {
+  name: '',
+  phone: '',
+  pincode: '',
+  address: '',
+ 
+
+};
 const Profile = () => {
+
+  const { values, handleBlur, handleChange, errors, touched } = useFormik({
+    initialValues,
+    validationSchema: signupSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    }
+  })
 
   const signupNameRef = useRef()
   const signupPhoneRef = useRef()
@@ -80,20 +100,39 @@ const Profile = () => {
                 <form onSubmit={handleClick}>
                   <div className="form__group">
                     <label>Name</label>
-                    <input type='text' name='name' placeholder='Ex. John Doe' required ref={signupNameRef} />
+                    <div className="form__group">
+                <input type='text' placeholder='(Eg. John Doe)' name="name" required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange} />
+              </div>
+              <div className='error_container'>
+                {errors.name && touched.name && (
+                  <p className='form_error'>{errors.name}</p>
+                )}
+              </div>
                   </div>
                   <div className="form__group">
-                    <label>Mobile Number</label>
-                    <input type="tel" name='phone' required ref={signupPhoneRef} />
-                  </div>
-                  <div className="form__group">
-                    <label>Pincode</label>
-                    <input type='text' name='pincode' required ref={signupPincodeRef} />
-                  </div>
-                  <div className="form__group">
-                    <label>Address</label>
-                    <textarea rows='3' name='address' required ref={signupAddressRef}></textarea>
-                  </div>
+                <input type='tel' placeholder='Mobile Number' name="phone" required ref={signupPhoneRef} value={values.phone} onBlur={handleBlur} onChange={handleChange} />
+              </div>
+              <div className='error_container'>
+                {errors.phone && touched.phone && (
+                  <p className='form_error'>{errors.phone}</p>
+                )}
+              </div>
+              <div className="form__group">
+                <input type='text' placeholder='Pincode' name="pincode" required ref={signupPincodeRef} value={values.pincode} onBlur={handleBlur} onChange={handleChange} />
+              </div>
+              <div className='error_container'>
+                {errors.pincode && touched.pincode && (
+                  <p className='form_error'>{errors.pincode}</p>
+                )}
+              </div>
+              <div className="form__group">
+                <textarea placeholder='House name and address' name="address" required ref={signupAddressRef} value={values.address} onBlur={handleBlur} onChange={handleChange} />
+              </div>
+              <div className='error_container'>
+                {errors.address && touched.address && (
+                  <p className='form_error'>{errors.address}</p>
+                )}
+              </div>
                   <button type="submit" className='addToCart__btn' >Save My Address</button>
                   </form>
                 </Modal.Body>
