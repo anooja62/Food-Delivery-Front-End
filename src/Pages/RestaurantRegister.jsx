@@ -131,8 +131,7 @@ const RestaurantRegister = () => {
 
           </Col>
           <Col xs={6}>
-          <label>Kitchen Image</label>
-                  <input type="file" name="upload" required />
+         
 
           </Col>
         </Row>

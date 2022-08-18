@@ -48,7 +48,7 @@ const Admin = () => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col sm={8}>
+          <Col sm={9}>
             <Tab.Content>
               <Tab.Pane eventKey="#home">
              Page under construction
@@ -63,6 +63,12 @@ const Admin = () => {
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Address</th>
+                        <th>FSSAI License</th>
+                        <th>Trade License</th>
+                        <th>Fire and Safety License</th>
+                        <th>Certificate Of Environmental Clearance</th>
+                        <th>Kitchen Image</th>
+                       
                         <th>Action</th>
                       </tr>
                     </thead>
