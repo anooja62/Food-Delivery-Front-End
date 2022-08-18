@@ -62,6 +62,13 @@
 textarea:focus{
     outline: none;
 }
+.form__group label{
+    width: 100%;
+    background: transparent;
+    padding: 7px 20px;
+    border: none;
+    margin-left: 5px;
+}
 .user__name {
     font-weight: 600;
     color: #212245;

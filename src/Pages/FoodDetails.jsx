@@ -13,6 +13,7 @@ import axios from "../axios"
 
 
 
+
 const FoodDetails = () => {
 
 
@@ -20,7 +21,7 @@ const FoodDetails = () => {
   const signupDescriptionRef = useRef()
 
   const handleClick = async (e) => {
-    
+
     e.preventDefault()
     const foodreview = {
       name: signupNameRef.current.value,
@@ -29,6 +30,7 @@ const FoodDetails = () => {
     try {
       await axios.post("revi/review", foodreview)
       
+
     } catch (err) {
       console.log(err)
     }
@@ -134,6 +136,7 @@ const FoodDetails = () => {
                   </div>
                   <button type="submit" className='addToCart__btn'>Submit</button>
                  
+
                 </form>
 
               </div>
