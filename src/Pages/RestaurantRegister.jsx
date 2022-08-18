@@ -99,13 +99,13 @@ const RestaurantRegister = () => {
                 <Col xs={6}>
                   <div>
                     <label> Food Safety License (FSSAI License)</label>
-                    <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" />
+                    <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
                   </div>
                 </Col>
                 <Col xs={6}>
 
                   <label>Trade License</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" />
+                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
 
                 </Col>
               </Row>
@@ -114,12 +114,12 @@ const RestaurantRegister = () => {
                 <Col xs={6}>
 
                   <label>Fire and Safety License</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" />
+                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
 
                 </Col>
                 <Col xs={6}>
                   <label>Certificate Of Environmental Clearance</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" />
+                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
 
                 </Col>
               </Row>
@@ -127,12 +127,12 @@ const RestaurantRegister = () => {
               <Row>
           <Col xs={6}>
           <label>Kitchen Image</label>
-                  <input type="file" name="upload"  />
+                  <input type="file" name="upload" required  />
 
           </Col>
           <Col xs={6}>
           <label>Kitchen Image</label>
-                  <input type="file" name="upload"  />
+                  <input type="file" name="upload" required />
 
           </Col>
         </Row>
