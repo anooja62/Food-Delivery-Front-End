@@ -8,6 +8,7 @@ import { signupSchema } from '../schemas'
 import '../styles/formerror.css'
 import { useNavigate } from 'react-router-dom'
 import axios from ".././axios"
+
 const initialValues = {
   name: '',
   phone: '',

@@ -1,0 +1,17 @@
+
+.admincard{
+    width: 200px;
+    background: rgb(47, 131, 47);
+    height: 200px;
+}
+.admincard i {
+    font-size: 4rem;
+    color: #fff;
+}
+.admincard p {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-left: 4px;
+    padding-top: 0;
+}

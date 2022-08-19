@@ -343,6 +343,21 @@ const handleShow = () => setShow(true);
                   <p className='form_error'>{errors.cpassword}</p>
                 )}
               </div>
+              <Row>
+                <Col xs={6}>
+                  <div>
+                    <label> Driving License</label>
+                    <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
+                  </div>
+                </Col>
+                <Col xs={6}>
+
+                  <label>PAN Card</label>
+                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
+
+                </Col>
+              </Row>
+              <br></br>
               <Row >
               <Col  sm={8}> <button type="submit" className='addToCart__btn'>Signup </button></Col>
              <Col sm={4}> <Button variant="outline-success" onClick={handleClose}>Close</Button></Col>

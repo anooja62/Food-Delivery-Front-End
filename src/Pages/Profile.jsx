@@ -20,6 +20,7 @@ const initialValues = {
 
 };
 const Profile = () => {
+ 
 
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
@@ -46,6 +47,7 @@ const Profile = () => {
     }
     try {
       await axios.post("addr/address", shipping)
+    
       
     } catch (err) {
       console.log(err)
@@ -54,6 +56,8 @@ const Profile = () => {
   }
   const [cookies, setCookie] = useCookies(null)
   const user = cookies.name
+
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -82,6 +86,7 @@ const Profile = () => {
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
               <h6> No Address Found</h6>
+            
             </div>
           </Col>
           <Col md={{ span: 3, offset: 3 }}>
