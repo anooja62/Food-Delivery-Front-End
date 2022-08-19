@@ -4,8 +4,10 @@ import Topbar from '../Components/Admin/Topbar/Topbar'
 import { Container, Row, Col, ListGroup } from 'react-bootstrap'
 import Deliveryboy from '../Components/Admin/Deliveryboy/Deliveryboy'
 import Manage from '../Components/Admin/Manage/Manage'
+import Review from '../Components/Admin/Review/Review'
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
+import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { useDispatch, useSelector } from "react-redux";
 import '../styles/admin.css'
 
@@ -26,6 +28,11 @@ const Admin = () => {
   const dispatchk = useDispatch()
   useEffect(() => {
     dispatchk(getDeliveryboys());
+  }, []);
+  const foodreviewLIst = useSelector((state) => state.foodreview.list);
+  const dispatchf = useDispatch()
+  useEffect(() => {
+    dispatchf(getFoodreviews());
   }, []);
 
   return (
@@ -186,7 +193,10 @@ const Admin = () => {
                         <th>Action</th>
                       </tr>
                     </thead>
+                    {foodreviewLIst.map((u) => (
+                      <Review key={u.id} foodreview={u} />
 
+                    ))}
                   </table>
                 </div>
               </Tab.Pane>
