@@ -5,13 +5,16 @@ import { Container, Row, Col, ListGroup } from 'react-bootstrap'
 import Deliveryboy from '../Components/Admin/Deliveryboy/Deliveryboy'
 import Manage from '../Components/Admin/Manage/Manage'
 import Review from '../Components/Admin/Review/Review'
+import User from '../Components/Admin/User/User'
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
+import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import '../styles/admin.css'
 
 import Tab from 'react-bootstrap/Tab';
+import {useNavigate} from 'react-router-dom'
 
 
 
@@ -35,6 +38,18 @@ const Admin = () => {
     dispatchf(getFoodreviews());
   }, []);
 
+  const userLIst = useSelector((state) => state.user.list);
+  const dispatchu = useDispatch()
+  useEffect(() => {
+    dispatchu(getUsers());
+  }, []);
+
+  const navigate = useNavigate()
+  const handleClick = ()=> {
+    
+    navigate('/login')
+   }
+  
   return (
     <div>
 
@@ -46,11 +61,11 @@ const Admin = () => {
 
       </Container>
       <br></br>
-      <Tab.Container id="list-group-tabs-example" defaultActiveKey="#home" className='tab'>
+      <Tab.Container id="list-group-tabs-example" defaultActiveKey="#" className='tab'>
         <Row>
           <Col sm={2}>
             <ListGroup>
-              <ListGroup.Item action href="#home">
+              <ListGroup.Item action href="#">
                 <i class="ri-home-2-line"></i>  Home
 
               </ListGroup.Item>
@@ -70,13 +85,17 @@ const Admin = () => {
                 <i class="ri-star-line"></i> Reviews
 
               </ListGroup.Item>
+              <ListGroup.Item action href="#logout">
+              <i class="ri-logout-box-line" onClick={handleClick} ></i> Logout
+
+              </ListGroup.Item>
 
 
             </ListGroup>
           </Col>
           <Col sm={9}>
             <Tab.Content>
-              <Tab.Pane eventKey="#home">
+              <Tab.Pane eventKey="#">
                <div>
                 <div className="row mb-3">
                 <div className="col-xl-3 col-sm-6 py-2">
@@ -122,12 +141,18 @@ const Admin = () => {
                     <thead>
                       <tr>
                         <th> Name</th>
+                        <th>Phone Number</th>  
                         <th>Email</th>
-                        <th>Phone Number</th>              
+                                   
                         <th>Action</th>
                       </tr>
                     </thead>
+                   
 
+                    {userLIst.map((u) => (
+                      <User key={u.id} user={u} />
+
+                    ))}
                   </table>
                 </div>
               </Tab.Pane>
@@ -136,7 +161,7 @@ const Admin = () => {
                   <table className='table table-bordered'>
                     <thead>
                       <tr>
-                        <th>SI NO.</th>
+                       
                         <th>Restaurant Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
@@ -200,6 +225,7 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
+           
             </Tab.Content>
           </Col>
         </Row>

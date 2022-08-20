@@ -16,7 +16,7 @@ export const approveFoodreview = createAsyncThunk(
 );
 
 const reviewSlice = createSlice({
-  name: "restaurants",
+  name: "reviews",
   initialState: {
     list: [],
     status: null,

@@ -14,8 +14,7 @@ import {
     dispatch(approveRestaurant(id));
   };
  
-  const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  
 
  
   
@@ -24,7 +23,7 @@ import {
  
  <tbody>
             <tr> 
-            <td className='text-center'>{date}</td>
+            
     <td className='text-center'>{restaurant.name}</td>
     <td className='text-center'>{restaurant.email}</td>
     <td className='text-center'>{restaurant.phone}</td>
