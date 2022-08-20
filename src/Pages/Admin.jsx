@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import Form from 'react-bootstrap/Form';
 import Topbar from '../Components/Admin/Topbar/Topbar'
 import { Container, Row, Col, ListGroup } from 'react-bootstrap'
 import Deliveryboy from '../Components/Admin/Deliveryboy/Deliveryboy'
@@ -11,16 +11,71 @@ import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import axios from ".././axios"
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import emailjs from '@emailjs/browser';
 
-import emailjs from '@emailjs/browser'
 
+function MyVerticallyCenteredModal(props) {
+
+  const handleClick =async (e) => {
+
+   
+
+    e.preventDefault()
+    console.log("hello ")
+
+   emailjs.sendForm("service_pp7cxbu","template_jx2i0sl",e.target,"3HARonvI0a5SrbOi6")
+
+}
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <h1>Add restaurant for online ordering</h1>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        
+      <Form onSubmit={handleClick}>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" name='to' />
+        <Form.Text className="text-muted">
+         Double check restaurant email for avoiding errors
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" name='password'/>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control type="password" placeholder="Confirm Password" naem='Confirm Password'/>
+      </Form.Group>
+      
+      <Button variant="primary" type="submit" > Submit
+      </Button>
+
+    </Form>
+      </Modal.Body>
+   
+    </Modal>
+  );
+}
 
 const Admin = () => {
 
-
+  const [modalShow, setModalShow] = React.useState(false);
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch()
   useEffect(() => {
@@ -43,23 +98,6 @@ const Admin = () => {
   useEffect(() => {
     dispatchu(getUsers());
   }, []);
-
-
-
-
-  
-  const handleClick =async (e) => {
-
-   
-
-      e.preventDefault()
-      console.log("hello ")
-
-     emailjs.sendForm("service_pp7cxbu","template_jx2i0sl",e.target,"3HARonvI0a5SrbOi6")
-
-  }
-
-
 
 
 
@@ -112,13 +150,7 @@ const Admin = () => {
             <Tab.Content>
               <Tab.Pane eventKey="#">
                 <div>
-                  <form onSubmit={handleClick}>
-                    From: <input type="email" name="from" /><br></br>
-                    To: <input type="email" name="to" /><br></br>
-                    Subject: <input type="text" name="subject" /><br></br>
-                    Message:<br></br> <textarea  name="message" ></textarea> <br></br>
-                  <input type="submit" value="Send" />
-                </form>
+                 
                 <div className="row mb-3">
                   <div className="col-xl-3 col-sm-6 py-2">
                     <div className="card bg-success text-white h-100">
@@ -194,6 +226,18 @@ const Admin = () => {
             </Tab.Pane>
             <Tab.Pane eventKey="#restaurant">
               <div>
+              
+
+      <Fab color="primary" aria-label="add">
+  <AddIcon onClick={() => setModalShow(true)}/>
+</Fab>
+<br></br>
+
+      <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+      <br></br>
                 <table className='table table-bordered'>
                   <thead>
                     <tr>
@@ -206,7 +250,7 @@ const Admin = () => {
                       <th>Trade License</th>
                       <th>Fire and Safety License</th>
                       <th>Certificate Of Environmental Clearance</th>
-                      <th>Kitchen Image</th>
+                      
 
                       <th>Action</th>
                     </tr>
@@ -222,6 +266,7 @@ const Admin = () => {
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="#deliveryboy">
+              
               <div>
                 <table className='table table-bordered'>
                   <thead>

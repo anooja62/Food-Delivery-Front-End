@@ -104,7 +104,7 @@ const RestaurantRegister = () => {
 
 
   return <Helmet title='Restaurant-Register'>
-     <Paper elevation={3} />
+    
     <CommonSection title='Register your resturant on Deliorder' />
     <section>
       <Container>
@@ -217,18 +217,8 @@ const RestaurantRegister = () => {
 
                 </Col>
               </Row>
-              <br></br>
-              <Row>
-                <Col xs={6}>
-                  <label>Kitchen Image</label>
-                  <input type="file" name="upload" required />
-
-                </Col>
-                <Col xs={6}>
-
-
-                </Col>
-              </Row>
+             
+             
               <br></br>
               <div className='text-center'>
                 <button className='addToCart__btn ' disabled={errors.name || errors.phone || errors.email ? true : false}>Register</button>

@@ -1,8 +1,10 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/Button';
+
 import { useDispatch } from "react-redux";
 
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   approveRestaurant,
 } from "../../../store/shopping-cart/restaurantSlice";
@@ -29,8 +31,12 @@ import {
     <td className='text-center'>{restaurant.phone}</td>
     <td className='text-center'>{restaurant.address}</td>
     <td className='text-center'> 
-    <Button variant="success" onClick={() => handleApprove(restaurant._id)}>Approve</Button>
    
+   
+
+<IconButton aria-label="delete" size="large">
+  <DeleteIcon fontSize="inherit" onClick={() => handleApprove(restaurant._id)} />
+</IconButton>
     
     </td>
     </tr>
