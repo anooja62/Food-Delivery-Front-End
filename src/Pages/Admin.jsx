@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Topbar from '../Components/Admin/Topbar/Topbar'
 import { Container, Row, Col, ListGroup } from 'react-bootstrap'
@@ -11,11 +11,11 @@ import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import '../styles/admin.css'
+import axios from ".././axios"
 
 import Tab from 'react-bootstrap/Tab';
-import {useNavigate} from 'react-router-dom'
 
+import emailjs from '@emailjs/browser'
 
 
 const Admin = () => {
@@ -44,13 +44,27 @@ const Admin = () => {
     dispatchu(getUsers());
   }, []);
 
-  const navigate = useNavigate()
-  const handleClick = ()=> {
-    
-    navigate('/login')
-   }
+
+
+
   
+  const handleClick =async (e) => {
+
+   
+
+      e.preventDefault()
+      console.log("hello ")
+
+     emailjs.sendForm("service_pp7cxbu","template_jx2i0sl",e.target,"3HARonvI0a5SrbOi6")
+
+  }
+
+
+
+
+
   return (
+
     <div>
 
       <Container fluid>
@@ -86,152 +100,174 @@ const Admin = () => {
 
               </ListGroup.Item>
               <ListGroup.Item action href="#logout">
-              <i class="ri-logout-box-line" onClick={handleClick} ></i> Logout
+                <i class="ri-logout-box-line"  ></i> Logout
 
               </ListGroup.Item>
 
 
             </ListGroup>
           </Col>
+
           <Col sm={9}>
             <Tab.Content>
               <Tab.Pane eventKey="#">
-               <div>
+                <div>
+                  <form onSubmit={handleClick}>
+                    From: <input type="email" name="from" /><br></br>
+                    To: <input type="email" name="to" /><br></br>
+                    Subject: <input type="text" name="subject" /><br></br>
+                    Message:<br></br> <textarea  name="message" ></textarea> <br></br>
+                  <input type="submit" value="Send" />
+                </form>
                 <div className="row mb-3">
-                <div className="col-xl-3 col-sm-6 py-2">
-                <div className="card bg-success text-white h-100">
-                    <div className="card-body bg-success" style={{backgroundColor:"#57b960"}}>
+                  <div className="col-xl-3 col-sm-6 py-2">
+                    <div className="card bg-success text-white h-100">
+                      <div className="card-body bg-success" >
                         <div className="rotate">
-                        <i class="ri-user-3-fill"></i>
+                          <i class="ri-user-3-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Users</h6>
-                        <h1 className="display-4" style={{color:"#fff"}}>134</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>134</h1>
+                      </div>
                     </div>
-                </div>
-            </div>
-                
-            <div className="col-xl-3 col-sm-6 py-2">
-                <div className="card text-white bg-danger h-100">
-                    <div className="card-body bg-danger">
+                  </div>
+                  <div className="col-xl-3 col-sm-6 py-2">
+                    <div className="card bg-orange text-white h-100">
+                      <div className="card-body bg-info" >
                         <div className="rotate">
-                        <i class="ri-store-2-fill"></i>
+                          <i class="ri-shopping-cart-2-fill"></i>
+                        </div>
+                        <h6 className="text-uppercase">Orders</h6>
+                        <h1 className="display-4" style={{ color: "#fff" }}>13</h1>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-xl-3 col-sm-6 py-2">
+                    <div className="card text-white bg-danger h-100">
+                      <div className="card-body bg-danger">
+                        <div className="rotate">
+                          <i class="ri-store-2-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Restaurants</h6>
-                        <h1 className="display-4" style={{color:"#fff"}}>5</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>5</h1>
+                      </div>
                     </div>
-                </div>
-            </div>
-            <div className="col-xl-3 col-sm-6 py-2">
-                <div className="card text-white bg-warning h-100">
-                    <div className="card-body">
+                  </div>
+                  <div className="col-xl-3 col-sm-6 py-2">
+                    <div className="card text-white bg-warning h-100">
+                      <div className="card-body">
                         <div className="rotate">
-                        <i class="ri-e-bike-2-fill"></i>
+                          <i class="ri-e-bike-2-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Delivery Staff</h6>
-                        <h1 className="display-4" style={{color:"#fff"}}>5</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>5</h1>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-                </div>
-               </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#users">
+
+
+              </div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="#users">
+
               <div>
-                  <table className='table table-bordered'>
-                    <thead>
-                      <tr>
-                        <th> Name</th>
-                        <th>Phone Number</th>  
-                        <th>Email</th>
-                                   
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                   
+                <table className='table table-bordered'>
+                  <thead>
+                    <tr>
+                      <th> Name</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
 
-                    {userLIst.map((u) => (
-                      <User key={u.id} user={u} />
-
-                    ))}
-                  </table>
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#restaurant">
-                <div>
-                  <table className='table table-bordered'>
-                    <thead>
-                      <tr>
-                       
-                        <th>Restaurant Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>FSSAI License</th>
-                        <th>Trade License</th>
-                        <th>Fire and Safety License</th>
-                        <th>Certificate Of Environmental Clearance</th>
-                        <th>Kitchen Image</th>
-
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-
-                    {restaurantLIst.map((u) => (
-                      <Manage key={u.id} restaurant={u} />
-
-                    ))}
+                      <th>Action</th>
+                    </tr>
+                  </thead>
 
 
-                  </table>
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#deliveryboy">
-                <div>
-                  <table className='table table-bordered'>
-                    <thead>
-                      <tr>
+                  {userLIst.map((u) => (
+                    <User key={u.id} user={u} />
 
-                        <th> Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>City</th>
-                        <th> License</th>
-                        <th>PAN Card</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    {deliveryboyLIst.map((u) => (
-                      <Deliveryboy key={u.id} deliveryboy={u} />
+                  ))}
+                </table>
+              </div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="#restaurant">
+              <div>
+                <table className='table table-bordered'>
+                  <thead>
+                    <tr>
 
-                    ))}
-                  </table>
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#reviews">
-                <div>
-                  <table className='table table-bordered'>
-                    <thead>
-                      <tr>
+                      <th>Restaurant Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Address</th>
+                      <th>FSSAI License</th>
+                      <th>Trade License</th>
+                      <th>Fire and Safety License</th>
+                      <th>Certificate Of Environmental Clearance</th>
+                      <th>Kitchen Image</th>
 
-                        <th> Name</th>
-                        <th>Review</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    {foodreviewLIst.map((u) => (
-                      <Review key={u.id} foodreview={u} />
+                      <th>Action</th>
+                    </tr>
+                  </thead>
 
-                    ))}
-                  </table>
-                </div>
-              </Tab.Pane>
-           
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+                  {restaurantLIst.map((u) => (
+                    <Manage key={u.id} restaurant={u} />
 
-    </div>
+                  ))}
+
+
+                </table>
+              </div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="#deliveryboy">
+              <div>
+                <table className='table table-bordered'>
+                  <thead>
+                    <tr>
+
+                      <th> Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>City</th>
+                      <th> License</th>
+                      <th>PAN Card</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  {deliveryboyLIst.map((u) => (
+                    <Deliveryboy key={u.id} deliveryboy={u} />
+
+                  ))}
+                </table>
+              </div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="#reviews">
+              <div>
+                <table className='table table-bordered'>
+                  <thead>
+                    <tr>
+
+                      <th> Name</th>
+                      <th>Review</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  {foodreviewLIst.map((u) => (
+                    <Review key={u.id} foodreview={u} />
+
+                  ))}
+                </table>
+              </div>
+            </Tab.Pane>
+
+          </Tab.Content>
+        </Col>
+      </Row>
+    </Tab.Container>
+
+    </div >
 
   )
 
