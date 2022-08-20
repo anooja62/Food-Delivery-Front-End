@@ -6,14 +6,14 @@ import { useDispatch } from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-  approveRestaurant,
+  rejectRestaurant,
 } from "../../../store/shopping-cart/restaurantSlice";
 
 
  const Manage = ({restaurant}) => {
   const dispatch = useDispatch();
-  const handleApprove = async (id) => {
-    dispatch(approveRestaurant(id));
+  const handleReject = async (id) => {
+    dispatch(rejectRestaurant(id));
   };
  
   
@@ -35,7 +35,7 @@ import {
    
 
 <IconButton aria-label="delete" size="large">
-  <DeleteIcon fontSize="inherit" onClick={() => handleApprove(restaurant._id)} />
+  <DeleteIcon fontSize="inherit" onClick={() => handleReject(restaurant._id)} />
 </IconButton>
     
     </td>

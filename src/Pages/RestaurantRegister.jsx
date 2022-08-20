@@ -225,7 +225,7 @@ const RestaurantRegister = () => {
               </div>
             </form>
             <div className='text-center'>
-              <Link to='/login'>Already registered on Deliorder ? Login here</Link>
+              <Link to='/restaurantlogin'>Already registered on Deliorder ? Login here</Link>
             </div>
 
           </Col>

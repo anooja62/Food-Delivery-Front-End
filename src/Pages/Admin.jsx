@@ -17,16 +17,16 @@ import Tab from 'react-bootstrap/Tab';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import emailjs from '@emailjs/browser';
-
+import {useNavigate} from "react-router-dom"
 
 function MyVerticallyCenteredModal(props) {
-
+const navigate = useNavigate()
   const handleClick =async (e) => {
 
-   
+   console.log(e.target.value)
 
     e.preventDefault()
-    console.log("hello ")
+   
 
    emailjs.sendForm("service_pp7cxbu","template_jx2i0sl",e.target,"3HARonvI0a5SrbOi6")
 
@@ -75,31 +75,25 @@ function MyVerticallyCenteredModal(props) {
 
 const Admin = () => {
 
+  const navigate = useNavigate()
   const [modalShow, setModalShow] = React.useState(false);
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getRestaurants());
+    dispatch(getDeliveryboys());
+    dispatch(getFoodreviews());
+    dispatch(getUsers());
   }, []);
 
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
-  const dispatchk = useDispatch()
-  useEffect(() => {
-    dispatchk(getDeliveryboys());
-  }, []);
   const foodreviewLIst = useSelector((state) => state.foodreview.list);
-  const dispatchf = useDispatch()
-  useEffect(() => {
-    dispatchf(getFoodreviews());
-  }, []);
-
   const userLIst = useSelector((state) => state.user.list);
-  const dispatchu = useDispatch()
-  useEffect(() => {
-    dispatchu(getUsers());
-  }, []);
 
 
+const handleLogout=() => {
+navigate('/login')
+}
 
   return (
 
@@ -137,8 +131,8 @@ const Admin = () => {
                 <i class="ri-star-line"></i> Reviews
 
               </ListGroup.Item>
-              <ListGroup.Item action href="#logout">
-                <i class="ri-logout-box-line"  ></i> Logout
+              <ListGroup.Item action href="#logout" onClick={()=>handleLogout()}>
+                <i class="ri-logout-box-line" />  Logout
 
               </ListGroup.Item>
 
@@ -159,7 +153,7 @@ const Admin = () => {
                           <i class="ri-user-3-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Users</h6>
-                        <h1 className="display-4" style={{ color: "#fff" }}>134</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>{userLIst.length}</h1>
                       </div>
                     </div>
                   </div>
@@ -318,3 +312,5 @@ const Admin = () => {
 
 }
 export default Admin
+
+//Math.random().toString(36).slice(-8)

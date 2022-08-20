@@ -21,7 +21,14 @@ const initialValues = {
 };
 const Profile = () => {
  
+  const [cookies, setCookie] = useCookies(null)
+  const userId = cookies.userId
+  const user = cookies.user
 
+  const [data,setData] =useState([])
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
     validationSchema: signupSchema,
@@ -43,24 +50,22 @@ const Profile = () => {
       name: signupNameRef.current.value,
       phone: signupPhoneRef.current.value,
       pincode: signupPincodeRef.current.value,
-      address: signupAddressRef.current.value
+      address: signupAddressRef.current.value,
+      userId:userId
     }
     try {
-      await axios.post("addr/address", shipping)
-    
+      const data = await axios.post("addr/address", shipping)
+      setData(data.data)
+      setShow(false)
+      
+      
       
     } catch (err) {
       console.log(err)
     }
 
   }
-  const [cookies, setCookie] = useCookies(null)
-  const user = cookies.name
 
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   return <Helmet title='Profile'>
     <CommonSection title={user} />
 
@@ -83,12 +88,24 @@ const Profile = () => {
     <section>
       <Container>
         <Row>
+         { data.length == 0 && 
+         <>
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
               <h6> No Address Found</h6>
             
             </div>
           </Col>
+          </>}
+          { data.length !== 0 && 
+         <>
+          <Col md={{ span: 3, offset: 3 }}>
+            <div className='profilecard'>
+              <h6> {data.name}</h6>
+            
+            </div>
+          </Col>
+          </>}
           <Col md={{ span: 3, offset: 3 }}>
             <button className='addToCart__btn' onClick={handleShow}><span><i class="ri-edit-box-line"></i> Add New Address</span>
 
