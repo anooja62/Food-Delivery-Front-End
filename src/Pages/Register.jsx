@@ -5,7 +5,7 @@ import Helmet from '../Components/Helmet/Helmet'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from ".././axios"
 import '../styles/formerror.css'
-
+import Paper from '@mui/material/Paper';
 import { useFormik } from 'formik'
 import { signupSchema } from '../schemas'
 
@@ -78,10 +78,12 @@ const Register = () => {
     <section>
       <Container>
         <Row>
-          <Col lg='6' md='6' sm='12' className='m-auto text-center'>
-
-            <form className="form mb-5" onSubmit={handleClick}>
-              <div className="form__group">
+          <Col lg='6' md='6' sm='12' className='m-auto '>
+          <Paper elevation={3} >
+            <br></br>
+            <form  onSubmit={handleClick}>
+              <div className="new__register">
+                <label>Name</label>
                 <input type='text' placeholder='Name   (Eg. John Doe)' name="name" required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -89,7 +91,8 @@ const Register = () => {
                   <p className='form_error'>{errors.name}</p>
                 )}
               </div>
-              <div className="form__group">
+              <div className="new__register">
+              <label>Mobile Number</label>
                 <input type='tel' placeholder='Mobile Number' name="phone" required ref={signupPhoneRef} value={values.phone} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -98,7 +101,8 @@ const Register = () => {
                 )}
               </div>
 
-              <div className="form__group">
+              <div className="new__register">
+              <label>Email</label>
                 <input type='email' placeholder='Email' name="email" required ref={signupEmailRef} value={values.email} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -107,7 +111,8 @@ const Register = () => {
                 )}
               </div>
 
-              <div className="form__group">
+              <div className="new__register">
+              <label>Password</label>
                 <input type='password' placeholder='Password' name="password" required ref={signupPasswordRef} value={values.password} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -115,7 +120,8 @@ const Register = () => {
                   <p className='form_error'>{errors.password}</p>
                 )}
               </div>
-              <div className="form__group">
+              <div className="new__register">
+              <label>Confirm password</label>
                 <input type='password' placeholder='Confirm Password' name="cpassword" required ref={signupConfirmPasswordRef} value={values.cpassword} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -123,11 +129,17 @@ const Register = () => {
                   <p className='form_error'>{errors.cpassword}</p>
                 )}
               </div>
-
+              <br></br>
+            <div className='text-center'>
               <button type="submit" className='addToCart__btn' disabled={errors.name || errors.phone || errors.email ? true : false}>Register</button>
-
+              </div>
+              <br></br>
             </form>
+            </Paper>
+            <br></br>
+            <div className='text-center'>
             <Link to='/login'>Already have an account ? Login here</Link>
+            </div>
 
           </Col>
 

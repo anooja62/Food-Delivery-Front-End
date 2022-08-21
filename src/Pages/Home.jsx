@@ -326,7 +326,7 @@ const handleShow = () => setShow(true);
            
            
           
-              <Row>
+              {/*<Row>
                 <Col xs={6}>
                   <div>
                     <label> Driving License</label>
@@ -339,7 +339,7 @@ const handleShow = () => setShow(true);
                   <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
 
                 </Col>
-              </Row>
+                </Row>*/}
               <br></br>
               <Row >
               <Col  sm={8}> <button type="submit" className='addToCart__btn'>Signup </button></Col>

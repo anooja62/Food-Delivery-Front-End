@@ -10,7 +10,7 @@ import { cartActions } from '../store/shopping-cart/cartSlice';
 import '../styles/product-details.css'
 import axios from "../axios"
 
-
+import Paper from '@mui/material/Paper';
 
 
 
@@ -109,7 +109,7 @@ const FoodDetails = () => {
                   <p className="user__name mb-0">
                     John Doe
                   </p>
-                  <p className='user__email'>john@gmail.com</p>
+                 
                   <p className='feedback__text'>
                     Great Product
                   </p>
@@ -119,26 +119,34 @@ const FoodDetails = () => {
                   <p className="user__name mb-0">
                     John Doe
                   </p>
-                  <p className='user__email'>john@gmail.com</p>
+                 
                   <p className='feedback__text'>
                     Great Product
                   </p>
                 </div>
-                <form className="form" onSubmit={handleClick}>
-                  <div className='form__group'>
+                <Col lg='6' md='6' sm='12' className='m-auto '>
+                <Paper elevation={3} >
+                <br></br>
+                <form  onSubmit={handleClick}>
+                  <div className='new__register'>
+                    <label>Your name</label>
                     <input type='text' placeholder='Enter your name' name="name" required ref={signupNameRef} />
                   </div>
 
-                  <div className='form__group'>
+                  <div className='new__register'>
+                    <label>Your review</label>
                     <textarea
-                      rows={5}
+                      rows={3}
                       type='text' placeholder='Write your review' name="description" required ref={signupDescriptionRef}></textarea>
                   </div>
+                  <div className='text-center'>
                   <button type="submit" className='addToCart__btn'>Submit</button>
-                 
+                  </div>
 
                 </form>
-
+                <br></br>
+                </Paper>
+                </Col>
               </div>
             }
           </Col>

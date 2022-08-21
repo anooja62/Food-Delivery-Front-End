@@ -1,9 +1,8 @@
 import React from "react";
 import emailjs from "@emailjs/browser";
-import { Form } from "react-bootstrap";
+import { Form,Modal,Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { rejectRestaurant } from "../../../store/shopping-cart/restaurantSlice";

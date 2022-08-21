@@ -1,4 +1,29 @@
 .form_error{
     color: red;
     font-weight: 100;
+    text-align: center;
+}
+.new__register input {
+   width: 90%;
+    background: transparent;
+    padding: 7px 20px;
+    border: 1px solid #ff81034c;
+    margin-left: 40px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.new__register textarea {
+    width: 80%;
+    background: transparent;
+    padding: 7px 20px;
+    border: 1px solid #ff81034c;
+    margin-left: 40px;
+    margin-top: 10px;
+}
+.new__register label{
+   
+    
+    margin-left: 40px;
+    margin-top: 10px;
+    font-weight: 600;
 }

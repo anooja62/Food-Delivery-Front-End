@@ -10,7 +10,7 @@ export const getShippings = createAsyncThunk(
 export const deleteShipping = createAsyncThunk(
     "addr/allShippings",
   async (id) => {
-    const response = await axios.put(`/addre/delete/${id}`);
+    const response = await axios.put(`/addr/delete/${id}`);
     return response.data;
   }
 );

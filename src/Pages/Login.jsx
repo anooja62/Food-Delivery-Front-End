@@ -10,6 +10,7 @@ import { auth,provider } from "./firebase";
 import {Link} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
 import '../styles/login.css'
+import Paper from '@mui/material/Paper';
 const Login = ()=> {
   const [cookies, setCookie, removeCookie] = useCookies(null)
  const [error, setError] = useState("")
@@ -86,24 +87,31 @@ navigate('/home')
             
             </Row>
               <Row>
-          <Col lg='6' md='6' sm='12' className='m-auto text-center'>
+          <Col lg='6' md='6' sm='12' className='m-auto '>
          
-            
-            <form className="form mb-5" onSubmit={handleClick}>
-              <div className="form__group">
+          <Paper elevation={3} >
+            <br></br>
+            <form  onSubmit={handleClick}>
+              <div className="new__register">
+                <label>Email</label>
                 <input type='email' placeholder='Email' required ref={loginEmailRef}/>
               </div>
              
-              <div className="form__group">
+              <div className="new__register">
+                <label>Password</label>
               <input type='password' placeholder='Password' required ref={loginPasswordRef}/>
               </div>
-              <p className='error__txt'>{error}</p>
-              <div> <button type='submit' className='addToCart__btn'>Login</button></div>
-             
+              <p className='error__txt text-center'>{error}</p>
+              <div className='text-center'> <button type='submit' className='addToCart__btn '>Login</button></div>
+             <br></br>
              
             </form>
-          
-           <Link to='/register'>New to Deliorder ? Create an account</Link>
+            </Paper>
+            <br></br>
+          <div className='text-center'>
+          <Link to='/register'>New to Deliorder ? Create an account</Link>
+          </div>
+           
            
           </Col>
          

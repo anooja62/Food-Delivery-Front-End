@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import CommonSection from '../Components/UI/common-section/CommonSection'
 import Helmet from '../Components/Helmet/Helmet'
-import { Link } from 'react-router-dom'
+
 import { useFormik } from 'formik'
 import { signupSchema } from '../schemas'
 import '../styles/formerror.css'
@@ -27,7 +27,7 @@ const steps = [
   {
     label: 'Upload documents for verification',
     description:
-      'FSSAI license copy,Trade License,Fire and Safety License,Certificate Of Environmental Clearance',
+      'FSSAI license copy',
   },
   {
     label: 'Register for online ordering',
@@ -155,10 +155,13 @@ const RestaurantRegister = () => {
           </Box>
 </Col>
           <Col sm={8} >
-
-            <form className="form mb-5" onSubmit={handleClick}>
-              <h6 className='text-center'>Registeration</h6>
-              <div className="form__group">
+          <h1 className='text-center'>Restaurant Information</h1>
+          <Paper elevation={3} >
+  
+            <form onSubmit={handleClick}>
+              
+              <div className='new__register'>
+              <label> Restaurant Name</label>
                 <input type='text' placeholder='Restaurant name' name='name' required ref={signupNameRef} value={values.name} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -166,7 +169,8 @@ const RestaurantRegister = () => {
                   <p className='form_error text-center'>{errors.name}</p>
                 )}
               </div>
-              <div className="form__group">
+              <div className="new__register">
+              <label> Restaurant Phone number</label>
                 <input type='tel' placeholder='Phone' required ref={signupPhoneRef} name='phone' value={values.phone} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -174,7 +178,8 @@ const RestaurantRegister = () => {
                   <p className='form_error'>{errors.phone}</p>
                 )}
               </div>
-              <div className="form__group">
+              <div className="new__register">
+              <label>Email ID</label>
                 <input type='email' placeholder='Email' name='email' required ref={signupEmailRef} value={values.email} onBlur={handleBlur} onChange={handleChange} />
               </div>
               <div className='error_container'>
@@ -182,55 +187,31 @@ const RestaurantRegister = () => {
                   <p className='form_error'>{errors.email}</p>
                 )}
               </div>
-              <div className="form__group">
-                <textarea rows='5' placeholder='Address' required ref={signupAddressRef}></textarea>
+              <div className="new__register">
+              <label> Restaurant Address</label>
+                <textarea rows='3' placeholder='Address' required ref={signupAddressRef}></textarea>
               </div>
-              <h6 className='text-center'> Upload documents for verification <i class="ri-upload-2-line"></i></h6>
-              <br></br>
-              <Row>
-                <Col xs={6}>
-                  <div>
+            
+             
+             
+                  {/*<div className='new__register'>
                     <label> Food Safety License (FSSAI License)</label>
+                    
+                    
                     <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-                  </div>
-                </Col>
-                <Col xs={6}>
-
-                  <label>Trade License</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-
-                </Col>
-              </Row>
-              <br></br>
-              <Row>
-                <Col xs={6}>
-
-                  <label>Fire and Safety License</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-
-                </Col>
-                <Col xs={6}>
-                  <label>Certificate Of Environmental Clearance</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-
-                </Col>
-              </Row>
-             
-             
-              <br></br>
+                  </div>*/}
+                
+                  <br></br>
+           
               <div className='text-center'>
                 <button className='addToCart__btn ' disabled={errors.name || errors.phone || errors.email ? true : false}>Register</button>
               </div>
+             
             </form>
-            <div className='text-center'>
-              <Link to='/login'>Already registered on Deliorder ? Login here</Link>
-            </div>
-
-          </Col>
-
-
-        </Row>
-
+            <br></br>       
+</Paper>
+</Col>
+</Row>
       </Container>
     </section>
   </Helmet>
