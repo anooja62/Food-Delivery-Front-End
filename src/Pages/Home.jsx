@@ -86,17 +86,13 @@ const handleClick = async (e) => {
 
   e.preventDefault()
 
-  if (signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value) {
-
-
-
-  } else {
+ 
     const deliveryboy = {
       name: signupNameRef.current.value,
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
       city: signupCityRef.current.value,
-      password: signupPasswordRef.current.value
+    
 
     } 
     try {
@@ -105,7 +101,7 @@ const handleClick = async (e) => {
     } catch (err) {
       console.log(err)
     }
-  }
+  
 
 }
 
@@ -327,22 +323,9 @@ const handleShow = () => setShow(true);
               <div className="form__group">
                 <input type='text' placeholder='City' name="city" required ref={signupCityRef} value={values.city} onBlur={handleBlur} onChange={handleChange} />
               </div>
-              <div className="form__group">
-                <input type='password' placeholder='Password' name="password" required ref={signupPasswordRef} value={values.password} onBlur={handleBlur} onChange={handleChange} />
-              </div>
-              <div className='error_container'>
-                {errors.password && touched.password && (
-                  <p className='form_error'>{errors.password}</p>
-                )}
-              </div>
-              <div className="form__group">
-                <input type='password' placeholder='Confirm Password' name="cpassword" required ref={signupConfirmPasswordRef} value={values.cpassword} onBlur={handleBlur} onChange={handleChange} />
-              </div>
-              <div className='error_container'>
-                {errors.cpassword && touched.cpassword && (
-                  <p className='form_error'>{errors.cpassword}</p>
-                )}
-              </div>
+           
+           
+          
               <Row>
                 <Col xs={6}>
                   <div>

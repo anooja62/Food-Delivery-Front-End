@@ -59,9 +59,7 @@ const RestaurantRegister = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+ 
 
 
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
@@ -225,7 +223,7 @@ const RestaurantRegister = () => {
               </div>
             </form>
             <div className='text-center'>
-              <Link to='/restaurantlogin'>Already registered on Deliorder ? Login here</Link>
+              <Link to='/login'>Already registered on Deliorder ? Login here</Link>
             </div>
 
           </Col>

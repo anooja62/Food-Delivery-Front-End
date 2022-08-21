@@ -7,10 +7,10 @@ export const getDeliveryboys = createAsyncThunk(
     return response.data;
   }
 );
-export const approveDeliveryboy = createAsyncThunk(
+export const rejectDeliveryboy = createAsyncThunk(
   "deli/allDeliveryboys",
   async (id) => {
-    const response = await axios.put(`/deli/approve/${id}`);
+    const response = await axios.put(`/deli/reject/${id}`);
     return response.data;
   }
 );
@@ -32,14 +32,14 @@ const deliverySlice = createSlice({
     [getDeliveryboys.rejected]: (state, action) => {
       state.status = "failed";
     },
-    [approveDeliveryboy.pending]: (state, action) => {
+    [rejectDeliveryboy.pending]: (state, action) => {
       state.status = "loading";
     },
-    [approveDeliveryboy.fulfilled]: (state, { payload }) => {
+    [rejectDeliveryboy.fulfilled]: (state, { payload }) => {
       state.list = payload;
       state.status = "success";
     },
-    [approveDeliveryboy.rejected]: (state, action) => {
+    [rejectDeliveryboy.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

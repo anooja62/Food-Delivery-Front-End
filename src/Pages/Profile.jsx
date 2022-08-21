@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef,useEffect } from 'react'
 import Helmet from '../Components/Helmet/Helmet'
 import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../Components/SideNav/Sidebar'
@@ -7,9 +7,11 @@ import ProfileCard from '../Components/Profile/ProfileCard'
 import axios from "../axios"
 import Modal from 'react-bootstrap/Modal';
 import { useCookies } from 'react-cookie'
-
+import Address from '../Components/UI/Address/Address'
+import { getShippings } from "../store/shopping-cart/addressSlice";
 import { useFormik } from 'formik'
 import { signupSchema } from '../schemas'
+import { useDispatch, useSelector } from "react-redux";
 
 const initialValues = {
   name: '',
@@ -65,6 +67,12 @@ const Profile = () => {
     }
 
   }
+  const shippingLIst = useSelector((state) => state.restaurant.list);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getShippings());
+   
+  }, []);
 
   return <Helmet title='Profile'>
     <CommonSection title={user} />
@@ -88,7 +96,7 @@ const Profile = () => {
     <section>
       <Container>
         <Row>
-         { data.length == 0 && 
+         { data.length === 0 && 
          <>
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
@@ -101,11 +109,25 @@ const Profile = () => {
          <>
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
-              <h6> {data.name}</h6>
-            
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+
+            {shippingLIst.map((u) => (
+                    <Address key={u.id} shipping={u} />
+
+                  ))}
+                  
             </div>
+          
           </Col>
           </>}
+
+          
+         
+
+          
           <Col md={{ span: 3, offset: 3 }}>
             <button className='addToCart__btn' onClick={handleShow}><span><i class="ri-edit-box-line"></i> Add New Address</span>
 

@@ -11,72 +11,18 @@ import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 import Tab from 'react-bootstrap/Tab';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import emailjs from '@emailjs/browser';
+
 import {useNavigate} from "react-router-dom"
+import { useCookies } from 'react-cookie'
 
-function MyVerticallyCenteredModal(props) {
-const navigate = useNavigate()
-  const handleClick =async (e) => {
 
-   console.log(e.target.value)
-
-    e.preventDefault()
-   
-
-   emailjs.sendForm("service_pp7cxbu","template_jx2i0sl",e.target,"3HARonvI0a5SrbOi6")
-
-}
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <h1>Add restaurant for online ordering</h1>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        
-      <Form onSubmit={handleClick}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" name='to' />
-        <Form.Text className="text-muted">
-         Double check restaurant email for avoiding errors
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name='password'/>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control type="password" placeholder="Confirm Password" naem='Confirm Password'/>
-      </Form.Group>
-      
-      <Button variant="primary" type="submit" > Submit
-      </Button>
-
-    </Form>
-      </Modal.Body>
-   
-    </Modal>
-  );
-}
 
 const Admin = () => {
 
   const navigate = useNavigate()
-  const [modalShow, setModalShow] = React.useState(false);
+  
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch()
   useEffect(() => {
@@ -89,11 +35,18 @@ const Admin = () => {
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
   const foodreviewLIst = useSelector((state) => state.foodreview.list);
   const userLIst = useSelector((state) => state.user.list);
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+ 
+  const isAdmin = cookies.isAdmin 
 
-
-const handleLogout=() => {
-navigate('/login')
-}
+  const clearCookies = ()=> {
+    removeCookie("name")
+    removeCookie("email")  
+    removeCookie("phone")
+    removeCookie("isAdmin")
+    
+    navigate('/login')
+   }
 
   return (
 
@@ -131,7 +84,7 @@ navigate('/login')
                 <i class="ri-star-line"></i> Reviews
 
               </ListGroup.Item>
-              <ListGroup.Item action href="#logout" onClick={()=>handleLogout()}>
+              <ListGroup.Item action onClick={()=>clearCookies()}>
                 <i class="ri-logout-box-line" />  Logout
 
               </ListGroup.Item>
@@ -176,7 +129,7 @@ navigate('/login')
                           <i class="ri-store-2-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Restaurants</h6>
-                        <h1 className="display-4" style={{ color: "#fff" }}>5</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>{restaurantLIst.length}</h1>
                       </div>
                     </div>
                   </div>
@@ -187,7 +140,7 @@ navigate('/login')
                           <i class="ri-e-bike-2-fill"></i>
                         </div>
                         <h6 className="text-uppercase">Delivery Staff</h6>
-                        <h1 className="display-4" style={{ color: "#fff" }}>5</h1>
+                        <h1 className="display-4" style={{ color: "#fff" }}>{deliveryboyLIst.length}</h1>
                       </div>
                     </div>
                   </div>
@@ -222,16 +175,6 @@ navigate('/login')
               <div>
               
 
-      <Fab color="primary" aria-label="add">
-  <AddIcon onClick={() => setModalShow(true)}/>
-</Fab>
-<br></br>
-
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
-      <br></br>
                 <table className='table table-bordered'>
                   <thead>
                     <tr>
@@ -244,7 +187,7 @@ navigate('/login')
                       <th>Trade License</th>
                       <th>Fire and Safety License</th>
                       <th>Certificate Of Environmental Clearance</th>
-                      
+                      <th>Send Mail</th>
 
                       <th>Action</th>
                     </tr>
@@ -313,4 +256,3 @@ navigate('/login')
 }
 export default Admin
 
-//Math.random().toString(36).slice(-8)

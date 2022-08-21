@@ -6,7 +6,7 @@ import FoodDetails from '../Pages/FoodDetails'
 import Cart from '../Pages/Cart'
 import Checkout from '../Pages/Checkout'
 import RestaurantRegister from '../Pages/RestaurantRegister'
-import RestaurantLogin from '../Pages/RestaurantLogin'
+
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 import Profile from '../Pages/Profile'
@@ -35,7 +35,7 @@ function Routers() {
         <Route path='/orders' element={<Orders/>}/>
      <Route path='/admin' element={<Admin/>}/>
     
-     <Route path='/restaurantlogin' element={<RestaurantLogin/>}/>
+    
      
         
 

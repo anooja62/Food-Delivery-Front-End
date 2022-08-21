@@ -5,6 +5,7 @@ import restaurantSlice from "./shopping-cart/restaurantSlice";
 import deliverySlice from "./shopping-cart/deliverySlice";
 import reviewSlice from "./shopping-cart/reviewSlice";
 import userSlice from "./shopping-cart/userSlice";
+import addressSlice from "./shopping-cart/addressSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     deliveryboy: deliverySlice.reducer,
     foodreview: reviewSlice.reducer,
     user: userSlice.reducer,
+    shipping: addressSlice.reducer,
   },
 });
 
