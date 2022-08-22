@@ -29,6 +29,7 @@ const Profile = () => {
 
   const [data,setData] =useState([])
   const [show, setShow] = useState(false);
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
@@ -53,8 +54,10 @@ const Profile = () => {
       phone: signupPhoneRef.current.value,
       pincode: signupPincodeRef.current.value,
       address: signupAddressRef.current.value,
-      userId:userId
+      userId:userId,
+     
     }
+    
     try {
       const data = await axios.post("addr/address", shipping)
       setData(data.data)
@@ -67,7 +70,7 @@ const Profile = () => {
     }
 
   }
-  const shippingLIst = useSelector((state) => state.restaurant.list);
+  const shippingLIst = useSelector((state) => state.shipping.list);
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getShippings());
@@ -105,24 +108,22 @@ const Profile = () => {
             </div>
           </Col>
           </>}
-          { data.length !== 0 && 
+         {/* { data.length !== 0 && 
          <>
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
+           
 
             {shippingLIst.map((u) => (
                     <Address key={u.id} shipping={u} />
 
                   ))}
+                 
                   
             </div>
           
           </Col>
-          </>}
+            </>*/}
 
           
          

@@ -1,16 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-export const getShippings = createAsyncThunk(
-  "addr/allShippings",
-  async () => {
-    const response = await axios.get(`/rest/all-addresses`);
-    return response.data;
-  }
-);
+export const getShippings = createAsyncThunk("addr/allShippings", async () => {
+  const response = await axios.get(`/addr/all-addresses`);
+  return response.data;
+});
 export const deleteShipping = createAsyncThunk(
-    "addr/allShippings",
+  "addr/allShippings",
   async (id) => {
-    const response = await axios.put(`/addr/delete/${id}`);
+    const response = await axios.put(`/addr/deleted/${id}`);
     return response.data;
   }
 );
