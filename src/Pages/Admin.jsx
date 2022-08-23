@@ -196,6 +196,7 @@ const Admin = () => {
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>City</th>
+                        <th>Driving License</th>
                         <th>Send Mail</th>
                         <th>Action</th>
                       </tr>

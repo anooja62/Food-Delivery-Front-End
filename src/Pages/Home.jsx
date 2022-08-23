@@ -61,6 +61,10 @@ const featureData = [
   },
 ];
 const Home = () => {
+
+  
+ 
+
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
     validationSchema: signupSchema,
@@ -68,48 +72,6 @@ const Home = () => {
       console.log(values);
     },
   });
-
-  const [imageUpload, setImageUpload] = useState(null);
-  const [imageList, setImageList] = useState([]);
-  const imageListRef = ref(storage, "deliveryboy/");
-
-  const navigate = useNavigate();
-
-  const signupNameRef = useRef();
-  const signupPhoneRef = useRef();
-
-  const signupEmailRef = useRef();
-  const signupCityRef = useRef();
-  const signupPasswordRef = useRef();
-  const signupConfirmPasswordRef = useRef();
-
-  const handleClick = async (e) => {
-    e.preventDefault();
-
-    const deliveryboy = {
-      name: signupNameRef.current.value,
-      phone: signupPhoneRef.current.value,
-      email: signupEmailRef.current.value,
-      city: signupCityRef.current.value,
-    };
-    if (imageUpload === null) return;
-    const imageRef = ref(storage, `deliveryboy/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
-      getDownloadURL(snaphsot.ref).then((url) => {
-        setImageList((prev) => [...prev, url]);
-      });
-
-      alert("image uploaded");
-    });
-
-    try {
-      await axios.post("deli/delivery", deliveryboy);
-      setShow(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -141,6 +103,40 @@ const Home = () => {
       setAllProducts(filteredProducts);
     }
   }, [category]);
+
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([]);
+  const imageListRef = ref(storage, "deliveryboy/");
+
+  const navigate = useNavigate();
+
+  const signupNameRef = useRef();
+  const signupPhoneRef = useRef();
+
+  const signupEmailRef = useRef();
+  const signupCityRef = useRef();
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    const deliveryboy = {
+      name: signupNameRef.current.value,
+      phone: signupPhoneRef.current.value,
+      email: signupEmailRef.current.value,
+      city: signupCityRef.current.value,
+    };
+    if (imageUpload === null) return;
+    const imageRef = ref(storage, `deliveryboy/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+      getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
+        setImageList(imgUrl);
+        await axios.post("deli/delivery", {...deliveryboy,imgUrl});
+        setShow(false);
+      });
+
+      alert("Registeration successful");
+    });
+  };
 
   return (
     <Helmet title="Home">
@@ -448,18 +444,6 @@ const Home = () => {
                                 }}
                               />
                             </div>
-                          </Col>
-                          <Col xs={6}>
-                            <label>PAN Card</label>
-                            <input
-                              type="file"
-                              name="upload"
-                              accept="application/pdf,application/vnd.ms-excel"
-                              required
-                              onChange={(event) => {
-                                setImageUpload(event.target.files[0]);
-                              }}
-                            />
                           </Col>
                         </Row>
                         <br></br>

@@ -95,31 +95,11 @@ const RestaurantRegister = () => {
        
       })
       
-      alert("image uploaded")
+      alert("Registeration successful")
     })
-// setTimeout(async()=>{
-//   try {
-   
-//     
-//   } catch (err) {
-//     console.log(err);
-//   }
-// },3000)
 
+  }
 
-  
-  };
-
-  // useEffect(()=>{
-  //      listAll(imageListRef).then((response)=>{
-  //      response.items.forEach((item)=>{
-  //       getDownloadURL(item).then((url)=>{
-  //         setImageList((prev)=>[...prev,url])
-  //       })
-
-  //      })
-  //      })
-  // },[])
 
   return (
     <Helmet title="Restaurant-Register">
@@ -247,7 +227,7 @@ const RestaurantRegister = () => {
                     <input
                       type="file"
                       name="upload"
-                     
+                      accept="application/pdf,application/vnd.ms-excel" 
                       required
                       onChange={(event) => {
                         setImageUpload(event.target.files[0]);
@@ -268,11 +248,7 @@ const RestaurantRegister = () => {
                     >
                       Register
                     </button>
-                    {/* {
-                      imageList.map((url)=>{
-                        return <img src={url}/>
-
-                        })} */}
+                 
                     
 
                       

@@ -86,6 +86,7 @@ const Deliveryboy = ({ deliveryboy }) => {
           <td className="text-center" style={{ paddingTop: "2%" }}>
             {deliveryboy.city}
           </td>
+          <td className="text-center" style={{ paddingTop: "2%" }}><a href={deliveryboy.imgUrl}>view License</a></td>
           <td className="text-center" style={{ paddingTop: "2%" }}>
             <Icon color="primary" onClick={() => setModalShow(true)}>
               add_circle
