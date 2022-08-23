@@ -17,13 +17,13 @@ const Address = ({ shipping }) => {
       <div>
        
           
-             <p>{shipping.name}</p> 
+             <p>{shipping?.name}</p> 
            
-             <p> {shipping.phone}</p>
+             <p> {shipping?.phone}</p>
            
-             <p> {shipping.pincode}</p>
+             <p> {shipping?.pincode}</p>
            
-             <p>{shipping.address}</p> 
+             <p>{shipping?.address}</p> 
            
 
             

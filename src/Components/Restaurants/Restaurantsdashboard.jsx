@@ -17,9 +17,9 @@ import Tab from "react-bootstrap/Tab";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const Admin = () => {
+const Restaurantdashboard = () => {
   const navigate = useNavigate();
- 
+
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,13 +27,11 @@ const Admin = () => {
     dispatch(getDeliveryboys());
     dispatch(getFoodreviews());
     dispatch(getUsers());
-   
   }, []);
 
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
   const foodreviewLIst = useSelector((state) => state.foodreview.list);
   const userLIst = useSelector((state) => state.user.list);
- 
   const [cookies, setCookie, removeCookie] = useCookies(null);
 
   const isAdmin = cookies.isAdmin;
@@ -171,7 +169,6 @@ const Admin = () => {
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Address</th>
-                        <th>FSSAI License</th>
 
                         <th>Send Mail</th>
 
@@ -182,8 +179,6 @@ const Admin = () => {
                     {restaurantLIst.map((u) => (
                       <Manage key={u.id} restaurant={u} />
                     ))}
-
-                  
                   </table>
                 </div>
               </Tab.Pane>
@@ -229,4 +224,4 @@ const Admin = () => {
     </div>
   );
 };
-export default Admin;
+export default Restaurantdashboard;

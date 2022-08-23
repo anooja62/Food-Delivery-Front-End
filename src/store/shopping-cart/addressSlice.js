@@ -8,7 +8,7 @@ export const deleteShipping = createAsyncThunk(
   "addr/allShippings",
   async (id) => {
     const response = await axios.put(`/addr/deleted/${id}`);
-    return response.data;
+    return response
   }
 );
 

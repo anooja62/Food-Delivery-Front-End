@@ -29,6 +29,7 @@ const FoodDetails = () => {
     }
     try {
       await axios.post("revi/review", foodreview)
+      alert("you have submitted feedback")
       
 
     } catch (err) {

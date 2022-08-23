@@ -54,34 +54,40 @@ const UpdateProfile = ()=> {
     <section>
       <Container>
         <Row>
-          <Col lg='6' md='6' sm='12' className='m-auto text-center'>
-          <Paper elevation={3} >
+          <Col lg='6' md='6' sm='12' className='m-auto '>
+          <Paper elevation={4} >
             <form className=" mb-5" onSubmit={handleClick}>
               <div className="new__register">
+                <label>Name</label>
                 <input type='text' name="name" placeholder='Name   (Eg. John Doe)'  ref={signupNameRef} defaultValue={user} />
               </div>
              
                         <div className="new__register">
+                          <label>Phone Number</label>
                 <input type='tel' placeholder='Mobile Number' name="phone"  ref={signupPhoneRef} defaultValue={phone} />
               </div>
               
              
               <div className="new__register">
+                <label>Email</label>
                 <input type='email' placeholder='Email' name="email"   ref={signupEmailRef} defaultValue={email}/>
               </div>
            
              
               <div className="new__register">
+                <label>Password</label>
                 <input type='password' placeholder='Password' name="password"  ref={signupPasswordRef} />
               </div>
               
               <div className="new__register">
+                <label>Confirm password</label>
                 <input type='password' placeholder='Confirm Password' name="cpassword"  ref={signupConfirmPasswordRef}   />
               </div>
              
                        <br></br> 
-                      
+                      <div className='text-center'>
               <button type="submit" className='addToCart__btn'>UPDATE CHANGES</button>
+              </div>
               
             </form>
             <br></br>

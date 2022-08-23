@@ -27,6 +27,10 @@ import TestimonialSlider from "../Components/UI/slider/TestimonialSlider.jsx";
 
 import Modal from "react-bootstrap/Modal";
 
+import { storage } from "./firebase";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
+
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas";
 
@@ -65,6 +69,10 @@ const Home = () => {
     },
   });
 
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([]);
+  const imageListRef = ref(storage, "deliveryboy/");
+
   const navigate = useNavigate();
 
   const signupNameRef = useRef();
@@ -84,6 +92,16 @@ const Home = () => {
       email: signupEmailRef.current.value,
       city: signupCityRef.current.value,
     };
+    if (imageUpload === null) return;
+    const imageRef = ref(storage, `deliveryboy/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+      getDownloadURL(snaphsot.ref).then((url) => {
+        setImageList((prev) => [...prev, url]);
+      });
+
+      alert("image uploaded");
+    });
+
     try {
       await axios.post("deli/delivery", deliveryboy);
       setShow(false);
@@ -416,25 +434,47 @@ const Home = () => {
                           />
                         </div>
 
-                        {/*<Row>
-                <Col xs={6}>
-                  <div>
-                    <label> Driving License</label>
-                    <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-                  </div>
-                </Col>
-                <Col xs={6}>
-
-                  <label>PAN Card</label>
-                  <input type="file" name="upload" accept="application/pdf,application/vnd.ms-excel" required />
-
-                </Col>
-                </Row>*/}
+                        <Row>
+                          <Col xs={6}>
+                            <div>
+                              <label> Driving License</label>
+                              <input
+                                type="file"
+                                name="upload"
+                                accept="application/pdf,application/vnd.ms-excel"
+                                required
+                                onChange={(event) => {
+                                  setImageUpload(event.target.files[0]);
+                                }}
+                              />
+                            </div>
+                          </Col>
+                          <Col xs={6}>
+                            <label>PAN Card</label>
+                            <input
+                              type="file"
+                              name="upload"
+                              accept="application/pdf,application/vnd.ms-excel"
+                              required
+                              onChange={(event) => {
+                                setImageUpload(event.target.files[0]);
+                              }}
+                            />
+                          </Col>
+                        </Row>
                         <br></br>
                         <Row>
                           <Col sm={8}>
                             {" "}
-                            <button type="submit" className="addToCart__btn" disabled={errors.name || errors.phone || errors.email ? true : false}>
+                            <button
+                              type="submit"
+                              className="addToCart__btn"
+                              disabled={
+                                errors.name || errors.phone || errors.email
+                                  ? true
+                                  : false
+                              }
+                            >
                               Register{" "}
                             </button>
                           </Col>
@@ -446,7 +486,7 @@ const Home = () => {
                             >
                               Close
                             </Button>
-              </Col>
+                          </Col>
                         </Row>
                       </form>
                     </Modal.Body>
