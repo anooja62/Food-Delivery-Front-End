@@ -46,11 +46,7 @@ const Header =()=>  {
            display:'Home',
            path:'/home'
         },
-        {
-            display:'Food',
-            path:'/foods'
-         },
-         
+       
         {
             display:'Add restaurant',
             path:'/restaurant'
@@ -75,6 +71,8 @@ const Header =()=>  {
             display:'Food',
             path:'/foods'
          },
+        
+         
          {
             display:'Cart',
             path:'/cart'

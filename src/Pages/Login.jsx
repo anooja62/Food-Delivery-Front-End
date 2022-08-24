@@ -12,7 +12,7 @@ import GoogleButton from 'react-google-button'
 import '../styles/login.css'
 import Paper from '@mui/material/Paper';
 const Login = ()=> {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const [cookies, setCookie] = useCookies(null)
  const [error, setError] = useState("")
   const loginEmailRef = useRef()
   const loginPasswordRef = useRef()

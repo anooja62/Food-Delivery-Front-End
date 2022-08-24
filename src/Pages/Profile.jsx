@@ -8,7 +8,7 @@ import axios from "../axios"
 import Modal from 'react-bootstrap/Modal';
 import { useCookies } from 'react-cookie'
 import Address from '../Components/UI/Address/Address'
-import { getShippings } from "../store/shopping-cart/addressSlice";
+import { getShippings,addShippingAddress } from "../store/shopping-cart/addressSlice";
 import { useFormik } from 'formik'
 import { signupSchema } from '../schemas'
 import { useDispatch, useSelector } from "react-redux";
@@ -22,14 +22,14 @@ const initialValues = {
 
 };
 const Profile = () => {
- 
+
   const [cookies, setCookie] = useCookies(null)
   const userId = cookies.userId
   const user = cookies.user
-
-  const [data,setData] =useState([])
+// let data = []
+  // const [data,setData] =useState([])
   const [show, setShow] = useState(false);
-  
+  const data = useSelector((state) => state.shipping.list);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
@@ -39,7 +39,17 @@ const Profile = () => {
       console.log(values);
     }
   })
-
+ 
+  // setData(shippingLIst)
+  console.log(data.length)
+  
+  // data.push(shippingLIst)
+// setData(tempArr)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getShippings(userId));
+   
+  }, []);
   const signupNameRef = useRef()
   const signupPhoneRef = useRef()
   const signupPincodeRef = useRef()
@@ -59,8 +69,7 @@ const Profile = () => {
     }
     
     try {
-      const data = await axios.post("addr/address", shipping)
-      setData(data.data)
+      dispatch(addShippingAddress(shipping))
       setShow(false)
       
       
@@ -70,12 +79,7 @@ const Profile = () => {
     }
 
   }
-  const shippingLIst = useSelector((state) => state.shipping.list);
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getShippings());
-   
-  }, []);
+  
 
   return <Helmet title='Profile'>
     <CommonSection title={user} />
@@ -108,22 +112,22 @@ const Profile = () => {
             </div>
           </Col>
           </>}
-         {/* { data.length !== 0 && 
+         { data.length !== 0 && 
          <>
           <Col md={{ span: 3, offset: 3 }}>
             <div className='profilecard'>
            
 
-            {shippingLIst.map((u) => (
+            {data.map((u) => (
                     <Address key={u.id} shipping={u} />
-
                   ))}
+        
                  
                   
             </div>
           
           </Col>
-            </>*/}
+            </>}
 
           
          

@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteShipping } from "../../../store/shopping-cart/addressSlice";
 
 const Address = ({ shipping }) => {
+  console.log(shipping)
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteShipping(id));
@@ -23,7 +24,7 @@ const Address = ({ shipping }) => {
            
              <p> {shipping?.pincode}</p>
            
-             <p>{shipping?.address}</p> 
+             <p>{shipping.address}</p> 
            
 
             

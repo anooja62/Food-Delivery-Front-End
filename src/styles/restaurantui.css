@@ -1,0 +1,22 @@
+.rest__ui{
+    background: rgb(153, 131, 131);
+    height: 150px;
+    width: 150px;
+    text-align:center;
+    align-items: center;
+    border-radius: 50%;
+    margin: auto;
+    overflow: hidden;
+}
+.first__sec{
+    margin-left: 55px;
+    margin-right: 55px;
+}
+.rest__ui:hover img{
+    transform: scale(0.8);
+    cursor: pointer;
+}
+
+.alice-carousel__dots-item:not(.__custom):hover, .alice-carousel__dots-item:not(.__custom).__active{
+    background-color: rgb(153, 131, 131) !important;
+}
