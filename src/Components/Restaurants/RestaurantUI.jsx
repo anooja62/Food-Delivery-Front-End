@@ -18,14 +18,14 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
  const RestaurantUI = () => {
-    const [tab, setTab] = useState('desc');
+    
   return (
     <div>
         <section className='first__sec'>
-            <h2>DineOut</h2>
+            <h2>Name of the Restaurant</h2>
             <p className='text-muted'>Address of Restaurant</p>
          <Swiper
         slidesPerView={3}
@@ -40,40 +40,67 @@ import { Pagination, Navigation } from "swiper";
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide><img src={dineout1}/></SwiperSlide>
-        <SwiperSlide><img src={dineout2}/></SwiperSlide>
-        <SwiperSlide><img src={dineout3}/></SwiperSlide>
-        <SwiperSlide><img src={dineout4}/></SwiperSlide>
-        <SwiperSlide><img src={dineout5}/></SwiperSlide>
-        <SwiperSlide><img src={dineout6}/></SwiperSlide>
+        <SwiperSlide><img src={dineout1} alt=""/></SwiperSlide>
+        <SwiperSlide><img src={dineout2} alt=""/></SwiperSlide>
+        <SwiperSlide><img src={dineout3} alt=""/></SwiperSlide>
+        <SwiperSlide><img src={dineout4} alt=""/></SwiperSlide>
+        <SwiperSlide><img src={dineout5} alt=""/></SwiperSlide>
+        <SwiperSlide><img src={dineout6} alt=""/></SwiperSlide>
         
       </Swiper>
-      
-      <div className="tabs d-flex align-items-center gap-5 py-3 mt-3">
-              <h6 className={`${tab === 'desc' ? 'tab__active' : ''}`} onClick={() => setTab('desc')}>Order Online</h6>
-              <h6 className={`${tab === 'rev' ? 'tab__active' : ''}`} onClick={() => setTab('rev')}>Reviews</h6>
-            </div>
-            {
-              tab === 'desc' ? <div className="tab__content"> <p>hvszx</p></div> : <div className="tab__form mb-3">
-                <div className="review pt-5">
-                  <p className="user__name mb-0">
-                    John Doe
-                  </p>
-                 
-                  <p className='feedback__text'>
-                    Great Product
-                  </p>
-                </div>
+      </section>
+      <div className='emenu'>
+      <h3 className='mt-5'>E Menu Card</h3>
+      <Tabs>
+        <TabList>
+          <Tab>
+            <p>Recommended</p>
+          </Tab>
+          <Tab>
+          <p>Special</p>
+           
+          </Tab>
+          <Tab>
+          <p>Burgers</p>
+          </Tab>
+          <Tab>
+            <p>Snacks</p>
+          </Tab>
+          <Tab>
+            <p>Salads</p>
+          </Tab>
+        </TabList>
 
-              
-                <Col lg='6' md='6' sm='12' className='m-auto '>
-                
-                </Col>
-              </div>
-            }
-            </section>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Any content 1</h2>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Any content 2</h2>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Any content 3</h2>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Any content 4</h2>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Any content 5</h2>
+          </div>
+        </TabPanel>
+      </Tabs>
+      </div>
       
-    </div>
+            </div>
+    
   )
 }
 

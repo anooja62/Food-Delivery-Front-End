@@ -20,3 +20,70 @@
 .alice-carousel__dots-item:not(.__custom):hover, .alice-carousel__dots-item:not(.__custom).__active{
     background-color: rgb(153, 131, 131) !important;
 }
+
+.emenu {
+ 
+  background: #fff;
+  color: #000;
+ 
+  width: 100%;
+ 
+}
+
+.react-tabs {
+  display: flex;
+  margin-left: 36px;
+  width: 100%;
+  height: auto;
+ 
+  color: #000;
+  background: #fff;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background: #fff;
+}
+
+.react-tabs__tab {
+  height: 50px;
+  list-style: none;
+  
+  padding: 12px 6px;
+  cursor: pointer;
+  color: #000;
+}
+
+.react-tabs__tab--selected {
+  background: #E67E22;
+  
+  border-left: 4px solid #010241;
+  color: white;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+ width:90%;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+}
+
+.react-tabs__tab {
+  padding-left: 24px;
+}
+
+.react-tabs__tab--selected {
+  padding-left: 21px;
+}
+
+.panel-content {
+ 
+  padding-left: 30px;
+}

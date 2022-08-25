@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie'
 
 
 const Sidebar = () => { 
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const [cookies, setCookie] = useCookies(null)
   const user = cookies.name
   const email = cookies.email
   const phone = cookies.phone
@@ -16,8 +16,8 @@ const Sidebar = () => {
       <div className='profilecard'>
         <ul>
        <li> <img src={profileuser} alt=''/></li>
-       <li>{user}</li>
-       <li>{email}</li>
+       <li style={{fontWeight : 600}}>{user}</li>
+       <li> {email}</li>
        <li>{phone}</li>
        </ul>
         </div>
