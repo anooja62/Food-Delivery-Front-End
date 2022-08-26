@@ -16,6 +16,10 @@ import Admin from "../Pages/Admin";
 import RestaurantRegister from "../Pages/RestaurantRegister";
 import Restaurantpage from "../Components/Restaurants/Restaurantspage";
 import RestaurantUI from "../Components/Restaurants/RestaurantUI";
+import ForgotPassword from "../Pages/ForgotPassword";
+import NewSubmit from "../Components/NewSubmit/NewSubmit";
+import Restaurantsdashboard from "../Components/Restaurants/Restaurantsdashboard";
+import DeliveryStaff from "../Components/DeliveryStaff/DeliveryStaff";
 
 function Routers() {
   return (
@@ -30,12 +34,16 @@ function Routers() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/register" element={<Register />} />
       <Route path="/restaurant" element={<Restaurant />} />
-    
+
       <Route path="/orders" element={<Orders />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/restaurantregister" element={<RestaurantRegister />} />
       <Route path="/ordernow" element={<Restaurantpage />} />
       <Route path="/ui" element={<RestaurantUI />} />
+      <Route path="/forgot" element={<ForgotPassword />} />
+      <Route path="/newsubmit" element={<NewSubmit />} />
+      <Route path="/res-dashboard" element={<Restaurantsdashboard />} />
+      <Route path="/delivery-staff" element={<DeliveryStaff />} />
     </Routes>
   );
 }

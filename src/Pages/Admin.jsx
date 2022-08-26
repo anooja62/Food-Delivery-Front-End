@@ -11,6 +11,12 @@ import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
+import StarHalfOutlinedIcon from '@mui/icons-material/StarHalfOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import Tab from "react-bootstrap/Tab";
 
@@ -62,22 +68,22 @@ const Admin = () => {
           <Col sm={2}>
             <ListGroup>
               <ListGroup.Item action href="#">
-                <i class="ri-home-2-line"></i> Home
+                <DashboardOutlinedIcon/> Dashboard
               </ListGroup.Item>
               <ListGroup.Item action href="#users">
-                <i class="ri-user-line"></i> Users
+                <PeopleAltOutlinedIcon/> Users
               </ListGroup.Item>
               <ListGroup.Item action href="#restaurant">
-                <i class="ri-store-2-line"></i> Restaurants
+                <StorefrontOutlinedIcon/> Restaurants
               </ListGroup.Item>
               <ListGroup.Item action href="#deliveryboy">
-                <i class="ri-e-bike-2-line"></i> Delivery
+                <DeliveryDiningOutlinedIcon/> Delivery
               </ListGroup.Item>
               <ListGroup.Item action href="#reviews">
-                <i class="ri-star-line"></i> Reviews
+                <StarHalfOutlinedIcon/> Reviews
               </ListGroup.Item>
               <ListGroup.Item action onClick={() => clearCookies()}>
-                <i class="ri-logout-box-line" /> Logout
+               <LockOutlinedIcon/> Logout
               </ListGroup.Item>
             </ListGroup>
           </Col>

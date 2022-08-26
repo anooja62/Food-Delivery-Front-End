@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
@@ -17,7 +17,7 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import {storage} from './firebase';
-import {ref, uploadBytes,listAll,getDownloadURL} from 'firebase/storage';
+import {ref, uploadBytes,getDownloadURL} from 'firebase/storage';
 import {v4} from 'uuid'
 
 
@@ -116,10 +116,10 @@ const RestaurantRegister = () => {
                       <StepLabel
                         optional={index === 2 ? <p>Last step</p> : null}
                       >
-                        {step.label}
+                       <p style={{fontWeight:500,fontSize:15}}> {step.label}</p>
                       </StepLabel>
                       <StepContent>
-                        <p>{step.description}</p>
+                        <p className=" feature__text">{step.description}</p>
                         <Box sx={{ mb: 2 }}>
                           <div>
                             <Button

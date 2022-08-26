@@ -12,7 +12,7 @@ function Layout() {
   const showCart = useSelector(state=>state.cartUi.cartIsVisible)
   return (
     <div>
-  {!window.location.href.includes('admin') &&
+  {!window.location.href.includes('admin' ) &&
    <Header/>
   }
        
@@ -25,7 +25,7 @@ function Layout() {
 
             
         </div>
-        {!window.location.href.includes('admin') &&
+        {!window.location.href.includes('admin'  ) &&
    <Footer/>
   }
   

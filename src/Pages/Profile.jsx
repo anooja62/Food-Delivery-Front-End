@@ -21,7 +21,7 @@ import {Chip,Stack} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DomainIcon from '@mui/icons-material/Domain';
 import LockIcon from '@mui/icons-material/Lock';
@@ -123,22 +123,22 @@ const Profile = () => {
             <Tabs>
               <TabList>
                 <Tab>
-                  <span style={{fontWeight: 600}}>
+                  <span >
                   <PersonIcon/> Profile
                   </span>
                 </Tab>
                 <Tab>
-                  <span style={{fontWeight: 600}}>
+                  <span >
                   <EditIcon/> Edit Profile
                   </span>
                 </Tab>
                 <Tab>
-                  <span style={{fontWeight: 600}}>
-                    <LocationOnIcon /> Saved Addresses
+                  <span >
+                    <AddLocationAltOutlinedIcon /> Saved Addresses
                   </span>
                 </Tab>
                 <Tab>
-                  <span style={{fontWeight: 600}} onClick={() => clearCookies()}>
+                  <span  onClick={() => clearCookies()}>
                     <LockIcon /> Sign Out
                   </span>
                 </Tab>
