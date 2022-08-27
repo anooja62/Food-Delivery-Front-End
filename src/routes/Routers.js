@@ -42,8 +42,8 @@ function Routers() {
       <Route path="/ui" element={<RestaurantUI />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/newsubmit" element={<NewSubmit />} />
-      <Route path="/res-dashboard" element={<Restaurantsdashboard />} />
-      <Route path="/delivery-staff" element={<DeliveryStaff />} />
+      <Route path="/admin-res" element={<Restaurantsdashboard />} />
+      <Route path="/admin-staff" element={<DeliveryStaff />} />
     </Routes>
   );
 }

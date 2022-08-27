@@ -3,6 +3,7 @@ import * as Yup from "yup";
 const nameRegExp = new RegExp("^[A-Z][a-z]*( [A-Z][a-z]*)*$");
 const phoneRegExp = new RegExp("^[6-9]{1}[)]?[0-9]{9}$");
 const emailRegExp = new RegExp("^[a-z][a-z0-9]+@[a-z]+.[a-z]+.[a-z]{2,3}$");
+const licRegExp = new RegExp("^[1]{1}[)]?[0-9]{13}$");
 
 const pincodeRegExp = new RegExp("^[1-9][0-9]{5}$");
 
@@ -31,4 +32,8 @@ export const signupSchema = Yup.object({
     .required("Please enter Pincode"),
   address: Yup.string()
   .required("Please enter address"),
+
+  license: Yup.string()
+  .matches(licRegExp, "enter valid license number"),
+
 });

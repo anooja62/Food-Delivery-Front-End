@@ -3,7 +3,7 @@ import CommonSection from "../UI/common-section/CommonSection";
 import Helmet from "../Helmet/Helmet";
 import Paper from "@mui/material/Paper";
 import { Row, Col } from "react-bootstrap";
-import axios from "axios";
+import axios from "../../axios"
 import { useNavigate } from "react-router-dom";
 const NewSubmit = (props) => {
   const resetOtpRef = useRef();
@@ -12,7 +12,7 @@ const NewSubmit = (props) => {
 
   const handleSubmit = () => {
     
-    axios.post('http://localhost:9000/submit-otp',
+    axios.post('auth/submit-otp',
         {
             otp: resetOtpRef.current.value,
             password: resetPasswordRef.current.value,

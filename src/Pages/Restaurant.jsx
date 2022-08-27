@@ -90,7 +90,7 @@ const Restaurant = () => {
                       </p>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <p>
+                      <p className="feature__text">
                         Average order value from our platform is generally more
                         than Rs 250. However, in some cases, users want to try
                         out your place by ordering for lesser amount. But we
@@ -111,7 +111,7 @@ const Restaurant = () => {
                       </p>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <p>
+                      <p className="feature__text">
                         Creating a restaurant page on Zomato is free of cost.
                         You can maintain your page by replying to reviews and do
                         a lot more without any charges.
@@ -130,7 +130,7 @@ const Restaurant = () => {
                       </p>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <p>
+                      <p className="feature__text">
                         You can use your and Deliorder's delivery fleet
                         simultaneously to increase the network of your delivery
                         radius. Also, our delivery fleet delivers orders in

@@ -1,9 +1,9 @@
-import React,{useState} from 'react'
-
+import React,{useEffect} from 'react'
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { Container, Row, Col } from 'react-bootstrap'
-
-
-
+import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+import FoodBankIcon from '@mui/icons-material/FoodBank';
 import dineout1 from '../../assets/images/dineout1.jpg'
 import dineout2 from '../../assets/images/dineout2.jpg'
 import dineout3 from '../../assets/images/dineout3.jpg'
@@ -11,16 +11,25 @@ import dineout4 from '../../assets/images/dineout4.jpg'
 import dineout5 from '../../assets/images/dineout5.jpg'
 import dineout6 from '../../assets/images/dineout6.jpg'
 import '../../styles/restaurantui.css'
-
+import { getMenus } from "../../store/shopping-cart/menuSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Menu from './Menu/Menu';
 
  const RestaurantUI = () => {
+
+  
+  const menuLIst = useSelector((state) => state.menu.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMenus());
+  }, []);
     
   return (
     <div>
@@ -50,30 +59,38 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
       </Swiper>
       </section>
       <div className='emenu'>
-      <h3 className='mt-5'>E Menu Card</h3>
+      
       <Tabs>
         <TabList>
           <Tab>
-            <p>Recommended</p>
+            <p><LocalDiningOutlinedIcon/> E Menu Card</p>
           </Tab>
           <Tab>
-          <p>Special</p>
+            <p><FastfoodIcon/> Combos</p>
+          </Tab>
+          <Tab>
+          <p><StarHalfIcon/> Reviews</p>
            
           </Tab>
           <Tab>
-          <p>Burgers</p>
+          <p><FoodBankIcon/> About Us</p>
           </Tab>
-          <Tab>
-            <p>Snacks</p>
-          </Tab>
-          <Tab>
-            <p>Salads</p>
-          </Tab>
+         
         </TabList>
 
         <TabPanel>
+          
           <div className="panel-content">
-            <h2>Any content 1</h2>
+          <h4>Order Now !</h4>
+          {menuLIst.length !== 0 && (
+            <>
+              <div className="row d-flex justify-content-between align-items-center mt-4">
+                {menuLIst.map((u) => (
+                  <Menu key={u.id} menu={u} />
+                ))}
+              </div>
+            </>
+          )}
           </div>
         </TabPanel>
         <TabPanel>

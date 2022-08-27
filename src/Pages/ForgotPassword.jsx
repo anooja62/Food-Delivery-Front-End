@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import axios from ".././axios";
-import {Row,  Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
@@ -11,23 +11,22 @@ const ForgotPassword = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    const user = {
+      email: forgotEmailRef.current.value,
+    };
 
-    axios
-      .post("http://localhost:9000/send-otp", {
-        email: forgotEmailRef.current.value,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.code === 200) {
-          navigate("/newsubmit");
-        } else {
-          alert("Email / Server Error.");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const res = await axios.post("/auth/send-otp", user);
+      if (res.data.code === 200) {
+        navigate("/newsubmit");
+      } else {
+        alert("Email / Server Error.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <Helmet title="forgot-password">
       <CommonSection title="Reset your Password!" />
@@ -49,7 +48,7 @@ const ForgotPassword = () => {
                     />
                   </div>
 
-                 <br></br>
+                  <br></br>
                   <div className="text-center">
                     {" "}
                     <button type="submit" className="addToCart__btn ">
