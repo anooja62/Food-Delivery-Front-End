@@ -4,14 +4,14 @@ import { Card, Button,Row,Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 
-import { deleteMenu } from "../../../store/shopping-cart/menuSlice";
+import { deleteCombo } from "../../../store/shopping-cart/comboSlice";
 
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
-const Menu = ({ menu, url }) => {
+const Combo = ({ combo, url }) => {
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
-    dispatch(deleteMenu(id));
+    dispatch(deleteCombo(id));
   };
 
   return (
@@ -20,16 +20,16 @@ const Menu = ({ menu, url }) => {
         <Card.Img
           variant="top"
           
-          src={menu.imgUrl}
+          src={combo.imgUrl}
           
         />
         <Card.Body className="text-center">
-          <Card.Title> {menu.foodname}</Card.Title>
-          <p>{menu.category}</p>
+          <Card.Title> {combo.Items}</Card.Title>
+          <p>{combo.category}</p>
          <Row>
-            <Col><p style={{fontWeight:600}}><CurrencyRupeeIcon/> {menu.price}</p></Col>
+            <Col><p style={{fontWeight:600}}><CurrencyRupeeIcon/> {combo.price}</p></Col>
             <Col>
-          <Button variant="danger" className=" text-center"  onClick={() => handleDelete(menu._id)}>
+          <Button variant="danger" className=" text-center"  onClick={() => handleDelete(combo._id)}>
             Delete
           </Button>
           </Col>
@@ -39,4 +39,4 @@ const Menu = ({ menu, url }) => {
     </>
   );
 };
-export default Menu;
+export default Combo;

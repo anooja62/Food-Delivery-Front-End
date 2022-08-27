@@ -20,6 +20,7 @@ import ForgotPassword from "../Pages/ForgotPassword";
 import NewSubmit from "../Components/NewSubmit/NewSubmit";
 import Restaurantsdashboard from "../Components/Restaurants/Restaurantsdashboard";
 import DeliveryStaff from "../Components/DeliveryStaff/DeliveryStaff";
+import ComboUI from "../Components/Restaurants/Combo/ComboUI";
 
 function Routers() {
   return (
@@ -44,6 +45,7 @@ function Routers() {
       <Route path="/newsubmit" element={<NewSubmit />} />
       <Route path="/admin-res" element={<Restaurantsdashboard />} />
       <Route path="/admin-staff" element={<DeliveryStaff />} />
+      <Route path="/combo" element={<ComboUI />}/>
     </Routes>
   );
 }

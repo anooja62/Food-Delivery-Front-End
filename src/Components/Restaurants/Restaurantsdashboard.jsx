@@ -12,6 +12,7 @@ import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
 import { getMenus } from "../../store/shopping-cart/menuSlice";
 import axios from "../../axios";
 import Menu from "./Menu/Menu";
+import ComboUI from "./Combo/ComboUI";
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
@@ -54,7 +55,7 @@ const Restaurantsdashboard = () => {
         await axios.post("/food/add-menu", { ...menu, imgUrl });
       });
 
-      alert("Registeration successful");
+      alert(" successful");
     });
   };
 
@@ -213,8 +214,13 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 3</h2>
-          </div>
+          <Col>
+            <div style={{ marginLeft: 150, marginRight: 200 }}>
+             <ComboUI/>
+                  </div>
+                  </Col>
+                  </div>  
+                 
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
@@ -283,7 +289,7 @@ const Restaurantsdashboard = () => {
                   </Row>
                   <div className="new__register">
                       <label>About Restaurant</label>
-                        <textarea row='4' name="about" ref={menuFoodPriceRef} placeholder="What Special about Restaurant..."></textarea>
+                        <textarea rows={4} name="about" ref={menuFoodPriceRef} placeholder="What Special about Restaurant..."></textarea>
 
                       </div>
 
@@ -299,54 +305,76 @@ const Restaurantsdashboard = () => {
               <Paper elevation={3}>
                 <form className="mt-3" onSubmit={addMenuData}>
                   <Row>
-                    <Col>
                     
-                      <div className="new__register mt-5">
-                        <label for="licensetype">License Type : </label>
-                        <select ref={menuCategoryRef} >
-                          <option value=" Central license">  Central license</option>
-                          <option value="State license"> State license</option>
-                          <option value="Basic registration license"> Basic registration license</option>
-                        </select>
-                      </div>
-                   
-                    </Col>
                     <Col>
                       <div className="new__register">
                         <label>Issued On: </label>
-                      
+                      <input type='date'></input>
+      
+                      </div>
+                    </Col>
+                    <Col>
+                    <div className="new__register">
+                        <label>Expire On: </label>
+                      <input type='date'></input>
       
                       </div>
                     </Col>
                   </Row>
                   <Row>
+                  <Col>
+                    
+                    <div className="new__register mt-5">
+                      <label for="licensetype">License Type : </label>
+                      <select ref={menuCategoryRef} >
+                        <option value=" Central license">  Central license</option>
+                        <option value="State license"> State license</option>
+                        <option value="Basic registration license"> Basic registration license</option>
+                      </select>
+                    </div>
+                 
+                  </Col>
                     <Col>
-                      <div className="new__register">
-                        <label>Upload Image of Restaurant</label>
-                        <input
-                          type="file"
-                          onChange={(event) => {
-                            setImageUpload(event.target.files[0]);
-                          }}
-                          name="photo"
-                          placeholder=""
-                          required
-                        />
+                    <div className="new__register mt-5">
+                    <label>For Renewal :</label>
+                    <a href="https://www.foodlicenseportal.org/?gclid=EAIaIQobChMI_53L85jn-QIVA5hmAh2tzwWLEAAYASAAEgLCWfD_BwE">Go to FSSAI Offical Site</a>
+                   </div>
+                    </Col>
+                   
+                  </Row>
+                  
+
+                  <div className="mt-4 text-center">
+                    <button className="addToCart__btn" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                  <br></br>
+                </form>
+              </Paper>
+
+              <h3 className="text-center mt-4">Owner Details</h3>
+              <Paper elevation={3}>
+                <form className="mt-3" onSubmit={addMenuData}>
+                  <Row>
+                    <Col>
+                    
+                      <div className="new__register ">
+                        <label for="ownername">Owner Name</label>
+                        <input type='text' name="ownername" placeholder="owner name"></input>
                       </div>
+                   
                     </Col>
                     <Col>
                       <div className="new__register">
-                      <label>Restaurant Phone Number</label>
-                        <input type="tel" name="phone" ref={menuFoodPriceRef} placeholder="Phone Number" />
-
+                        <label>Owner Phone Number </label>
+                      <input type='tel' placeholder="Owner's Phone Number" name="ownernumber"></input>
+      
                       </div>
                     </Col>
                   </Row>
-                  <div className="new__register">
-                      <label>About Restaurant</label>
-                        <textarea row='4' name="about" ref={menuFoodPriceRef} placeholder="What Special about Restaurant..."></textarea>
-
-                      </div>
+                 
+                  
 
                   <div className="mt-4 text-center">
                     <button className="addToCart__btn" type="submit">

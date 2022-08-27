@@ -1,8 +1,8 @@
-import React from "react";
+import React,{useRef} from "react";
 import emailjs from "@emailjs/browser";
 import { Form, Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-
+import axios from "../../../axios";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { rejectRestaurant } from "../../../store/shopping-cart/restaurantSlice";
@@ -10,11 +10,13 @@ import { rejectRestaurant } from "../../../store/shopping-cart/restaurantSlice";
 import Icon from "@mui/material/Icon";
 
 const Manage = ({ restaurant, url }) => {
+  const restaurantPasswordRef = useRef();
   const [modalShow, setModalShow] = React.useState(false);
   const dispatch = useDispatch();
   const handleReject = async (id) => {
     dispatch(rejectRestaurant(id));
   };
+
 
   function MyVerticallyCenteredModal(props) {
     const handleClick = async (e) => {
@@ -26,6 +28,17 @@ const Manage = ({ restaurant, url }) => {
         e.target,
         "3HARonvI0a5SrbOi6"
       );
+
+      const restaurant = {
+        
+        password:restaurantPasswordRef.current.value,
+      };
+      try {
+        await axios.post("/rest/add-restaurant", restaurant)
+        alert("suceess")
+      } catch (err) {
+        console.log(err)
+      }
     };
     return (
       <Modal
@@ -57,6 +70,7 @@ const Manage = ({ restaurant, url }) => {
                 type="password"
                 placeholder="Password"
                 name="password"
+                ref={restaurantPasswordRef}
                 defaultValue={Math.random().toString(36).slice(-8)}
               />
             </Form.Group>

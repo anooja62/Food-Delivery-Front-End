@@ -21,14 +21,18 @@ import { Pagination, Navigation } from "swiper";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Menu from './Menu/Menu';
+import Combo from './Combo/Combo';
+import { getCombos } from '../../store/shopping-cart/comboSlice';
 
  const RestaurantUI = () => {
 
   
   const menuLIst = useSelector((state) => state.menu.list);
+  const comboLIst = useSelector((state) => state.combo.list);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMenus());
+    dispatch(getCombos());
   }, []);
     
   return (
@@ -95,12 +99,32 @@ import Menu from './Menu/Menu';
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 2</h2>
+          {comboLIst.length !== 0 && (
+            <>
+              <div className="row d-flex justify-content-between align-items-center mt-4">
+                {comboLIst.map((u) => (
+                  <Combo key={u.id} combo={u} />
+                ))}
+              </div>
+            </>
+          )}
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 3</h2>
+            <h2 className='text-center'>Add review</h2>
+            <form>
+              <div className='new__register'>
+                <label>Your Name</label>
+                <input type="text" name='name' placeholder='Your name'></input>
+              </div>
+              <div className='new__register'>
+              <label>Review</label>
+              <div className='new__register'>
+                <textarea rows={5} placeholder='Review....'></textarea>
+              </div>
+              </div>
+            </form>
           </div>
         </TabPanel>
         <TabPanel>
