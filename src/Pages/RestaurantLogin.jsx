@@ -16,28 +16,27 @@ const RestaurantLogin = () => {
   const loginEmailRef = useRef();
   const loginPasswordRef = useRef();
   const navigate = useNavigate();
-  const isAdmin = cookies.isAdmin;
-
+  
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log("dsfdsfdsf")
+   
     const restaurant = {
       email: loginEmailRef.current.value,
       password: loginPasswordRef.current.value,
     };
 
-
     try {
       const response = await axios.post("/rest/rest-login", restaurant);
-   console.log(response)
-      if(response.status === 200 ){
-        navigate('/admin-res')
+      console.log(response);
+      if (response.status === 200) {
+       
+          setCookie("restaurantId", response.data._id);
+          setCookie("restaurantName", response.data.name);
+          setCookie("restaurantEmail", response.data.email);
+          setCookie("restaurantPhone", response.data.phone);
+        navigate("/admin-res");
         window.location.reload();
-
       }
-      
-
-     
     } catch (err) {
       console.log(err);
       setError(err.response.data, "user response");
@@ -50,7 +49,6 @@ const RestaurantLogin = () => {
 
       <section>
         <Container>
-         
           <Row>
             <Col lg="6" md="6" sm="12" className="m-auto ">
               <Paper elevation={3}>
@@ -84,11 +82,12 @@ const RestaurantLogin = () => {
                   </div>
                   <br></br>
                 </form>
-               
               </Paper>
               <br></br>
               <div className="text-center">
-                <Link to="/restaurantregister">New to Deliorder ? Create an account</Link>
+                <Link to="/restaurantregister">
+                  New to Deliorder ? Create an account
+                </Link>
               </div>
             </Col>
           </Row>

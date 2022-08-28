@@ -13,7 +13,7 @@ import { getMenus } from "../../store/shopping-cart/menuSlice";
 import axios from "../../axios";
 import Menu from "./Menu/Menu";
 import ComboUI from "./Combo/ComboUI";
-import FastfoodIcon from '@mui/icons-material/Fastfood';
+import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Paper from "@mui/material/Paper";
@@ -22,8 +22,18 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { useCookies } from "react-cookie";
 
 const Restaurantsdashboard = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const restaurantId = cookies.restaurantId;
+  const restaurantName = cookies.restaurantName;
+  const restaurantPhone = cookies.restaurantPhone;
+  const restaurantEmail = cookies.restaurantEmail;
+  const restaurantLicense = cookies.restaurantLicense;
+  const restaurantIssuedate = cookies.restaurantIssuedate;
+  const restaurantExpiredate = cookies.restaurantExpiredate;
+  const restaurantAbout = cookies.restaurantAbout;
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "foodimages/");
@@ -37,32 +47,81 @@ const Restaurantsdashboard = () => {
   const menuFoodNameRef = useRef();
   const menuFoodPriceRef = useRef();
   const menuCategoryRef = useRef();
+  const restaurantPasswordRef = useRef();
+  const restaurantEmailRef = useRef();
+  const restaurantNameRef = useRef();
+  const restaurantPhoneRef = useRef();
+  const restaurantAboutRef = useRef();
+  const restaurantLicRef = useRef();
+  const restaurantIssueRef=useRef();
+  const restaurantExpireRef=useRef();
+  const restaurantOwnernameRef=useRef();
+  const restaurantOwnerphoneRef=useRef();
+  const restaurantLicensetypeRef=useRef();
+
   // add menu data
 
   const addMenuData = async (e) => {
     e.preventDefault();
     const menu = {
       foodname: menuFoodNameRef.current.value,
-      price:menuFoodPriceRef.current.value,
-      category:menuCategoryRef.current.value,
+      price: menuFoodPriceRef.current.value,
+      category: menuCategoryRef.current.value,
     };
-    
+
     if (imageUpload === null) return;
     const imageRef = ref(storage, `foodimages/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        const res = await axios.post("/food/add-menu", { ...menu, imgUrl })
-        .then(()=>{
-          dispatch(getMenus());
-        })
-      
+        const res = await axios
+          .post("/food/add-menu", { ...menu, imgUrl })
+          .then(() => {
+            dispatch(getMenus());
+          });
       });
 
       alert(" successful");
     });
   };
 
+  //update pwd
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    const restaurants = {
+      name: restaurantNameRef.current.value,
+      phone: restaurantPhoneRef.current.value,
+      email: restaurantEmailRef.current.value,
+      password: restaurantPasswordRef.current.value,
+      license: restaurantLicRef.current.value,
+      about: restaurantAboutRef.current.value,
+      issuedate:restaurantIssueRef.current.value,
+      expiredate:restaurantExpireRef.current.value,
+      ownername:restaurantOwnernameRef.current.value,
+      ownerphone:restaurantOwnerphoneRef.current.value,
+      licensetype:restaurantLicensetypeRef.current.value,
+    };
+
+    try {
+      const res = await axios.put(
+        `/rest/update-res/${restaurantId}`,
+        restaurants
+
+        
+      );
+      alert(" successful");
+      if (res.status === 200) {
+      setCookie("restaurantLicense", res.data.license);
+      setCookie("restaurantIssuedate", res.data.issuedate);
+      setCookie("restaurantExpiredate", res.data.expiredate);
+      setCookie("restaurantAbout", res.data.about);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   return (
     <div>
       <Topbar />
@@ -165,7 +224,13 @@ const Restaurantsdashboard = () => {
                     <Col>
                       <div className="new__register">
                         <label>Price</label>
-                        <input type="number" name="price" ref={menuFoodPriceRef} placeholder="Price" required />
+                        <input
+                          type="number"
+                          name="price"
+                          ref={menuFoodPriceRef}
+                          placeholder="Price"
+                          required
+                        />
                       </div>
                     </Col>
                   </Row>
@@ -187,7 +252,7 @@ const Restaurantsdashboard = () => {
                     <Col>
                       <div className="new__register mt-5">
                         <label for="category">Category : </label>
-                        <select ref={menuCategoryRef} >
+                        <select ref={menuCategoryRef}>
                           <option value="Non-Veg"> Non-Veg</option>
                           <option value="Veg">Veg</option>
                         </select>
@@ -218,13 +283,12 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-          <Col>
-            <div style={{ marginLeft: 150, marginRight: 200 }}>
-             <ComboUI/>
-                  </div>
-                  </Col>
-                  </div>  
-                 
+            <Col>
+              <div style={{ marginLeft: 150, marginRight: 200 }}>
+                <ComboUI />
+              </div>
+            </Col>
+          </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
@@ -243,11 +307,10 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-           
             <div style={{ marginLeft: 150, marginRight: 200 }}>
               <h3 className="text-center">Restaurant Details</h3>
               <Paper elevation={3}>
-                <form className="mt-3" onSubmit={addMenuData}>
+                <form className="mt-3" onSubmit={handleClick}>
                   <Row>
                     <Col>
                       <div className="new__register">
@@ -255,16 +318,22 @@ const Restaurantsdashboard = () => {
                         <input
                           type="text"
                           name="foodname"
-                          ref={menuFoodNameRef}
+                          ref={restaurantNameRef}
                           placeholder="First Letter should be captial"
-                          
+                          defaultValue={restaurantName}
                         />
                       </div>
                     </Col>
                     <Col>
                       <div className="new__register">
                         <label>LIC.NO</label>
-                        <input type="number" name="license" ref={menuFoodPriceRef} placeholder="License Number"  />
+                        <input
+                          type="number"
+                          name="license"
+                          ref={restaurantLicRef}
+                          placeholder="License Number"
+                          defaultValue={restaurantLicense}
+                        />
                       </div>
                     </Col>
                   </Row>
@@ -279,106 +348,141 @@ const Restaurantsdashboard = () => {
                           }}
                           name="photo"
                           placeholder=""
-                          required
                         />
                       </div>
                     </Col>
                     <Col>
                       <div className="new__register">
-                      <label>Restaurant Phone Number</label>
-                        <input type="tel" name="phone" ref={menuFoodPriceRef} placeholder="Phone Number" />
-
+                        <label>Restaurant Phone Number</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          ref={restaurantPhoneRef}
+                          placeholder="Phone Number"
+                          defaultValue={restaurantPhone}
+                        />
                       </div>
                     </Col>
                   </Row>
                   <div className="new__register">
-                      <label>About Restaurant</label>
-                        <textarea rows={4} name="about" ref={menuFoodPriceRef} placeholder="What Special about Restaurant..."></textarea>
-
-                      </div>
-
-                  <div className="mt-4 text-center">
-                    <button className="addToCart__btn" type="submit">
-                      Submit
-                    </button>
+                    <label>About Restaurant</label>
+                    <textarea
+                      rows={4}
+                      name="about"
+                      ref={restaurantAboutRef}
+                      placeholder="What Special about Restaurant..."
+                      defaultValue={restaurantAbout}
+                    ></textarea>
                   </div>
+
                   <br></br>
-                </form>
-              </Paper>
-              <h3 className="text-center mt-4">FSSAI Details</h3>
-              <Paper elevation={3}>
-                <form className="mt-3" onSubmit={addMenuData}>
+
+                  <h3 className="text-center mt-4">FSSAI Details</h3>
+
                   <Row>
-                    
                     <Col>
                       <div className="new__register">
                         <label>Issued On: </label>
-                      <input type='date'></input>
-      
+                        <input type="date"
+                        name='issuedate'
+                        ref={restaurantIssueRef}
+                        defaultValue={restaurantIssuedate}
+                        ></input>
                       </div>
                     </Col>
                     <Col>
-                    <div className="new__register">
+                      <div className="new__register">
                         <label>Expire On: </label>
-                      <input type='date'></input>
-      
+                        <input type="date" name='expiredate' ref={restaurantExpireRef} defaultValue={restaurantExpiredate}></input>
                       </div>
                     </Col>
                   </Row>
                   <Row>
-                  <Col>
-                    
-                    <div className="new__register mt-5">
-                      <label for="licensetype">License Type : </label>
-                      <select ref={menuCategoryRef} >
-                        <option value=" Central license">  Central license</option>
-                        <option value="State license"> State license</option>
-                        <option value="Basic registration license"> Basic registration license</option>
-                      </select>
-                    </div>
-                 
-                  </Col>
                     <Col>
-                    <div className="new__register mt-5">
-                    <label>For Renewal :</label>
-                    <a href="https://www.foodlicenseportal.org/?gclid=EAIaIQobChMI_53L85jn-QIVA5hmAh2tzwWLEAAYASAAEgLCWfD_BwE">Go to FSSAI Offical Site</a>
-                   </div>
+                      <div className="new__register mt-5">
+                        <label for="licensetype">License Type : </label>
+                        <select ref={restaurantLicensetypeRef}>
+                          <option value=" Central license">
+                            {" "}
+                            Central license
+                          </option>
+                          <option value="State license"> State license</option>
+                          <option value="Basic registration license">
+                            {" "}
+                            Basic registration license
+                          </option>
+                        </select>
+                      </div>
                     </Col>
-                   
+                    <Col>
+                      <div className="new__register mt-5">
+                        <label>For Renewal :</label>
+                        <a href="https://www.foodlicenseportal.org/?gclid=EAIaIQobChMI_53L85jn-QIVA5hmAh2tzwWLEAAYASAAEgLCWfD_BwE">
+                          Go to FSSAI Offical Site
+                        </a>
+                      </div>
+                    </Col>
                   </Row>
-                  
 
-                  <div className="mt-4 text-center">
-                    <button className="addToCart__btn" type="submit">
-                      Submit
-                    </button>
-                  </div>
                   <br></br>
-                </form>
-              </Paper>
 
-              <h3 className="text-center mt-4">Owner Details</h3>
-              <Paper elevation={3}>
-                <form className="mt-3" onSubmit={addMenuData}>
+                  <h3 className="text-center mt-4">Owner Details</h3>
+
                   <Row>
                     <Col>
-                    
                       <div className="new__register ">
                         <label for="ownername">Owner Name</label>
-                        <input type='text' name="ownername" placeholder="owner name"></input>
+                        <input
+                          type="text"
+                          name="ownername"
+                          placeholder="owner name"
+                          ref={restaurantOwnernameRef}
+                          
+                        ></input>
                       </div>
-                   
                     </Col>
                     <Col>
                       <div className="new__register">
                         <label>Owner Phone Number </label>
-                      <input type='tel' placeholder="Owner's Phone Number" name="ownernumber"></input>
-      
+                        <input
+                          type="tel"
+                          placeholder="Owner's Phone Number"
+                          name="ownernumber"
+                          ref={restaurantOwnerphoneRef}
+                        ></input>
                       </div>
                     </Col>
                   </Row>
-                 
-                  
+
+                  <br></br>
+
+                  <h3 className="text-center mt-4">Account Settings </h3>
+
+                  <Row>
+                    <Col>
+                      <div className="new__register ">
+                        <label for="email">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          ref={restaurantEmailRef}
+                          defaultValue={restaurantEmail}
+                        ></input>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="new__register">
+                        <label>Change Password </label>
+                        <input
+                          type="password"
+                          placeholder="Change Password"
+                          name="password"
+                          ref={restaurantPasswordRef}
+                        ></input>
+                      </div>
+                    </Col>
+                  </Row>
 
                   <div className="mt-4 text-center">
                     <button className="addToCart__btn" type="submit">
