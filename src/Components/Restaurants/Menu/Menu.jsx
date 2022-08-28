@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 
 import { deleteMenu } from "../../../store/shopping-cart/menuSlice";
+import { cartActions } from '../../../store/shopping-cart/cartSlice'
 
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
@@ -13,6 +14,10 @@ const Menu = ({ menu, url }) => {
   const handleDelete = async (id) => {
     dispatch(deleteMenu(id));
   };
+
+
+   
+
 
   return (
     <>
@@ -29,9 +34,13 @@ const Menu = ({ menu, url }) => {
          <Row>
             <Col><p style={{fontWeight:600}}><CurrencyRupeeIcon/> {menu.price}</p></Col>
             <Col>
-          <Button variant="danger" className=" text-center"  onClick={() => handleDelete(menu._id)}>
+       {window.location.href.includes("admin-res")  ? <Button variant="danger" className=" text-center"  onClick={() => handleDelete(menu._id)}>
             Delete
           </Button>
+          : <Button variant="danger" className=" text-center"  onClick={() => console.log("added")}>
+         Add to Cart
+        </Button>}
+
           </Col>
           </Row>
         </Card.Body>

@@ -21,7 +21,7 @@ const Restaurant = () => {
               </Link>
             </button>
             <button className="all__foods-btn">
-              <Link to="/login">Already registered ? Login here</Link>
+              <Link to="/res-login">Already registered ? Login here</Link>
             </button>
           </div>
         </Container>

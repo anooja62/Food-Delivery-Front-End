@@ -52,7 +52,11 @@ const Restaurantsdashboard = () => {
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        await axios.post("/food/add-menu", { ...menu, imgUrl });
+        const res = await axios.post("/food/add-menu", { ...menu, imgUrl })
+        .then(()=>{
+          dispatch(getMenus());
+        })
+      
       });
 
       alert(" successful");

@@ -87,9 +87,11 @@ import { getCombos } from '../../store/shopping-cart/comboSlice';
           <div className="panel-content">
           <h4>Order Now !</h4>
           {menuLIst.length !== 0 && (
+            
             <>
               <div className="row d-flex justify-content-between align-items-center mt-4">
                 {menuLIst.map((u) => (
+                  
                   <Menu key={u.id} menu={u} />
                 ))}
               </div>
