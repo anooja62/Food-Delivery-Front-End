@@ -3,21 +3,26 @@ import { getCombos } from "../../../store/shopping-cart/comboSlice";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios"
-
+import { getMenus } from "../../../store/shopping-cart/menuSlice";
 import Combo from './Combo'
 import { Row, Col } from "react-bootstrap";
 import { storage } from "../../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import Menu from "../Menu/Menu";
 const ComboUI = () => {
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState("");
     const imageListRef = ref(storage, "comboimages/");
+
+    const menuLIst = useSelector((state) => state.menu.list);
+   
   
     const comboLIst = useSelector((state) => state.combo.list);
     const dispatch = useDispatch();
     useEffect(() => {
       dispatch(getCombos());
+      dispatch(getMenus());
     }, []);
   
     const menuFoodNameRef = useRef();
@@ -57,8 +62,12 @@ const ComboUI = () => {
                           name="Items"
                           ref={menuFoodNameRef}
                           placeholder=""
-                          required
+                        
                         />
+                          
+            
+           
+         
                       </div>
                     </Col>
                     <Col>

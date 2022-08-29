@@ -91,7 +91,7 @@ const RestaurantRegister = () => {
       getDownloadURL(snaphsot.ref).then(async(imgUrl)=>{
         setImageList(imgUrl)
         await axios.post("/rest/add-restaurent", {...restaurant,imgUrl});
-        navigate("/login");
+        navigate("/home");
        
       })
       

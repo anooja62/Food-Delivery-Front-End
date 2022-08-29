@@ -34,6 +34,12 @@ const RestaurantLogin = () => {
           setCookie("restaurantName", response.data.name);
           setCookie("restaurantEmail", response.data.email);
           setCookie("restaurantPhone", response.data.phone);
+          setCookie("restaurantLicense", response.data.license);
+      setCookie("restaurantIssuedate", response.data.issuedate);
+      setCookie("restaurantExpiredate", response.data.expiredate);
+      setCookie("restaurantAbout", response.data.about);
+      setCookie("restaurantOwnername", response.data.ownername);
+      setCookie("restaurantOwnerphone", response.data.ownerphone);
         navigate("/admin-res");
         window.location.reload();
       }

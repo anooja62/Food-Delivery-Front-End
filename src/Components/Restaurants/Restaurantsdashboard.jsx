@@ -23,8 +23,10 @@ import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Restaurantsdashboard = () => {
+  const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const restaurantName = cookies.restaurantName;
@@ -34,6 +36,8 @@ const Restaurantsdashboard = () => {
   const restaurantIssuedate = cookies.restaurantIssuedate;
   const restaurantExpiredate = cookies.restaurantExpiredate;
   const restaurantAbout = cookies.restaurantAbout;
+  const restaurantOwnername = cookies.restaurantOwnername;
+  const restaurantOwnerphone = cookies.restaurantOwnerphone;
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "foodimages/");
@@ -58,6 +62,14 @@ const Restaurantsdashboard = () => {
   const restaurantOwnernameRef=useRef();
   const restaurantOwnerphoneRef=useRef();
   const restaurantLicensetypeRef=useRef();
+
+  const clearCookies = () => {
+    removeCookie("restaurantId");
+    removeCookie("restaurantName");
+    removeCookie("restaurantPhone");
+    
+    navigate("/res-login");
+  };
 
   // add menu data
 
@@ -111,12 +123,7 @@ const Restaurantsdashboard = () => {
         
       );
       alert(" successful");
-      if (res.status === 200) {
-      setCookie("restaurantLicense", res.data.license);
-      setCookie("restaurantIssuedate", res.data.issuedate);
-      setCookie("restaurantExpiredate", res.data.expiredate);
-      setCookie("restaurantAbout", res.data.about);
-      }
+      
     } catch (err) {
       console.log(err);
     }
@@ -163,7 +170,7 @@ const Restaurantsdashboard = () => {
             </p>
           </Tab>
           <Tab>
-            <p>
+            <p onClick={() => clearCookies()}>
               <LockOutlinedIcon /> Log Out
             </p>
           </Tab>
@@ -437,6 +444,7 @@ const Restaurantsdashboard = () => {
                           name="ownername"
                           placeholder="owner name"
                           ref={restaurantOwnernameRef}
+                          defaultValue={restaurantOwnername}
                           
                         ></input>
                       </div>
@@ -449,6 +457,7 @@ const Restaurantsdashboard = () => {
                           placeholder="Owner's Phone Number"
                           name="ownernumber"
                           ref={restaurantOwnerphoneRef}
+                          defaultValue={restaurantOwnerphone}
                         ></input>
                       </div>
                     </Col>

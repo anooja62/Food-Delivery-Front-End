@@ -37,9 +37,9 @@ const Menu = ({ menu, url }) => {
        {window.location.href.includes("admin-res")  ? <Button variant="danger" className=" text-center"  onClick={() => handleDelete(menu._id)}>
             Delete
           </Button>
-          : <Button variant="danger" className=" text-center"  onClick={() => console.log("added")}>
+          : <button  className="addToCart__btn"  onClick={() => console.log("added")}>
          Add to Cart
-        </Button>}
+        </button>}
 
           </Col>
           </Row>

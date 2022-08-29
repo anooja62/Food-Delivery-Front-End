@@ -11,12 +11,14 @@ import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
 import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
-import StarHalfOutlinedIcon from '@mui/icons-material/StarHalfOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
+import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import Fssai from "../Components/Restaurants/FSSAI/Fssai";
 
 import Tab from "react-bootstrap/Tab";
 
@@ -25,7 +27,7 @@ import { useCookies } from "react-cookie";
 
 const Admin = () => {
   const navigate = useNavigate();
- 
+
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,13 +35,12 @@ const Admin = () => {
     dispatch(getDeliveryboys());
     dispatch(getFoodreviews());
     dispatch(getUsers());
-   
   }, []);
 
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
   const foodreviewLIst = useSelector((state) => state.foodreview.list);
   const userLIst = useSelector((state) => state.user.list);
- 
+
   const [cookies, setCookie, removeCookie] = useCookies(null);
 
   const isAdmin = cookies.isAdmin;
@@ -68,22 +69,25 @@ const Admin = () => {
           <Col sm={2}>
             <ListGroup>
               <ListGroup.Item action href="#">
-                <DashboardOutlinedIcon/> Dashboard
+                <DashboardOutlinedIcon /> Dashboard
               </ListGroup.Item>
               <ListGroup.Item action href="#users">
-                <PeopleAltOutlinedIcon/> Users
+                <PeopleAltOutlinedIcon /> Users
               </ListGroup.Item>
               <ListGroup.Item action href="#restaurant">
-                <StorefrontOutlinedIcon/> Restaurants
+                <StorefrontOutlinedIcon /> Restaurants
+              </ListGroup.Item>
+              <ListGroup.Item action href="#fssai">
+                <StickyNote2Icon /> FSSAI
               </ListGroup.Item>
               <ListGroup.Item action href="#deliveryboy">
-                <DeliveryDiningOutlinedIcon/> Delivery
+                <DeliveryDiningOutlinedIcon /> Delivery
               </ListGroup.Item>
               <ListGroup.Item action href="#reviews">
-                <StarHalfOutlinedIcon/> Reviews
+                <StarHalfOutlinedIcon /> Reviews
               </ListGroup.Item>
               <ListGroup.Item action onClick={() => clearCookies()}>
-               <LockOutlinedIcon/> Logout
+                <LockOutlinedIcon /> Logout
               </ListGroup.Item>
             </ListGroup>
           </Col>
@@ -188,8 +192,25 @@ const Admin = () => {
                     {restaurantLIst.map((u) => (
                       <Manage key={u.id} restaurant={u} />
                     ))}
+                  </table>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="#fssai">
+                <div>
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Restaurant Name</th>
+                        <th>Email</th>
 
-                  
+                        <th>FSSAI Expire date</th>
+
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    {restaurantLIst.map((u) => (
+                      <Fssai key={u.id} restaurant={u} />
+                    ))}
                   </table>
                 </div>
               </Tab.Pane>
