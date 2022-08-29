@@ -477,7 +477,7 @@ const Home = () => {
                   </Modal>
                 </Col>
                 <Col>
-                  <Link to="/login">
+                  <Link to="/delivery-login">
                     <p className="choose_us-title d-flex align-items-center gap-2">
                       Already have an account ? Login here
                     </p>

@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 export const getMenus = createAsyncThunk(
-  "food/allMenus",
-  async () => {
-    const response = await axios.get(`/food/all-menu`);
+  `food/allMenus`,
+  async (id) => {
+    const response = await axios.get(`/food/all-menu/${id}`);
     return response.data;
   }
 );
+export const addMenu = createAsyncThunk("food/add-menu", async (menu) => {
+  const response = await axios.post("food/add-menu",menu);
+
+  return response.data;
+});
 export const deleteMenu = createAsyncThunk(
   "food/allMenus",
   async (id) => {
@@ -30,6 +35,16 @@ const menuSlice = createSlice({
       state.status = "success";
     },
     [getMenus.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [addMenu.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [addMenu.fulfilled]: (state, { payload }) => {
+      state.list = payload;
+      state.status = "success";
+    },
+    [addMenu.rejected]: (state, action) => {
       state.status = "failed";
     },
     [deleteMenu.pending]: (state, action) => {

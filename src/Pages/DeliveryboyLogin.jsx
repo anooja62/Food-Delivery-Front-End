@@ -5,51 +5,48 @@ import Helmet from "../Components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
 import axios from ".././axios";
 import { useCookies } from "react-cookie";
-
 import { Link } from "react-router-dom";
 
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
-const RestaurantLogin = () => {
-  const [cookies, setCookie] = useCookies(null);
-  const [error, setError] = useState("");
-  const loginEmailRef = useRef();
-  const loginPasswordRef = useRef();
-  const navigate = useNavigate();
 
+const DeliveryboyLogin = () => {
+    const [cookies, setCookie] = useCookies(null);
+    const [error, setError] = useState("");
+    const loginEmailRef = useRef();
+    const loginPasswordRef = useRef();
+    const navigate = useNavigate();
+
+    
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const restaurant = {
+    const deliveryboy = {
       email: loginEmailRef.current.value,
       password: loginPasswordRef.current.value,
     };
-
     try {
-      const response = await axios.post("/rest/rest-login", restaurant);
-      console.log(response);
-      if (response.status === 200) {
-        setCookie("restaurantId", response.data._id);
-        setCookie("restaurantName", response.data.name);
-        setCookie("restaurantEmail", response.data.email);
-        setCookie("restaurantPhone", response.data.phone);
-        setCookie("restaurantLicense", response.data.license);
-        setCookie("restaurantIssuedate", response.data.issuedate);
-        setCookie("restaurantExpiredate", response.data.expiredate);
-        setCookie("restaurantAbout", response.data.about);
-        setCookie("restaurantOwnername", response.data.ownername);
-        setCookie("restaurantOwnerphone", response.data.ownerphone);
-        navigate("/admin-res");
-        window.location.reload();
+        const response = await axios.post("/deli/delivery-login", deliveryboy);
+        console.log(response);
+        if (response.status === 200) {
+          setCookie("deliveryboyId", response.data._id);
+          setCookie("deliveryboyName", response.data.name);
+          setCookie("deliveryboyEmail", response.data.email);
+          setCookie("deliveryboyPhone", response.data.phone);
+         
+          setCookie("deliveryboyCity", response.data.city);
+        
+          navigate("/admin-staff");
+          window.location.reload();
+        }
+      } catch (err) {
+        console.log(err);
+        setError(err.response.data, "user response");
       }
-    } catch (err) {
-      console.log(err);
-      setError(err.response.data, "user response");
-    }
-  };
-
+    };
   return (
-    <Helmet title="Login">
+    <div>
+ <Helmet title="Deliveryboy Login">
       <CommonSection title="Welcome back!" />
 
       <section>
@@ -90,7 +87,7 @@ const RestaurantLogin = () => {
               </Paper>
               <br></br>
               <div className="text-center">
-                <Link to="/restaurantregister">
+                <Link to="/home">
                   New to Deliorder ? Create an account
                 </Link>
               </div>
@@ -99,7 +96,9 @@ const RestaurantLogin = () => {
         </Container>
       </section>
     </Helmet>
-  );
-};
+  
+    </div>
+  )
+}
 
-export default RestaurantLogin;
+export default DeliveryboyLogin

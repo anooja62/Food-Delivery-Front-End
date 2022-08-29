@@ -23,23 +23,32 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Menu from './Menu/Menu';
 import Combo from './Combo/Combo';
 import { getCombos } from '../../store/shopping-cart/comboSlice';
+import { getRestaurantdetails } from '../../store/shopping-cart/restaurantSlice';
+import Details from './Details/Details';
 
  const RestaurantUI = () => {
 
   
   const menuLIst = useSelector((state) => state.menu.list);
   const comboLIst = useSelector((state) => state.combo.list);
+  const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMenus());
     dispatch(getCombos());
+    dispatch(getRestaurantdetails());
   }, []);
     
   return (
     <div>
         <section className='first__sec'>
-            <h2>Name of the Restaurant</h2>
-            <p className='text-muted'>Address of Restaurant</p>
+           <div>
+            {restaurantLIst.map((u) => (
+             
+                  
+                  <Details key={u.id} restaurant={u} />
+                ))}
+                </div>
          <Swiper
         slidesPerView={3}
         spaceBetween={30}

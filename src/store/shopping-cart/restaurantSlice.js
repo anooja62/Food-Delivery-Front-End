@@ -1,14 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 export const getRestaurants = createAsyncThunk(
-  "rest/allReataurants",
+  "rest/allRestaurants",
   async () => {
     const response = await axios.get(`/rest/all-restaurent`);
     return response.data;
   }
 );
+export const getRestaurantdetails = createAsyncThunk(
+  `rest/allRestaurants`,
+  async (id) => {
+    const response = await axios.get(`/rest/res-details${id}`);
+    return response.data;
+  }
+);
 export const rejectRestaurant = createAsyncThunk(
-  "rest/allReataurants",
+  "rest/allRestaurants",
   async (id) => {
     const response = await axios.put(`/rest/reject/${id}`);
     return response.data;
@@ -30,6 +37,16 @@ const restaurantSlice = createSlice({
       state.status = "success";
     },
     [getRestaurants.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getRestaurantdetails.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getRestaurantdetails.fulfilled]: (state, { payload }) => {
+      state.list = payload;
+      state.status = "success";
+    },
+    [getRestaurantdetails.rejected]: (state, action) => {
       state.status = "failed";
     },
     [rejectRestaurant.pending]: (state, action) => {

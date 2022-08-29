@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import WhereToVoteOutlinedIcon from "@mui/icons-material/WhereToVoteOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
-import { getMenus } from "../../store/shopping-cart/menuSlice";
+import { getMenus,addMenu } from "../../store/shopping-cart/menuSlice";
 import axios from "../../axios";
 import Menu from "./Menu/Menu";
 import ComboUI from "./Combo/ComboUI";
@@ -24,8 +24,25 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { signupSchema } from "../../schemas";
+import { useFormik } from "formik";
+const initialValues = {
+  name: "",
+  phone: "",
+ 
+  address: "",
+  license:"",
+  
+  
+ 
+};
 
 const Restaurantsdashboard = () => {
+  const { handleBlur, handleChange, errors, touched } = useFormik({
+    initialValues,
+    validationSchema: signupSchema,
+   
+  });
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
@@ -45,7 +62,7 @@ const Restaurantsdashboard = () => {
   const menuLIst = useSelector((state) => state.menu.list);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMenus());
+    dispatch(getMenus(restaurantId));
   }, []);
 
   const menuFoodNameRef = useRef();
@@ -79,6 +96,7 @@ const Restaurantsdashboard = () => {
       foodname: menuFoodNameRef.current.value,
       price: menuFoodPriceRef.current.value,
       category: menuCategoryRef.current.value,
+      restaurantId: restaurantId,
     };
 
     if (imageUpload === null) return;
@@ -335,13 +353,20 @@ const Restaurantsdashboard = () => {
                       <div className="new__register">
                         <label>LIC.NO</label>
                         <input
-                          type="number"
+                          type="tel"
                           name="license"
                           ref={restaurantLicRef}
                           placeholder="License Number"
                           defaultValue={restaurantLicense}
+                          onBlur={handleBlur}
+                                onChange={handleChange}
                         />
                       </div>
+                      <div className="error_container">
+                              {errors.license && touched.license && (
+                                <p className="form_error">{errors.license}</p>
+                              )}
+                            </div>
                     </Col>
                   </Row>
                   <Row>
