@@ -5,8 +5,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux';
 import { cartActions } from '../../../store/shopping-cart/cartSlice';
 import {useCookies} from 'react-cookie'
- import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
