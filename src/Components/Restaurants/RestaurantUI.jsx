@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import FoodBankIcon from '@mui/icons-material/FoodBank';
+import Menu from './Menu/Menu';
 import dineout1 from '../../assets/images/dineout1.jpg'
 import dineout2 from '../../assets/images/dineout2.jpg'
 import dineout3 from '../../assets/images/dineout3.jpg'
@@ -18,36 +19,35 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
-
+import { useParams,
+} from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Menu from './Menu/Menu';
-import Combo from './Combo/Combo';
-import { getCombos } from '../../store/shopping-cart/comboSlice';
-import { getRestaurantdetails } from '../../store/shopping-cart/restaurantSlice';
+
+
 import Details from './Details/Details';
 
  const RestaurantUI = () => {
-
   
+  let { id } = useParams();
+ 
   const menuLIst = useSelector((state) => state.menu.list);
-  const comboLIst = useSelector((state) => state.combo.list);
-  const restaurantLIst = useSelector((state) => state.restaurant.list);
+ 
   const dispatch = useDispatch();
+  
   useEffect(() => {
-    dispatch(getMenus());
-    dispatch(getCombos());
-    dispatch(getRestaurantdetails());
+    dispatch(getMenus(id));
   }, []);
+
     
   return (
     <div>
         <section className='first__sec'>
            <div>
-            {restaurantLIst.map((u) => (
+           
              
                   
-                  <Details key={u.id} restaurant={u} />
-                ))}
+                  <Details  />
+               
                 </div>
          <Swiper
         slidesPerView={3}
@@ -95,30 +95,17 @@ import Details from './Details/Details';
           
           <div className="panel-content">
           <h4>Order Now !</h4>
-          {menuLIst.length !== 0 && (
-            
-            <>
-              <div className="row d-flex justify-content-between align-items-center mt-4">
-                {menuLIst.map((u) => (
-                  
-                  <Menu key={u.id} menu={u} />
-                ))}
-              </div>
-            </>
-          )}
-          </div>
+          <div className="row d-flex justify-content-between mt-5">
+          {menuLIst.map((u) => (
+              <Menu key={u.id} menu={u} />))}
+         </div>
+         
+         </div>
+        
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-          {comboLIst.length !== 0 && (
-            <>
-              <div className="row d-flex justify-content-between align-items-center mt-4">
-                {comboLIst.map((u) => (
-                  <Combo key={u.id} combo={u} />
-                ))}
-              </div>
-            </>
-          )}
+         
           </div>
         </TabPanel>
         <TabPanel>

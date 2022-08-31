@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Topbar from "../Admin/Topbar/Topbar";
+import Top from "./Top/Top";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
@@ -9,9 +9,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import WhereToVoteOutlinedIcon from "@mui/icons-material/WhereToVoteOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
-import { getMenus,addMenu } from "../../store/shopping-cart/menuSlice";
+
 import axios from "../../axios";
-import Menu from "./Menu/Menu";
+
 import ComboUI from "./Combo/ComboUI";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
@@ -58,7 +58,7 @@ const Restaurantsdashboard = () => {
   const restaurantOwnerphone = cookies.restaurantOwnerphone;
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
-  const imageListRef = ref(storage, "restaurantimages/");
+  const imageListRef = ref(storage, "restimages/");
 
  
 
@@ -102,24 +102,30 @@ const Restaurantsdashboard = () => {
       ownerphone:restaurantOwnerphoneRef.current.value,
       licensetype:restaurantLicensetypeRef.current.value,
     };
-
-    try {
-      const res = await axios.put(
-        `/rest/update-res/${restaurantId}`,
-        restaurants
-
+    if (imageUpload === null) return;
+    const imageRef = ref(storage, `restimages/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+      getDownloadURL(snaphsot.ref).then(async (restImg) => {
+        setImageList(restImg);
+        const res = await axios
+        .put(`/rest/update-res/${restaurantId}`,
+        {...restaurants,restImg})
         
-      );
-      alert(" successful");
-      
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    });
+
+    alert(" successful");
+   
+  });
+};
+
+
+
+     
+     
   
   return (
     <div>
-      <Topbar />
+      <Top />
       <Tabs>
         <TabList>
           <Tab>
@@ -281,7 +287,8 @@ const Restaurantsdashboard = () => {
                           }}
                           name="photo"
                           placeholder=""
-                        />
+                          required
+                          />
                       </div>
                     </Col>
                     <Col>

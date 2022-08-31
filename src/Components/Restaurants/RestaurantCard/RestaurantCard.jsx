@@ -1,42 +1,47 @@
-import React from 'react'
-import '../../../styles/product-card.css'
-import {Link, useNavigate} from 'react-router-dom'
+import React from "react";
 
-import {useDispatch} from 'react-redux';
-
-import {useCookies} from 'react-cookie'
-
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useDispatch } from "react-redux";
 
 import { getRestaurantdetails } from "../../../store/shopping-cart/restaurantSlice";
-
-
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
+import {useNavigate} from 'react-router-dom'
 const RestaurantCard = ({ restaurant }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-  dispatch(getRestaurantdetails());
+  // dispatch(getRestaurantdetails());
 
-  const [cookies, setCookie] = useCookies(null)
-  const user = cookies.name
-  
- 
-  const navigate =useNavigate() 
-  
+  const handleSingleRestaurent = (id) =>{
+    
+    navigate("/ui/"+id)
+  }
+
   return (
-    <div className='product__item'>
-<div className="product__img">
-    <img src={image01} alt='products' className='w-50'/>
-</div>
-<div className="product__content">
-<h5><Link to={`/ui/${id}`}>{restaurant.name}</Link></h5>
-<div className='d-flex align-items-center justify-content-between'>
+    <>
   
-   
-    </div>
-    </div>
-    </div>
-   )
-}
+      <Card sx={{ maxWidth: 345 }} className='mt-5'>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="200"
+            src={restaurant.restImg}
+            alt="restaurant images"
+          />
+          <CardContent>
+            <Typography variant="h5" component="div" onClick={()=>handleSingleRestaurent(restaurant._id)}>
+              {restaurant.name}
+            </Typography>
+            
+          </CardContent>
+        </CardActionArea>
+      </Card>
+      
+    </>
+  );
+};
 
-export default RestaurantCard
+export default RestaurantCard;

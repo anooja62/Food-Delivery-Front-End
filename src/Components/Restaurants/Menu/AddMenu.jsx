@@ -110,7 +110,7 @@ const AddMenu = () => {
 
                   <div className="mt-4 text-center">
                     <button className="addToCart__btn" type="submit">
-                      Submit
+                      Create Menu Item
                     </button>
                   </div>
                   <br></br>
@@ -119,13 +119,14 @@ const AddMenu = () => {
   
      {menuLIst.length !== 0 && (
         <>
-          <div className="row d-flex justify-content-between align-items-center mt-5">
+          <div className="row d-flex justify-content-between ">
             {menuLIst.map((u) => (
               <Menu key={u.id} menu={u} />
             ))}
           </div>
         </>
       )}
+      
         </div>
   )
 }

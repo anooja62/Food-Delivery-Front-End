@@ -71,14 +71,7 @@ const Manage = ({ restaurant, url }) => {
             </Icon>
           </td>
 
-          <td className="text-center">
-            <IconButton aria-label="delete" size="large">
-              <DeleteIcon
-                fontSize="inherit"
-                onClick={() => handleReject(restaurant._id)}
-              />
-            </IconButton>
-          </td>
+         
         </tr>
       </tbody>
       {modalShow && (

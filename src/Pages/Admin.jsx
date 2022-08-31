@@ -185,7 +185,7 @@ const Admin = () => {
 
                         <th>Send Mail</th>
 
-                        <th>Action</th>
+                       
                       </tr>
                     </thead>
 

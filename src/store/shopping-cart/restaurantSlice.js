@@ -8,16 +8,23 @@ export const getRestaurants = createAsyncThunk(
   }
 );
 export const getRestaurantdetails = createAsyncThunk(
-  `rest/allRestaurants`,
+  `rest/getRestaurantdetails`,
   async (id) => {
-    const response = await axios.get(`/rest/res-details${id}`);
+    const response = await axios.get(`/rest/res-details/${id}`);
     return response.data;
   }
 );
 export const rejectRestaurant = createAsyncThunk(
-  "rest/allRestaurants",
+  "rest/rejectRestaurant",
   async (id) => {
     const response = await axios.put(`/rest/reject/${id}`);
+    return response.data;
+  }
+);
+export const getSingleRestaurant = createAsyncThunk(
+  `rest/getSingleRestaurant`,
+  async (id) => {
+    const response = await axios.get(`/rest/single-rest/${id}`);
     return response.data;
   }
 );
@@ -27,6 +34,7 @@ const restaurantSlice = createSlice({
   initialState: {
     list: [],
     status: null,
+    singleRestaurent:{}
   },
   extraReducers: {
     [getRestaurants.pending]: (state, action) => {
@@ -57,6 +65,16 @@ const restaurantSlice = createSlice({
       state.status = "success";
     },
     [rejectRestaurant.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getSingleRestaurant.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getSingleRestaurant.fulfilled]: (state, { payload }) => {
+      state.singleRestaurent = payload;
+      state.status = "success";
+    },
+    [getSingleRestaurant.rejected]: (state, action) => {
       state.status = "failed";
     },
   },
