@@ -19,11 +19,13 @@ import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Fssai from "../Components/Restaurants/FSSAI/Fssai";
-
+import MarkEmailUnreadOutlinedIcon from '@mui/icons-material/MarkEmailUnreadOutlined';
 import Tab from "react-bootstrap/Tab";
 
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import MessageReply from "../Components/Admin/MessageReply/MessageReply";
+
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const Admin = () => {
     dispatch(getDeliveryboys());
     dispatch(getFoodreviews());
     dispatch(getUsers());
+   
   }, []);
 
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
@@ -85,6 +88,9 @@ const Admin = () => {
               </ListGroup.Item>
               <ListGroup.Item action href="#reviews">
                 <StarHalfOutlinedIcon /> Reviews
+              </ListGroup.Item>
+              <ListGroup.Item action href="#messages">
+                <MarkEmailUnreadOutlinedIcon /> Messages
               </ListGroup.Item>
               <ListGroup.Item action onClick={() => clearCookies()}>
                 <LockOutlinedIcon /> Logout
@@ -248,6 +254,13 @@ const Admin = () => {
                       <Review key={u.id} foodreview={u} />
                     ))}
                   </table>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="#messages">
+                <div>
+                
+       <MessageReply/>
+     
                 </div>
               </Tab.Pane>
             </Tab.Content>

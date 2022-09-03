@@ -1,5 +1,5 @@
 import React,{useRef,useEffect, useState} from 'react'
-import { getMenus,addMenu } from '../../../store/shopping-cart/menuSlice';
+import { getMenus } from '../../../store/shopping-cart/menuSlice';
 import axios from "../../../axios";
 import { storage } from "../../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";

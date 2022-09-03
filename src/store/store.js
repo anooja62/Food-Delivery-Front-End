@@ -9,6 +9,7 @@ import addressSlice from "./shopping-cart/addressSlice";
 import menuSlice from "./shopping-cart/menuSlice";
 import comboSlice from "./shopping-cart/comboSlice";
 
+
 const store = configureStore({
   reducer: {
     cart: cartSlice.reducer,
@@ -20,6 +21,8 @@ const store = configureStore({
     shipping: addressSlice.reducer,
     menu:menuSlice.reducer,
     combo:comboSlice.reducer,
+   
+
 
   },
 });

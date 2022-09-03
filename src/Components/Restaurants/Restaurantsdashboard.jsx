@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import WhereToVoteOutlinedIcon from "@mui/icons-material/WhereToVoteOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
-
+import RateReviewIcon from '@mui/icons-material/RateReview';
 import axios from "../../axios";
 
 import ComboUI from "./Combo/ComboUI";
@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { signupSchema } from "../../schemas";
 import { useFormik } from "formik";
 import AddMenu from "./Menu/AddMenu";
+import ContactDeliorder from "./ContactDeliorder/ContactDeliorder";
 const initialValues = {
   name: "",
   phone: "",
@@ -60,7 +61,7 @@ const Restaurantsdashboard = () => {
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "restimages/");
 
- 
+  
 
 
   const restaurantPasswordRef = useRef();
@@ -161,6 +162,11 @@ const Restaurantsdashboard = () => {
           <Tab>
             <p>
               <ManageAccountsIcon /> Manage
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+              <RateReviewIcon /> Contact
             </p>
           </Tab>
           <Tab>
@@ -435,6 +441,14 @@ const Restaurantsdashboard = () => {
                 </form>
               </Paper>
             </div>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2 className="text-center">Contact Deliorder</h2>
+            
+         <ContactDeliorder/>
+      
           </div>
         </TabPanel>
       </Tabs>

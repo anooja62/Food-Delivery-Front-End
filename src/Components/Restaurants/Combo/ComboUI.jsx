@@ -1,40 +1,53 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getCombos } from "../../../store/shopping-cart/comboSlice";
+import Box from '@mui/material/Box';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+import Checkbox from '@mui/material/Checkbox';
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios"
 import { getMenus } from "../../../store/shopping-cart/menuSlice";
-import Combo from './Combo'
+import { useCookies } from "react-cookie";
 import { Row, Col } from "react-bootstrap";
 import { storage } from "../../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import Menu from "../Menu/Menu";
+
+
 const ComboUI = () => {
+  const [cookies, setCookie] = useCookies(null);
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState("");
     const imageListRef = ref(storage, "comboimages/");
-
+    const restaurantId = cookies.restaurantId;
     const menuLIst = useSelector((state) => state.menu.list);
-   
-  
-    const comboLIst = useSelector((state) => state.combo.list);
+
+    console.log(menuLIst)
     const dispatch = useDispatch();
     useEffect(() => {
-      dispatch(getCombos());
-      dispatch(getMenus());
+      
+      dispatch(getMenus(restaurantId));
     }, []);
+    
   
+    const handleChange = (event) => {
+     
+    };
     const menuFoodNameRef = useRef();
     const menuFoodPriceRef = useRef();
     const menuCategoryRef = useRef();
 
     const addMenuData = async (e) => {
         e.preventDefault();
+       
         const combo = {
           Items: menuFoodNameRef.current.value,
           price:menuFoodPriceRef.current.value,
           category:menuCategoryRef.current.value,
+          
         };
         
         if (imageUpload === null) return;
@@ -48,6 +61,8 @@ const ComboUI = () => {
           alert(" successful");
         });
       };
+     
+
   return (
     <>
 <h1 className="text-center">Add Combo Items</h1>
@@ -56,17 +71,41 @@ const ComboUI = () => {
                   <Row>
                     <Col>
                       <div className="new__register">
-                        <label>Food Items</label>
-                        <input
-                          type="text"
-                          name="Items"
-                          ref={menuFoodNameRef}
-                          placeholder=""
-                        
-                        />
-                          
+                      <FormLabel component="legend">Select Combo</FormLabel>
+                     {   menuLIst.map((item)=>{
+                      return (<Box sx={{ display: 'flex' }}>
+                      <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+                      
+                        <FormGroup>
+                          <FormControlLabel
+                            control={
+                              <Checkbox checked={false} onChange={handleChange} name="gilad" />
+
+                            }
+                            label={item.foodname}
+                          />
+                         
+                         
+                        </FormGroup>
+                       
+                      </FormControl>
+                      <FormControl
+                        required
+                 
+                        component="fieldset"
+                        sx={{ m: 3 }}
+                        variant="standard"
+                      >
+                     
+                      
+                      </FormControl>
+                    </Box>)
+                     })
+                      
+                     }
+                      
             
-           
+                     
          
                       </div>
                     </Col>
@@ -114,16 +153,6 @@ const ComboUI = () => {
             
          
 
-          {comboLIst.length !== 0 && (
-            <>
-              <div className="row d-flex justify-content-between align-items-center mt-5">
-                {comboLIst.map((u) => (
-                  <Combo key={u.id} combo={u} />
-                ))}
-              </div>
-            </>
-          )}
-   
     </>
   )
 }

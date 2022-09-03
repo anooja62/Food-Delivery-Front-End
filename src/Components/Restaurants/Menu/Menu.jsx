@@ -9,6 +9,7 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import {cartActions} from '../../../store/shopping-cart/cartSlice'
 
 const Menu = ({ menu, url }) => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const Menu = ({ menu, url }) => {
             ) : (
               <button
                 className="addToCart__btn"
-                onClick={() => console.log("added")}
+                onClick={() => dispatch(cartActions.addItem(menu))}
               >
                 Add to Cart
               </button>

@@ -153,11 +153,13 @@ const Home = () => {
                 <p>Order food from your favourite restaurants.</p>
                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
                   <button className="order__btn d-flex align-items-center justify-content-between">
+                    
                     <Link to="/ordernow">Order now</Link>
+
                     <i class="ri-arrow-right-s-line"></i>
                   </button>
                   <button className="all__foods-btn">
-                    <Link to="/ui">See all food menu</Link>
+                    <Link to="/register">SignUp For More</Link>
                   </button>
                 </div>
                 <div className="hero__service d-flex align-items-center gap-5 mt-5">

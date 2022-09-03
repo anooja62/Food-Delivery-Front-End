@@ -65,17 +65,17 @@ const Cart=()=> {
 
 
 const Tr = props=>{
-  const {id,image01,title,price,quantity} = props.item
+  const {_id,image,foodname,price,quantity} = props.item
   const dispatch = useDispatch()
-  const deleteItem = ()=>{
-    dispatch(cartActions.deleteItem(id))
+  const deleteItem = (_id)=>{
+    dispatch(cartActions.deleteItem(_id))
   }
   return <tr>
-    <td className='text-center cart__img-box'><img src={image01} alt=""/></td>
-    <td className='text-center'>{title}</td>
+    <td className='text-center cart__img-box'><img src={image} alt=""/></td>
+    <td className='text-center'>{foodname}</td>
     <td className='text-center'>₹{price}</td>
     <td className='text-center'>{quantity}px</td>
-    <td className='text-center cart__item-del'><i class="ri-delete-bin-line" onClick={deleteItem}></i></td>
+    <td className='text-center cart__item-del'><i class="ri-delete-bin-line" onClick={()=>deleteItem(_id)}></i></td>
   </tr>
 }
 

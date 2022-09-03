@@ -1,26 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 
-import { useDispatch,useSelector } from "react-redux";
-import {
-  
-  useParams,
-} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-
-import {getSingleRestaurant} from "../../../store/shopping-cart/restaurantSlice";
+import { getSingleRestaurant } from "../../../store/shopping-cart/restaurantSlice";
 
 const Details = () => {
-
   let { id } = useParams();
 
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(getSingleRestaurant(id));
-  }, [])
+  }, []);
 
-  const singleRestaurant = useSelector((state) => state.restaurant.singleRestaurent);
+  const singleRestaurant = useSelector(
+    (state) => state.restaurant.singleRestaurent
+  );
 
   return (
     <>
