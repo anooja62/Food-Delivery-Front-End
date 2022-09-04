@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 
 import { Button, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import {cartActions} from '../../../store/shopping-cart/cartSlice'
 
+
 const Menu = ({ menu, url }) => {
+
+ 
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteMenu(id));
@@ -19,6 +22,7 @@ const Menu = ({ menu, url }) => {
 
   return (
     <>
+   
       <Card sx={{ maxWidth: 345 }} className='mt-5'>
         <CardMedia
           component="img"
@@ -50,10 +54,11 @@ const Menu = ({ menu, url }) => {
             ) : (
               <button
                 className="addToCart__btn"
-                onClick={() => dispatch(cartActions.addItem(menu))}
+                onClick={() => dispatch(cartActions.addItem(menu)) }
               >
                 Add to Cart
               </button>
+              
             )}
           </Col>
         </Row>

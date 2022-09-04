@@ -1,6 +1,6 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import FastfoodIcon from '@mui/icons-material/Fastfood';
-
+import {  Row, Col } from "react-bootstrap";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import FoodBankIcon from '@mui/icons-material/FoodBank';
@@ -20,9 +20,12 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import About from './About/About';
 
 
+import 'react-toastify/dist/ReactToastify.css';
 import Details from './Details/Details';
 
  const RestaurantUI = () => {
+
+ 
   
   let { id } = useParams();
  
@@ -71,6 +74,21 @@ import Details from './Details/Details';
           
           <div className="panel-content">
           <h4>Order Now !</h4>
+          <Row>
+            <Col lg="6" md="6" sm="6" xs="12">
+              <div className="search__widget d-flex align-items-center justify-content-between">
+                <input
+                  type="text"
+                  placeholder="I'm looking for....."
+                  
+                />
+                <span>
+                  <i class="ri-search-line"></i>
+                </span>
+              </div>
+            </Col>
+            </Row>
+          
           <div className="row d-flex justify-content-between ">
           {menuLIst.map((u) => (
               <Menu key={u.id} menu={u} />))}

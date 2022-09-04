@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import Menu from './Menu';
 
+
 const AddMenu = () => {
+  
     const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
     const [imageUpload, setImageUpload] = useState(null);
