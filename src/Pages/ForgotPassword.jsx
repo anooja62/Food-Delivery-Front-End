@@ -17,7 +17,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await axios.put("/auth/send-otp", user);
-      if (res.data.code === 200) {
+      if (res.status === 200) {
         navigate("/newsubmit");
       } else {
         alert("Email / Server Error.");

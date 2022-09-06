@@ -82,7 +82,7 @@ const ComboUI = () => {
 
   useEffect(() => {
     const sum = checkedFinalItems.reduce((accumulator, object) => {
-      console.log(object);
+      
       return Number(accumulator) + Number(object.price);
     }, 0);
     setTotalPrice(sum);
@@ -104,6 +104,7 @@ const ComboUI = () => {
                     value={item.foodname}
                     type="checkbox"
                     onChange={handleCheck}
+                    
                   />
 
                   <span> {item.foodname}</span>

@@ -1,4 +1,11 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "../../axios";
+
+
+export const addCart = createAsyncThunk("cart/add-cart", async (cart) => {
+    const response = await axios.post("cart/add-cart",cart);
+    return response.data;
+  });
 
 const initialState = {
     cartItems : [],
@@ -9,7 +16,17 @@ const initialState = {
 const cartSlice =createSlice({
     name:'cart',
     initialState:initialState,
-
+    extraReducers: {
+        [addCart.pending]: (state, action) => {
+          state.status = "loading";
+        },
+        [addCart.fulfilled]: (state,{ payload} ) => {
+          state.status = "success";
+        },
+        [addCart.rejected]: (state, action) => {
+          state.status = "failed";
+        },
+    },
     reducers:{
      addItem(state,action){
             const newItem = action.payload

@@ -5,30 +5,31 @@ import Paper from "@mui/material/Paper";
 import { Row, Col } from "react-bootstrap";
 import axios from "../../axios"
 import { useNavigate } from "react-router-dom";
-const NewSubmit = (props) => {
+const NewSubmit = () => {
   const resetOtpRef = useRef();
   const resetPasswordRef = useRef();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    
-    axios.post('auth/submit-otp',
-        {
-            otp: resetOtpRef.current.value,
-            password: resetPasswordRef.current.value,
-        })
-        .then(res => {
-            console.log(res.data)
-            if (res.data.code === 200) {
+  const handleSubmit =async (e) => {
+    e.preventDefault();
+    const user ={
+      otp: resetOtpRef.current.value,
+      password: resetPasswordRef.current.value,
+    };
+    try{
+   const res = await axios.put('/auth/submit-otp',user);
+      
+           
+            if (res.status === 200) {
                 navigate('/login')
-                alert('Password Updated.')
+                
             } else {
-                alert('server err / wrong OTP')
+                alert('server error / wrong OTP');
             }
-        }).catch(err => {
-            console.log(err)
-        })
-}
+          }catch(err) {
+            console.log(err);
+        }
+};
 
   return (
     <Helmet title="reset-password">
@@ -42,7 +43,7 @@ const NewSubmit = (props) => {
               <div className="new__register">
                 <label>OTP</label>
                 <input
-                  type="tel"
+                  type="number"
                   placeholder="OTP"
                   required
                   ref={resetOtpRef}
