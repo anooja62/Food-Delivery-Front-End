@@ -10,6 +10,7 @@ import { rejectRestaurant } from "../../../store/shopping-cart/restaurantSlice";
 import Icon from "@mui/material/Icon";
 
 const Manage = ({ restaurant, url }) => {
+ 
   const restaurantPasswordRef = useRef();
   const restaurantEmailRef = useRef();
   const [modalShow, setModalShow] = useState(false);
@@ -36,7 +37,9 @@ const Manage = ({ restaurant, url }) => {
             "3HARonvI0a5SrbOi6"
           );
           setModalShow(false);
+         
         });
+        
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +73,7 @@ const Manage = ({ restaurant, url }) => {
               add_circle
             </Icon>
           </td>
-
+         
          
         </tr>
       </tbody>

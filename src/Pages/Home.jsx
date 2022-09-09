@@ -13,13 +13,7 @@ import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
 
 import products from "../assets/data/product.js";
-import foodCategoryImg01 from "../assets/images/hamburger.png";
-import foodCategoryImg02 from "../assets/images/pizza.png";
-import foodCategoryImg03 from "../assets/images/bread.png";
 
-import ProductCard from "../Components/UI/product-card/ProductCard.jsx";
-
-import Button from "react-bootstrap/Button";
 
 import review from "../assets/images/review.jpg";
 
@@ -28,7 +22,7 @@ import TestimonialSlider from "../Components/UI/slider/TestimonialSlider.jsx";
 import Modal from "react-bootstrap/Modal";
 
 import { storage } from "./firebase";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
 import { useFormik } from "formik";
@@ -80,29 +74,7 @@ const Home = () => {
   const [category, setCategory] = useState("ALL");
   const [allProducts, setAllProducts] = useState(products);
 
-  useEffect(() => {
-    if (category === "ALL") {
-      setAllProducts(products);
-    }
-    if (category === "BURGER") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Burger"
-      );
-      setAllProducts(filteredProducts);
-    }
-    if (category === "PIZZA") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Pizza"
-      );
-      setAllProducts(filteredProducts);
-    }
-    if (category === "BREAD") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Bread"
-      );
-      setAllProducts(filteredProducts);
-    }
-  }, [category]);
+  
 
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
@@ -151,23 +123,21 @@ const Home = () => {
                   food at <span> your door</span>
                 </h1>
                 <p>Order food from your favourite restaurants.</p>
-                <div className="hero__btns d-flex align-items-center gap-5 mt-4">
+                <div className="hero__btns d-flex align-items-center  mt-4">
                   <button className="order__btn d-flex align-items-center justify-content-between">
                     
                     <Link to="/ordernow">Order now</Link>
 
                     <i class="ri-arrow-right-s-line"></i>
                   </button>
-                  <button className="all__foods-btn">
-                    <Link to="/register">SignUp For More</Link>
-                  </button>
+                 
                 </div>
                 <div className="hero__service d-flex align-items-center gap-5 mt-5">
                   <p className="d-flex align-items-center gap-2">
                     <span className="delivery__icon">
-                      <i class="ri-car-line"></i>
+                    <i class="ri-surgical-mask-line"></i>
                     </span>
-                    No delivery charge
+                    No Contact delivery
                   </p>
                   <p className="d-flex align-items-center gap-2">
                     <span className="delivery__icon">
@@ -219,61 +189,7 @@ const Home = () => {
             <Col lg="4" md="4"></Col>
           </Row>
         </Container>
-      </section>
-      <section>
-        <Container>
-          <Row>
-            <Col lg="12" className="text-center">
-              <h2>Popular Foods</h2>
-            </Col>
-            <Col lg="12">
-              <div className="food__category d-flex align-items-center justify-content-center gap-4">
-                <button
-                  className={`all__btn ${
-                    category === "ALL" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("ALL")}
-                >
-                  All
-                </button>
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BURGER" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("BURGER")}
-                >
-                  <img src={foodCategoryImg01} alt="product" />
-                  Burger
-                </button>
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "PIZZA" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("PIZZA")}
-                >
-                  <img src={foodCategoryImg02} alt="product" />
-                  Pizza
-                </button>
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BREAD" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("BREAD")}
-                >
-                  <img src={foodCategoryImg03} alt="product" />
-                  Bread
-                </button>
-              </div>
-            </Col>
-
-            {allProducts.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
-                <ProductCard item={item} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
+      </section>          
       <section className="why__choose-us">
         <Container>
           <Row>
@@ -362,12 +278,13 @@ const Home = () => {
                     SignUp to Deliver{" "}
                   </button>
                   <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                       <Modal.Title>Sign up now</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <form className=" mb-5" onSubmit={handleClick}>
-                        <div className="form__group">
+                        <div className="new__register">
+                          <label>Name</label>
                           <input
                             type="text"
                             placeholder="Name   (Eg. John Doe)"
@@ -384,7 +301,8 @@ const Home = () => {
                             <p className="form_error">{errors.name}</p>
                           )}
                         </div>
-                        <div className="form__group">
+                        <div className="new__register">
+                          <label>Mobile Number</label>
                           <input
                             type="tel"
                             placeholder="Mobile Number"
@@ -402,7 +320,8 @@ const Home = () => {
                           )}
                         </div>
 
-                        <div className="form__group">
+                        <div className="new__register">
+                          <label>Email</label>
                           <input
                             type="email"
                             placeholder="Email"
@@ -419,7 +338,8 @@ const Home = () => {
                             <p className="form_error">{errors.email}</p>
                           )}
                         </div>
-                        <div className="form__group">
+                        <div className="new__register">
+                          <label>City</label>
                           <input
                             type="text"
                             placeholder="City"
@@ -433,8 +353,8 @@ const Home = () => {
                         </div>
 
                         <Row>
-                          <Col xs={6}>
-                            <div>
+                          
+                            <div className="new__register">
                               <label> Driving License</label>
                               <input
                                 type="file"
@@ -446,12 +366,12 @@ const Home = () => {
                                 }}
                               />
                             </div>
-                          </Col>
+                          
                         </Row>
                         <br></br>
                         <Row>
-                          <Col sm={8}>
-                            {" "}
+                         
+                           <div className="text-center">
                             <button
                               type="submit"
                               className="addToCart__btn"
@@ -463,16 +383,8 @@ const Home = () => {
                             >
                               Register{" "}
                             </button>
-                          </Col>
-                          <Col sm={4}>
-                            {" "}
-                            <Button
-                              variant="outline-success"
-                              onClick={handleClose}
-                            >
-                              Close
-                            </Button>
-                          </Col>
+                          
+                            </div>
                         </Row>
                       </form>
                     </Modal.Body>
@@ -487,7 +399,7 @@ const Home = () => {
                 </Col>
               </Row>
               <br></br>
-              <br></br>
+             
               <Row>
                 <h3>Delivery Requirements*</h3>
                 <p className=" mb-4 choose_us-desc">Two Wheeler Delivery: </p>
@@ -537,7 +449,7 @@ const Home = () => {
           <Row>
             <Col lg="6" md="6">
               <div className="testimonial">
-                <h5 className="testimonial__subtitle mb-4">Testimonial</h5>
+                <h5 className="testimonial__subtitle">Testimonial</h5>
                 <h2 className="testimonial__title mb-4">
                   {" "}
                   What our <span>customers </span>are saying
