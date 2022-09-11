@@ -28,7 +28,7 @@ const Address = ({ shipping }) => {
         </Col>
         <Col></Col>
         <Col>
-          <Chip size="small" label="home" />
+          <Chip size="small" label= {shipping?.label}/>
           </Col>
           </Row>
         <p><i class="ri-phone-fill"></i> {shipping?.phone}</p>

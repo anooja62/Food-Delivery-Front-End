@@ -69,9 +69,9 @@ const Manage = ({ restaurant, url }) => {
             <a href={restaurant.imgUrl}>view License</a>
           </td>
           <td className="text-center" style={{ paddingTop: "2%" }}>
-            <Icon color="primary" onClick={() => setModalShow(true)}>
+        {  !restaurant.isApproved ? <Icon color="primary" onClick={() => setModalShow(true)}>
               add_circle
-            </Icon>
+            </Icon> : <p>Approved</p>}
           </td>
          
          

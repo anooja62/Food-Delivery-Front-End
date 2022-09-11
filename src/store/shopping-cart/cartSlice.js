@@ -6,11 +6,18 @@ export const addCart = createAsyncThunk("cart/add-cart", async (cart) => {
   return response.data;
 });
 
+export const userCart = createAsyncThunk("cart/get-cart", async (id) => {
+  const response = await axios.get(`cart/get-cart/${id}`);
+  return response.data;
+});
+
 const initialState = {
   cartItems: [],
+  cartItemsApi: [],
   totalQuantity: 0,
   totalAmount: 0,
   dbUpdated: false,
+  apiCallRequired: false,
 };
 const cartSlice = createSlice({
   name: "cart",
@@ -23,8 +30,21 @@ const cartSlice = createSlice({
     [addCart.fulfilled]: (state, { payload }) => {
       state.status = "success";
       state.dbUpdated = true;
+      state.cartItemsApi = payload;
     },
     [addCart.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [userCart.pending]: (state, action) => {
+      state.status = "loading";
+      state.dbUpdated = true;
+    },
+    [userCart.fulfilled]: (state, { payload }) => {
+      state.status = "success";
+      state.dbUpdated = true;
+      state.cartItems = payload;
+    },
+    [userCart.rejected]: (state, action) => {
       state.status = "failed";
     },
   },
@@ -37,6 +57,7 @@ const cartSlice = createSlice({
       );
       state.totalQuantity++;
       state.dbUpdated = false;
+      state.apiCallRequired = true;
       if (!existingItem) {
         state.cartItems.push({
           _id: newItem._id,
@@ -52,22 +73,23 @@ const cartSlice = createSlice({
           Number(existingItem.totalPrice) + Number(newItem.price);
       }
       state.dbUpdated = false;
-      state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),
-        0
-      );
+      state.apiCallRequired = true;
+      // state.totalAmount = state.cartItems.reduce(
+      //   (total, item) => total + Number(item.price) * Number(item.quantity),
+      //   0
+      // );
     },
 
     removeItem(state, action) {
       const id = action.payload;
       const existingItem = state.cartItems.find((item) => item._id === id);
       state.totalQuantity--;
-
+      state.apiCallRequired = true;
       if (existingItem.quantity === 1) {
         state.cartItems = state.cartItems.filter((item) => item._id !== id);
       } else {
         existingItem.quantity--;
-
+        state.apiCallRequired = true;
         existingItem.totalPrice =
           Number(existingItem.totalPrice) - Number(existingItem.price);
       }
@@ -82,25 +104,36 @@ const cartSlice = createSlice({
       const existingItem = state.cartItems.find((item) => item._id === id);
       state.totalQuantity++;
       existingItem.quantity++;
+      state.apiCallRequired = true;
       state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
     },
+    calculations(state, action) {
 
-    deleteItem(state, action) {
-      const id = action.payload;
-      console.log(id, "dfdsfdsfdsf");
-      const existingItem = state.cartItems.find((item) => item._id === id);
-
-      if (existingItem) {
-        state.cartItems = state.cartItems.filter((item) => item._id !== id);
-        state.totalQuantity = state.totalQuantity - existingItem.quantity;
-      }
       state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
+      state.totalQuantity = state.cartItems.reduce(
+        (total, item) => total + Number(item.quantity),
+        0
+      );
+    },
+    deleteItem(state, action) {
+      const id = action.payload;
+  
+      const existingItem = state.cartItems.find((item) => item._id === id);
+      state.apiCallRequired = true;
+      if (existingItem) {
+        state.cartItems = state.cartItems.filter((item) => item._id !== id);
+        state.totalQuantity = state.totalQuantity - existingItem.quantity;
+      }
+      // state.totalAmount = state.cartItems.reduce(
+      //   (total, item) => total + Number(item.price) * Number(item.quantity),
+      //   0
+      // );
     },
   },
 });

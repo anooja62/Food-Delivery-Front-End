@@ -39,7 +39,7 @@ const ComboUI = () => {
     e.preventDefault();
 
     const combo = {
-      Items: menuFoodNameRef.current.value,
+      Items: checked,
       price: menuFoodPriceRef.current.value,
       category: menuCategoryRef.current.value,
     };
@@ -50,6 +50,8 @@ const ComboUI = () => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
         await axios.post("/comb/add-combo", { ...combo, imgUrl });
+        setChecked([])
+        setTotalPrice('')
       });
 
       alert(" successful");
@@ -86,6 +88,7 @@ const ComboUI = () => {
       return Number(accumulator) + Number(object.price);
     }, 0);
     setTotalPrice(sum);
+    // console.log(checkedFinalItems)
   }, [checked]);
 
   return (
@@ -120,7 +123,7 @@ const ComboUI = () => {
                   type="number"
                   name="price"
                   value={totalPrice}
-                  // ref={menuFoodPriceRef}
+                  
                   placeholder="Price"
                   required
                 />
@@ -132,7 +135,7 @@ const ComboUI = () => {
                 <input
                   type="number"
                   name="comboprice"
-                  // ref={menuFoodPriceRef}
+                   ref={menuFoodPriceRef}
                   placeholder="Price"
                   required
                 />

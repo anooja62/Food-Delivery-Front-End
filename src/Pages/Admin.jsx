@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
+
 import Topbar from "../Components/Admin/Topbar/Topbar";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
@@ -21,13 +21,18 @@ import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Fssai from "../Components/Restaurants/FSSAI/Fssai";
 import MarkEmailUnreadOutlinedIcon from '@mui/icons-material/MarkEmailUnreadOutlined';
 import Tab from "react-bootstrap/Tab";
-
+import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import MessageReply from "../Components/Admin/MessageReply/MessageReply";
-
+import Button from 'react-bootstrap/Button';
 
 const Admin = () => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const navigate = useNavigate();
   
 
@@ -35,21 +40,25 @@ const Admin = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRestaurants());
+   
+  }, [restaurantLIst]);
+
+  useEffect(()=>{
     dispatch(getDeliveryboys());
     dispatch(getFoodreviews());
     dispatch(getUsers());
    
-  }, []);
-
+  },[])
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
   const foodreviewLIst = useSelector((state) => state.foodreview.list);
   const userLIst = useSelector((state) => state.user.list);
 
-  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const [cookies, removeCookie] = useCookies(null);
 
   const isAdmin = cookies.isAdmin;
 
   const clearCookies = () => {
+    
     removeCookie("name");
     removeCookie("email");
     removeCookie("phone");
@@ -93,10 +102,25 @@ const Admin = () => {
               <ListGroup.Item action href="#messages">
                 <MarkEmailUnreadOutlinedIcon /> Messages
               </ListGroup.Item>
-              <ListGroup.Item action onClick={() => clearCookies()}>
+              <ListGroup.Item action onClick= {handleShow}>
                 <LockOutlinedIcon /> Logout
               </ListGroup.Item>
             </ListGroup>
+           
+            <Modal show={show} onHide={handleClose}>
+            <Modal.Header >
+          <Modal.Title><br></br></Modal.Title>
+        </Modal.Header>
+        <Modal.Body><h5>Do you really want to logout ? </h5></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={clearCookies}>
+            Logout Now
+          </Button>
+        </Modal.Footer>
+      </Modal>
           </Col>
 
           <Col sm={9}>

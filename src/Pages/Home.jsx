@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Helmet from "../Components/Helmet/Helmet.js";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import axios from ".././axios";
 import deliverman from "../assets/images/deliverman.png";
 import whyimg from "../assets/images/whyimg.png";
 import "../styles/maincontent.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Category from "../Components/UI/category/Category.jsx";
 import "../styles/home.css";
 import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
-
-import products from "../assets/data/product.js";
-
+import { useCookies } from "react-cookie";
 
 import review from "../assets/images/review.jpg";
 
@@ -55,9 +53,9 @@ const featureData = [
   },
 ];
 const Home = () => {
+  const [cookies] = useCookies(null);
 
-  
- 
+  const user = cookies.name;
 
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
@@ -71,16 +69,9 @@ const Home = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [category, setCategory] = useState("ALL");
-  const [allProducts, setAllProducts] = useState(products);
-
-  
-
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const imageListRef = ref(storage, "deliveryboy/");
-
-  const navigate = useNavigate();
 
   const signupNameRef = useRef();
   const signupPhoneRef = useRef();
@@ -102,7 +93,7 @@ const Home = () => {
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        await axios.post("deli/delivery", {...deliveryboy,imgUrl});
+        await axios.post("deli/delivery", { ...deliveryboy, imgUrl });
         setShow(false);
       });
 
@@ -125,17 +116,19 @@ const Home = () => {
                 <p>Order food from your favourite restaurants.</p>
                 <div className="hero__btns d-flex align-items-center  mt-4">
                   <button className="order__btn d-flex align-items-center justify-content-between">
-                    
-                    <Link to="/ordernow">Order now</Link>
+                    {user ? (
+                      <Link to="/ordernow">Order now</Link>
+                    ) : (
+                      <Link to="/login">Order now</Link>
+                    )}
 
                     <i class="ri-arrow-right-s-line"></i>
                   </button>
-                 
                 </div>
                 <div className="hero__service d-flex align-items-center gap-5 mt-5">
                   <p className="d-flex align-items-center gap-2">
                     <span className="delivery__icon">
-                    <i class="ri-surgical-mask-line"></i>
+                      <i class="ri-surgical-mask-line"></i>
                     </span>
                     No Contact delivery
                   </p>
@@ -189,7 +182,7 @@ const Home = () => {
             <Col lg="4" md="4"></Col>
           </Row>
         </Container>
-      </section>          
+      </section>
       <section className="why__choose-us">
         <Container>
           <Row>
@@ -353,25 +346,22 @@ const Home = () => {
                         </div>
 
                         <Row>
-                          
-                            <div className="new__register">
-                              <label> Driving License</label>
-                              <input
-                                type="file"
-                                name="upload"
-                                accept="application/pdf,application/vnd.ms-excel"
-                                required
-                                onChange={(event) => {
-                                  setImageUpload(event.target.files[0]);
-                                }}
-                              />
-                            </div>
-                          
+                          <div className="new__register">
+                            <label> Driving License</label>
+                            <input
+                              type="file"
+                              name="upload"
+                              accept="application/pdf,application/vnd.ms-excel"
+                              required
+                              onChange={(event) => {
+                                setImageUpload(event.target.files[0]);
+                              }}
+                            />
+                          </div>
                         </Row>
                         <br></br>
                         <Row>
-                         
-                           <div className="text-center">
+                          <div className="text-center">
                             <button
                               type="submit"
                               className="addToCart__btn"
@@ -383,8 +373,7 @@ const Home = () => {
                             >
                               Register{" "}
                             </button>
-                          
-                            </div>
+                          </div>
                         </Row>
                       </form>
                     </Modal.Body>
@@ -399,7 +388,7 @@ const Home = () => {
                 </Col>
               </Row>
               <br></br>
-             
+
               <Row>
                 <h3>Delivery Requirements*</h3>
                 <p className=" mb-4 choose_us-desc">Two Wheeler Delivery: </p>

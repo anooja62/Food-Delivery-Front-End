@@ -21,47 +21,22 @@ import About from "./About/About";
 import "react-toastify/dist/ReactToastify.css";
 import Details from "./Details/Details";
 import { useCookies } from "react-cookie";
-import { addCart } from "../../store/shopping-cart/cartSlice";
+
 const RestaurantUI = () => {
   let { id } = useParams();
   const [cookies, setCookie] = useCookies(null);
-  const userId = cookies.userId;
+
   const menuLIst = useSelector((state) => state.menu.list);
+
   const cartProducts = useSelector((state) => state.cart.cartItems);
-  const cartDbUpdated = useSelector((state) => state.cart.dbUpdated);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  console.log({ cartProducts });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMenus(id));
+    // dispatch(userCart(userId));
   }, []);
-  let arr = [
-    {
-      userId: userId,
-      products: [],
-    },
-  ];
-
-  const objForApi = (cart) => {
-    for (let i = 0; i < cart.length; i++) {
-      let obj = {
-        products: {
-          ProductId: "",
-          quantity: "",
-        },
-      };
-      obj.products.ProductId = cartProducts[i]._id;
-      obj.products.quantity = cartProducts[i].quantity;
-      arr[0].products.push(obj.products);
-    }
-  };
-  useEffect(() => {
-    objForApi(cartProducts);
-    dispatch(addCart(arr[0]));
-  }, [cartProducts, totalAmount]);
-
-  console.log(arr);
 
   return (
     <div>

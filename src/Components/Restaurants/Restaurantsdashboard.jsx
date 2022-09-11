@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Top from "./Top/Top";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
@@ -9,15 +9,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import WhereToVoteOutlinedIcon from "@mui/icons-material/WhereToVoteOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
-import RateReviewIcon from '@mui/icons-material/RateReview';
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import axios from "../../axios";
-
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import ComboUI from "./Combo/ComboUI";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
-import Alert from "react-bootstrap/Alert";
+
 import Paper from "@mui/material/Paper";
-import { useDispatch, useSelector } from "react-redux";
+
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -31,19 +32,19 @@ import ContactDeliorder from "./ContactDeliorder/ContactDeliorder";
 const initialValues = {
   name: "",
   phone: "",
- 
+
   address: "",
-  license:"",
-  
-  
- 
+  license: "",
 };
 
 const Restaurantsdashboard = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const { handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
     validationSchema: signupSchema,
-   
   });
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(null);
@@ -61,32 +62,33 @@ const Restaurantsdashboard = () => {
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "restimages/");
 
-  
-
-
   const restaurantPasswordRef = useRef();
   const restaurantEmailRef = useRef();
   const restaurantNameRef = useRef();
   const restaurantPhoneRef = useRef();
   const restaurantAboutRef = useRef();
   const restaurantLicRef = useRef();
-  const restaurantIssueRef=useRef();
-  const restaurantExpireRef=useRef();
-  const restaurantOwnernameRef=useRef();
-  const restaurantOwnerphoneRef=useRef();
-  const restaurantLicensetypeRef=useRef();
+  const restaurantIssueRef = useRef();
+  const restaurantExpireRef = useRef();
+  const restaurantOwnernameRef = useRef();
+  const restaurantOwnerphoneRef = useRef();
+  const restaurantLicensetypeRef = useRef();
 
   const clearCookies = () => {
     removeCookie("restaurantId");
     removeCookie("restaurantName");
     removeCookie("restaurantPhone");
-    
+    removeCookie("restaurantAbout");
+    removeCookie("restaurantLicense");
+    removeCookie("restaurantOwnername");
+    removeCookie("restaurantOwnerphone");
+    removeCookie("restaurantIssuedate");
+    removeCookie("restaurantExpiredate");
+
     navigate("/res-login");
   };
 
-  
-
-  //update pwd
+  //update details
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -97,33 +99,27 @@ const Restaurantsdashboard = () => {
       password: restaurantPasswordRef.current.value,
       license: restaurantLicRef.current.value,
       about: restaurantAboutRef.current.value,
-      issuedate:restaurantIssueRef.current.value,
-      expiredate:restaurantExpireRef.current.value,
-      ownername:restaurantOwnernameRef.current.value,
-      ownerphone:restaurantOwnerphoneRef.current.value,
-      licensetype:restaurantLicensetypeRef.current.value,
+      issuedate: restaurantIssueRef.current.value,
+      expiredate: restaurantExpireRef.current.value,
+      ownername: restaurantOwnernameRef.current.value,
+      ownerphone: restaurantOwnerphoneRef.current.value,
+      licensetype: restaurantLicensetypeRef.current.value,
     };
     if (imageUpload === null) return;
     const imageRef = ref(storage, `restimages/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (restImg) => {
         setImageList(restImg);
-        const res = await axios
-        .put(`/rest/update-res/${restaurantId}`,
-        {...restaurants,restImg})
-        
+        const res = await axios.put(`/rest/update-res/${restaurantId}`, {
+          ...restaurants,
+          restImg,
+        });
+      });
+
+      alert(" successful");
     });
+  };
 
-    alert(" successful");
-   
-  });
-};
-
-
-
-     
-     
-  
   return (
     <div>
       <Top />
@@ -170,10 +166,28 @@ const Restaurantsdashboard = () => {
             </p>
           </Tab>
           <Tab>
-            <p onClick={() => clearCookies()}>
+            <p onClick={handleShow}>
               <LockOutlinedIcon /> Log Out
             </p>
           </Tab>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>
+                <br></br>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h5>Do you really want to logout ? </h5>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={clearCookies}>
+                Logout Now
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </TabList>
 
         <TabPanel>
@@ -213,11 +227,9 @@ const Restaurantsdashboard = () => {
           <Col>
             <div style={{ marginLeft: 150, marginRight: 200 }}>
               <h1 className="text-center">Add Menu Item</h1>
-             <AddMenu/>
+              <AddMenu />
             </div>
           </Col>
-
-         
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
@@ -272,14 +284,14 @@ const Restaurantsdashboard = () => {
                           placeholder="License Number"
                           defaultValue={restaurantLicense}
                           onBlur={handleBlur}
-                                onChange={handleChange}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="error_container">
-                              {errors.license && touched.license && (
-                                <p className="form_error">{errors.license}</p>
-                              )}
-                            </div>
+                        {errors.license && touched.license && (
+                          <p className="form_error">{errors.license}</p>
+                        )}
+                      </div>
                     </Col>
                   </Row>
                   <Row>
@@ -294,7 +306,7 @@ const Restaurantsdashboard = () => {
                           name="photo"
                           placeholder=""
                           required
-                          />
+                        />
                       </div>
                     </Col>
                     <Col>
@@ -329,17 +341,23 @@ const Restaurantsdashboard = () => {
                     <Col>
                       <div className="new__register">
                         <label>Issued On: </label>
-                        <input type="date"
-                        name='issuedate'
-                        ref={restaurantIssueRef}
-                        defaultValue={restaurantIssuedate}
+                        <input
+                          type="date"
+                          name="issuedate"
+                          ref={restaurantIssueRef}
+                          defaultValue={restaurantIssuedate}
                         ></input>
                       </div>
                     </Col>
                     <Col>
                       <div className="new__register">
                         <label>Expire On: </label>
-                        <input type="date" name='expiredate' ref={restaurantExpireRef} defaultValue={restaurantExpiredate}></input>
+                        <input
+                          type="date"
+                          name="expiredate"
+                          ref={restaurantExpireRef}
+                          defaultValue={restaurantExpiredate}
+                        ></input>
                       </div>
                     </Col>
                   </Row>
@@ -384,7 +402,6 @@ const Restaurantsdashboard = () => {
                           placeholder="owner name"
                           ref={restaurantOwnernameRef}
                           defaultValue={restaurantOwnername}
-                          
                         ></input>
                       </div>
                     </Col>
@@ -446,9 +463,8 @@ const Restaurantsdashboard = () => {
         <TabPanel>
           <div className="panel-content">
             <h2 className="text-center">Contact Deliorder</h2>
-            
-         <ContactDeliorder/>
-      
+
+            <ContactDeliorder />
           </div>
         </TabPanel>
       </Tabs>

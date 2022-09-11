@@ -37,7 +37,7 @@ const Profile = () => {
   const user = cookies.name;
   const phone = cookies.phone;
   const email = cookies.email;
-
+ const [labelAdd, setLabelAdd] = useState('')
   const [show, setShow] = useState(false);
   const data = useSelector((state) => state.shipping.list);
   const handleClose = () => setShow(false);
@@ -70,7 +70,7 @@ const Profile = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     const shipping = {
-      
+      label:labelAdd,
       name: addressNameRef.current.value,
       phone: addressPhoneRef.current.value,
       pincode: addressPincodeRef.current.value,
@@ -112,6 +112,10 @@ const Profile = () => {
       console.log(err);
     }
   };
+  const handleChip = (label) => {
+    console.log(label)
+    setLabelAdd(label)
+  }
 
   return (
     <Helmet title="Profile">
@@ -246,8 +250,8 @@ const Profile = () => {
                       </Modal.Header>
                       <Modal.Body>
                       <Stack direction="row" spacing={1}>
-      <Chip icon={<HomeIcon />} label="Home" />
-      <Chip icon={<DomainIcon />} label="Work" variant="outlined"  />
+      <Chip icon={<HomeIcon />} label="Home" onClick={()=>handleChip("Home")}/>
+      <Chip icon={<DomainIcon />} label="Work" variant="outlined" onClick={()=>handleChip("Work")} />
     </Stack>
                         <form onSubmit={handleClick}>
 

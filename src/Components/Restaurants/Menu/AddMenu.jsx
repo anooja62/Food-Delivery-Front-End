@@ -22,7 +22,7 @@ const AddMenu = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMenus(restaurantId));
-  }, []);
+  }, [menuLIst]);
   const menuFoodNameRef = useRef();
   const menuFoodPriceRef = useRef();
   const menuCategoryRef = useRef();
