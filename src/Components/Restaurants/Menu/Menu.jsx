@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,20 +11,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 import { useCookies } from "react-cookie";
-import { addCart } from "../../../store/shopping-cart/cartSlice";
+
 
 const Menu = ({ menu, url }) => {
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const cartProducts = useSelector((state) => state.cart.cartItems);
   const cartDbUpdated = useSelector((state) => state.cart.dbUpdated);
-  // console.log(cartDbUpdated);
-  //  console.log(cartProducts)
+
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteMenu(id));
   };
-  console.log("dsfdsfdfdfdfdf");
+  
   let arr = [
     {
       userId: userId,
@@ -32,9 +31,9 @@ const Menu = ({ menu, url }) => {
     },
   ];
 
-  //  console.log(obj)
+  
   const handleAddItem = (menu, arr, cartProducts) => {
-    // objForApi(cartProducts);
+ 
     dispatch(cartActions.addItem(menu));
   };
 

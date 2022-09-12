@@ -305,7 +305,7 @@ const Restaurantsdashboard = () => {
                           }}
                           name="photo"
                           placeholder=""
-                          required
+                         
                         />
                       </div>
                     </Col>

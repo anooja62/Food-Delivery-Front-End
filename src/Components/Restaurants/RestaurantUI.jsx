@@ -5,14 +5,14 @@ import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import Menu from "./Menu/Menu";
+import Combo from './Combo/Combo'
 
 import "../../styles/restaurantui.css";
 import { getMenus } from "../../store/shopping-cart/menuSlice";
+import { getCombos } from "../../store/shopping-cart/comboSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+
 
 import { useParams } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -27,15 +27,17 @@ const RestaurantUI = () => {
   const [cookies, setCookie] = useCookies(null);
 
   const menuLIst = useSelector((state) => state.menu.list);
+  const comboList = useSelector((state) => state.combo.list);
 
   const cartProducts = useSelector((state) => state.cart.cartItems);
-  console.log({ cartProducts });
+ 
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMenus(id));
-    // dispatch(userCart(userId));
+    dispatch(getCombos(id));
+    
   }, []);
 
   return (
@@ -91,7 +93,13 @@ const RestaurantUI = () => {
             </div>
           </TabPanel>
           <TabPanel>
-            <div className="panel-content"></div>
+            <div className="panel-content ">
+            <div className="row d-flex justify-content-between ">
+                {comboList.map((u) => {
+                  return <Combo key={u.id} combo={u} />;
+                })}
+              </div>
+            </div>
           </TabPanel>
           <TabPanel>
             <div className="panel-content">

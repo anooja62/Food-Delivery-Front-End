@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-
-
+import Combo from './Combo'
+import { getCombos } from "../../../store/shopping-cart/comboSlice";
 
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,24 +24,27 @@ const ComboUI = () => {
   const imageListRef = ref(storage, "comboimages/");
   const restaurantId = cookies.restaurantId;
   const menuLIst = useSelector((state) => state.menu.list);
+  const comboList = useSelector((state) => state.combo.list);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMenus(restaurantId));
+    dispatch(getCombos(restaurantId));
   }, []);
 
   const handleChange = (event) => {};
-  const menuFoodNameRef = useRef();
+ 
   const menuFoodPriceRef = useRef();
   const menuCategoryRef = useRef();
 
-  const addMenuData = async (e) => {
+  const addComboData = async (e) => {
     e.preventDefault();
 
     const combo = {
-      Items: checked,
+      foodname: checked,
       price: menuFoodPriceRef.current.value,
       category: menuCategoryRef.current.value,
+      restaurantId: restaurantId,
     };
 
     if (imageUpload === null) return;
@@ -49,7 +52,10 @@ const ComboUI = () => {
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        await axios.post("/comb/add-combo", { ...combo, imgUrl });
+        await axios.post("/comb/add-combo", { ...combo, imgUrl })
+        .then(() => {
+          dispatch(getCombos());
+        });
         setChecked([])
         setTotalPrice('')
       });
@@ -88,14 +94,14 @@ const ComboUI = () => {
       return Number(accumulator) + Number(object.price);
     }, 0);
     setTotalPrice(sum);
-    // console.log(checkedFinalItems)
+    
   }, [checked]);
 
   return (
     <>
       <h1 className="text-center">Add Combo Items</h1>
       <Paper elevation={3}>
-        <form className="mt-3" onSubmit={addMenuData}>
+        <form className="mt-3" onSubmit={addComboData}>
           <div className="new__register">
             <label> Select Combo</label>
           </div>{" "}
@@ -174,7 +180,18 @@ const ComboUI = () => {
           </div>
           <br></br>
         </form>
+        
       </Paper>
+      <br/>
+      {comboList.length !== 0 && (
+        <>
+          <div className="row d-flex justify-content-between ">
+            {comboList.map((u) => (
+              <Combo key={u.id} combo={u} />
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };

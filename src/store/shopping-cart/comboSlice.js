@@ -2,11 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 export const getCombos = createAsyncThunk(
   "comb/allCombos",
-  async () => {
-    const response = await axios.get(`/comb/all-combo`);
+  async (id) => {
+    const response = await axios.get(`/comb/all-combo/${id}`);
     return response.data;
   }
 );
+export const addCombo = createAsyncThunk("comb/add-combo", async (combo) => {
+  const response = await axios.post("comb/add-combo",combo);
+
+  return response.data;
+});
 export const deleteCombo = createAsyncThunk(
   "comb/allCombos",
   async (id) => {

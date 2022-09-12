@@ -51,7 +51,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       const newItem = action.payload;
-      console.log(newItem);
+      
       const existingItem = state.cartItems.find(
         (item) => item.id !== newItem.id
       );
@@ -74,10 +74,7 @@ const cartSlice = createSlice({
       }
       state.dbUpdated = false;
       state.apiCallRequired = true;
-      // state.totalAmount = state.cartItems.reduce(
-      //   (total, item) => total + Number(item.price) * Number(item.quantity),
-      //   0
-      // );
+     
     },
 
     removeItem(state, action) {
@@ -130,10 +127,7 @@ const cartSlice = createSlice({
         state.cartItems = state.cartItems.filter((item) => item._id !== id);
         state.totalQuantity = state.totalQuantity - existingItem.quantity;
       }
-      // state.totalAmount = state.cartItems.reduce(
-      //   (total, item) => total + Number(item.price) * Number(item.quantity),
-      //   0
-      // );
+      
     },
   },
 });

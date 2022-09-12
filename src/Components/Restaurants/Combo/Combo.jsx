@@ -1,42 +1,83 @@
 import React from "react";
 
-import { Card, Button,Row,Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import {  Button,Row,Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
-
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import { deleteCombo } from "../../../store/shopping-cart/comboSlice";
 
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { cartActions } from "../../../store/shopping-cart/cartSlice";
+import { useCookies } from "react-cookie";
+
 
 const Combo = ({ combo, url }) => {
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
+  const cartProducts = useSelector((state) => state.cart.cartItems);
+
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteCombo(id));
   };
 
+  let arr = [
+    {
+      userId: userId,
+      products: [],
+    },
+  ];
+
+  
+  const handleAddItem = (combo, arr, cartProducts) => {
+ 
+    dispatch(cartActions.addItem(combo));
+  };
+
   return (
     <>
-      <Card style={{ maxWidth: "18rem", height:"20rem"}} className="mb-3">
-        <Card.Img
-          variant="top"
-          
+      <Card style={{ maxWidth: 345}} className="mt-5">
+      <CardMedia
+          component="img"
+          height="140"
           src={combo.imgUrl}
-          
+          alt="product"
         />
-        <Card.Body className="text-center">
-          <Card.Title> {combo.Items}</Card.Title>
+        <CardContent>
+        <Typography gutterBottom variant="h6" component="div">
+            {combo.foodname}
+          </Typography>
+        </CardContent>
           <p>{combo.category}</p>
          <Row>
-            <Col><p style={{fontWeight:600}}><CurrencyRupeeIcon/> {combo.price}</p></Col>
-            <Col>
-          <Button variant="danger" className=" text-center"  onClick={() => handleDelete(combo._id)}>
-            Delete
-          </Button>
+         <Col>
+            <span className="product__price">₹{combo.price}</span>
           </Col>
-          </Row>
-        </Card.Body>
+          <Col>
+            {window.location.href.includes("admin-res") ? (
+              <Button
+                variant="danger"
+                className=" text-center"
+                onClick={() => handleDelete(combo._id)}
+              >
+                Delete
+              </Button>
+            ) : (
+              <button
+                className="addToCart__btn"
+                onClick={() => handleAddItem(combo, arr, cartProducts)}
+              >
+                Add to Cart
+              </button>
+            )}
+          </Col>
+        </Row>
+        <br></br>
       </Card>
-    </>
+      <br></br>
+      </>
   );
 };
 export default Combo;
