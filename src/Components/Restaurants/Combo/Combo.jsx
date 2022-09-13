@@ -8,7 +8,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { deleteCombo } from "../../../store/shopping-cart/comboSlice";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 import { useCookies } from "react-cookie";
 
@@ -34,6 +35,15 @@ const Combo = ({ combo, url }) => {
   const handleAddItem = (combo, arr, cartProducts) => {
  
     dispatch(cartActions.addItem(combo));
+    toast.success("Item Added to cart", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   };
 
   return (
@@ -70,6 +80,17 @@ const Combo = ({ combo, url }) => {
                 onClick={() => handleAddItem(combo, arr, cartProducts)}
               >
                 Add to Cart
+                <ToastContainer
+position="bottom-center"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
               </button>
             )}
           </Col>

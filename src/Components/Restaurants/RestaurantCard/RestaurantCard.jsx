@@ -13,7 +13,7 @@ const RestaurantCard = ({ restaurant }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  // dispatch(getRestaurantdetails());
+ 
 
   const handleSingleRestaurent = (id) =>{
     
@@ -30,6 +30,7 @@ const RestaurantCard = ({ restaurant }) => {
             height="200"
             src={restaurant.restImg}
             alt="restaurant images"
+            onClick={()=>handleSingleRestaurent(restaurant._id)}
           />
           <CardContent>
             <Typography variant="h5" component="div" onClick={()=>handleSingleRestaurent(restaurant._id)}>

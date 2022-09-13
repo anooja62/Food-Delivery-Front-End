@@ -33,7 +33,7 @@ const Header = () => {
   const navigate = useNavigate();
   const apiCallRequired = useSelector((state) => state.cart.apiCallRequired);
 
-  console.log({ cartProducts });
+ 
   const cartDbUpdated = useSelector((state) => state.cart.dbUpdated);
 
   useEffect(() => {
@@ -64,14 +64,14 @@ const Header = () => {
     }
   };
   useEffect(() => {
-    console.log("useEffect");
+    
     objForApi(cartProducts);
     if (apiCallRequired) {
       dispatch(addCart(arr[0]));
     }
   }, [cartProducts, totalAmount]);
 
-  console.log(arr);
+  
   const clearCookies = () => {
     removeCookie("name");
     removeCookie("email");

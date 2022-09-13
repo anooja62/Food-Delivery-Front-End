@@ -11,7 +11,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 import { useCookies } from "react-cookie";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  
 
 const Menu = ({ menu, url }) => {
   const [cookies, setCookie] = useCookies(null);
@@ -35,8 +37,17 @@ const Menu = ({ menu, url }) => {
   const handleAddItem = (menu, arr, cartProducts) => {
  
     dispatch(cartActions.addItem(menu));
+    toast.success("Item Added to cart", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   };
-
+  
   return (
     <>
       <Card sx={{ maxWidth: 345 }} className="mt-5">
@@ -73,7 +84,19 @@ const Menu = ({ menu, url }) => {
                 onClick={() => handleAddItem(menu, arr, cartProducts)}
               >
                 Add to Cart
+                <ToastContainer
+position="bottom-center"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
               </button>
+              
             )}
           </Col>
         </Row>

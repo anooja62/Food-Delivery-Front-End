@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import Menu from "./Menu/Menu";
-import Combo from './Combo/Combo'
+import Combo from "./Combo/Combo";
 
 import "../../styles/restaurantui.css";
 import { getMenus } from "../../store/shopping-cart/menuSlice";
@@ -13,32 +13,32 @@ import { getCombos } from "../../store/shopping-cart/comboSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { useParams } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import About from "./About/About";
-
-import "react-toastify/dist/ReactToastify.css";
 import Details from "./Details/Details";
-import { useCookies } from "react-cookie";
+
+import AddReview from "./Review/AddReview";
+
 
 const RestaurantUI = () => {
+  
   let { id } = useParams();
-  const [cookies, setCookie] = useCookies(null);
 
   const menuLIst = useSelector((state) => state.menu.list);
   const comboList = useSelector((state) => state.combo.list);
-
+  
   const cartProducts = useSelector((state) => state.cart.cartItems);
  
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMenus(id));
     dispatch(getCombos(id));
-    
+   
   }, []);
+
+  
 
   return (
     <div>
@@ -94,7 +94,7 @@ const RestaurantUI = () => {
           </TabPanel>
           <TabPanel>
             <div className="panel-content ">
-            <div className="row d-flex justify-content-between ">
+              <div className="row d-flex justify-content-between ">
                 {comboList.map((u) => {
                   return <Combo key={u.id} combo={u} />;
                 })}
@@ -103,23 +103,11 @@ const RestaurantUI = () => {
           </TabPanel>
           <TabPanel>
             <div className="panel-content">
-              <h2 className="text-center">Add review</h2>
-              <form>
-                <div className="new__register">
-                  <label>Your Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                  ></input>
-                </div>
-                <div className="new__register">
-                  <label>Review</label>
-                  <div className="new__register">
-                    <textarea rows={5} placeholder="Review...."></textarea>
-                  </div>
-                </div>
-              </form>
+              <h2 className="text-center ">Add review</h2>
+              <div style={{ marginLeft: 150, marginRight: 200 }}>
+               revieww
+               
+              </div>
             </div>
           </TabPanel>
           <TabPanel>

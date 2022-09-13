@@ -47,22 +47,27 @@ const Checkout = ()=> {
           <Col lg='8' md='6'>
             <h6 className='mb-4'>Delivery Address</h6>
             <form className=" checkout__form" onSubmit={submitHandler}>
-              <div className="form__group">
+              <div className="new__register">
+                <label>Name</label>
                 <input type='text' placeholder='Name' required onChange={e=> setEnterName(e.target.value)}/>
               </div>
-              <div className="form__group">
-                <input type='number' placeholder='Phone number' required onChange={e=> setEnterPhone(e.target.value)}/>
+              <div className="new__register">
+              <label>Phone Number</label>
+                <input type='tel' placeholder='Phone number' required onChange={e=> setEnterPhone(e.target.value)}/>
               </div>
               
-              <div className="form__group">
+              <div className="new__register">
+              <label>House Name</label>
                 <input type='text' placeholder='House name' required onChange={e=> setEnterHouseName(e.target.value)}/>
               </div>
-              <div className="form__group">
+              <div className="new__register">
+              <label>Pincode</label>
                 <input type='number' placeholder='Pincode' required onChange={e=> setEnterPincode(e.target.value)}/>
               </div>
-                        
-            
+                     <br></br>   
+            <div className='text-center'>
              <button className="addToCart__btn"> Payment</button>
+             </div>
             </form>
            
           </Col>

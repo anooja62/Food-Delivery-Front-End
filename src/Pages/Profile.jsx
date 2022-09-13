@@ -255,9 +255,9 @@ const Profile = () => {
     </Stack>
                         <form onSubmit={handleClick}>
 
-                          <div className="form__group">
+                          <div className="new__register">
                             <label>Name</label>
-                            <div className="form__group">
+                            <div className="new__register">
                               <input
                                 type="text"
                                 placeholder="(Eg. John Doe)"
@@ -275,7 +275,8 @@ const Profile = () => {
                               )}
                             </div>
                           </div>
-                          <div className="form__group">
+                          <div className="new__register">
+                          <label>Phone Number</label>
                             <input
                               type="tel"
                               placeholder="Mobile Number"
@@ -292,7 +293,8 @@ const Profile = () => {
                               <p className="form_error">{errors.phone}</p>
                             )}
                           </div>
-                          <div className="form__group">
+                          <div className="new__register">
+                          <label>Pincode</label>
                             <input
                               type="text"
                               placeholder="Pincode"
@@ -309,7 +311,8 @@ const Profile = () => {
                               <p className="form_error">{errors.pincode}</p>
                             )}
                           </div>
-                          <div className="form__group">
+                          <div className="new__register">
+                          <label>Address</label>
                             <textarea
                               placeholder="House name and address"
                               name="address"
@@ -325,9 +328,11 @@ const Profile = () => {
                               <p className="form_error">{errors.address}</p>
                             )}
                           </div>
-                          <button type="submit" className="addToCart__btn">
+                          <div className="text-center">
+                          <button type="submit" className="addToCart__btn ">
                             Save  Address
                           </button>
+                          </div>
                         </form>
                       </Modal.Body>
                     </Modal>
