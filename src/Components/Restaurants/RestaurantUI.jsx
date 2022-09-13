@@ -74,17 +74,7 @@ const RestaurantUI = () => {
           <TabPanel>
             <div className="panel-content">
               <h4>Order Now !</h4>
-              <Row>
-                <Col lg="6" md="6" sm="6" xs="12">
-                  <div className="search__widget d-flex align-items-center justify-content-between">
-                    <input type="text" placeholder="I'm looking for....." />
-                    <span>
-                      <i class="ri-search-line"></i>
-                    </span>
-                  </div>
-                </Col>
-              </Row>
-
+             
               <div className="row d-flex justify-content-between ">
                 {menuLIst.map((u) => {
                   return <Menu key={u.id} menu={u} />;
@@ -103,10 +93,9 @@ const RestaurantUI = () => {
           </TabPanel>
           <TabPanel>
             <div className="panel-content">
-              <h2 className="text-center ">Add review</h2>
+              
               <div style={{ marginLeft: 150, marginRight: 200 }}>
-               revieww
-               
+            
               </div>
             </div>
           </TabPanel>

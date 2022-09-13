@@ -10,8 +10,9 @@ const AddReview = () => {
   const [cookies, setCookie] = useCookies(null);
   const user = cookies.name;
   let { id } = useParams();
-  console.log(id);
-  const reviewList = useSelector((state) => state.review.list);
+  
+  const reviewList = useSelector((state) => state.foodreview.list);
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFoodreviews(id));
@@ -28,7 +29,11 @@ const AddReview = () => {
     };
 
     try {
-      await axios.post("/revi/review", foodreview);
+      await axios.post("/revi/review", foodreview)
+      .then(() => {
+        dispatch(getFoodreviews());
+      });
+      alert(" successful");
     } catch (err) {
       console.log(err);
     }
@@ -36,7 +41,16 @@ const AddReview = () => {
 
   return (
     <div>
-      <Paper elevation={3}>
+     
+      {reviewList.length !== 0 && (
+        <>
+          {reviewList.map((u) => (
+            <Review key={u.id} foodreview={u} />
+          ))}
+        </>
+      )}
+      <h5 className="text-center ">Add review</h5>
+       <Paper elevation={3}>
         <form className="mt-3" onSubmit={handleReview}>
           <div className="new__register">
             <label>Your Name</label>
@@ -66,13 +80,6 @@ const AddReview = () => {
         </form>
         <br></br>
       </Paper>
-      {reviewList.length !== 0 && (
-        <>
-          {reviewList.map((u) => (
-            <Review key={u.id} review={u} />
-          ))}
-        </>
-      )}
     </div>
   );
 };

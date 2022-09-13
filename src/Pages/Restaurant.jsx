@@ -112,7 +112,7 @@ const Restaurant = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <p className="feature__text">
-                        Creating a restaurant page on Zomato is free of cost.
+                        Creating a restaurant page on Deliorder is free of cost.
                         You can maintain your page by replying to reviews and do
                         a lot more without any charges.
                       </p>

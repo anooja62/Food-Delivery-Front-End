@@ -96,9 +96,7 @@ const Admin = () => {
               <ListGroup.Item action href="#deliveryboy">
                 <DeliveryDiningOutlinedIcon /> Delivery
               </ListGroup.Item>
-              <ListGroup.Item action href="#reviews">
-                <StarHalfOutlinedIcon /> Reviews
-              </ListGroup.Item>
+             
               <ListGroup.Item action href="#messages">
                 <MarkEmailUnreadOutlinedIcon /> Messages
               </ListGroup.Item>
@@ -265,22 +263,7 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="#reviews">
-                <div>
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th> Name</th>
-                        <th>Review</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    {foodreviewLIst.map((u) => (
-                      <Review key={u.id} foodreview={u} />
-                    ))}
-                  </table>
-                </div>
-              </Tab.Pane>
+             
               <Tab.Pane eventKey="#messages">
                 <div>
                 

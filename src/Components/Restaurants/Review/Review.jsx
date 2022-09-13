@@ -1,7 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
 import { useParams } from "react-router-dom";
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 const Review = ({ foodreview }) => {
     let { id } = useParams();
     
@@ -9,8 +10,10 @@ const Review = ({ foodreview }) => {
     dispatch(getFoodreviews(id));
   return (
     <>
-      <p className="text-center">{foodreview.name}</p>
-      <p className="text-center">{foodreview.description}</p>
+    
+     <span style={{fontWeight:600}}><VerifiedUserIcon fontSize="small"/> {foodreview.name}</span>
+      
+      <p>{foodreview.description}</p>
     </>
   );
 };

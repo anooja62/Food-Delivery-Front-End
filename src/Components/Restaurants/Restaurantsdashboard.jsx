@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Top from "./Top/Top";
+import {  useSelector } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
@@ -38,6 +39,7 @@ const initialValues = {
 };
 
 const Restaurantsdashboard = () => {
+  const reviewList = useSelector((state) => state.foodreview.list);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -252,7 +254,7 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 6</h2>
+         
           </div>
         </TabPanel>
         <TabPanel>
