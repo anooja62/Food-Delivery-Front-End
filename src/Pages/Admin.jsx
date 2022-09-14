@@ -213,6 +213,7 @@ const Admin = () => {
                         <th>FSSAI License</th>
 
                         <th>Send Mail</th>
+                        
 
                        
                       </tr>
@@ -254,7 +255,7 @@ const Admin = () => {
                         <th>City</th>
                         <th>Driving License</th>
                         <th>Send Mail</th>
-                        <th>Action</th>
+                       
                       </tr>
                     </thead>
                     {deliveryboyLIst.map((u) => (

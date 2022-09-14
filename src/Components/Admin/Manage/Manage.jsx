@@ -71,10 +71,10 @@ const Manage = ({ restaurant, url }) => {
           <td className="text-center" style={{ paddingTop: "2%" }}>
         {  !restaurant.isApproved ? <Icon color="primary" onClick={() => setModalShow(true)}>
               add_circle
-            </Icon> : <p>Approved</p>}
+            </Icon> : <p style={{color:"green"}}>Approved</p>}
           </td>
          
-         
+          
         </tr>
       </tbody>
       {modalShow && (

@@ -107,7 +107,7 @@ const Profile = () => {
 
     try {
       await axios.put(`/auth/update/${userId}`, user);
-      navigate("/login");
+      alert("Details Updated")
     } catch (err) {
       console.log(err);
     }

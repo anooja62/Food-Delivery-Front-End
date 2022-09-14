@@ -13,10 +13,15 @@ import { v4 } from "uuid";
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import axios from "../../axios";
-
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import DeliveryTopbar from "./DeliveryTopBar/DeliveryTopBar";
 const DeliveryStaff = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const deliveryboyPasswordRef = useRef();
   const deliveryboyEmailRef = useRef();
   const deliveryboyNameRef = useRef();
@@ -90,10 +95,28 @@ const DeliveryStaff = () => {
             </p>
           </Tab>
           <Tab>
-          <p onClick={() => clearCookies()}>
+          <p onClick={handleShow}>
               <LockOutlinedIcon /> Log Out
             </p>
           </Tab>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>
+                <br></br>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h5>Do you really want to logout ? </h5>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={clearCookies}>
+                Logout Now
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </TabList>
 
         <TabPanel>

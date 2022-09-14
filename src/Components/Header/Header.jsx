@@ -199,18 +199,13 @@ const Header = () => {
                       <img src={bag} alt=""></img>Orders
                     </li>
                   </Link>
-                  <Link to="./update">
-                    {" "}
-                    <li>
-                      <img src={useredit} alt=""></img>Edit Profile
-                    </li>
-                  </Link>
+                 
                   <Link
                     to="/home"
                     className={(navClass) =>
                       navClass.isActive ? "active__menu" : ""
                     }
-                    onClick={() => removeCookie("name")}
+                    onClick={() => clearCookies()}
                   >
                     {" "}
                     <li>

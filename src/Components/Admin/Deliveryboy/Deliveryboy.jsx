@@ -66,18 +66,11 @@ const Deliveryboy = ({ deliveryboy }) => {
         </td>
         <td className="text-center" style={{ paddingTop: "2%" }}><a href={deliveryboy.imgUrl}>view License</a></td>
         <td className="text-center" style={{ paddingTop: "2%" }}>
-          <Icon color="primary" onClick={() => setModalShow(true)}>
-            add_circle
-          </Icon>
+        {  !deliveryboy.isApproved ? <Icon color="primary" onClick={() => setModalShow(true)}>
+              add_circle
+            </Icon> : <p style={{color:"green"}}>Approved</p>}
         </td>
-        <td className="text-center">
-          <IconButton aria-label="delete" size="large">
-            <DeleteIcon
-              fontSize="inherit"
-              onClick={() => handleReject(deliveryboy._id)}
-            />
-          </IconButton>
-        </td>
+        
       </tr>
     </tbody>
     {modalShow && (

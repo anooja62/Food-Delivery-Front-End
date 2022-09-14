@@ -10,7 +10,7 @@ import {
 
 const User = ({ user }) => {
     const dispatch = useDispatch();
-    const handleApprove = async (id) => {
+    const handleReject = async (id) => {
         dispatch(blockUser(id));
     };
 
@@ -26,7 +26,7 @@ const User = ({ user }) => {
                 <td className='text-center'>{user.phone}</td>
                 
                 <td className='text-center'>
-                    <Button variant="danger" onClick={() => handleApprove(user._id)}>Block</Button>
+                   <Button variant="danger" onClick={() => handleReject(user._id)}>Block</Button> 
 
 
                 </td>

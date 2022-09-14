@@ -12,6 +12,7 @@ const Restaurantspage = () => {
   return (
     <>
     <div style={{marginLeft:80,marginRight:80}}>
+      <h3 className="mt-2">Order food from your favourite restaurants</h3>
     {restaurantList.length !== 0 && (
         <>
           <div className="row d-flex justify-content-between ">
