@@ -39,6 +39,7 @@ const initialValues = {
 };
 
 const Restaurantsdashboard = () => {
+ 
   const reviewList = useSelector((state) => state.foodreview.list);
   const [show, setShow] = useState(false);
 
@@ -75,7 +76,7 @@ const Restaurantsdashboard = () => {
   const restaurantOwnernameRef = useRef();
   const restaurantOwnerphoneRef = useRef();
   const restaurantLicensetypeRef = useRef();
-
+  
   const clearCookies = () => {
     removeCookie("restaurantId");
     removeCookie("restaurantName");
@@ -89,7 +90,7 @@ const Restaurantsdashboard = () => {
 
     navigate("/res-login");
   };
-
+  
   //update details
   const handleClick = async (e) => {
     e.preventDefault();

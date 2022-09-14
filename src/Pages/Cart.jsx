@@ -6,13 +6,18 @@ import {Container,Row,Col} from 'react-bootstrap'
 import '../styles/cart-page.css';
 import {cartActions} from '../store/shopping-cart/cartSlice'
 import {Link} from 'react-router-dom'
-
-
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Cart=()=> {
    
 
-
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
+  const navigate = useNavigate()
+  if(!userId){
+    navigate('/login')
+   }
   const cartItems = useSelector((state)=>state.cart.cartItems)
   const totalAmount = useSelector((state)=>state.cart.totalAmount)
   return <Helmet title='Cart'>

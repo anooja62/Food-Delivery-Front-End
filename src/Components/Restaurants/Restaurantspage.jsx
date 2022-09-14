@@ -2,8 +2,15 @@ import React,{useEffect}from 'react'
 import { getRestaurantdetails } from '../../store/shopping-cart/restaurantSlice';
 import RestaurantCard from './RestaurantCard/RestaurantCard'
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 const Restaurantspage = () => {
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
+  const navigate = useNavigate()
+  if(!userId){
+    navigate('/login')
+   }
   const restaurantList = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
   useEffect(() => {

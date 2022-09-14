@@ -32,7 +32,8 @@ const initialValues = {
   address: "",
 };
 const Profile = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const navigate = useNavigate();
+  const [cookies,  removeCookie] = useCookies(null);
   const userId = cookies.userId;
   const user = cookies.name;
   const phone = cookies.phone;
@@ -50,12 +51,9 @@ const Profile = () => {
     },
   });
 
-  const clearCookies = () => {
-    removeCookie("name");
-    removeCookie("email");
-    removeCookie("phone");
-    navigate("/home");
-  };
+  if(!userId){
+    navigate('/home')
+  }
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -93,7 +91,8 @@ const Profile = () => {
   const signupPasswordRef = useRef();
   const signupConfirmPasswordRef = useRef();
 
-  const navigate = useNavigate();
+ 
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,11 +140,7 @@ const Profile = () => {
                     <AddLocationAltOutlinedIcon /> Saved Addresses
                   </span>
                 </Tab>
-                <Tab>
-                  <span  onClick={() => clearCookies()}>
-                    <LockIcon /> Sign Out
-                  </span>
-                </Tab>
+                
               </TabList>
 
               <TabPanel>

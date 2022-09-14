@@ -10,10 +10,10 @@ import Combo from "./Combo/Combo";
 import "../../styles/restaurantui.css";
 import { getMenus } from "../../store/shopping-cart/menuSlice";
 import { getCombos } from "../../store/shopping-cart/comboSlice";
-
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import About from "./About/About";
 import Details from "./Details/Details";
@@ -22,7 +22,12 @@ import AddReview from "./Review/AddReview";
 
 
 const RestaurantUI = () => {
-  
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
+  const navigate = useNavigate()
+  if(!userId){
+    navigate('/login')
+   }
   let { id } = useParams();
 
   const menuLIst = useSelector((state) => state.menu.list);
@@ -95,7 +100,7 @@ const RestaurantUI = () => {
             <div className="panel-content">
               
               <div style={{ marginLeft: 150, marginRight: 200 }}>
-            
+         
               </div>
             </div>
           </TabPanel>

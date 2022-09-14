@@ -13,9 +13,11 @@ import { cartActions } from "../../../store/shopping-cart/cartSlice";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
   
 
 const Menu = ({ menu, url }) => {
+  const navigate = useNavigate()
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const cartProducts = useSelector((state) => state.cart.cartItems);
@@ -33,7 +35,8 @@ const Menu = ({ menu, url }) => {
     },
   ];
 
-  
+ 
+   
   const handleAddItem = (menu, arr, cartProducts) => {
  
     dispatch(cartActions.addItem(menu));
@@ -47,7 +50,7 @@ const Menu = ({ menu, url }) => {
       progress: undefined,
       });
   };
-  
+
   return (
     <>
       <Card sx={{ maxWidth: 345 }} className="mt-5">
@@ -79,9 +82,10 @@ const Menu = ({ menu, url }) => {
                 Delete
               </Button>
             ) : (
-              <button
-                className="addToCart__btn"
+              <button className="addToCart__btn"
+               
                 onClick={() => handleAddItem(menu, arr, cartProducts)}
+                
               >
                 Add to Cart
                 <ToastContainer
