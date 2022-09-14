@@ -21,15 +21,16 @@
     
     cursor: pointer;
   }
-  .topAvatar{
-    width: 40px;
-    height: 40px;
+  .topAvatar img{
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     cursor: pointer;
 }
   .topRight{
       display: flex;
       align-items: center;
+     
   }
   .topbar i{
     font-size: 1.3rem;

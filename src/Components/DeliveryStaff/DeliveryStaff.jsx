@@ -1,4 +1,4 @@
-import React, { useRef,useState } from "react";
+import React, { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
@@ -10,13 +10,14 @@ import { useCookies } from "react-cookie";
 import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+
 import axios from "../../axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import DeliveryTopbar from "./DeliveryTopBar/DeliveryTopBar";
+import Card from "react-bootstrap/Card";
+
 const DeliveryStaff = () => {
   const [show, setShow] = useState(false);
 
@@ -30,16 +31,14 @@ const DeliveryStaff = () => {
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "deliveryboyimages/");
 
-
   const [cookies, removeCookie] = useCookies(null);
   const deliveryboyId = cookies.deliveryboyId;
   const deliveryboyName = cookies.deliveryboyName;
   const deliveryboyPhone = cookies.deliveryboyPhone;
   const deliveryboyEmail = cookies.deliveryboyEmail;
-
+  const deliveryboyProfileImg= cookies.deliveryboyProfileImg;
 
   const handleClick = async (e) => {
-   
     e.preventDefault();
 
     const deliveryboy = {
@@ -47,35 +46,37 @@ const DeliveryStaff = () => {
       phone: deliveryboyPhoneRef.current.value,
       email: deliveryboyEmailRef.current.value,
       password: deliveryboyPasswordRef.current.value,
-      
     };
     if (imageUpload === null) return;
-    const imageRef = ref(storage, `deliveryboyimages/${imageUpload.name + v4()}`);
+    const imageRef = ref(
+      storage,
+      `deliveryboyimages/${imageUpload.name + v4()}`
+    );
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (profileImg) => {
         setImageList(profileImg);
-        const deliveryboys = await axios
-        .put(`/deli/update-delivery/${deliveryboyId}`,
-        {...deliveryboy,profileImg})
-        
-    });
+        const deliveryboys = await axios.put(
+          `/deli/update-delivery/${deliveryboyId}`,
+          { ...deliveryboy, profileImg }
+        );
+      });
 
-    alert(" successful");
-   
-  });
-};
+      alert(" successful");
+    });
+  };
 
   const navigate = useNavigate();
   const clearCookies = () => {
     removeCookie("deliveryboyId");
     removeCookie("deliveryboyName");
     removeCookie("deliveryboyPhone");
-    
+    removeCookie("deliveryboyProfileImg");
+
     navigate("/delivery-login");
   };
   return (
     <div>
-      <DeliveryTopbar/>
+      <DeliveryTopbar />
       <Tabs>
         <TabList>
           <Tab>
@@ -95,7 +96,7 @@ const DeliveryStaff = () => {
             </p>
           </Tab>
           <Tab>
-          <p onClick={handleShow}>
+            <p onClick={handleShow}>
               <LockOutlinedIcon /> Log Out
             </p>
           </Tab>
@@ -121,105 +122,127 @@ const DeliveryStaff = () => {
 
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 1</h2>
+            <h2>Orders</h2>
+            <Card style={{ width: "18rem" }}>
+              <Card.Body>
+                <Card.Title>Customer Name</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Address
+                </Card.Subtitle>
+                <Card.Text>Order Details</Card.Text>
+                <Row>
+                  <Col>
+                    <Card.Text onClick={() => console.log("Accepted")}>
+                      Accept
+                    </Card.Text>
+                  </Col>
+                  <Col>
+                    <Card.Text onClick={() => console.log("declined")}>
+                      Decline
+                    </Card.Text>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 2</h2>
+            <h2>Salary Details</h2>
           </div>
         </TabPanel>
         <TabPanel>
-        <div className="panel-content">
-          <div style={{ marginLeft: 150, marginRight: 200 }}>
-            <h3 className="text-center">Profile Details</h3>
-            <Paper elevation={3}>
-              <form className="mt-3" onSubmit={handleClick}>
-                <Row>
-                  <Col>
-                    <div className="new__register ">
-                      <label for="ownername"> Name</label>
-                      <input
-                        type="text"
-                        name="ownername"
-                        placeholder="owner name"
-                        ref={deliveryboyNameRef}
-                        defaultValue={deliveryboyName}
-                      ></input>
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="new__register">
-                      <label> Phone Number </label>
-                      <input
-                        type="tel"
-                        placeholder=" Phone Number"
-                        name="number"
-                        ref={deliveryboyPhoneRef}
-                        defaultValue={deliveryboyPhone}
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                  <div className="new__register mt-5">
-                      <label> Profile Picture </label>
-                <IconButton color="primary" aria-label="upload picture" component="label">
-        <input hidden accept="image/*" type="file" onChange={(event) => {
+          <div className="panel-content">
+            <div style={{ marginLeft: 150, marginRight: 200 }}>
+              <h3 className="text-center">Profile Details</h3>
+              <Paper elevation={3}>
+                <form className="mt-3" onSubmit={handleClick}>
+                  <Row>
+                    <Col>
+                      <div className="new__register ">
+                        <label for="ownername"> Name</label>
+                        <input
+                          type="text"
+                          name="ownername"
+                          placeholder="owner name"
+                          ref={deliveryboyNameRef}
+                          defaultValue={deliveryboyName}
+                        ></input>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="new__register">
+                        <label> Phone Number </label>
+                        <input
+                          type="tel"
+                          placeholder=" Phone Number"
+                          name="number"
+                          ref={deliveryboyPhoneRef}
+                          defaultValue={deliveryboyPhone}
+                        ></input>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <div className="new__register mt-5">
+                        <label> Profile Picture </label>
+                        <input
+                          type="file"
+                          onChange={(event) => {
                             setImageUpload(event.target.files[0]);
-                          }}/>
-        <PhotoCamera />
-      </IconButton>
-      </div>
-      </Col>
-      <Col>
-      </Col>
-                </Row>
+                          }}
+                          name="photo"
+                          placeholder=""
+                          
+                        />
+                      </div>
+                    </Col>
+                    <Col></Col>
+                  </Row>
 
-                <br></br>
+                  <br></br>
 
-                <h3 className="text-center mt-4">Account Settings </h3>
+                  <h3 className="text-center mt-4">Account Settings </h3>
 
-                <Row>
-                  <Col>
-                    <div className="new__register ">
-                      <label for="email">Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        ref={deliveryboyEmailRef}
-                        defaultValue={deliveryboyEmail}
-                      ></input>
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="new__register">
-                      <label>Change Password </label>
-                      <input
-                        type="password"
-                        placeholder="Change Password"
-                        name="password"
-                        ref={deliveryboyPasswordRef}
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
+                  <Row>
+                    <Col>
+                      <div className="new__register ">
+                        <label for="email">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          ref={deliveryboyEmailRef}
+                          defaultValue={deliveryboyEmail}
+                        ></input>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="new__register">
+                        <label>Change Password </label>
+                        <input
+                          type="password"
+                          placeholder="Change Password"
+                          name="password"
+                          ref={deliveryboyPasswordRef}
+                        ></input>
+                      </div>
+                    </Col>
+                  </Row>
 
-                <div className="mt-4 text-center">
-                  <button className="addToCart__btn" type="submit">
-                    Submit
-                  </button>
-                </div>
-                <br></br>
-              </form>
-            </Paper>
+                  <div className="mt-4 text-center">
+                    <button className="addToCart__btn" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                  <br></br>
+                </form>
+              </Paper>
+            </div>
           </div>
-        </div>
         </TabPanel>
-
-        
+       
       </Tabs>
     </div>
   );

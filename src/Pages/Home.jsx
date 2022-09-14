@@ -241,8 +241,7 @@ const Home = () => {
                     <p className="choose_us-desc">
                       Our payment process highly efficient and easy to use, a
                       customer must have all the payment options available in
-                      the market listed in the On-Demand Food Delivery App for
-                      your business.
+                      the market .
                     </p>
                   </ListGroupItem>
                 </ListGroup>

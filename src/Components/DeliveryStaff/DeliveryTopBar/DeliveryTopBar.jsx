@@ -6,6 +6,7 @@ export default function DeliveryTopbar() {
     const [cookies, setCookie] = useCookies(null);
  
     const deliveryboyName = cookies.deliveryboyName;
+    const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
  
   return (
     <div className="topbar">
@@ -14,13 +15,14 @@ export default function DeliveryTopbar() {
             <div className="logo"></div>
             <h1>{deliveryboyName}</h1>
           </div>
-        </div>
+        
         <div className="topRight">
          
          <div className="topAvatar">
-          <img src="" alt=''/>
+          <img src={deliveryboyProfileImg} alt=''/>
          </div>
          
+        </div>
         </div>
       </div>
    

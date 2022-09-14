@@ -33,7 +33,7 @@ const DeliveryboyLogin = () => {
           setCookie("deliveryboyName", response.data.name);
           setCookie("deliveryboyEmail", response.data.email);
           setCookie("deliveryboyPhone", response.data.phone);
-         
+          setCookie("deliveryboyProfileImg", response.data.profileImg);
           setCookie("deliveryboyCity", response.data.city);
         
           navigate("/admin-staff");
