@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Combo from './Combo'
 import { getCombos } from "../../../store/shopping-cart/comboSlice";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios";
@@ -60,7 +61,15 @@ const ComboUI = () => {
         setTotalPrice('')
       });
 
-      alert(" successful");
+      toast.success("Item Added to Combo List", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   };
 
@@ -176,6 +185,17 @@ const ComboUI = () => {
           <div className="mt-4 text-center">
             <button className="addToCart__btn" type="submit">
               Submit
+              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
             </button>
           </div>
           <br></br>

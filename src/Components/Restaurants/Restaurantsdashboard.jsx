@@ -19,7 +19,8 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
 
 import Paper from "@mui/material/Paper";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -119,7 +120,15 @@ const Restaurantsdashboard = () => {
         });
       });
 
-      alert(" successful");
+      toast.success("Details Updated", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   };
 
@@ -455,6 +464,17 @@ const Restaurantsdashboard = () => {
                   <div className="mt-4 text-center">
                     <button className="addToCart__btn" type="submit">
                       Submit
+                      <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
                     </button>
                   </div>
                   <br></br>

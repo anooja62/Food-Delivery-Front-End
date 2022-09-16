@@ -17,14 +17,16 @@ import { signupSchema } from "../schemas";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-import {Chip,Stack} from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import EditIcon from '@mui/icons-material/Edit';
-import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
+import { Chip, Stack } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import EditIcon from "@mui/icons-material/Edit";
+import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import DomainIcon from '@mui/icons-material/Domain';
-import LockIcon from '@mui/icons-material/Lock';
+import DomainIcon from "@mui/icons-material/Domain";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const initialValues = {
   name: "",
   phone: "",
@@ -33,12 +35,12 @@ const initialValues = {
 };
 const Profile = () => {
   const navigate = useNavigate();
-  const [cookies,  removeCookie] = useCookies(null);
+  const [cookies, removeCookie] = useCookies(null);
   const userId = cookies.userId;
   const user = cookies.name;
   const phone = cookies.phone;
   const email = cookies.email;
- const [labelAdd, setLabelAdd] = useState('')
+  const [labelAdd, setLabelAdd] = useState("");
   const [show, setShow] = useState(false);
   const data = useSelector((state) => state.shipping.list);
   const handleClose = () => setShow(false);
@@ -51,8 +53,8 @@ const Profile = () => {
     },
   });
 
-  if(!userId){
-    navigate('/home')
+  if (!userId) {
+    navigate("/home");
   }
 
   const dispatch = useDispatch();
@@ -64,11 +66,10 @@ const Profile = () => {
   const addressPincodeRef = useRef();
   const addressAddressRef = useRef();
 
-  
   const handleClick = async (e) => {
     e.preventDefault();
     const shipping = {
-      label:labelAdd,
+      label: labelAdd,
       name: addressNameRef.current.value,
       phone: addressPhoneRef.current.value,
       pincode: addressPincodeRef.current.value,
@@ -91,9 +92,6 @@ const Profile = () => {
   const signupPasswordRef = useRef();
   const signupConfirmPasswordRef = useRef();
 
- 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,15 +104,23 @@ const Profile = () => {
 
     try {
       await axios.put(`/auth/update/${userId}`, user);
-      alert("Details Updated")
+      toast.success("Details Updated", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (err) {
       console.log(err);
     }
   };
   const handleChip = (label) => {
-    console.log(label)
-    setLabelAdd(label)
-  }
+    console.log(label);
+    setLabelAdd(label);
+  };
 
   return (
     <Helmet title="Profile">
@@ -126,114 +132,121 @@ const Profile = () => {
             <Tabs>
               <TabList>
                 <Tab>
-                  <span >
-                  <PersonIcon/> Profile
+                  <span>
+                    <PersonIcon /> Profile
                   </span>
                 </Tab>
                 <Tab>
-                  <span >
-                  <EditIcon/> Edit Profile
+                  <span>
+                    <EditIcon /> Edit Profile
                   </span>
                 </Tab>
                 <Tab>
-                  <span >
+                  <span>
                     <AddLocationAltOutlinedIcon /> Saved Addresses
                   </span>
                 </Tab>
-                
               </TabList>
 
               <TabPanel>
-              <Row>
-        <Col></Col>
-              <Col xs={6}>
+                <Row>
+                  <Col></Col>
+                  <Col xs={6}>
                     <ProfileCard />
-                    </Col>
-                    <Col></Col>
-                    </Row>
-                 
-
-                 
-                
+                  </Col>
+                  <Col></Col>
+                </Row>
               </TabPanel>
 
               <TabPanel>
-                <Row >
-                <div style={{paddingLeft:90,paddingRight:90}}>
-                  <Col >
-                    
-                    <Paper elevation={3}>
-                      <form onSubmit={handleSubmit}>
-                        <div className="new__register">
-                          <label>Name</label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Name   (Eg. John Doe)"
-                            ref={signupNameRef}
-                            defaultValue={user}
-                          />
-                        </div>
+                <Row>
+                  <div style={{ paddingLeft: 90, paddingRight: 90 }}>
+                    <Col>
+                      <Paper elevation={3}>
+                        <form onSubmit={handleSubmit}>
+                          <div className="new__register">
+                            <label>Name</label>
+                            <input
+                              type="text"
+                              name="name"
+                              placeholder="Name   (Eg. John Doe)"
+                              ref={signupNameRef}
+                              defaultValue={user}
+                              disabled
+                            />
+                          </div>
 
-                        <div className="new__register">
-                          <label>Phone Number</label>
-                          <input
-                            type="tel"
-                            placeholder="Mobile Number"
-                            name="phone"
-                            ref={signupPhoneRef}
-                            defaultValue={phone}
-                          />
-                        </div>
+                          <div className="new__register">
+                            <label>Phone Number</label>
+                            <input
+                              type="tel"
+                              placeholder="Mobile Number"
+                              name="phone"
+                              ref={signupPhoneRef}
+                              defaultValue={phone}
+                              required
+                            />
+                          </div>
 
-                        <div className="new__register">
-                          <label>Email</label>
-                          <input
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            ref={signupEmailRef}
-                            defaultValue={email}
-                          />
-                        </div>
+                          <div className="new__register">
+                            <label>Email</label>
+                            <input
+                              type="email"
+                              placeholder="Email"
+                              name="email"
+                              ref={signupEmailRef}
+                              defaultValue={email}
+                              disabled
+                            />
+                          </div>
 
-                        <div className="new__register">
-                          <label>Password</label>
-                          <input
-                            type="password"
-                            placeholder="Password"
-                            name="password"
-                            ref={signupPasswordRef}
-                          />
-                        </div>
+                          <div className="new__register">
+                            <label>Password</label>
+                            <input
+                              type="password"
+                              placeholder="Password"
+                              name="password"
+                              ref={signupPasswordRef}
+                            />
+                          </div>
 
-                        <div className="new__register">
-                          <label>Confirm password</label>
-                          <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            name="cpassword"
-                            ref={signupConfirmPasswordRef}
-                          />
-                        </div>
+                          <div className="new__register">
+                            <label>Confirm password</label>
+                            <input
+                              type="password"
+                              placeholder="Confirm Password"
+                              name="cpassword"
+                              ref={signupConfirmPasswordRef}
+                            />
+                          </div>
 
-                        <br></br>
-                        <div className="text-center">
-                          <button type="submit" className="addToCart__btn">
-                            UPDATE CHANGES
-                          </button>
-
-                        </div>
-                        <br></br>
-                      </form>
-                    </Paper>
-                  </Col>
+                          <br></br>
+                          <div className="text-center">
+                            <button type="submit" className="addToCart__btn">
+                              UPDATE CHANGES
+                              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+                            </button>
+                          </div>
+                          <br></br>
+                        </form>
+                      </Paper>
+                    </Col>
                   </div>
                 </Row>
               </TabPanel>
               <TabPanel>
                 <Row>
-                <Col>
+                  <Col>
                     <button className="address__btn" onClick={handleShow}>
                       <span>
                         <i class="ri-edit-box-line"></i> Add New Address
@@ -244,12 +257,20 @@ const Profile = () => {
                         <Modal.Title>Enter Your Address</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                      <Stack direction="row" spacing={1}>
-      <Chip icon={<HomeIcon />} label="Home" onClick={()=>handleChip("Home")}/>
-      <Chip icon={<DomainIcon />} label="Work" variant="outlined" onClick={()=>handleChip("Work")} />
-    </Stack>
+                        <Stack direction="row" spacing={1}>
+                          <Chip
+                            icon={<HomeIcon />}
+                            label="Home"
+                            onClick={() => handleChip("Home")}
+                          />
+                          <Chip
+                            icon={<DomainIcon />}
+                            label="Work"
+                            variant="outlined"
+                            onClick={() => handleChip("Work")}
+                          />
+                        </Stack>
                         <form onSubmit={handleClick}>
-
                           <div className="new__register">
                             <label>Name</label>
                             <div className="new__register">
@@ -271,7 +292,7 @@ const Profile = () => {
                             </div>
                           </div>
                           <div className="new__register">
-                          <label>Phone Number</label>
+                            <label>Phone Number</label>
                             <input
                               type="tel"
                               placeholder="Mobile Number"
@@ -289,7 +310,7 @@ const Profile = () => {
                             )}
                           </div>
                           <div className="new__register">
-                          <label>Pincode</label>
+                            <label>Pincode</label>
                             <input
                               type="text"
                               placeholder="Pincode"
@@ -307,7 +328,7 @@ const Profile = () => {
                             )}
                           </div>
                           <div className="new__register">
-                          <label>Address</label>
+                            <label>Address</label>
                             <textarea
                               placeholder="House name and address"
                               name="address"
@@ -324,15 +345,15 @@ const Profile = () => {
                             )}
                           </div>
                           <div className="text-center">
-                          <button type="submit" className="addToCart__btn ">
-                            Save  Address
-                          </button>
+                            <button type="submit" className="addToCart__btn ">
+                              Save Address
+                            </button>
                           </div>
                         </form>
                       </Modal.Body>
                     </Modal>
                   </Col>
-                 
+
                   <Col className="mt-5">
                     {data.length === 0 && (
                       <>
@@ -343,22 +364,16 @@ const Profile = () => {
                     )}
                     {data.length !== 0 && (
                       <>
-                      <Stack direction="row" spacing={3}>
-                        {data.map((u) => (
-                           
-                           <div className="addresscard">
-                          <Address key={u.id} shipping={u} />
-                          </div>
-                         
-                        
-                         
-                        ))}
-                         </Stack>
+                        <Stack direction="row" spacing={3}>
+                          {data.map((u) => (
+                            <div className="addresscard">
+                              <Address key={u.id} shipping={u} />
+                            </div>
+                          ))}
+                        </Stack>
                       </>
                     )}
                   </Col>
-                 
-                  
                 </Row>
               </TabPanel>
             </Tabs>

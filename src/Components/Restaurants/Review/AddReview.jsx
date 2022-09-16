@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
 import { useCookies } from "react-cookie";
 import Review from "./Review";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddReview = () => {
   const [cookies, setCookie] = useCookies(null);
   const user = cookies.name;
@@ -33,7 +35,15 @@ const AddReview = () => {
       .then(() => {
         dispatch(getFoodreviews());
       });
-      alert(" successful");
+      toast.success("Thanks for the Review", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -75,6 +85,17 @@ const AddReview = () => {
           <div className="mt-4 text-center">
             <button className="addToCart__btn" type="submit">
               Submit Review
+              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
             </button>
           </div>
         </form>
