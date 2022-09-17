@@ -4,7 +4,7 @@ import Topbar from "../Components/Admin/Topbar/Topbar";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
 import Manage from "../Components/Admin/Manage/Manage";
-import Review from "../Components/Admin/Review/Review";
+
 import User from "../Components/Admin/User/User";
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
@@ -15,7 +15,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
-import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
+
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Fssai from "../Components/Restaurants/FSSAI/Fssai";
