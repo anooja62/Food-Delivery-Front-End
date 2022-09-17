@@ -8,6 +8,7 @@ import userSlice from "./shopping-cart/userSlice";
 import addressSlice from "./shopping-cart/addressSlice";
 import menuSlice from "./shopping-cart/menuSlice";
 import comboSlice from "./shopping-cart/comboSlice";
+import paymentSlice from "./shopping-cart/comboSlice";
 
 
 const store = configureStore({
@@ -21,6 +22,7 @@ const store = configureStore({
     shipping: addressSlice.reducer,
     menu:menuSlice.reducer,
     combo:comboSlice.reducer,
+    payment:paymentSlice.reducer,
    
 
 

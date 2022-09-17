@@ -153,9 +153,12 @@ const Profile = () => {
                   <Col></Col>
                   <Col xs={6}>
                     <ProfileCard />
+                    <br></br>
+                    
                   </Col>
                   <Col></Col>
                 </Row>
+                
               </TabPanel>
 
               <TabPanel>
