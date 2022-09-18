@@ -3,7 +3,7 @@ import axios from "../../../axios";
 import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import { useParams } from "react-router-dom";
-import { getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
+import { addReview, getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
 import { useCookies } from "react-cookie";
 import Review from "./Review";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,7 +18,7 @@ const AddReview = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFoodreviews(id));
-  }, [reviewList]);
+  }, []);
   const reviewNameRef = useRef();
   const reviewDescriptionRef = useRef();
   const handleReview = async (e) => {
@@ -31,10 +31,7 @@ const AddReview = () => {
     };
 
     try {
-      await axios.post("/revi/review", foodreview)
-      .then(() => {
-        dispatch(getFoodreviews());
-      });
+      dispatch(addReview(foodreview));
       toast.success("Thanks for the Review", {
         position: "top-center",
         autoClose: 1000,

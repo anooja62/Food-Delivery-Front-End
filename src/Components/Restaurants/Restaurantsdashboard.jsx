@@ -283,6 +283,7 @@ const Restaurantsdashboard = () => {
                           ref={restaurantNameRef}
                           placeholder="First Letter should be captial"
                           defaultValue={restaurantName}
+                          disabled
                         />
                       </div>
                     </Col>
@@ -297,6 +298,7 @@ const Restaurantsdashboard = () => {
                           defaultValue={restaurantLicense}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled
                         />
                       </div>
                       <div className="error_container">
@@ -369,6 +371,7 @@ const Restaurantsdashboard = () => {
                           name="expiredate"
                           ref={restaurantExpireRef}
                           defaultValue={restaurantExpiredate}
+                          
                         ></input>
                       </div>
                     </Col>
@@ -445,6 +448,7 @@ const Restaurantsdashboard = () => {
                           placeholder="Email"
                           ref={restaurantEmailRef}
                           defaultValue={restaurantEmail}
+                          disabled
                         ></input>
                       </div>
                     </Col>

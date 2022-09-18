@@ -1,17 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
 import "../styles/checkout.css";
 import axios from "../axios";
+import DomainIcon from "@mui/icons-material/Domain";
+import HomeIcon from "@mui/icons-material/Home";
 import { useCookies } from "react-cookie";
-import { Stack } from "@mui/material";
+import { Chip,Stack } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { getShippings } from "../store/shopping-cart/addressSlice";
 import Address from "../Components/UI/Address/Address";
 const Checkout = () => {
+  const [labelAdd, setLabelAdd] = useState("");
   const [cookies, setCookie] = useCookies(null);
+  const[disableForm,setDisableForm] = useState(false)
+  console.log(disableForm)
   const userId = cookies.userId;
   const data = useSelector((state) => state.shipping.list);
   const navigate = useNavigate();
@@ -19,7 +25,10 @@ const Checkout = () => {
     navigate("/login");
   }
 
- 
+  const handleChip = (label) => {
+    
+    setLabelAdd(label);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getShippings(userId));
@@ -29,7 +38,7 @@ const Checkout = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartId = useSelector((state) => state.cart.totalAmount);
   let deliveryCharge = 0
- { cartTotalAmount>=700 ? deliveryCharge=0 : deliveryCharge=30}
+ cartTotalAmount>=700 ? deliveryCharge=0 : deliveryCharge=30
   const totalAmount = cartTotalAmount + Number(deliveryCharge);
 
  
@@ -37,7 +46,7 @@ const Checkout = () => {
   const initPayment = (data) => {
     const options = {
       // key: "rzp_test_DXC7t4WYidBOkp",
-      key:  "rzp_test_9L3CizQufAwqct",
+      key:  "rzp_test_0YsOnkZc3nwtKA",
      
       amount: data.amount,
       currency: data.currency,
@@ -72,7 +81,11 @@ const Checkout = () => {
       console.log(error);
     }
   };
-
+  const  handleChangeRadio = () => {
+ 
+      setDisableForm(false)
+  
+  }
   return (
     <Helmet title="Checkout">
       <CommonSection title="Checkout" />
@@ -80,9 +93,10 @@ const Checkout = () => {
         <Container>
           <Row>
             <Col lg="8" md="6">
-              <h6 className="mb-4">Delivery Address</h6>
+              <h6 className="mb-4">Select Delivery Address</h6>
               <form className=" checkout__form" onSubmit={handlePayment}>
-              
+               
+           
               {data.length === 0 && (
                       <>
                         <div className="addresscard">
@@ -95,12 +109,31 @@ const Checkout = () => {
                         <Stack direction="row" spacing={3}>
                           {data.map((u) => (
                             <div className="addresscard">
-                              <Address key={u.id} shipping={u} />
+                              <Address key={u.id} shipping={u} setDisableForm={setDisableForm} />
                             </div>
                           ))}
                         </Stack>
                       </>
                     )}
+                    
+               {!disableForm && <>
+                <h6 className="mb-3 mt-3">Add new Delivery Address</h6>
+                <Paper elevation={3}><br/>
+                <Stack direction="row" spacing={1}>
+                          <Chip
+                            icon={<HomeIcon />}
+                            label="Home"
+                            onClick={() => handleChip("Home")}
+                          />
+                          <Chip
+                            icon={<DomainIcon />}
+                            label="Work"
+                            variant="outlined"
+                            onClick={() => handleChip("Work")}
+                          />
+                        </Stack>
+                <Row>
+                  <Col>
                 <div className="new__register">
                   <label>Name</label>
                   <input
@@ -109,6 +142,7 @@ const Checkout = () => {
                    
                   />
                 </div>
+                </Col><Col>
                 <div className="new__register">
                   <label>Phone Number</label>
                   <input
@@ -117,15 +151,19 @@ const Checkout = () => {
                     
                   />
                 </div>
-
+                </Col>
+</Row>
+<Row><Col>
                 <div className="new__register">
-                  <label>House Name</label>
+                  <label>Address</label>
                   <input
                     type="text"
                     placeholder="House name"
                     
                   />
+                 
                 </div>
+                </Col><Col>
                 <div className="new__register">
                   <label>Pincode</label>
                   <input
@@ -134,6 +172,11 @@ const Checkout = () => {
                    
                   />
                 </div>
+                </Col>
+                </Row><br/><br/>
+                </Paper>
+                </>}
+                
 
                 <br></br>
                 <p style={{color:'red', fontWeight:600}}>* There will be no cancellation after payment</p>

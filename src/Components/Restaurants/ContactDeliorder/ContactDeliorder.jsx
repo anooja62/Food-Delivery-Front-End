@@ -13,14 +13,12 @@ const ContactDeliorder = () => {
   const restaurantMessageRef = useRef();
   const restaurantQueryRef = useRef();
   const handleClick = async (e) => {
-    e.preventDefault();
-
-    
-   
+    e.preventDefault();  
       const message= {
         restaurantname: restaurantNameRef.current.value,
         requestFor:  restaurantQueryRef.current.value,
         msg:restaurantMessageRef.current.value,
+        restaurantId:restaurantId,
        
       };
 

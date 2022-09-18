@@ -10,12 +10,18 @@ import { styled } from "@mui/material/styles";
 import { deleteShipping } from "../../../store/shopping-cart/addressSlice";
 import Chip from '@mui/material/Chip';
 
-const Address = ({ shipping }) => {
+const Address = ({ shipping,setDisableForm}) => {
   
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteShipping(id));
   };
+  
+const  handleChangeRadio = (id) => {
+    if(id){
+      setDisableForm(true)
+    }
+  }
 
   return (
     <>
@@ -24,6 +30,8 @@ const Address = ({ shipping }) => {
     
       <Row>
         <Col>
+        <input type="radio" name="site_name" value={shipping?._id}  onChange={()=>handleChangeRadio(shipping?._id)}/>
+              
         <p style={{ fontWeight: "600"}}>{shipping?.name} </p>
         </Col>
         <Col></Col>

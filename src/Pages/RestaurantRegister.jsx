@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas";
 import "../styles/formerror.css";
@@ -40,6 +41,7 @@ const initialValues = {
   name: "",
   phone: "",
   email: "",
+  license:"",
 };
 
 const RestaurantRegister = () => {
@@ -73,6 +75,7 @@ const RestaurantRegister = () => {
 
   const signupEmailRef = useRef();
   const signupAddressRef = useRef();
+  const signupLicenseRef = useRef();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -82,6 +85,7 @@ const RestaurantRegister = () => {
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
       address: signupAddressRef.current.value,
+      license:signupLicenseRef.current.value,
     
     };
     console.log(imageList)
@@ -95,7 +99,15 @@ const RestaurantRegister = () => {
        
       })
       
-      alert("Registeration successful")
+      toast.success("Registeration Success", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     })
 
   }
@@ -155,10 +167,13 @@ const RestaurantRegister = () => {
             </Col>
             <Col sm={8}>
               <h1 className="text-center">Restaurant Information</h1>
+             
               <Paper elevation={3}>
                 <form onSubmit={handleClick}>
+                  <Row>
+                    <Col>
                   <div className="new__register">
-                    <label> Restaurant Name</label>
+                    <label>* Restaurant Name</label>
                     <input
                       type="text"
                       placeholder="Restaurant name"
@@ -175,8 +190,9 @@ const RestaurantRegister = () => {
                       <p className="form_error text-center">{errors.name}</p>
                     )}
                   </div>
+                  </Col><Col>
                   <div className="new__register">
-                    <label> Restaurant Phone number</label>
+                    <label>* Restaurant Phone number</label>
                     <input
                       type="tel"
                       placeholder="Phone"
@@ -193,8 +209,10 @@ const RestaurantRegister = () => {
                       <p className="form_error">{errors.phone}</p>
                     )}
                   </div>
+</Col>
+                  </Row>
                   <div className="new__register">
-                    <label>Email ID</label>
+                    <label>* Email ID</label>
                     <input
                       type="email"
                       placeholder="Email"
@@ -212,7 +230,7 @@ const RestaurantRegister = () => {
                     )}
                   </div>
                   <div className="new__register">
-                    <label> Restaurant Address</label>
+                    <label>* Restaurant Address</label>
                     <textarea
                       rows="3"
                       placeholder="Address"
@@ -220,9 +238,10 @@ const RestaurantRegister = () => {
                       ref={signupAddressRef}
                     ></textarea>
                   </div>
-
+<Row>
+  <Col>
                   <div className="new__register">
-                    <label> Food Safety License (FSSAI License)</label>
+                    <label>* Food Safety License (FSSAI License)</label>
 
                     <input
                       type="file"
@@ -234,7 +253,30 @@ const RestaurantRegister = () => {
                       }}
                     />
                   </div>
+                  </Col>
+                  <Col>
+                  <div className="new__register">
+                    <label>* FSSAI License Number</label>
 
+                    <input
+                      type="text"
+                      name="license"
+                      ref={signupLicenseRef}
+                      required
+                      value={values.license}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder='License No.'
+                     
+                    />
+                  </div>
+                  <div className="error_container">
+                        {errors.license && touched.license && (
+                          <p className="form_error">{errors.license}</p>
+                        )}
+                      </div>
+                  </Col>
+</Row>
                   <br></br>
 
                   <div className="text-center">
@@ -247,6 +289,17 @@ const RestaurantRegister = () => {
                       }
                     >
                       Register
+                      <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
                     </button>
                  
                     

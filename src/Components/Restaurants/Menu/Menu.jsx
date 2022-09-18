@@ -53,10 +53,10 @@ const Menu = ({ menu, url }) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345 }} className="mt-5">
+      <Card sx={{ maxWidth: 340 }} className="mt-5">
         <CardMedia
           component="img"
-          height="140"
+          height="180"
           src={menu.imgUrl}
           alt="product"
         />

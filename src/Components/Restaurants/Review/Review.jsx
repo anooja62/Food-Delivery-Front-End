@@ -4,10 +4,7 @@ import { getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
 import { useParams } from "react-router-dom";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 const Review = ({ foodreview }) => {
-    let { id } = useParams();
-    
-    const dispatch = useDispatch();
-    dispatch(getFoodreviews(id));
+   
   return (
     <>
     

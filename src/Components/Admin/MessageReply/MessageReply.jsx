@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-
+import { getSingleMessage } from '../../../store/shopping-cart/messageSlice';
 const MessageReply = () => {
+  const dispatch = useDispatch();
 
-   
-    
+  
+  
   return (
-    <div style={{ marginLeft: 150, marginRight: 200 }}>
+    <div >
       <Paper elevation={3}>
         <form className="mt-3">
           <div className="new__register">

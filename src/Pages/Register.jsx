@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
@@ -18,6 +18,7 @@ const initialValues = {
 };
 
 const Register = () => {
+  const [error, setError] = useState("");
   const { values, handleBlur, handleChange, errors, touched } = useFormik({
     initialValues,
     validationSchema: signupSchema,
@@ -54,6 +55,7 @@ const Register = () => {
         navigate("/login");
       } catch (err) {
         console.log(err);
+        setError(err.response.data, "user response");
       }
     }
   };
@@ -123,6 +125,7 @@ const Register = () => {
                       <p className="form_error">{errors.email}</p>
                     )}
                   </div>
+                  <p className="error__txt text-center">{error}</p>
 
                   <div className="new__register">
                     <label>Password</label>

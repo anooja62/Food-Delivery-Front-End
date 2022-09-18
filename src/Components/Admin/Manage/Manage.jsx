@@ -58,10 +58,9 @@ const Manage = ({ restaurant, url }) => {
           </td>
           <td className="text-center" style={{ paddingTop: "2%" }}>
             {restaurant.email}
+            <p>{restaurant.phone}</p>
           </td>
-          <td className="text-center" style={{ paddingTop: "2%" }}>
-            {restaurant.phone}
-          </td>
+         
           <td className="text-center" style={{ paddingTop: "2%" }}>
             {restaurant.address}
           </td>

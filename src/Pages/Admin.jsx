@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState,useRef } from "react";
+import axios from '../axios';
 import Topbar from "../Components/Admin/Topbar/Topbar";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
@@ -15,7 +15,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
-
+import { getMessages } from "../store/shopping-cart/messageSlice";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Fssai from "../Components/Restaurants/FSSAI/Fssai";
@@ -26,6 +26,9 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import MessageReply from "../Components/Admin/MessageReply/MessageReply";
 import Button from 'react-bootstrap/Button';
+import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDetails";
+import Paper from "@mui/material/Paper";
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 
 const Admin = () => {
 
@@ -35,28 +38,29 @@ const Admin = () => {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
   
-
+  const singleMessage = useSelector(
+    (state) => state.message.singleMessage
+  );
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getRestaurants());
-   
-  }, [restaurantLIst]);
-
+  
   useEffect(()=>{
     dispatch(getDeliveryboys());
-    dispatch(getFoodreviews());
+    dispatch(getRestaurants());
+   
     dispatch(getUsers());
+    dispatch(getMessages());
    
   },[])
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
-  const foodreviewLIst = useSelector((state) => state.foodreview.list);
+  
   const userLIst = useSelector((state) => state.user.list);
+  const messageList = useSelector((state) => state.message.list);
 
   const [cookies, removeCookie] = useCookies(null);
 
   const isAdmin = cookies.isAdmin;
-
+  const messageReplyRef = useRef();
   const clearCookies = () => {
     
     removeCookie("name");
@@ -66,7 +70,23 @@ const Admin = () => {
 
     navigate("/login");
   };
+ const restaurantId = singleMessage._id
 
+  const handleClick = async (e) => {
+    e.preventDefault();  
+      const message= {
+       reply:messageReplyRef.current.value,
+     
+       
+      };
+
+      try {
+        await axios.put(`/msg/reply/${restaurantId}`, message);
+        alert(" successful");
+      } catch (err) {
+        console.log(err);
+      }
+    };
   return (
     <div>
       <Container fluid>
@@ -207,8 +227,8 @@ const Admin = () => {
                     <thead>
                       <tr>
                         <th>Restaurant Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
+                        <th>Contact Info.</th>
+                        
                         <th>Address</th>
                         <th>FSSAI License</th>
 
@@ -266,10 +286,48 @@ const Admin = () => {
               </Tab.Pane>
              
               <Tab.Pane eventKey="#messages">
-                <div>
-                
-       <MessageReply/>
-     
+               <div>
+               <Row><Col>
+                {messageList.map((u) => (
+              <MessageDetails key={u._id} message={u} />
+            ))}
+          </Col><Col>
+      <Paper elevation={3}>
+        <form className="mt-3" onSubmit={handleClick}>
+          <div className="new__register">
+            <label>Restaurant Name</label>
+            <input type="text" name="foodname" placeholder="" defaultValue={singleMessage.restaurantname} disabled></input>
+           
+          </div>
+          <div className="new__register">
+          <label>Query</label>
+                        <input type='text' defaultValue={singleMessage.requestFor} disabled></input>
+                      </div>
+          <div className="new__register">
+            <label>Message</label>
+           
+          </div>
+          <div className="new__register">
+          <textarea rows={3} placeholder="Your Message" defaultValue={singleMessage.msg} disabled ></textarea>
+          </div>
+          <div className="new__register">
+            <label>Reply</label>
+           
+          </div>
+          <div className="new__register">
+          <textarea rows={3} placeholder="Reply" required ref={messageReplyRef}></textarea>
+          </div>
+
+          <div className="mt-4 text-center">
+            <button className="addToCart__btn" type="submit">
+             <ReplyOutlinedIcon/> Send Reply 
+            </button>
+          </div>
+          <br></br>
+        </form>
+      </Paper>
+      </Col>
+      </Row>
                 </div>
               </Tab.Pane>
             </Tab.Content>

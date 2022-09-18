@@ -19,6 +19,7 @@ import About from "./About/About";
 import Details from "./Details/Details";
 
 import AddReview from "./Review/AddReview";
+import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
 
 
 const RestaurantUI = () => {
@@ -32,6 +33,7 @@ const RestaurantUI = () => {
 
   const menuLIst = useSelector((state) => state.menu.list);
   const comboList = useSelector((state) => state.combo.list);
+ 
   
   const cartProducts = useSelector((state) => state.cart.cartItems);
  
@@ -40,6 +42,7 @@ const RestaurantUI = () => {
   useEffect(() => {
     dispatch(getMenus(id));
     dispatch(getCombos(id));
+    
    
   }, []);
 
@@ -100,7 +103,7 @@ const RestaurantUI = () => {
             <div className="panel-content">
               
               <div style={{ marginLeft: 150, marginRight: 200 }}>
-         
+     <AddReview/>
               </div>
             </div>
           </TabPanel>
