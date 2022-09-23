@@ -13,7 +13,7 @@ export const addShippingAddress = createAsyncThunk("addr/address", async (shippi
 export const deleteShipping = createAsyncThunk(
   "addr/allShippings",
   async (id) => {
-    const response = await axios.put(`/addr/deleted/${id}`);
+    const response = await axios.put(`/addr/delete/${id}`);
     console.log(response)
     return response
   }

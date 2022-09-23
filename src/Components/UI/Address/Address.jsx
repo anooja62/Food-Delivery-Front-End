@@ -30,7 +30,10 @@ const  handleChangeRadio = (id) => {
     
       <Row>
         <Col>
-        <input type="radio" name="site_name" value={shipping?._id}  onChange={()=>handleChangeRadio(shipping?._id)}/>
+        {window.location.href.includes("checkout") ? (
+        <input type="radio" name="shippingid" value={shipping?._id}  onChange={()=>handleChangeRadio(shipping?._id)}/>):(
+        " "
+        )}
               
         <p style={{ fontWeight: "600"}}>{shipping?.name} </p>
         </Col>
@@ -45,13 +48,13 @@ const  handleChangeRadio = (id) => {
 
         <p> {shipping?.address}</p>
 
-        {/*<IconButton aria-label="delete" size="large">
+        
+   {/* <IconButton aria-label="delete" size="large">
                 <DeleteIcon
                   fontSize="inherit"
                   onClick={() => handleDelete(shipping._id)}
                 />
-  </IconButton>*/}
-  
+        </IconButton>*/}
   
  
  

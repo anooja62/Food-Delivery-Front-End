@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import Paper from "@mui/material/Paper";
-import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import { getMessages } from "../../../store/shopping-cart/messageSlice";
-import Modal from "react-bootstrap/Modal";
-import {  Row, Col } from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

@@ -12,13 +12,7 @@ export const addReview = createAsyncThunk("revi/review", async (review) => {
 
   return response.data;
 });
-export const approveFoodreview = createAsyncThunk(
-  "revi/allFoodreviews",
-  async (id) => {
-    const response = await axios.put(`/revi/approve/${id}`);
-    return response.data;
-  }
-);
+
 
 const reviewSlice = createSlice({
   name: "reviews",
@@ -47,16 +41,7 @@ const reviewSlice = createSlice({
     [getFoodreviews.rejected]: (state, action) => {
       state.status = "failed";
     },
-    [approveFoodreview.pending]: (state, action) => {
-      state.status = "loading";
-    },
-    [approveFoodreview.fulfilled]: (state, { payload }) => {
-      state.list = payload;
-      state.status = "success";
-    },
-    [approveFoodreview.rejected]: (state, action) => {
-      state.status = "failed";
-    },
+    
   },
 });
 

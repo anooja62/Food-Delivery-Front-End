@@ -1,20 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-export const getMessages = createAsyncThunk(
-  "msg/allMessages",
-  async () => {
-    const response = await axios.get(`/msg/all-message`);
-    return response.data;
-  }
-);
+export const getMessages = createAsyncThunk("msg/allMessages", async () => {
+  const response = await axios.get(`/msg/all-message`);
+  return response.data;
+});
 
-export const replyMessage = createAsyncThunk(
-  "msg/replymessage",
-  async (id) => {
-    const response = await axios.put(`/msg/reply/${id}`);
-    return response.data;
-  }
-);
+export const replyMessage = createAsyncThunk("msg/replymessage", async (id) => {
+  const response = await axios.put(`/msg/reply/${id}`);
+  return response.data;
+});
 export const getSingleMessage = createAsyncThunk(
   `msg/getSingleMessage`,
   async (id) => {
@@ -22,13 +16,17 @@ export const getSingleMessage = createAsyncThunk(
     return response.data;
   }
 );
+export const getReply = createAsyncThunk(`msg/getReply`, async (id) => {
+  const response = await axios.get(`/msg/get-reply/${id}`);
+  return response.data;
+});
 
 const messageSlice = createSlice({
   name: "messages",
   initialState: {
     list: [],
     status: null,
-    singleMessage:{}
+    singleMessage: {},
   },
   extraReducers: {
     [getMessages.pending]: (state, action) => {
@@ -41,7 +39,7 @@ const messageSlice = createSlice({
     [getMessages.rejected]: (state, action) => {
       state.status = "failed";
     },
-   
+
     [replyMessage.pending]: (state, action) => {
       state.status = "loading";
     },
@@ -60,6 +58,16 @@ const messageSlice = createSlice({
       state.status = "success";
     },
     [getSingleMessage.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getReply.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getReply.fulfilled]: (state, { payload }) => {
+      state.list = payload;
+      state.status = "success";
+    },
+    [getReply.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

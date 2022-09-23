@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddMenu = () => {
+  
   const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const [imageUpload, setImageUpload] = useState(null);
@@ -22,7 +23,7 @@ const AddMenu = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMenus(restaurantId));
-  }, [menuLIst]);
+  }, []);
   const menuFoodNameRef = useRef();
   const menuFoodPriceRef = useRef();
   const menuCategoryRef = useRef();
@@ -60,6 +61,8 @@ const AddMenu = () => {
       });
     });
   };
+
+ 
   return (
     <div>
       <Paper elevation={3}>
@@ -102,6 +105,7 @@ const AddMenu = () => {
                   name="photo"
                   placeholder=""
                   required
+                  accept="image/*"
                 />
               </div>
             </Col>

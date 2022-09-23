@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef ,useEffect} from "react";
 import Top from "./Top/Top";
-import {  useSelector } from "react-redux";
+import {  Stack } from "@mui/material";
+import ReviewDisplay from '../Admin/ReviewDisplay/ReviewDisplay'
+import {  useSelector,useDispatch } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
@@ -17,7 +19,7 @@ import Modal from "react-bootstrap/Modal";
 import ComboUI from "./Combo/ComboUI";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
-
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,6 +33,10 @@ import { signupSchema } from "../../schemas";
 import { useFormik } from "formik";
 import AddMenu from "./Menu/AddMenu";
 import ContactDeliorder from "./ContactDeliorder/ContactDeliorder";
+import Reply from './ContactDeliorder/Reply';
+import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
+import { getMessages, getReply } from "../../store/shopping-cart/messageSlice";
+import Orders from "./Orders/Orders";
 const initialValues = {
   name: "",
   phone: "",
@@ -40,8 +46,11 @@ const initialValues = {
 };
 
 const Restaurantsdashboard = () => {
+  
  
   const reviewList = useSelector((state) => state.foodreview.list);
+  const messageList = useSelector((state) => state.message.list);
+  
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -57,8 +66,7 @@ const Restaurantsdashboard = () => {
   const restaurantPhone = cookies.restaurantPhone;
   const restaurantEmail = cookies.restaurantEmail;
   const restaurantLicense = cookies.restaurantLicense;
-  const restaurantIssuedate = cookies.restaurantIssuedate;
-  const restaurantExpiredate = cookies.restaurantExpiredate;
+ 
   const restaurantAbout = cookies.restaurantAbout;
   const restaurantOwnername = cookies.restaurantOwnername;
   const restaurantOwnerphone = cookies.restaurantOwnerphone;
@@ -72,12 +80,18 @@ const Restaurantsdashboard = () => {
   const restaurantPhoneRef = useRef();
   const restaurantAboutRef = useRef();
   const restaurantLicRef = useRef();
-  const restaurantIssueRef = useRef();
-  const restaurantExpireRef = useRef();
+
   const restaurantOwnernameRef = useRef();
   const restaurantOwnerphoneRef = useRef();
   const restaurantLicensetypeRef = useRef();
+  const dispatch = useDispatch();
   
+  useEffect(()=>{
+    
+    dispatch(getFoodreviews(restaurantId));
+    dispatch(getReply(restaurantId));
+   
+  },[])
   const clearCookies = () => {
     removeCookie("restaurantId");
     removeCookie("restaurantName");
@@ -86,8 +100,7 @@ const Restaurantsdashboard = () => {
     removeCookie("restaurantLicense");
     removeCookie("restaurantOwnername");
     removeCookie("restaurantOwnerphone");
-    removeCookie("restaurantIssuedate");
-    removeCookie("restaurantExpiredate");
+   
 
     navigate("/res-login");
   };
@@ -103,8 +116,7 @@ const Restaurantsdashboard = () => {
       password: restaurantPasswordRef.current.value,
       license: restaurantLicRef.current.value,
       about: restaurantAboutRef.current.value,
-      issuedate: restaurantIssueRef.current.value,
-      expiredate: restaurantExpireRef.current.value,
+     
       ownername: restaurantOwnernameRef.current.value,
       ownerphone: restaurantOwnerphoneRef.current.value,
       licensetype: restaurantLicensetypeRef.current.value,
@@ -131,7 +143,9 @@ const Restaurantsdashboard = () => {
       });
     });
   };
+  
 
+  
   return (
     <div>
       <Top />
@@ -175,6 +189,11 @@ const Restaurantsdashboard = () => {
           <Tab>
             <p>
               <RateReviewIcon /> Contact
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+              <MarkEmailUnreadIcon /> Messages
             </p>
           </Tab>
           <Tab>
@@ -254,17 +273,32 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 4</h2>
+            <h2>Orders</h2>
+            <Orders/>
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Any content 5</h2>
+            <h2>Payments</h2>
+
           </div>
         </TabPanel>
         <TabPanel>
-          <div className="panel-content">
-         
+          <div className="panel-content" style={{ marginLeft: 150, marginRight: 200 }}>
+         <h2>Reviews</h2>
+         <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th> Name</th>
+                        <th>Review</th>
+                        
+                       
+                      </tr>
+                    </thead>
+                    {reviewList.map((u) => (
+              <ReviewDisplay key={u.id} foodreview={u} />
+            ))}
+                  </table>
           </div>
         </TabPanel>
         <TabPanel>
@@ -332,7 +366,14 @@ const Restaurantsdashboard = () => {
                           ref={restaurantPhoneRef}
                           placeholder="Phone Number"
                           defaultValue={restaurantPhone}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
                         />
+                      </div>
+                      <div className="error_container">
+                        {errors.phone && touched.phone && (
+                          <p className="form_error">{errors.phone}</p>
+                        )}
                       </div>
                     </Col>
                   </Row>
@@ -349,62 +390,7 @@ const Restaurantsdashboard = () => {
 
                   <br></br>
 
-                  <h3 className="text-center mt-4">FSSAI Details</h3>
-
-                  <Row>
-                    <Col>
-                      <div className="new__register">
-                        <label>Issued On: </label>
-                        <input
-                          type="date"
-                          name="issuedate"
-                          ref={restaurantIssueRef}
-                          defaultValue={restaurantIssuedate}
-                        ></input>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="new__register">
-                        <label>Expire On: </label>
-                        <input
-                          type="date"
-                          name="expiredate"
-                          ref={restaurantExpireRef}
-                          defaultValue={restaurantExpiredate}
-                          
-                        ></input>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="new__register mt-5">
-                        <label for="licensetype">License Type : </label>
-                        <select ref={restaurantLicensetypeRef}>
-                          <option value=" Central license">
-                            {" "}
-                            Central license
-                          </option>
-                          <option value="State license"> State license</option>
-                          <option value="Basic registration license">
-                            {" "}
-                            Basic registration license
-                          </option>
-                        </select>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="new__register mt-5">
-                        <label>For Renewal :</label>
-                        <a href="https://www.foodlicenseportal.org/?gclid=EAIaIQobChMI_53L85jn-QIVA5hmAh2tzwWLEAAYASAAEgLCWfD_BwE">
-                          Go to FSSAI Offical Site
-                        </a>
-                      </div>
-                    </Col>
-                  </Row>
-
-                  <br></br>
-
+                 
                   <h3 className="text-center mt-4">Owner Details</h3>
 
                   <Row>
@@ -417,6 +403,7 @@ const Restaurantsdashboard = () => {
                           placeholder="owner name"
                           ref={restaurantOwnernameRef}
                           defaultValue={restaurantOwnername}
+                          required
                         ></input>
                       </div>
                     </Col>
@@ -429,6 +416,7 @@ const Restaurantsdashboard = () => {
                           name="ownernumber"
                           ref={restaurantOwnerphoneRef}
                           defaultValue={restaurantOwnerphone}
+                          required
                         ></input>
                       </div>
                     </Col>
@@ -494,7 +482,20 @@ const Restaurantsdashboard = () => {
             <ContactDeliorder />
           </div>
         </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+          <div >
+            <h2 className="text-center">Messages From Deliorder</h2>
+            <Stack direction="row" spacing={3}>
+            {messageList.map((u) => (
+              <Reply key={u.id} message={u} />
+            ))}
+            </Stack>
+          </div>
+          </div>
+        </TabPanel>
       </Tabs>
+     
     </div>
   );
 };

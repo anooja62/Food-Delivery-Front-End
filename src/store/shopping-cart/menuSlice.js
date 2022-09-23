@@ -19,12 +19,19 @@ export const deleteMenu = createAsyncThunk(
     return response.data;
   }
 );
-
+export const getSingleMenu = createAsyncThunk(
+  `food/getSingleMenu`,
+  async (id) => {
+    const response = await axios.get(`/food/single-menu/${id}`);
+    return response.data;
+  }
+);
 const menuSlice = createSlice({
   name: "menus",
   initialState: {
     list: [],
     status: null,
+    singleMenu:{}
   },
   extraReducers: {
     [getMenus.pending]: (state, action) => {
@@ -55,6 +62,16 @@ const menuSlice = createSlice({
       state.status = "success";
     },
     [deleteMenu.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getSingleMenu.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getSingleMenu.fulfilled]: (state, { payload }) => {
+      state.singleMenu = payload;
+      state.status = "success";
+    },
+    [getSingleMenu.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

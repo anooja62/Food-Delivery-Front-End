@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
@@ -6,47 +6,62 @@ import StarHalfIcon from "@mui/icons-material/StarHalf";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import Menu from "./Menu/Menu";
 import Combo from "./Combo/Combo";
-
+import ReactPaginate from "react-paginate";
+import "../../styles/all-foods.css";
+import "../../styles/pagination.css";
 import "../../styles/restaurantui.css";
 import { getMenus } from "../../store/shopping-cart/menuSlice";
 import { getCombos } from "../../store/shopping-cart/comboSlice";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import About from "./About/About";
 import Details from "./Details/Details";
 
 import AddReview from "./Review/AddReview";
-import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
-
 
 const RestaurantUI = () => {
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
-  const navigate = useNavigate()
-  if(!userId){
-    navigate('/login')
-   }
+  const navigate = useNavigate();
+  if (!userId) {
+    navigate("/login");
+  }
   let { id } = useParams();
 
   const menuLIst = useSelector((state) => state.menu.list);
   const comboList = useSelector((state) => state.combo.list);
- 
-  
+
   const cartProducts = useSelector((state) => state.cart.cartItems);
- 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMenus(id));
     dispatch(getCombos(id));
-    
-   
   }, []);
 
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const searchedProduct = menuLIst.filter((item) => {
+    if (searchTerm.value === "") return item;
+
+    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
+      return item;
+  });
+  const productPerPage = 8;
+  const visitedPage = pageNumber * productPerPage;
+  const displayPage = searchedProduct.slice(
+    visitedPage,
+    visitedPage + productPerPage
+  );
+
+  const pageCount = Math.ceil(menuLIst.length / productPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   return (
     <div>
@@ -82,16 +97,36 @@ const RestaurantUI = () => {
           <TabPanel>
             <div className="panel-content">
               <h4>Order Now !</h4>
-             
+              <Col lg="6" md="6" sm="6" xs="12">
+                <div className="search__widget d-flex align-items-center justify-content-between">
+                  <input
+                    type="text"
+                    placeholder="I'm looking for....."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <span>
+                    <i class="ri-search-line"></i>
+                  </span>
+                </div>
+              </Col>
               <div className="row d-flex justify-content-between ">
-                {menuLIst.map((u) => {
-                  return <Menu key={u.id} menu={u} />;
+                {displayPage.map((item) => {
+                  return <Menu key={item.id} menu={item} />;
                 })}
               </div>
+              <ReactPaginate
+                pageCount={pageCount}
+                onPageChange={changePage}
+                previousLabel={"Prev"}
+                nextLabel={"Next"}
+                containerClassName="paginationBttns"
+              />
             </div>
           </TabPanel>
           <TabPanel>
             <div className="panel-content ">
+           
               <div className="row d-flex justify-content-between ">
                 {comboList.map((u) => {
                   return <Combo key={u.id} combo={u} />;
@@ -101,9 +136,8 @@ const RestaurantUI = () => {
           </TabPanel>
           <TabPanel>
             <div className="panel-content">
-              
               <div style={{ marginLeft: 150, marginRight: 200 }}>
-     <AddReview/>
+                <AddReview />
               </div>
             </div>
           </TabPanel>

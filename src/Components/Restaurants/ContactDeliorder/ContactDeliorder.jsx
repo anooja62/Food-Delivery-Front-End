@@ -49,7 +49,9 @@ const ContactDeliorder = () => {
                           
                           <option value="My Restaurant is not shown in Deliorder List, Why ?"> My Restaurant is not shown in Deliorder List, Why ?  </option>
                           <option value="Delete My Restaurant From Deliorder List"> Delete My Restaurant From Deliorder List  </option>
-                          <option value="Temporarily Disable My Restaurant From Deliorder List">Temporarily Disable My Restaurant From Deliorder List  </option>
+                          
+                        <option value="Temporarily Disable My Restaurant From Deliorder List">Temporarily Disable My Restaurant From Deliorder List  </option>
+                        <option value="Others">Others</option>
                         </select>
                       </div>
           <div className="new__register">

@@ -1,7 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
-import { useParams } from "react-router-dom";
+
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 const Review = ({ foodreview }) => {
    

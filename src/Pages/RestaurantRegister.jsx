@@ -17,10 +17,9 @@ import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import {storage} from './firebase';
-import {ref, uploadBytes,getDownloadURL} from 'firebase/storage';
-import {v4} from 'uuid'
-
+import { storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 const steps = [
   {
@@ -41,14 +40,14 @@ const initialValues = {
   name: "",
   phone: "",
   email: "",
-  license:"",
+  license: "",
+  restname: "",
 };
 
 const RestaurantRegister = () => {
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageList,setImageList]= useState("");
-  const imageListRef = ref(storage,"images/")
-
+  const [imageList, setImageList] = useState("");
+  const imageListRef = ref(storage, "images/");
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -70,7 +69,8 @@ const RestaurantRegister = () => {
 
   const navigate = useNavigate();
   const signupNameRef = useRef();
-
+  const restaurantOwnernameRef = useRef();
+  const restaurantOwnerphoneRef = useRef();
   const signupPhoneRef = useRef();
 
   const signupEmailRef = useRef();
@@ -85,20 +85,20 @@ const RestaurantRegister = () => {
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
       address: signupAddressRef.current.value,
-      license:signupLicenseRef.current.value,
-    
+      license: signupLicenseRef.current.value,
+      ownername: restaurantOwnernameRef.current.value,
+      ownerphone: restaurantOwnerphoneRef.current.value,
     };
-    console.log(imageList)
-    if(imageUpload === null) return;
-    const imageRef =ref(storage,`images/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef,imageUpload).then((snaphsot)=>{
-      getDownloadURL(snaphsot.ref).then(async(imgUrl)=>{
-        setImageList(imgUrl)
-        await axios.post("/rest/add-restaurent", {...restaurant,imgUrl});
+    console.log(imageList);
+    if (imageUpload === null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+      getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
+        setImageList(imgUrl);
+        await axios.post("/rest/add-restaurent", { ...restaurant, imgUrl });
         navigate("/home");
-       
-      })
-      
+      });
+
       toast.success("Registeration Success", {
         position: "top-center",
         autoClose: 1000,
@@ -108,10 +108,8 @@ const RestaurantRegister = () => {
         draggable: true,
         progress: undefined,
       });
-    })
-
-  }
-
+    });
+  };
 
   return (
     <Helmet title="Restaurant-Register">
@@ -128,7 +126,10 @@ const RestaurantRegister = () => {
                       <StepLabel
                         optional={index === 2 ? <p>Last step</p> : null}
                       >
-                       <p style={{fontWeight:500,fontSize:15}}> {step.label}</p>
+                        <p style={{ fontWeight: 500, fontSize: 15 }}>
+                          {" "}
+                          {step.label}
+                        </p>
                       </StepLabel>
                       <StepContent>
                         <p className=" feature__text">{step.description}</p>
@@ -167,116 +168,126 @@ const RestaurantRegister = () => {
             </Col>
             <Col sm={8}>
               <h1 className="text-center">Restaurant Information</h1>
-             
+
               <Paper elevation={3}>
                 <form onSubmit={handleClick}>
                   <Row>
                     <Col>
-                  <div className="new__register">
-                    <label>* Restaurant Name</label>
-                    <input
-                      type="text"
-                      placeholder="Restaurant name"
-                      name="name"
-                      required
-                      ref={signupNameRef}
-                      value={values.name}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="error_container">
-                    {errors.name && touched.name && (
-                      <p className="form_error text-center">{errors.name}</p>
-                    )}
-                  </div>
-                  </Col><Col>
-                  <div className="new__register">
-                    <label>* Restaurant Phone number</label>
-                    <input
-                      type="tel"
-                      placeholder="Phone"
-                      required
-                      ref={signupPhoneRef}
-                      name="phone"
-                      value={values.phone}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="error_container">
-                    {errors.phone && touched.phone && (
-                      <p className="form_error">{errors.phone}</p>
-                    )}
-                  </div>
-</Col>
+                      <div className="new__register">
+                        <label>* Restaurant Name</label>
+                        <input
+                          type="text"
+                          placeholder="Restaurant name"
+                          name="restname"
+                          required
+                          ref={signupNameRef}
+                          value={values.restname}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="error_container">
+                        {errors.restname && touched.restname && (
+                          <p className="form_error text-center">
+                            {errors.restname}
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="new__register">
+                        <label>* Restaurant Phone number</label>
+                        <input
+                          type="tel"
+                          placeholder="Phone"
+                          required
+                          ref={signupPhoneRef}
+                          name="phone"
+                          value={values.phone}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="error_container">
+                        {errors.phone && touched.phone && (
+                          <p className="form_error">{errors.phone}</p>
+                        )}
+                      </div>
+                    </Col>
                   </Row>
-                  <div className="new__register">
-                    <label>* Email ID</label>
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      required
-                      ref={signupEmailRef}
-                      value={values.email}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="error_container">
-                    {errors.email && touched.email && (
-                      <p className="form_error">{errors.email}</p>
-                    )}
-                  </div>
-                  <div className="new__register">
-                    <label>* Restaurant Address</label>
-                    <textarea
-                      rows="3"
-                      placeholder="Address"
-                      required
-                      ref={signupAddressRef}
-                    ></textarea>
-                  </div>
-<Row>
-  <Col>
-                  <div className="new__register">
-                    <label>* Food Safety License (FSSAI License)</label>
+                  <Row>
+                    <Col>
+                      <div className="new__register">
+                        <label>* Email ID</label>
+                        <input
+                          type="email"
+                          placeholder="Email"
+                          name="email"
+                          required
+                          ref={signupEmailRef}
+                          value={values.email}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="error_container">
+                        {errors.email && touched.email && (
+                          <p className="form_error">{errors.email}</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col>
+                      {" "}
+                      <div className="new__register">
+                        <label>* Restaurant Address</label>
+                        <textarea
+                          rows="3"
+                          placeholder="Address"
+                          required
+                          ref={signupAddressRef}
+                        ></textarea>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <div className="new__register">
+                        <label>* Food Safety License (FSSAI License)</label>
 
-                    <input
-                      type="file"
-                      name="upload"
-                      accept="application/pdf,application/vnd.ms-excel" 
-                      required
-                      onChange={(event) => {
-                        setImageUpload(event.target.files[0]);
-                      }}
-                    />
-                  </div>
-                  </Col>
-                  <Col>
-                  <div className="new__register">
-                    <label>* FSSAI License Number</label>
+                        <input
+                          type="file"
+                          name="upload"
+                          accept="application/pdf,application/vnd.ms-excel"
+                          required
+                          onChange={(event) => {
+                            setImageUpload(event.target.files[0]);
+                          }}
+                        />
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="new__register">
+                        <label>* FSSAI License Number</label>
 
-                    <input
-                      type="text"
-                      name="license"
-                      ref={signupLicenseRef}
-                      required
-                      value={values.license}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder='License No.'
-                     
-                    />
-                  </div>
-                  <div className="error_container">
+                        <input
+                          type="text"
+                          name="license"
+                          ref={signupLicenseRef}
+                          required
+                          value={values.license}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="License No."
+                        />
+                      </div>
+                      <div className="error_container">
                         {errors.license && touched.license && (
                           <p className="form_error">{errors.license}</p>
                         )}
                       </div>
-                  </Col>
-</Row>
+                    </Col>
+                  </Row>
+
                   <br></br>
 
                   <div className="text-center">
@@ -290,24 +301,17 @@ const RestaurantRegister = () => {
                     >
                       Register
                       <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
+                        position="top-center"
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
                     </button>
-                 
-                    
-
-                      
-
-                      
-                    
                   </div>
                 </form>
                 <br></br>
