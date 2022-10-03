@@ -10,7 +10,8 @@ import { useCookies } from "react-cookie";
 import { storage } from "../../Pages/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -61,7 +62,15 @@ const DeliveryStaff = () => {
         );
       });
 
-      alert(" successful");
+      toast.success("Details updated", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   };
 
@@ -215,6 +224,7 @@ const DeliveryStaff = () => {
                           placeholder="Email"
                           ref={deliveryboyEmailRef}
                           defaultValue={deliveryboyEmail}
+                          disabled
                         ></input>
                       </div>
                     </Col>
@@ -235,6 +245,17 @@ const DeliveryStaff = () => {
                     <button className="addToCart__btn" type="submit">
                       Submit
                     </button>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
                   </div>
                   <br></br>
                 </form>

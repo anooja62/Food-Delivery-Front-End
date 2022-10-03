@@ -9,7 +9,6 @@ import { signupSchema } from "../schemas";
 import "../styles/formerror.css";
 import { useNavigate } from "react-router-dom";
 import axios from ".././axios";
-
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -45,6 +44,7 @@ const initialValues = {
 };
 
 const RestaurantRegister = () => {
+  const [error, setError] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "images/");
@@ -86,29 +86,33 @@ const RestaurantRegister = () => {
       email: signupEmailRef.current.value,
       address: signupAddressRef.current.value,
       license: signupLicenseRef.current.value,
-      ownername: restaurantOwnernameRef.current.value,
-      ownerphone: restaurantOwnerphoneRef.current.value,
+      
     };
-    console.log(imageList);
+    try {
     if (imageUpload === null) return;
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
         await axios.post("/rest/add-restaurent", { ...restaurant, imgUrl });
+        toast.success("Registeration Success", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         navigate("/home");
       });
 
-      toast.success("Registeration Success", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+     
     });
+  } catch (err) {
+    console.log(err);
+    setError(err.response.data, " response");
+  }
   };
 
   return (
@@ -193,6 +197,7 @@ const RestaurantRegister = () => {
                           </p>
                         )}
                       </div>
+                      
                     </Col>
                     <Col>
                       <div className="new__register">
@@ -235,9 +240,12 @@ const RestaurantRegister = () => {
                           <p className="form_error">{errors.email}</p>
                         )}
                       </div>
+                      <p className="error__txt text-center">{error}</p>
+                     
                     </Col>
+                   
                     <Col>
-                      {" "}
+                     
                       <div className="new__register">
                         <label>* Restaurant Address</label>
                         <textarea
@@ -294,7 +302,7 @@ const RestaurantRegister = () => {
                     <button
                       className="addToCart__btn "
                       disabled={
-                        errors.name || errors.phone || errors.email
+                        errors.restname || errors.phone || errors.email || errors.license
                           ? true
                           : false
                       }

@@ -34,8 +34,7 @@ const RestaurantLogin = () => {
         setCookie("restaurantEmail", response.data.email);
         setCookie("restaurantPhone", response.data.phone);
         setCookie("restaurantLicense", response.data.license);
-        setCookie("restaurantIssuedate", response.data.issuedate);
-        setCookie("restaurantExpiredate", response.data.expiredate);
+        setCookie("restaurantimgUrl", response.data.imgUrl);
         setCookie("restaurantAbout", response.data.about);
         setCookie("restaurantOwnername", response.data.ownername);
         setCookie("restaurantOwnerphone", response.data.ownerphone);

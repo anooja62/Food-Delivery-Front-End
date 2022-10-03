@@ -12,12 +12,14 @@ import { Chip,Stack } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { getShippings } from "../store/shopping-cart/addressSlice";
+import { addOrder } from "../store/shopping-cart/cartSlice";
 import Address from "../Components/UI/Address/Address";
+import { cartActions } from "../store/shopping-cart/cartSlice";
 const Checkout = () => {
   const [labelAdd, setLabelAdd] = useState("");
   const [cookies, setCookie] = useCookies(null);
   const[disableForm,setDisableForm] = useState(false)
-  console.log(disableForm)
+ 
   const userId = cookies.userId;
   const data = useSelector((state) => state.shipping.list);
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ const Checkout = () => {
 
   const initPayment = (data) => {
     const options = {
-      // key: "rzp_test_DXC7t4WYidBOkp",
+     
       key:  "rzp_test_0YsOnkZc3nwtKA",
      
       amount: data.amount,
@@ -58,6 +60,7 @@ const Checkout = () => {
         try {
           const { data } = await axios.post("pay/verify", response);
           console.log(data);
+          dispatch(cartActions.clearItem());
         } catch (error) {
           console.log(error);
         }
@@ -73,6 +76,7 @@ const Checkout = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
+    dispatch(addOrder(userId))
     try {
       const { data } = await axios.post("pay/orders", { amount: totalAmount,userId:userId});
       console.log(data);
@@ -182,7 +186,7 @@ const Checkout = () => {
                 <p style={{color:'red', fontWeight:600}}>* There will be no cancellation after payment</p>
 
                 <div className="text-center">
-                  <button className="addToCart__btn" type="submit">
+                  <button className="addToCart__btn" type="submit" >
                     {" "}
                     Payment
                   </button>

@@ -83,7 +83,7 @@ const menuId = menu._id
       restaurantId: restaurantId,
     };
 
-    if (imageUpload === null) return;
+   
     const imageRef = ref(storage, `foodimages/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {

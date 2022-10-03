@@ -1,5 +1,6 @@
 import React,{useRef} from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Paper from "@mui/material/Paper";
 import { useCookies } from "react-cookie";
 import axios from '../../../axios';
@@ -24,7 +25,15 @@ const ContactDeliorder = () => {
 
       try {
         await axios.post("/msg/add-message", message);
-        alert(" successful");
+        toast.success("Message Sent Successfully", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } catch (err) {
         console.log(err);
       }
@@ -66,6 +75,17 @@ const ContactDeliorder = () => {
             <button className="addToCart__btn" type="submit">
               Send Message <MarkunreadOutlinedIcon/>
             </button>
+            <ToastContainer
+                        position="top-center"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
           </div>
           <br></br>
         </form>

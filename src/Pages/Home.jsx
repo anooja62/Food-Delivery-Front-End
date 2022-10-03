@@ -12,7 +12,8 @@ import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
 import { useCookies } from "react-cookie";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import review from "../assets/images/review.jpg";
 
 import TestimonialSlider from "../Components/UI/slider/TestimonialSlider.jsx";
@@ -96,8 +97,15 @@ const Home = () => {
         await axios.post("deli/delivery", { ...deliveryboy, imgUrl });
         setShow(false);
       });
-
-      alert("Registeration successful");
+      toast.success("Registeration sucessfull", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   };
 
@@ -372,6 +380,17 @@ const Home = () => {
                             >
                               Register{" "}
                             </button>
+                            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
                           </div>
                         </Row>
                       </form>

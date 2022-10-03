@@ -57,19 +57,20 @@ const ComboUI = () => {
         .then(() => {
           dispatch(getCombos());
         });
+        toast.success("Item Added to Combo List", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setChecked([])
         setTotalPrice('')
       });
 
-      toast.success("Item Added to Combo List", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+     
     });
   };
 

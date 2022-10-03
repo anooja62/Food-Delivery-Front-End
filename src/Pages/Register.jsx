@@ -39,10 +39,7 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    if (
-      signupConfirmPasswordRef.current.value !== signupPasswordRef.current.value
-    ) {
-    } else {
+    
       const user = {
         name: signupNameRef.current.value,
         phone: signupPhoneRef.current.value,
@@ -58,7 +55,7 @@ const Register = () => {
         setError(err.response.data, "user response");
       }
     }
-  };
+ 
 
   return (
     <Helmet title="Register">

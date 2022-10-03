@@ -4,7 +4,8 @@ import Topbar from "../Components/Admin/Topbar/Topbar";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
 import Manage from "../Components/Admin/Manage/Manage";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import User from "../Components/Admin/User/User";
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
@@ -82,7 +83,15 @@ const Admin = () => {
 
       try {
         await axios.put(`/msg/reply/${restaurantId}`, message);
-        alert(" successful");
+        toast.success("Reply sent Successfully", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } catch (err) {
         console.log(err);
       }
@@ -322,6 +331,17 @@ const Admin = () => {
             <button className="addToCart__btn" type="submit">
              <ReplyOutlinedIcon/> Send Reply 
             </button>
+            <ToastContainer
+                        position="top-center"
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
           </div>
           <br></br>
         </form>

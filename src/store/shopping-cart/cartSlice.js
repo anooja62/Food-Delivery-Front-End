@@ -11,6 +11,11 @@ export const userCart = createAsyncThunk(`cart/get-cart`, async (id) => {
   return response.data;
 });
 
+export const addOrder = createAsyncThunk(`order/add-order`, async (id) => {
+  const response = await axios.post(`order/add-order/${id}`);
+  return response.data;
+});
+
 const initialState = {
   cartItems: [],
   cartItemsApi: [],
@@ -46,6 +51,17 @@ const cartSlice = createSlice({
     },
     [userCart.rejected]: (state, action) => {
       state.status = "failed";
+    },
+    [addOrder.pending]: (state, action) => {
+     
+    },
+    [addOrder.fulfilled]: (state, { payload }) => {
+     
+      // state.cartItemsApi = []
+      // state.cartItems = []
+    },
+    [addOrder.rejected]: (state, action) => {
+      
     },
   },
   reducers: {
@@ -128,6 +144,14 @@ const cartSlice = createSlice({
         state.totalQuantity = state.totalQuantity - existingItem.quantity;
       }
       
+    },
+    clearItem(state, action) {
+      
+       state.cartItemsApi = []
+      state.cartItems = []
+      state.apiCallRequired=  true
+      state.totalAmount = 0
+      state.totalQuantity = 0
     },
   },
 });

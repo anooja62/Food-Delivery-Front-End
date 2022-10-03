@@ -35,7 +35,7 @@ import AddMenu from "./Menu/AddMenu";
 import ContactDeliorder from "./ContactDeliorder/ContactDeliorder";
 import Reply from './ContactDeliorder/Reply';
 import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
-import { getMessages, getReply } from "../../store/shopping-cart/messageSlice";
+import { getReply } from "../../store/shopping-cart/messageSlice";
 import Orders from "./Orders/Orders";
 const initialValues = {
   name: "",
@@ -66,6 +66,7 @@ const Restaurantsdashboard = () => {
   const restaurantPhone = cookies.restaurantPhone;
   const restaurantEmail = cookies.restaurantEmail;
   const restaurantLicense = cookies.restaurantLicense;
+  const restaurantimgUrl = cookies.restaurantimgUrl;
  
   const restaurantAbout = cookies.restaurantAbout;
   const restaurantOwnername = cookies.restaurantOwnername;
@@ -130,17 +131,18 @@ const Restaurantsdashboard = () => {
           ...restaurants,
           restImg,
         });
+        toast.success("Details Updated", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
 
-      toast.success("Details Updated", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+    
     });
   };
   
@@ -389,7 +391,11 @@ const Restaurantsdashboard = () => {
                   </div>
 
                   <br></br>
-
+                  <h3 className="text-center mt-4">FSSAI License</h3>
+                  <div className="text-center mt-4"> 
+                  <a href={restaurantimgUrl} style={{fontWeight:600,color:"red"}}>View License</a>
+                  </div>
+                 
                  
                   <h3 className="text-center mt-4">Owner Details</h3>
 
