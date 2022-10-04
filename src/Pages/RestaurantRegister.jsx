@@ -45,6 +45,7 @@ const initialValues = {
 
 const RestaurantRegister = () => {
   const [error, setError] = useState("");
+
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "images/");
@@ -94,7 +95,8 @@ const RestaurantRegister = () => {
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        await axios.post("/rest/add-restaurent", { ...restaurant, imgUrl });
+       const response = await axios.post("/rest/add-restaurent", { ...restaurant, imgUrl });
+       console.log(response)
         toast.success("Registeration Success", {
           position: "top-center",
           autoClose: 1000,
@@ -110,8 +112,8 @@ const RestaurantRegister = () => {
      
     });
   } catch (err) {
-    console.log(err);
-    setError(err.response.data, " response");
+ 
+  
   }
   };
 

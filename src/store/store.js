@@ -10,6 +10,7 @@ import menuSlice from "./shopping-cart/menuSlice";
 import comboSlice from "./shopping-cart/comboSlice";
 import paymentSlice from "./shopping-cart/comboSlice";
 import messageSlice from "./shopping-cart/messageSlice";
+import orderSlice from "./shopping-cart/ordersSlice";
 
 
 const store = configureStore({
@@ -25,6 +26,7 @@ const store = configureStore({
     combo:comboSlice.reducer,
     payment:paymentSlice.reducer,
     message:messageSlice.reducer,
+    order:orderSlice.reducer,
    
 
 

@@ -1,16 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../Pages/Home";
-
-
 import Cart from "../Pages/Cart";
 import Checkout from "../Pages/Checkout";
 import Restaurant from "../Pages/Restaurant";
-
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Profile from "../Pages/Profile";
-
 import Orders from "../Pages/Orders";
 import Admin from "../Pages/Admin";
 import RestaurantRegister from "../Pages/RestaurantRegister";
@@ -23,14 +19,14 @@ import DeliveryStaff from "../Components/DeliveryStaff/DeliveryStaff";
 import ComboUI from "../Components/Restaurants/Combo/ComboUI";
 import RestaurantLogin from "../Pages/RestaurantLogin";
 import DeliveryboyLogin from "../Pages/DeliveryboyLogin";
+import PaymentSuccess from "../Pages/PaymentSuccess";
 
 function Routers() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
-     
-      
+
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/login" element={<Login />} />
@@ -47,9 +43,10 @@ function Routers() {
       <Route path="/newsubmit" element={<NewSubmit />} />
       <Route path="/admin-res" element={<Restaurantsdashboard />} />
       <Route path="/admin-staff" element={<DeliveryStaff />} />
-      <Route path="/combo" element={<ComboUI />}/>
-      <Route path="/res-login" element={<RestaurantLogin />}/>
-      <Route path="/delivery-login" element={<DeliveryboyLogin />}/>
+      <Route path="/combo" element={<ComboUI />} />
+      <Route path="/res-login" element={<RestaurantLogin />} />
+      <Route path="/delivery-login" element={<DeliveryboyLogin />} />
+      <Route path="/success" element={<PaymentSuccess />} />
     </Routes>
   );
 }

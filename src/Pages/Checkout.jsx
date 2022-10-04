@@ -81,6 +81,7 @@ const Checkout = () => {
       const { data } = await axios.post("pay/orders", { amount: totalAmount,userId:userId});
       console.log(data);
       initPayment(data.data);
+      navigate('/success')
     } catch (error) {
       console.log(error);
     }
