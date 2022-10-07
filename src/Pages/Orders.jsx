@@ -44,7 +44,7 @@ const Orders = () => {
                   <td>{item.foodname}</td>
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
-                  <td>Status</td>
+                  <td>Order Confirmed</td>
                 </tr>)
               })
               }
