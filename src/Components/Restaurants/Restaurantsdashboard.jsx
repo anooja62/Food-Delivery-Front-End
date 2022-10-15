@@ -1,8 +1,8 @@
-import React, { useState, useRef ,useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Top from "./Top/Top";
-import {  Stack } from "@mui/material";
-import ReviewDisplay from '../Admin/ReviewDisplay/ReviewDisplay'
-import {  useSelector,useDispatch } from "react-redux";
+import { Stack } from "@mui/material";
+import ReviewDisplay from "../Admin/ReviewDisplay/ReviewDisplay";
+import { useSelector, useDispatch } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
@@ -19,7 +19,7 @@ import Modal from "react-bootstrap/Modal";
 import ComboUI from "./Combo/ComboUI";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,10 +33,11 @@ import { signupSchema } from "../../schemas";
 import { useFormik } from "formik";
 import AddMenu from "./Menu/AddMenu";
 import ContactDeliorder from "./ContactDeliorder/ContactDeliorder";
-import Reply from './ContactDeliorder/Reply';
+import Reply from "./ContactDeliorder/Reply";
 import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
 import { getReply } from "../../store/shopping-cart/messageSlice";
 import Orders from "./Orders/Orders";
+import { restaurantOrder } from "../../store/shopping-cart/ordersSlice";
 const initialValues = {
   name: "",
   phone: "",
@@ -46,11 +47,9 @@ const initialValues = {
 };
 
 const Restaurantsdashboard = () => {
-  
- 
   const reviewList = useSelector((state) => state.foodreview.list);
   const messageList = useSelector((state) => state.message.list);
-  
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -67,7 +66,7 @@ const Restaurantsdashboard = () => {
   const restaurantEmail = cookies.restaurantEmail;
   const restaurantLicense = cookies.restaurantLicense;
   const restaurantimgUrl = cookies.restaurantimgUrl;
- 
+
   const restaurantAbout = cookies.restaurantAbout;
   const restaurantOwnername = cookies.restaurantOwnername;
   const restaurantOwnerphone = cookies.restaurantOwnerphone;
@@ -86,13 +85,12 @@ const Restaurantsdashboard = () => {
   const restaurantOwnerphoneRef = useRef();
   const restaurantLicensetypeRef = useRef();
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    
+
+  useEffect(() => {
     dispatch(getFoodreviews(restaurantId));
     dispatch(getReply(restaurantId));
-   
-  },[])
+    dispatch(restaurantOrder(restaurantId));
+  }, []);
   const clearCookies = () => {
     removeCookie("restaurantId");
     removeCookie("restaurantName");
@@ -101,11 +99,10 @@ const Restaurantsdashboard = () => {
     removeCookie("restaurantLicense");
     removeCookie("restaurantOwnername");
     removeCookie("restaurantOwnerphone");
-   
 
     navigate("/res-login");
   };
-  
+
   //update details
   const handleClick = async (e) => {
     e.preventDefault();
@@ -117,7 +114,7 @@ const Restaurantsdashboard = () => {
       password: restaurantPasswordRef.current.value,
       license: restaurantLicRef.current.value,
       about: restaurantAboutRef.current.value,
-     
+
       ownername: restaurantOwnernameRef.current.value,
       ownerphone: restaurantOwnerphoneRef.current.value,
       licensetype: restaurantLicensetypeRef.current.value,
@@ -141,13 +138,9 @@ const Restaurantsdashboard = () => {
           progress: undefined,
         });
       });
-
-    
     });
   };
-  
 
-  
   return (
     <div>
       <Top />
@@ -276,31 +269,31 @@ const Restaurantsdashboard = () => {
         <TabPanel>
           <div className="panel-content">
             <h2>Orders</h2>
-            <Orders/>
+            <Orders />
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
             <h2>Payments</h2>
-
           </div>
         </TabPanel>
         <TabPanel>
-          <div className="panel-content" style={{ marginLeft: 150, marginRight: 200 }}>
-         <h2>Reviews</h2>
-         <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th> Name</th>
-                        <th>Review</th>
-                        
-                       
-                      </tr>
-                    </thead>
-                    {reviewList.map((u) => (
-              <ReviewDisplay key={u.id} foodreview={u} />
-            ))}
-                  </table>
+          <div
+            className="panel-content"
+            style={{ marginLeft: 150, marginRight: 200 }}
+          >
+            <h2>Reviews</h2>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th> Name</th>
+                  <th>Review</th>
+                </tr>
+              </thead>
+              {reviewList.map((u) => (
+                <ReviewDisplay key={u.id} foodreview={u} />
+              ))}
+            </table>
           </div>
         </TabPanel>
         <TabPanel>
@@ -355,7 +348,6 @@ const Restaurantsdashboard = () => {
                           }}
                           name="photo"
                           placeholder=""
-                         
                         />
                       </div>
                     </Col>
@@ -392,11 +384,15 @@ const Restaurantsdashboard = () => {
 
                   <br></br>
                   <h3 className="text-center mt-4">FSSAI License</h3>
-                  <div className="text-center mt-4"> 
-                  <a href={restaurantimgUrl} style={{fontWeight:600,color:"red"}}>View License</a>
+                  <div className="text-center mt-4">
+                    <a
+                      href={restaurantimgUrl}
+                      style={{ fontWeight: 600, color: "red" }}
+                    >
+                      View License
+                    </a>
                   </div>
-                 
-                 
+
                   <h3 className="text-center mt-4">Owner Details</h3>
 
                   <Row>
@@ -463,16 +459,16 @@ const Restaurantsdashboard = () => {
                     <button className="addToCart__btn" type="submit">
                       Submit
                       <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
+                        position="top-center"
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
                     </button>
                   </div>
                   <br></br>
@@ -490,18 +486,17 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-          <div >
-            <h2 className="text-center">Messages From Deliorder</h2>
-            <Stack direction="row" spacing={3}>
-            {messageList.map((u) => (
-              <Reply key={u.id} message={u} />
-            ))}
-            </Stack>
-          </div>
+            <div>
+              <h2 className="text-center">Messages From Deliorder</h2>
+              <Stack direction="row" spacing={3}>
+                {messageList.map((u) => (
+                  <Reply key={u.id} message={u} />
+                ))}
+              </Stack>
+            </div>
           </div>
         </TabPanel>
       </Tabs>
-     
     </div>
   );
 };

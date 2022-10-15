@@ -191,8 +191,13 @@ const Checkout = () => {
                     {" "}
                     Payment
                   </button>
+              
                 </div>
               </form>
+              <button className="addToCart__btn" onClick={()=>{console.log("button clicked")}}>
+                    {" "}
+                  Add Address
+                  </button>
             </Col>
             <Col lg="4" md="6">
               <p style={{color:'green', fontWeight:600}}>* Delivery is free for orders above ₹700</p>
