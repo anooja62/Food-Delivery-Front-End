@@ -16,8 +16,8 @@ const Orders = () => {
   // console.log(restaurantOrders);
   const dispatch = useDispatch();
   const handleFoodReady = (id) => {
-    dispatch(orderReady(id));
-    dispatch(restaurantOrder(restaurantId));
+    dispatch(orderReady({ id, restaurantId }));
+    // dispatch(restaurantOrder(restaurantId));
   };
 
   return (

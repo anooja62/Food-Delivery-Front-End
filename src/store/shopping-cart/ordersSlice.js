@@ -12,10 +12,13 @@ export const restaurantOrder = createAsyncThunk(
     return response.data;
   }
 );
-export const orderReady = createAsyncThunk(`order/order-ready`, async (id) => {
-  const response = await axios.put(`order/order-ready/${id}`);
-  return response.data;
-});
+export const orderReady = createAsyncThunk(
+  `order/order-ready`,
+  async (data) => {
+    const response = await axios.put(`order/order-ready`, data);
+    return response.data;
+  }
+);
 
 const initialState = {
   status: "",
@@ -50,6 +53,7 @@ const orderSlice = createSlice({
       state.status = "loading";
     },
     [orderReady.fulfilled]: (state, { payload }) => {
+      state.restaurantOrders = payload;
       state.status = "success";
     },
     [orderReady.rejected]: (state, action) => {
