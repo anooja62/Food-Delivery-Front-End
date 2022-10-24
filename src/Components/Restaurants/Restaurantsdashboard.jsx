@@ -38,6 +38,8 @@ import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
 import { getReply } from "../../store/shopping-cart/messageSlice";
 import Orders from "./Orders/Orders";
 import { restaurantOrder } from "../../store/shopping-cart/ordersSlice";
+import { deliveryOrder } from "../../store/shopping-cart/ordersSlice";
+
 const initialValues = {
   name: "",
   phone: "",
@@ -90,6 +92,8 @@ const Restaurantsdashboard = () => {
     dispatch(getFoodreviews(restaurantId));
     dispatch(getReply(restaurantId));
     dispatch(restaurantOrder(restaurantId));
+
+    dispatch(deliveryOrder(restaurantId));
   }, []);
   const clearCookies = () => {
     removeCookie("restaurantId");
@@ -231,6 +235,7 @@ const Restaurantsdashboard = () => {
                     </h1>
                   </div>
                 </div>
+                
               </div>
 
               <div className="col-xl-3 col-sm-6 py-2">

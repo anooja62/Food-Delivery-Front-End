@@ -30,7 +30,7 @@ const Carts = () => {
 </div>
 <div className="cart__bottom d-flex align-items-center justify-content-between">
   <h6>Subtotal : <span>₹{totalAmount}</span></h6>
-  <button><Link to={'./checkout'}>Checkout</Link></button>
+  <button onClick={()=>dispatch(cartUiActions.close())}><Link to={'./checkout'}>Checkout</Link></button>
 </div>
     </ListGroup>
   </div>

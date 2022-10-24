@@ -17,6 +17,8 @@ const AddMenu = () => {
   const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const [imageUpload, setImageUpload] = useState(null);
+  const [error, setError] = useState("");
+
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "foodimages/");
   const menuLIst = useSelector((state) => state.menu.list);
@@ -61,7 +63,16 @@ const AddMenu = () => {
       });
     });
   };
-
+const handleImageUpload = (event) => {
+  console.log(event.target.files[0].name.includes("png"))
+  if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+    setImageUpload(event.target.files[0]);
+    setError("")
+  }else{
+    setError("you can upload only images")
+ 
+  }
+}
  
   return (
     <div>
@@ -99,14 +110,15 @@ const AddMenu = () => {
                 <label>Select Your Image</label>
                 <input
                   type="file"
-                  onChange={(event) => {
-                    setImageUpload(event.target.files[0]);
-                  }}
+                  onChange={
+                 handleImageUpload
+                  }
                   name="photo"
                   placeholder=""
                   required
                   accept="image/*"
                 />
+                <p>{error}</p>
               </div>
             </Col>
             <Col>

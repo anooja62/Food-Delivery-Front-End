@@ -86,9 +86,13 @@ const ComboUI = () => {
 
   useEffect(() => {
     const checkedListArr = (list) => {
+      
       list.forEach((values) => {
+        console.log(values)
         const CheckedItemList = menuLIst.filter(
-          (item) => item.foodname === values
+          (item) => {
+            console.log(item)
+           return item.foodname+item._id === values}
         );
 
         checkedFinalItems.push(...CheckedItemList);
@@ -120,7 +124,7 @@ const ComboUI = () => {
               return (
                 <div key={index}>
                   <input
-                    value={item.foodname}
+                    value={item.foodname+item._id}
                     type="checkbox"
                     onChange={handleCheck}
                     

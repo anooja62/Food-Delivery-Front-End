@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie";
 
 
 const Combo = ({ combo, url }) => {
+  console.log(combo)
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const cartProducts = useSelector((state) => state.cart.cartItems);
@@ -45,7 +46,7 @@ const Combo = ({ combo, url }) => {
       progress: undefined,
       });
   };
-
+  const lastIndex = combo.foodname.length -1
   return (
     <>
       <Card style={{ maxWidth: 345}} className="mt-5">
@@ -57,7 +58,10 @@ const Combo = ({ combo, url }) => {
         />
         <CardContent>
         <Typography gutterBottom variant="h6" component="div">
-            {combo.foodname}
+          
+           {
+           combo.foodname.map((item,index) =><><p>{item} </p>{index!==lastIndex  &&<p>+</p>}</>) }
+            
           </Typography>
         </CardContent>
           <p>{combo.category}</p>

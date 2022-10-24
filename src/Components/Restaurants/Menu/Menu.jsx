@@ -43,6 +43,7 @@ const Menu = ({ menu, url }) => {
   const dispatch = useDispatch();
   const handleDelete = async (id) => {
     dispatch(deleteMenu(id));
+   
   };
   
 
@@ -84,24 +85,47 @@ const menuId = menu._id
     };
 
    
-    const imageRef = ref(storage, `foodimages/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snaphsot) => {
-      getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
-        setImageList(imgUrl);
-        const res = await axios
-          .put(`/food/update/${menuId}`, { ...menu, imgUrl })
-          toast.success("Menu Item updated successfully", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+    
+    console.log(imageUpload)
+    if(imageUpload){
+      const imageRef = ref(storage, `foodimages/${imageUpload.name + v4()}`);
+      uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+        getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
+          setImageList(imgUrl);
+          const res = await axios
+            .put(`/food/update/${menuId}`, { ...menu, imgUrl })
+            setShow(false)
+            dispatch(getMenus(restaurantId))
+            toast.success("Menu Item updated successfully", {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+        })
+       
       });
+    }else{
      
-    });
+       const res = await axios
+            .put(`/food/update/${menuId}`, {...menu})
+            setShow(false)
+            dispatch(getMenus(restaurantId))
+            toast.success("Menu Item updated successfully", {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+        
+    }
+   
   };
   return (
     <>

@@ -13,19 +13,19 @@ const Orders = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const restaurantOrders = useSelector((state) => state.order.restaurantOrders);
-  // console.log(restaurantOrders);
+  
   const dispatch = useDispatch();
   const handleFoodReady = (id) => {
     dispatch(orderReady({ id, restaurantId }));
-    // dispatch(restaurantOrder(restaurantId));
+    
   };
 
   return (
     <>
       {restaurantOrders.map((orders) => {
-        // console.log(orders, "orders");
+       
         let orderId = orders[orders.length - 1];
-        // console.log(orderId);
+        
 
         return (
           <Card style={{ width: "18rem" }}>

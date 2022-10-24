@@ -3,8 +3,10 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+import MopedIcon from '@mui/icons-material/Moped';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Row, Col } from "react-bootstrap";
+
 import Paper from "@mui/material/Paper";
 import { useCookies } from "react-cookie";
 import { storage } from "../../Pages/firebase";
@@ -18,10 +20,25 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import DeliveryTopbar from "./DeliveryTopBar/DeliveryTopBar";
 import Card from "react-bootstrap/Card";
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deliveryOrder,
+  outForDelivery,
+  deliveredOrder,makeDeliverd
+} from "../../store/shopping-cart/ordersSlice";
+import { getParsedRestaurants } from "../../store/shopping-cart/restaurantSlice";
+import { useEffect } from "react";
 
 const DeliveryStaff = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(deliveryOrder(restaurantId));
+    dispatch(getParsedRestaurants());
+    dispatch(deliveredOrder())
+  }, []);
   const [show, setShow] = useState(false);
-
+  const items = JSON.parse(sessionStorage.getItem("items"));
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const deliveryboyPasswordRef = useRef();
@@ -37,7 +54,23 @@ const DeliveryStaff = () => {
   const deliveryboyName = cookies.deliveryboyName;
   const deliveryboyPhone = cookies.deliveryboyPhone;
   const deliveryboyEmail = cookies.deliveryboyEmail;
-  const deliveryboyProfileImg= cookies.deliveryboyProfileImg;
+  const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
+
+  const restaurantId = cookies.restaurantId;
+  const deliveryOrderData = useSelector((state) => state.order.deliveryOrder);
+  const deliveredOrders = useSelector((state) => state.order.deliveredOrders);
+  const parsedRestaurents = useSelector(
+    (state) => state.restaurant.parsedRestaurant
+  );
+
+  const foundRestaurant = (id) => {
+    const name = parsedRestaurents.filter((item) => item.value === id)?.[0]
+
+    return name || "";
+  };
+  
+ 
+  
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -83,6 +116,22 @@ const DeliveryStaff = () => {
 
     navigate("/delivery-login");
   };
+  const handleOutForDelivery = (orderId) => {
+    dispatch(outForDelivery({ orderId: orderId, restaurantId: restaurantId }));
+  };
+  const handleDeclineUsingSession = (orderId) => {
+    if (items) {
+      items.push(orderId);
+      console.log(items);
+      sessionStorage.setItem("items", JSON.stringify(items));
+      return;
+    }
+    sessionStorage.setItem("items", JSON.stringify([orderId]));
+  };
+ const  handleDelivered = (orderId) =>{
+  dispatch(makeDeliverd({ orderId: orderId}))
+ }
+  
   return (
     <div>
       <DeliveryTopbar />
@@ -90,13 +139,13 @@ const DeliveryStaff = () => {
         <TabList>
           <Tab>
             <p>
-              <DeliveryDiningOutlinedIcon /> Orders
+              <PendingActionsIcon /> New Orders
             </p>
           </Tab>
 
           <Tab>
             <p>
-              <CurrencyRupeeOutlinedIcon /> Salary
+              <MopedIcon /> Delivery
             </p>
           </Tab>
           <Tab>
@@ -132,34 +181,102 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className="panel-content">
             <h2>Orders</h2>
-            <Card style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title>Customer Name</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Address
-                </Card.Subtitle>
-                <Card.Text>Order Details</Card.Text>
-                <Row>
-                  <Col>
-                    <Card.Text onClick={() => console.log("Accepted")}>
-                      Accept
-                    </Card.Text>
-                  </Col>
-                  <Col>
-                    <Card.Text onClick={() => console.log("declined")}>
-                      Decline
-                    </Card.Text>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
+            {deliveryOrderData.map((data) => {
+             
+              const lastIndex = data.length - 1;
+             
+              return (
+                <Card style={{ width: "18rem" }}>
+                  <Card.Body>
+                    {data.map((item) => {
+                     
+                      return (
+                        <>
+                         
+                          <Card.Text>{item.foodname}  </Card.Text>
+                          <Card.Text>
+                            {foundRestaurant(item.restaurantId).label}
+                            <br/>
+                            {foundRestaurant(item.restaurantId).address}
+                          </Card.Text>
+                        
+                        </>
+                      );
+                    })}
+                    <Card.Subtitle className="mb-2 text-muted">
+                     Customer Address
+                    </Card.Subtitle>
+
+                    <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
+                   
+                    <Row>
+                      <Col>
+                        <Button
+                          onClick={() =>
+                            handleOutForDelivery(data[lastIndex].orderId)
+                          }
+                        >
+                          Accept Order
+                        </Button>
+                      </Col>
+                      
+                    </Row>
+                  </Card.Body>
+                </Card>
+              );
+            })}
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Salary Details</h2>
+            <h2>Delivery details</h2>
+            { deliveredOrders.map((data) => {
+              
+              const lastIndex = data.length - 1;
+             
+              return (
+                <Card style={{ width: "18rem" }}>
+                  <Card.Body>
+                    {data.map((item) => {
+                     
+                      return (
+                        <>
+                         
+                        
+                        </>
+                      );
+                    })}
+                    <Card.Subtitle className="mb-2 text-muted">
+                     Customer Address
+                    </Card.Subtitle>
+
+                    <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
+                   
+                    <Row>
+                     {data[lastIndex].isDelivered === 0 ? 
+                     <><Col>
+                        <Button
+                          onClick={() =>
+                            handleDelivered(data[lastIndex].orderId)
+                          }
+                        >
+                          Delivery Completed
+                        </Button>
+                      </Col></>:<p>Delivered</p>}
+                     
+                    </Row>
+                  </Card.Body>
+                </Card>
+              );
+            })}
           </div>
         </TabPanel>
+        
+       
         <TabPanel>
           <div className="panel-content">
             <div style={{ marginLeft: 150, marginRight: 200 }}>
@@ -203,7 +320,6 @@ const DeliveryStaff = () => {
                           }}
                           name="photo"
                           placeholder=""
-                          
                         />
                       </div>
                     </Col>
@@ -246,16 +362,16 @@ const DeliveryStaff = () => {
                       Submit
                     </button>
                     <ToastContainer
-                        position="top-center"
-                        autoClose={3000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                      />
+                      position="top-center"
+                      autoClose={3000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                    />
                   </div>
                   <br></br>
                 </form>
@@ -263,7 +379,6 @@ const DeliveryStaff = () => {
             </div>
           </div>
         </TabPanel>
-       
       </Tabs>
     </div>
   );
