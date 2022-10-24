@@ -204,12 +204,12 @@ const Checkout = () => {
                 )}
 
                 <br></br>
-                <p style={{ color: "red", fontWeight: 600 }}>
+                <p style={{ color: "blue", fontWeight: 600 }}>
                   * There will be no cancellation after payment
                 </p>
-
+{!disableForm && <p style={{ color: "red", fontWeight: 600 }}>No Address Selected</p>}
                 <div className="text-center">
-                  <button className="addToCart__btn" type="submit">
+                  <button className="addToCart__btn" type="submit" disabled={!disableForm}>
                     {" "}
                     Payment
                   </button>

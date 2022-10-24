@@ -44,8 +44,8 @@ const Orders = () => {
                   <td>{item.foodname}</td>
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
-                  <td style={{fontWeight:600}}>{item.status === 0  && 'Order Confirmed'||item.status === 1 && "Out for delivery"
-                  ||item.status === 2 && "Delivered"}</td>
+                  <td style={{fontWeight:600}}>{(item.status === 0  && 'Order Confirmed')||(item.status === 1 && "Out for delivery")
+                  ||(item.status === 2 && "Delivered")}</td>
                 </tr>)
               })
               }
