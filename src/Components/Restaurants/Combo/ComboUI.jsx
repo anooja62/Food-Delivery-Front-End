@@ -17,7 +17,7 @@ const ComboUI = () => {
   const [checked, setChecked] = useState([]);
   let checkedFinalItems = [{}];
   var theRemovedElement = checkedFinalItems.shift();
-
+  const [error, setError] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [cookies, setCookie] = useCookies(null);
   const [imageUpload, setImageUpload] = useState(null);
@@ -110,7 +110,17 @@ const ComboUI = () => {
     setTotalPrice(sum);
     
   }, [checked]);
-
+  const handleImageUpload = (event) => {
+    console.log(event.target.files[0].name.includes("png"))
+    if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+      setImageUpload(event.target.files[0]);
+      setError("")
+    }else{
+      setError("you can upload only images")
+   
+    }
+  }
+   
   return (
     <>
       <h1 className="text-center">Add Combo Items</h1>
@@ -168,14 +178,17 @@ const ComboUI = () => {
                 <label>Select Your Image</label>
                 <input
                   type="file"
-                  onChange={(event) => {
-                    setImageUpload(event.target.files[0]);
-                  }}
+                  onChange={
+                 handleImageUpload
+                  }
                   name="photo"
                   placeholder=""
                   required
+                  accept="image/*"
                 />
+                <p style={{color:"red",fontWeight:600}}>{error}</p>
               </div>
+              
             </Col>
             <Col>
               <div className="new__register mt-5">

@@ -75,7 +75,7 @@ const Restaurantsdashboard = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "restimages/");
-
+  const [error, setError] = useState("");
   const restaurantPasswordRef = useRef();
   const restaurantEmailRef = useRef();
   const restaurantNameRef = useRef();
@@ -144,7 +144,16 @@ const Restaurantsdashboard = () => {
       });
     });
   };
-
+  const handleImageUpload = (event) => {
+    console.log(event.target.files[0].name.includes("png"))
+    if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+      setImageUpload(event.target.files[0]);
+      setError("")
+    }else{
+      setError("you can upload only images")
+   
+    }
+  }
   return (
     <div>
       <Top />
@@ -170,11 +179,7 @@ const Restaurantsdashboard = () => {
               <LocalGroceryStoreOutlinedIcon /> Orders
             </p>
           </Tab>
-          <Tab>
-            <p>
-              <CurrencyRupeeOutlinedIcon /> Payments
-            </p>
-          </Tab>
+         
           <Tab>
             <p>
               <StarHalfOutlinedIcon /> Reviews
@@ -277,11 +282,7 @@ const Restaurantsdashboard = () => {
             <Orders />
           </div>
         </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Payments</h2>
-          </div>
-        </TabPanel>
+       
         <TabPanel>
           <div
             className="panel-content"
@@ -347,14 +348,18 @@ const Restaurantsdashboard = () => {
                       <div className="new__register">
                         <label>Upload Image of Restaurant</label>
                         <input
-                          type="file"
-                          onChange={(event) => {
-                            setImageUpload(event.target.files[0]);
-                          }}
-                          name="photo"
-                          placeholder=""
-                        />
-                      </div>
+                  type="file"
+                  onChange={
+                 handleImageUpload
+                  }
+                  name="photo"
+                  placeholder=""
+                  required
+                  accept="image/*"
+                />
+                <p style={{color:"red",fontWeight:600}}>{error}</p>
+              </div>
+                     
                     </Col>
                     <Col>
                       <div className="new__register">

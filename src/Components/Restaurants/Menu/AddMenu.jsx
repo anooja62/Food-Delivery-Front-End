@@ -118,7 +118,7 @@ const handleImageUpload = (event) => {
                   required
                   accept="image/*"
                 />
-                <p>{error}</p>
+                <p style={{color:"red",fontWeight:600}}>{error}</p>
               </div>
             </Col>
             <Col>

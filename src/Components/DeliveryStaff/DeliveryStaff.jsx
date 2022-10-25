@@ -32,11 +32,7 @@ import { useEffect } from "react";
 
 const DeliveryStaff = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(deliveryOrder(restaurantId));
-    dispatch(getParsedRestaurants());
-    dispatch(deliveredOrder())
-  }, []);
+  const [error, setError] = useState("");
   const [show, setShow] = useState(false);
   const items = JSON.parse(sessionStorage.getItem("items"));
   const handleClose = () => setShow(false);
@@ -62,7 +58,11 @@ const DeliveryStaff = () => {
   const parsedRestaurents = useSelector(
     (state) => state.restaurant.parsedRestaurant
   );
-
+  useEffect(() => {
+    dispatch(deliveryOrder(restaurantId));
+    dispatch(getParsedRestaurants());
+    dispatch(deliveredOrder())
+  }, []);
   const foundRestaurant = (id) => {
     const name = parsedRestaurents.filter((item) => item.value === id)?.[0]
 
@@ -131,7 +131,16 @@ const DeliveryStaff = () => {
  const  handleDelivered = (orderId) =>{
   dispatch(makeDeliverd({ orderId: orderId}))
  }
-  
+ const handleImageUpload = (event) => {
+  console.log(event.target.files[0].name.includes("png"))
+  if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+    setImageUpload(event.target.files[0]);
+    setError("")
+  }else{
+    setError("you can upload only images")
+ 
+  }
+}
   return (
     <div>
       <DeliveryTopbar />
@@ -293,6 +302,7 @@ const DeliveryStaff = () => {
                           placeholder="owner name"
                           ref={deliveryboyNameRef}
                           defaultValue={deliveryboyName}
+                          readOnly
                         ></input>
                       </div>
                     </Col>
@@ -314,13 +324,16 @@ const DeliveryStaff = () => {
                       <div className="new__register mt-5">
                         <label> Profile Picture </label>
                         <input
-                          type="file"
-                          onChange={(event) => {
-                            setImageUpload(event.target.files[0]);
-                          }}
-                          name="photo"
-                          placeholder=""
-                        />
+                  type="file"
+                  onChange={
+                 handleImageUpload
+                  }
+                  name="photo"
+                  placeholder=""
+                  required
+                  accept="image/*"
+                />
+                <p>{error}</p>
                       </div>
                     </Col>
                     <Col></Col>

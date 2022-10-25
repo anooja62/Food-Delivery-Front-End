@@ -119,9 +119,7 @@ const Admin = () => {
               <ListGroup.Item action href="#restaurant">
                 <StorefrontOutlinedIcon /> Restaurants
               </ListGroup.Item>
-              <ListGroup.Item action href="#fssai">
-                <StickyNote2Icon /> FSSAI
-              </ListGroup.Item>
+             
               <ListGroup.Item action href="#deliveryboy">
                 <DeliveryDiningOutlinedIcon /> Delivery
               </ListGroup.Item>
@@ -168,19 +166,7 @@ const Admin = () => {
                         </div>
                       </div>
                     </div>
-                    {/*<div className="col-xl-3 col-sm-6 py-2">
-                      <div className="card bg-orange text-white h-100">
-                        <div className="card-body bg-info">
-                          <div className="rotate">
-                            <i class="ri-shopping-cart-2-fill"></i>
-                          </div>
-                          <h6 className="text-uppercase">Orders</h6>
-                          <h1 className="display-4" style={{ color: "#fff" }}>
-                            13
-                          </h1>
-                        </div>
-                      </div>
-  </div>*/}
+              
 
                     <div className="col-xl-3 col-sm-6 py-2">
                       <div className="card text-white bg-danger h-100">
@@ -254,25 +240,7 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="#fssai">
-                <div>
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Restaurant Name</th>
-                        <th>Email</th>
-
-                        <th>FSSAI Expire date</th>
-
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    {restaurantLIst.map((u) => (
-                      <Fssai key={u.id} restaurant={u} />
-                    ))}
-                  </table>
-                </div>
-              </Tab.Pane>
+            
               <Tab.Pane eventKey="#deliveryboy">
                 <div>
                   <table className="table table-bordered">
