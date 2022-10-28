@@ -39,7 +39,10 @@ import { getReply } from "../../store/shopping-cart/messageSlice";
 import Orders from "./Orders/Orders";
 import { restaurantOrder } from "../../store/shopping-cart/ordersSlice";
 import { deliveryOrder } from "../../store/shopping-cart/ordersSlice";
-
+import PrintIcon from '@mui/icons-material/Print';
+import DescriptionIcon from '@mui/icons-material/Description';
+import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
+import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
 const initialValues = {
   name: "",
   phone: "",
@@ -198,6 +201,16 @@ const Restaurantsdashboard = () => {
           <Tab>
             <p>
               <MarkEmailUnreadIcon /> Messages
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+             <PrintIcon/> Bill
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+             <DescriptionIcon/> Reports
             </p>
           </Tab>
           <Tab>
@@ -503,6 +516,22 @@ const Restaurantsdashboard = () => {
                   <Reply key={u.id} message={u} />
                 ))}
               </Stack>
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <div>
+              <h2 className="text-center">Bill Generation</h2>
+              <RestaurantBarcode/>
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <div>
+             
+              <RestaurantExcel/>
             </div>
           </div>
         </TabPanel>
