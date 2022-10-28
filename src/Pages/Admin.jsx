@@ -5,6 +5,7 @@ import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
 import Manage from "../Components/Admin/Manage/Manage";
 import { ToastContainer, toast } from "react-toastify";
+import PrintIcon from '@mui/icons-material/Print';
 import "react-toastify/dist/ReactToastify.css";
 import User from "../Components/Admin/User/User";
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
@@ -30,6 +31,7 @@ import Button from 'react-bootstrap/Button';
 import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDetails";
 import Paper from "@mui/material/Paper";
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import Reports from "../Components/Admin/Reports/Reports";
 
 const Admin = () => {
 
@@ -126,6 +128,9 @@ const Admin = () => {
              
               <ListGroup.Item action href="#messages">
                 <MarkEmailUnreadOutlinedIcon /> Messages
+              </ListGroup.Item>
+              <ListGroup.Item action href="#reports">
+                <PrintIcon /> Reports
               </ListGroup.Item>
               <ListGroup.Item action onClick= {handleShow}>
                 <LockOutlinedIcon /> Logout
@@ -316,6 +321,11 @@ const Admin = () => {
       </Paper>
       </Col>
       </Row>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="#reports">
+                <div>
+                 <Reports/>
                 </div>
               </Tab.Pane>
             </Tab.Content>

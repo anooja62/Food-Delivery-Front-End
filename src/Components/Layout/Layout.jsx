@@ -11,7 +11,7 @@ function Layout() {
 
   const showCart = useSelector(state=>state.cartUi.cartIsVisible)
   return (
-    <div>
+    <div role="parent">
   {!window.location.href.includes('admin' ) &&
    <Header/>
   }

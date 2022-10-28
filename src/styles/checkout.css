@@ -6,3 +6,6 @@
     border: 1px solid #ddd;
     padding-top: 30px;
 }
+td, th {
+    border: 1px solid #0a0606;
+}

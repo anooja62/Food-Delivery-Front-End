@@ -61,7 +61,7 @@ const Login = () => {
   };
 
   return (
-    <Helmet title="Login">
+    <Helmet title="Login" >
       <CommonSection title="Welcome back!" />
 
       <section>

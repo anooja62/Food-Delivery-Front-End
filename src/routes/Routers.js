@@ -29,7 +29,7 @@ function Routers() {
 
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login data-testid="child"/>} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/register" element={<Register />} />
       <Route path="/restaurant" element={<Restaurant />} />
