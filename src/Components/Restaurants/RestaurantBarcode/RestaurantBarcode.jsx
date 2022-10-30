@@ -1,62 +1,115 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Barcode from "react-barcode";
 import { Row, Col } from "react-bootstrap";
-
+import { useSelector, useDispatch } from "react-redux";
+import { deliveredOrder } from "../../../store/shopping-cart/ordersSlice";
+import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 const RestaurantBarcode = () => {
-  
+  const dispatch = useDispatch();
   const [barcode, setBarcode] = useState();
-  const generateBarcode = () => {
-    setBarcode("orderid");
+  const [orders, setOrders] = useState([]);
+  const deliveredOrderss = useSelector((state) => state.order?.deliveredOrders);
+
+  useEffect(() => {
+    dispatch(deliveredOrder());
+  }, []);
+  const generateBarcode = (orderId, order) => {
+    setBarcode(orderId);
+    setOrders(order);
+    console.log(order);
+  };
+  const print = () => {
+    let printContents = document.getElementById("printableTable").innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
   };
   return (
     <div>
       <Row>
         <Col>
-          <table className='table table-bordered mt-4'>
+          <table className="table table-bordered mt-4">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Order id</th>
+                <th>ID</th>
                 <th>Food Name</th>
-                <th>Bill</th>
+                <th>Total</th>
+                <th>Generate Bill</th>
               </tr>
             </thead>
-            <tbody className='text-center' style={{ paddingTop: "2%" }}>
-              <tr>
-                <td>1</td>
-                <td>iddddd</td>
-                <td>biriyani</td>
-                <td>
-                  {" "}
-                  <Button variant="contained" onClick={generateBarcode}>Generate Bill</Button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>iddddd</td>
-                <td>biriyani</td>
-                <td>
-                  {" "}
-                  <Button variant="contained" onClick={generateBarcode}>Generate Bill</Button>
-                </td>
-              </tr>
-            </tbody>
+
+            {deliveredOrderss.map((item) => {
+              return (
+                <tbody className="text-center" style={{ paddingTop: "2%" }}>
+                  {item.map((order, index) => {
+                    const lastIndex = item.length - 1;
+                    console.log(item[lastIndex]);
+                    return (
+                      <>
+                        {index === 0 && (
+                          <tr>
+                           
+                            <td>{item[lastIndex]?.orderId}</td>
+
+                            <td>
+                              {item.map((o) => {
+                                return <p>{o.foodname}</p>;
+                              })}
+                            </td>
+                            <td>{item[lastIndex]?.totalAmount}</td>
+                            <td>
+                              <Button
+                                variant="contained"
+                                onClick={() =>
+                                  generateBarcode(
+                                    item[lastIndex]?.orderId,
+                                    item
+                                  )
+                                }
+                              >
+                                Generate Bill
+                              </Button>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              );
+            })}
           </table>
         </Col>
         <Col>
           {" "}
-          <div className="mt-3 text-center" style={{border:"2px solid black"}}>
-            <h3 >Customer Bill</h3>
-            <Barcode value={barcode} />
-            <h4>Food item 1</h4>
-            <h4>Food item 2</h4>
-            <h2>ThankYou!!!!!</h2>
+          <Button variant="contained" color="success" onClick={print}><PrintRoundedIcon/> &nbsp;Print Bill</Button>
+          
+          <div
+            className="mt-3 text-center"
+            style={{ border: "2px solid black" }}
+          >
+            <div id="printableTable">
+              <h3>Customer Bill</h3>
+              <Barcode value={barcode} />
+              {orders.map((item) => {
+                return(
+                  <>
+                  <h4>{item.foodname} </h4>
+               
+                  </>
+                 
+
+                )
+                
+              })}
+               <h6>Payment Mode: Online</h6>
+              <h2>ThankYou!!!!!</h2>
+            </div>
           </div>
         </Col>
-        <Col></Col>
+       
       </Row>
     </div>
   );

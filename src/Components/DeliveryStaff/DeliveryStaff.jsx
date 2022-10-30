@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
-import MopedIcon from '@mui/icons-material/Moped';
+import MopedIcon from "@mui/icons-material/Moped";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Row, Col } from "react-bootstrap";
 
@@ -20,12 +20,13 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import DeliveryTopbar from "./DeliveryTopBar/DeliveryTopBar";
 import Card from "react-bootstrap/Card";
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deliveryOrder,
   outForDelivery,
-  deliveredOrder,makeDeliverd
+  deliveredOrder,
+  makeDeliverd,
 } from "../../store/shopping-cart/ordersSlice";
 import { getParsedRestaurants } from "../../store/shopping-cart/restaurantSlice";
 import { useEffect } from "react";
@@ -61,16 +62,13 @@ const DeliveryStaff = () => {
   useEffect(() => {
     dispatch(deliveryOrder(restaurantId));
     dispatch(getParsedRestaurants());
-    dispatch(deliveredOrder())
+    dispatch(deliveredOrder());
   }, []);
   const foundRestaurant = (id) => {
-    const name = parsedRestaurents.filter((item) => item.value === id)?.[0]
+    const name = parsedRestaurents.filter((item) => item.value === id)?.[0];
 
     return name || "";
   };
-  
- 
-  
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -117,7 +115,12 @@ const DeliveryStaff = () => {
     navigate("/delivery-login");
   };
   const handleOutForDelivery = (orderId) => {
-    dispatch(outForDelivery({ orderId: orderId, restaurantId: restaurantId }));
+    dispatch(
+      outForDelivery({
+        orderId: orderId,
+        restaurantId: restaurantId,
+      })
+    );
   };
   const handleDeclineUsingSession = (orderId) => {
     if (items) {
@@ -128,19 +131,21 @@ const DeliveryStaff = () => {
     }
     sessionStorage.setItem("items", JSON.stringify([orderId]));
   };
- const  handleDelivered = (orderId) =>{
-  dispatch(makeDeliverd({ orderId: orderId}))
- }
- const handleImageUpload = (event) => {
-  console.log(event.target.files[0].name.includes("png"))
-  if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
-    setImageUpload(event.target.files[0]);
-    setError("")
-  }else{
-    setError("you can upload only images")
- 
-  }
-}
+  const handleDelivered = (orderId) => {
+    dispatch(makeDeliverd({ orderId: orderId, deliveryBoyId: deliveryboyId }));
+  };
+  const handleImageUpload = (event) => {
+    console.log(event.target.files[0].name.includes("png"));
+    if (
+      event.target.files[0].name.includes("png") ||
+      event.target.files[0].name.includes("jpg")
+    ) {
+      setImageUpload(event.target.files[0]);
+      setError("");
+    } else {
+      setError("you can upload only images");
+    }
+  };
   return (
     <div>
       <DeliveryTopbar />
@@ -191,35 +196,31 @@ const DeliveryStaff = () => {
           <div className="panel-content">
             <h2>Orders</h2>
             {deliveryOrderData.map((data) => {
-             
               const lastIndex = data.length - 1;
-             
+
               return (
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
                     {data.map((item) => {
-                     
                       return (
                         <>
-                         
-                          <Card.Text>{item.foodname}  </Card.Text>
+                          <Card.Text>{item.foodname} </Card.Text>
                           <Card.Text>
                             {foundRestaurant(item.restaurantId).label}
-                            <br/>
+                            <br />
                             {foundRestaurant(item.restaurantId).address}
                           </Card.Text>
-                        
                         </>
                       );
                     })}
                     <Card.Subtitle className="mb-2 text-muted">
-                     Customer Address
+                      Customer Address
                     </Card.Subtitle>
 
                     <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
-                   
+
                     <Row>
                       <Col>
                         <Button
@@ -230,7 +231,6 @@ const DeliveryStaff = () => {
                           Accept Order
                         </Button>
                       </Col>
-                      
                     </Row>
                   </Card.Body>
                 </Card>
@@ -241,42 +241,39 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className="panel-content">
             <h2>Delivery details</h2>
-            { deliveredOrders.map((data) => {
-              
+            {deliveredOrders.map((data) => {
               const lastIndex = data.length - 1;
-             
+
               return (
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
                     {data.map((item) => {
-                     
-                      return (
-                        <>
-                         
-                        
-                        </>
-                      );
+                      return <></>;
                     })}
                     <Card.Subtitle className="mb-2 text-muted">
-                     Customer Address
+                      Customer Address
                     </Card.Subtitle>
 
                     <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
-                   
+
                     <Row>
-                     {data[lastIndex].isDelivered === 0 ? 
-                     <><Col>
-                        <Button
-                          onClick={() =>
-                            handleDelivered(data[lastIndex].orderId)
-                          }
-                        >
-                          Delivery Completed
-                        </Button>
-                      </Col></>:<p>Delivered</p>}
-                     
+                      {data[lastIndex].isDelivered === 0 ? (
+                        <>
+                          <Col>
+                            <Button
+                              onClick={() =>
+                                handleDelivered(data[lastIndex].orderId)
+                              }
+                            >
+                              Delivery Completed
+                            </Button>
+                          </Col>
+                        </>
+                      ) : (
+                        <p>Delivered</p>
+                      )}
                     </Row>
                   </Card.Body>
                 </Card>
@@ -284,8 +281,7 @@ const DeliveryStaff = () => {
             })}
           </div>
         </TabPanel>
-        
-       
+
         <TabPanel>
           <div className="panel-content">
             <div style={{ marginLeft: 150, marginRight: 200 }}>
@@ -324,16 +320,14 @@ const DeliveryStaff = () => {
                       <div className="new__register mt-5">
                         <label> Profile Picture </label>
                         <input
-                  type="file"
-                  onChange={
-                 handleImageUpload
-                  }
-                  name="photo"
-                  placeholder=""
-                  required
-                  accept="image/*"
-                />
-                <p>{error}</p>
+                          type="file"
+                          onChange={handleImageUpload}
+                          name="photo"
+                          placeholder=""
+                          required
+                          accept="image/*"
+                        />
+                        <p>{error}</p>
                       </div>
                     </Col>
                     <Col></Col>

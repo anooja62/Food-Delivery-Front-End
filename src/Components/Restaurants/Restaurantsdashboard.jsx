@@ -38,9 +38,12 @@ import { getFoodreviews } from "../../store/shopping-cart/reviewSlice";
 import { getReply } from "../../store/shopping-cart/messageSlice";
 import Orders from "./Orders/Orders";
 import { restaurantOrder } from "../../store/shopping-cart/ordersSlice";
-import { deliveryOrder } from "../../store/shopping-cart/ordersSlice";
-import PrintIcon from '@mui/icons-material/Print';
-import DescriptionIcon from '@mui/icons-material/Description';
+import {
+  deliveryOrder,
+  deliveredOrder,
+} from "../../store/shopping-cart/ordersSlice";
+import PrintIcon from "@mui/icons-material/Print";
+import DescriptionIcon from "@mui/icons-material/Description";
 import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
 import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
 const initialValues = {
@@ -95,7 +98,7 @@ const Restaurantsdashboard = () => {
     dispatch(getFoodreviews(restaurantId));
     dispatch(getReply(restaurantId));
     dispatch(restaurantOrder(restaurantId));
-
+    dispatch(deliveredOrder());
     dispatch(deliveryOrder(restaurantId));
   }, []);
   const clearCookies = () => {
@@ -148,15 +151,17 @@ const Restaurantsdashboard = () => {
     });
   };
   const handleImageUpload = (event) => {
-    console.log(event.target.files[0].name.includes("png"))
-    if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+    console.log(event.target.files[0].name.includes("png"));
+    if (
+      event.target.files[0].name.includes("png") ||
+      event.target.files[0].name.includes("jpg")
+    ) {
       setImageUpload(event.target.files[0]);
-      setError("")
-    }else{
-      setError("you can upload only images")
-   
+      setError("");
+    } else {
+      setError("you can upload only images");
     }
-  }
+  };
   return (
     <div>
       <Top />
@@ -182,7 +187,7 @@ const Restaurantsdashboard = () => {
               <LocalGroceryStoreOutlinedIcon /> Orders
             </p>
           </Tab>
-         
+
           <Tab>
             <p>
               <StarHalfOutlinedIcon /> Reviews
@@ -205,12 +210,12 @@ const Restaurantsdashboard = () => {
           </Tab>
           <Tab>
             <p>
-             <PrintIcon/> Bill
+              <PrintIcon /> Bill
             </p>
           </Tab>
           <Tab>
             <p>
-             <DescriptionIcon/> Reports
+              <DescriptionIcon /> Reports
             </p>
           </Tab>
           <Tab>
@@ -253,7 +258,6 @@ const Restaurantsdashboard = () => {
                     </h1>
                   </div>
                 </div>
-                
               </div>
 
               <div className="col-xl-3 col-sm-6 py-2">
@@ -295,7 +299,7 @@ const Restaurantsdashboard = () => {
             <Orders />
           </div>
         </TabPanel>
-       
+
         <TabPanel>
           <div
             className="panel-content"
@@ -361,18 +365,15 @@ const Restaurantsdashboard = () => {
                       <div className="new__register">
                         <label>Upload Image of Restaurant</label>
                         <input
-                  type="file"
-                  onChange={
-                 handleImageUpload
-                  }
-                  name="photo"
-                  placeholder=""
-                  required
-                  accept="image/*"
-                />
-                <p style={{color:"red",fontWeight:600}}>{error}</p>
-              </div>
-                     
+                          type="file"
+                          onChange={handleImageUpload}
+                          name="photo"
+                          placeholder=""
+                          required
+                          accept="image/*"
+                        />
+                        <p style={{ color: "red", fontWeight: 600 }}>{error}</p>
+                      </div>
                     </Col>
                     <Col>
                       <div className="new__register">
@@ -523,15 +524,14 @@ const Restaurantsdashboard = () => {
           <div className="panel-content">
             <div>
               <h2 className="text-center">Bill Generation</h2>
-              <RestaurantBarcode/>
+              <RestaurantBarcode />
             </div>
           </div>
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
             <div>
-             
-              <RestaurantExcel/>
+              <RestaurantExcel />
             </div>
           </div>
         </TabPanel>

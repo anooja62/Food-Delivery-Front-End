@@ -1,61 +1,166 @@
-import React,{Component} from 'react'
-import ReactToPrint from 'react-to-print';
-import Button from '@mui/material/Button';
+import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
+import { CSVLink } from "react-csv";
+import { useSelector, useDispatch } from "react-redux";
+import { array } from "yup";
 import PrintIcon from '@mui/icons-material/Print';
-class Reports extends Component{
-render() {
+import Button from '@mui/material/Button';
+import { deliveredOrder } from "../../../store/shopping-cart/ordersSlice";
+const Reports = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(deliveredOrder());
+  }, []);
+
+  const deliveredOrderss = useSelector((state) => state.order?.deliveredOrders);
+
+  const print = () => {
+    let printContents = document.getElementById("printableTable").innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+  };
+
+  const handleBack = () => {
+    window.location.reload();
+  };
+
+  const csvData = [
+    [
+      "Order ID",
+      "Customer Address",
+      "Delivery Agent Details",
+      "Food Items",
+      "Total Amount",
+    ],
+  ];
+  const convertJsonIntoArray = () => {
+    deliveredOrderss.map((order, ind) => {
+      order.map((item, index) => {
+        let temp = [];
+        const lastIndex = order.length - 1;
+        if (index === 0) {
+          temp.push(
+            order[lastIndex]?.orderId,
+            [
+              order[lastIndex]?.address.name,
+              order[lastIndex]?.address.address,
+              order[lastIndex]?.address.phone,
+              order[lastIndex]?.address.pincode,
+            ],
+            [
+              order[lastIndex]?.deliveryBoyAddress?.name,
+
+              order[lastIndex]?.deliveryBoyAddress?.email,
+              order[lastIndex]?.deliveryBoyAddress?.phone,
+            ],
+            order.map((o, index) => o.foodname),
+            order[lastIndex]?.totalAmount
+          );
+
+          csvData.push(temp);
+        }
+      });
+    });
+    
+  };
+  convertJsonIntoArray();
+  
   return (
-    <div>
-        <ReactToPrint
-          trigger={() => {
-           
-            return <Button variant="contained"><PrintIcon/>&nbsp;Print Report</Button>;
-          
-          }}
-          content={() => this.componentRef}
-          documentTitle="Deliorder Restaurant Orders Report"
-          pageStyle="print"
-        />
-        <div ref={el => (this.componentRef = el)} >
-      <table className="table table-bordered mt-4" >
-<thead>
-    <tr>
-        <th>No</th>
-        <th>Date</th>
-        <th>Restaurant Name</th>
-        <th>Food Items</th>
-        <th>Customer Name</th>
-        <th>Customer Address</th>
-        <th>Delivery boy name</th>
-        <th>Delivery boy phone number</th>
-    </tr>
-</thead>
-<tbody className="text-center" style={{ paddingTop: "2%" }}>
-<tr >
-    <td >1</td>
-    <td>23/09/2022</td>
-    <td>Paragon</td>
-    <td>Chicken biriyani, pizza</td>
-    <td>anooja</td>
-    <td>kozhikode</td>
-    <td>Hari</td>
-    <td>7867564545</td>
-    </tr>
-    <tr >
-    <td>1</td>
-    <td>23/09/2022</td>
-    <td>Paragon</td>
-    <td>Chicken biriyani, pizza</td>
-    <td>anooja</td>
-    <td>kozhikode</td>
-    <td>Hari</td>
-    <td>7867564545</td>
-    </tr>
-    </tbody>
-      </table>
+    <>
+    <Button variant="contained" onClick={print}><PrintIcon/>&nbsp; Download PDF</Button>&nbsp;&nbsp;
+      
+      <CSVLink
+        data={csvData}
+        filename="RegisterUserData"
+        className="btn btn-success "
+      >
+        Export Order Data
+      </CSVLink>
+      <div id="printableTable">
+        <Container>
+          <div className="row">
+            <div className="col-sm-8">
+              <h4 className="mt-3 mb-3">Customer Order Details </h4>
+
+              <table className="table table-bordered ">
+                <thead>
+                  <tr>
+                    <th scope="col"> ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Delivery Boy Details</th>
+
+                    <th scope="col">Food Items</th>
+                    <th scope="col">Total Amount</th>
+                  </tr>
+                </thead>
+
+                {deliveredOrderss.map((order) => {
+                  return (
+                    <tbody>
+                      {order.map((item, index) => {
+                        const lastIndex = order.length - 1;
+                        return (
+                          <>
+                            {index !== lastIndex && (
+                              <tr key={index}>
+                                {index === 0 && (
+                                  <td> {order[lastIndex]?.orderId}</td>
+                                )}
+
+                                {index === 0 && (
+                                  <td>
+                                    {order[lastIndex]?.address.name} <br />
+                                    {order[lastIndex]?.address.address}
+                                    <br />
+                                    {order[lastIndex]?.address.pincode}
+                                    <br />
+                                    {order[lastIndex]?.address.phone}
+                                  </td>
+                                )}
+                                {index === 0 && (
+                                  <td>
+                                    {order[lastIndex]?.deliveryBoyAddress?.name}
+                                    <br />
+                                    {
+                                      order[lastIndex]?.deliveryBoyAddress
+                                        ?.email
+                                    }
+                                    <br />
+                                    {
+                                      order[lastIndex]?.deliveryBoyAddress
+                                        ?.phone
+                                    }
+                                  </td>
+                                )}
+                                {index === 0 && (
+                                  <td>
+                                    {order.map((o, index) => {
+                                      return (
+                                        <>
+                                          {o.foodname && <li>{o.foodname}</li>}
+                                        </>
+                                      );
+                                    })}
+                                  </td>
+                                )}
+                                {index === 0 && (
+                                  <td>₹ {order[lastIndex]?.totalAmount} </td>
+                                )}
+                              </tr>
+                            )}
+                          </>
+                        );
+                      })}
+                    </tbody>
+                  );
+                })}
+              </table>
+            </div>
+          </div>
+        </Container>
       </div>
-    </div>
-  )
-}
-}
-export default Reports
+    </>
+  );
+};
+
+export default Reports;

@@ -7,10 +7,4 @@ test('react testing implemented', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('login component test', () => {
-  const {getByLabelText} = render(<App />);
-  const childElement = getByLabelText("Email");
-  expect(childElement).toBeTruthy();
-  
-});
 
