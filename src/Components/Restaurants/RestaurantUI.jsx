@@ -21,8 +21,20 @@ import About from "./About/About";
 import Details from "./Details/Details";
 
 import AddReview from "./Review/AddReview";
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import SearchIcon from '@mui/icons-material/Search';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 const RestaurantUI = () => {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const navigate = useNavigate();
@@ -46,9 +58,9 @@ const RestaurantUI = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const searchedProduct = menuLIst.filter((item) => {
-    if (searchTerm.value === "") return item;
+    if (transcript.value === "") return item;
 
-    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
+    if (item.foodname.toLowerCase().includes(transcript.toLowerCase()))
       return item;
   });
   const productPerPage = 8;
@@ -99,14 +111,18 @@ const RestaurantUI = () => {
               <h4>Order Now !</h4>
               <Col lg="6" md="6" sm="6" xs="12">
                 <div className="search__widget d-flex align-items-center justify-content-between">
+                  
                   <input
                     type="text"
+                  
                     placeholder="I'm looking for....."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    //value={searchTerm}
+                     onChange={(e) => setSearchTerm(e.target.value)}
+                    value={transcript}
                   />
                   <span>
-                    <i class="ri-search-line"></i>
+                  <KeyboardVoiceIcon onClick={SpeechRecognition.startListening}/>
+                   <SearchIcon/>
                   </span>
                 </div>
               </Col>

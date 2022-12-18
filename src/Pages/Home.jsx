@@ -15,7 +15,7 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import review from "../assets/images/review.jpg";
-
+import VoiceSearch from "../Components/VoiceSearch/VoiceSearch.js";
 import TestimonialSlider from "../Components/UI/slider/TestimonialSlider.jsx";
 
 import Modal from "react-bootstrap/Modal";
@@ -114,6 +114,8 @@ const Home = () => {
       <section>
         <Container>
           <Row>
+            <VoiceSearch/>
+         
             <Col lg="6" md="6">
               <div className="hero__content">
                 <h5 className="mb-3">Deliorder</h5>
