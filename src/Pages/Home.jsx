@@ -115,8 +115,8 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-           <ChatBot/>
-         
+          
+         <ChatBot/>
             <Col lg="6" md="6">
               <div className="hero__content">
                 <h5 className="mb-3">Deliorder</h5>
