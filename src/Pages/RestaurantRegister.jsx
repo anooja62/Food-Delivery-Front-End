@@ -195,12 +195,14 @@ const RestaurantRegister = () => {
 
   const navigate = useNavigate();
   const signupNameRef = useRef();
-  const restaurantOwnernameRef = useRef();
-  const restaurantOwnerphoneRef = useRef();
+  
   const signupPhoneRef = useRef();
 
   const signupEmailRef = useRef();
-  const signupAddressRef = useRef();
+  const signupPincodeRef = useRef();
+  const signupCityRef = useRef();
+  const signupCountryRef = useRef();
+  const signupStateRef = useRef();
   const signupLicenseRef = useRef();
 
   const handleClick = async (e) => {
@@ -210,7 +212,10 @@ const RestaurantRegister = () => {
       name: signupNameRef.current.value,
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
-      address: signupAddressRef.current.value,
+      city: signupCityRef.current.value,
+      pincode: signupPincodeRef.current.value,
+      state: signupStateRef.current.value,
+      country: signupCountryRef.current.value,
       license: signupLicenseRef.current.value,
     };
     try {
@@ -391,13 +396,20 @@ const RestaurantRegister = () => {
                     <Col>
                       <div className='new__register'>
                         <label>City:</label>{" "}
-                        <input type='text' value={address.city} required/>
+                        <input type='text' value={address.city} 
+                        name='city'
+                        ref={signupCityRef}
+                        required/>
                       </div>
                     </Col>
                     <Col>
                       <div className='new__register'>
                         <label>State:</label>{" "}
-                        <input type='text' value={address.state}required />
+                        <input type='text'
+                        name='state'
+                         defaultValue={address.state}
+                        ref={signupStateRef}
+                        required />
                       </div>
                     </Col>
                   </Row>
@@ -405,13 +417,21 @@ const RestaurantRegister = () => {
                     <Col>
                       <div className='new__register'>
                         <label>Pincode:</label>{" "}
-                        <input type='text' value={address.zip} required/>
+                        <input type='text'
+                        name='pincode'
+                         defaultValue={address.zip} 
+                        ref={signupPincodeRef}
+                        required/>
                       </div>
                     </Col>
                     <Col>
                       <div className='new__register'>
                         <label>Country:</label>{" "}
-                        <input type='text' value={address.country} required />
+                        <input type='text' 
+                        name='country'
+                        defaultValue={address.country} 
+                        ref={signupCountryRef}
+                        required />
                       </div>
                     </Col>
                   </Row>

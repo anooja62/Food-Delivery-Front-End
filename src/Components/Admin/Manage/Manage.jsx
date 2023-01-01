@@ -62,7 +62,7 @@ const Manage = ({ restaurant, url }) => {
           </td>
          
           <td className="text-center" style={{ paddingTop: "2%" }}>
-            {restaurant.address}
+            {restaurant.city},{restaurant.pincode},{restaurant.state},{restaurant.country}
           </td>
           <td className="text-center" style={{ paddingTop: "2%" }}>
             <a href={restaurant.imgUrl}>view License</a>

@@ -32,6 +32,7 @@ import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDe
 import Paper from "@mui/material/Paper";
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import Reports from "../Components/Admin/Reports/Reports";
+import Charts from "../Components/Charts/Charts";
 
 const Admin = () => {
 
@@ -157,6 +158,7 @@ const Admin = () => {
             <Tab.Content>
               <Tab.Pane eventKey="#">
                 <div>
+                 
                   <div className="row mb-3">
                     <div className="col-xl-3 col-sm-6 py-2">
                       <div className="card bg-success text-white h-100">
