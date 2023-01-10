@@ -60,7 +60,7 @@ const RestaurantUI = () => {
   const searchedProduct = menuLIst.filter((item) => {
     if (transcript.value === "") return item;
 
-    if (item.foodname.toLowerCase().includes(transcript.toLowerCase()))
+    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
       return item;
   });
   const productPerPage = 8;
@@ -116,9 +116,9 @@ const RestaurantUI = () => {
                     type="text"
                   
                     placeholder="I'm looking for....."
-                    //value={searchTerm}
+                    value={searchTerm}
                      onChange={(e) => setSearchTerm(e.target.value)}
-                    value={transcript}
+                   
                   />
                   <span>
                   <KeyboardVoiceIcon onClick={SpeechRecognition.startListening}/>

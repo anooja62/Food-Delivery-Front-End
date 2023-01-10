@@ -27,6 +27,7 @@ import { v4 } from "uuid";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas";
 import ChatBot from "../Components/ChatBot/ChatBot.jsx";
+import UserLocation from "../Components/UserLocation/UserLocation.js";
 
 const initialValues = {
   name: "",
@@ -115,8 +116,8 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-          
-         <ChatBot/>
+      
+      <ChatBot/>
             <Col lg="6" md="6">
               <div className="hero__content">
                 <h5 className="mb-3">Deliorder</h5>

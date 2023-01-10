@@ -4,9 +4,9 @@ import Modal from "react-bootstrap/Modal";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Paper from "@mui/material/Paper";
+import Switch from '@mui/material/Switch';
 import "../../../styles/product-card.css";
-import { deleteMenu, getMenus } from "../../../store/shopping-cart/menuSlice";
+import { deleteMenu, getMenus,availableMenu } from "../../../store/shopping-cart/menuSlice";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -24,6 +24,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
 const Menu = ({ menu, url }) => {
+  const [available, setAvailable] = React.useState(true);
   const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const [show, setShow] = useState(false);
@@ -46,7 +47,10 @@ const Menu = ({ menu, url }) => {
    
   };
   
-
+  const handleAvailability = async (id) => {
+    dispatch(availableMenu(id));
+   
+  };
   const handleShow = () => {
     setShow(true);
    
@@ -127,9 +131,17 @@ const menuId = menu._id
     }
    
   };
+ 
   return (
     <>
+   
       <Card sx={{ maxWidth: 340 }} className="mt-5">
+      <Switch
+            checked={available}
+            onChange={() => handleAvailability(menu._id)}
+            name="loading"
+            color="primary"
+          />
         <CardMedia
           component="img"
           height="180"

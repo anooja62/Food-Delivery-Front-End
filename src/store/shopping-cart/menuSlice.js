@@ -19,6 +19,13 @@ export const deleteMenu = createAsyncThunk(
     return response.data;
   }
 );
+export const availableMenu = createAsyncThunk(
+  "food/allMenus",
+  async (id) => {
+    const response = await axios.put(`/food/available/${id}`);
+    return response.data;
+  }
+);
 export const getSingleMenu = createAsyncThunk(
   `food/getSingleMenu`,
   async (id) => {
@@ -62,6 +69,16 @@ const menuSlice = createSlice({
       state.status = "success";
     },
     [deleteMenu.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [availableMenu.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [availableMenu.fulfilled]: (state, { payload }) => {
+      state.list = payload;
+      state.status = "success";
+    },
+    [availableMenu.rejected]: (state, action) => {
       state.status = "failed";
     },
     [getSingleMenu.pending]: (state, action) => {
