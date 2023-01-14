@@ -26,7 +26,7 @@ import "../Components/Location/Location.css";
 import SearchIcon from "@mui/icons-material/Search";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 
-const apiKey = "AIzaSyCSNW7Pt4PQZ7qxeT6rrTAQoBqpcw51KBE";
+const apiKey = "AIzaSyA-t99Dx-RD6dFtzZ443Zv1vBIi2IkxEkU";
 const mapApiJs = "https://maps.googleapis.com/maps/api/js";
 const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
 // load google map api js

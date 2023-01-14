@@ -1,109 +1,43 @@
-import {useEffect, useState} from 'react';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
+/** @format */
 
-import { Bar } from 'react-chartjs-2';
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-const options = {
-    indexAxis: 'y',
-    elements: {
-      bar: {
-        borderWidth: 2,
-      },
+import React, { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import { getRestaurants } from "../../store/shopping-cart/restaurantSlice";
+const Charts = () => {
+  const restaurantLIst = useSelector((state) => state.restaurant.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRestaurants());
+  }, []);
+  const restNo = restaurantLIst.length;
+
+  const options = {
+    xAxis: {
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'right',
-      },
+    yAxis: {
       title: {
-        display: true,
-        text: 'Chart.js Horizontal Bar Chart',
-      },
+        text: "Number of Users "
+      }
     },
+    title: {
+      text: 'Users Statistics'
+  },
+    series: [
+      {
+        data: [restNo, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
+      }
+    ]
   };
 
-const Charts =() => {
-    const [data, setData] = useState({
-        labels:['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data:[],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          },
-          {
-            label: 'Dataset 2',
-            data:[],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
-      });
-    useEffect(()=> {
-       const fetchData= async()=> {
-           const url = 'https://jsonplaceholder.typicode.com/comments'
-           const labelSet = []
-           const dataSet1 = [];
-           const dataSet2 = [];
-         await fetch(url).then((data)=> {
-             console.log("Api data", data)
-             const res = data.json();
-             return res
-         }).then((res) => {
-             console.log("ressss", res)
-            for (const val of res) {
-                dataSet1.push(val.id);
-                dataSet2.push(val.postId)
-                // labelSet.push(val.name)
-            }
-            setData({
-                labels:['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                datasets: [
-                  {
-                    label: 'Dataset ID',
-                    data:dataSet1,
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(99, 132, 0.5)',
-                  },
-                  {
-                    label: 'Dataset ID2',
-                    data:dataSet2,
-                    borderColor: 'rgb(53, 162, 235)',
-                    backgroundColor: 'rgba(53, 235, 0.5)',
-                  },
-                ],
-              })
-            console.log("arrData", dataSet1, dataSet2)
-         }).catch(e => {
-                console.log("error", e)
-            })
-        }
-        
-        fetchData();
-    },[])
-   
-    return(
-        <div style={{width:'80%', height:'50%'}}>
-            {
-                console.log("dataaaaaaaa", data)
-            }
-            <Bar data={data} options={options}/>
-         </div>)
-}
+  return (
+    <div>
+       <HighchartsReact highcharts={Highcharts} options={options} />
+    </div>
+  );
+};
+
 export default Charts;

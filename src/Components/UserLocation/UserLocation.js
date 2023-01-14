@@ -1,55 +1,68 @@
-
-
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 const UserLocation = () => {
-    const getlocation = () => {
-        if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(showPosition,showError); 
-        }
-        else{
-            alert("Geolocation is not supported by this browser");
-        }
-    };
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [location, setLocation] = useState([]);
+  const [locationInfo, setLocationInfo] = useState({});
+  const fetchSuggestions = async (query) => {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${query}&format=json`
+    );
+    setSuggestions(response.data);
+  };
 
-    const showPosition = (position) => {
-        let lat = position.coords.latitude
-        let long = position.coords.longitude
-        
-        console.log(lat,long);
+  useEffect(() => {
+    if (query) {
+      fetchSuggestions(query);
+    } else {
+      setSuggestions([])
     }
-    const showError = (error)=>{
-         switch (error.code) {
-            case error.PERMISSION_DENIED:
-                alert("User denied location permisssion");
-                
-                break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information unavailable");
-                    
-                    break;
-                    case error.TIMEOUT:
-                        alert("Locatiion access request timeout");
-                        
-                        break;
-                        case error.UNKNOWN_ERROR:
-                            alert("Unknown error occurred");
-                            
-                            break;
-             
-            default:
-                alert("Unknown error occurred")
-               
-         }
-    }
+  }, [query]);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSuggestionSelection = (suggestion) => {
+    setQuery(suggestion.display_name);
+    setSuggestions([]);
+    setLocation([suggestion.lat,suggestion.lon]);
+  };
+ 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      const response = await axios.get(
+        `https://us1.locationiq.com/v1/reverse.php?key=pk.de89a66c75d2c7e2838b70033a082722&lat=${latitude}&lon=${longitude}&format=json`
+      );
+
+      setLocationInfo(response.data);
+    });
+  }, []);
   return (
     <div>
-        <Button onClick={getlocation()}>Get Location</Button>
-        <h1>user location</h1>
-        
+      <input type="text" value={query} onChange={handleInputChange} />
+      {suggestions.length > 0 && (
+        <ul>
+          {suggestions.map((suggestion, index) => (
+            <li key={index} onClick={() => handleSuggestionSelection(suggestion)}>
+              {suggestion.display_name}
+            </li>
+          ))}
+        </ul>
+      )}
+         <div>
+      <p>Your current address is:</p>
+      <p>
+        {locationInfo.address &&
+          `${locationInfo.address.road}, ${locationInfo.address.city}, ${locationInfo.address.state}, ${locationInfo.address.postcode}`}
+      </p>
     </div>
-  )
-}
+    </div>
+  );
+};
 
-export default UserLocation
+export default UserLocation;

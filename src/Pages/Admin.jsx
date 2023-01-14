@@ -19,8 +19,7 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import { getMessages } from "../store/shopping-cart/messageSlice";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
-import Fssai from "../Components/Restaurants/FSSAI/Fssai";
+
 import MarkEmailUnreadOutlinedIcon from '@mui/icons-material/MarkEmailUnreadOutlined';
 import Tab from "react-bootstrap/Tab";
 import Modal from 'react-bootstrap/Modal';
@@ -33,6 +32,8 @@ import Paper from "@mui/material/Paper";
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import Reports from "../Components/Admin/Reports/Reports";
 import Charts from "../Components/Charts/Charts";
+
+import PieChart from "../Components/Charts/PieChart";
 
 const Admin = () => {
 
@@ -158,7 +159,7 @@ const Admin = () => {
             <Tab.Content>
               <Tab.Pane eventKey="#">
                 <div>
-                 
+                
                   <div className="row mb-3">
                     <div className="col-xl-3 col-sm-6 py-2">
                       <div className="card bg-success text-white h-100">
@@ -202,6 +203,10 @@ const Admin = () => {
                       </div>
                     </div>
                   </div>
+                  <Row><Col> <Charts/>
+                  </Col>
+                  <Col><PieChart/></Col></Row>
+                 
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="#users">
