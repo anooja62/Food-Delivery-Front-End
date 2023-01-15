@@ -22,70 +22,7 @@ import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import "../Components/Location/Location.css";
-
-import SearchIcon from "@mui/icons-material/Search";
-import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-
-const apiKey = "AIzaSyA-t99Dx-RD6dFtzZ443Zv1vBIi2IkxEkU";
-const mapApiJs = "https://maps.googleapis.com/maps/api/js";
-const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
-// load google map api js
-
-function loadAsyncScript(src) {
-  return new Promise((resolve) => {
-    const script = document.createElement("script");
-    Object.assign(script, {
-      type: "text/javascript",
-      async: true,
-      src,
-    });
-    script.addEventListener("load", () => resolve(script));
-    document.head.appendChild(script);
-  });
-}
-
-const extractAddress = (place) => {
-  const address = {
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    plain() {
-      const city = this.city ? this.city + ", " : "";
-      
-      const state = this.state ? this.state + ", " : "";
-      const zip = this.zip ? this.zip + ", " : "";
-      return city + zip + state + this.country;
-    },
-  };
-
-  if (!Array.isArray(place?.address_components)) {
-    return address;
-  }
-
-  place.address_components.forEach((component) => {
-    const types = component.types;
-    const value = component.long_name;
-
-    if (types.includes("locality")) {
-      address.city = value;
-    }
-
-    if (types.includes("administrative_area_level_2")) {
-      address.state = value;
-    }
-
-    if (types.includes("postal_code")) {
-      address.zip = value;
-    }
-
-    if (types.includes("country")) {
-      address.country = value;
-    }
-  });
-
-  return address;
-};
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 const steps = [
   {
@@ -111,63 +48,34 @@ const initialValues = {
 };
 
 const RestaurantRegister = () => {
-  const searchInput = useRef(null);
-  const [address, setAddress] = useState({});
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [location, setLocation] = useState([]);
 
-  // init gmap script
-  const initMapScript = () => {
-    // if script already loaded
-    if (window.google) {
-      return Promise.resolve();
-    }
-    const src = `${mapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
-    return loadAsyncScript(src);
-  };
-
-  // do something on address change
-  const onChangeAddress = (autocomplete) => {
-    const place = autocomplete.getPlace();
-    setAddress(extractAddress(place));
-  };
-
-  // init autocomplete
-  const initAutocomplete = () => {
-    if (!searchInput.current) return;
-
-    const autocomplete = new window.google.maps.places.Autocomplete(
-      searchInput.current
+  const fetchSuggestions = async (query) => {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${query}&format=json`
     );
-    autocomplete.setFields(["address_component", "geometry"]);
-    autocomplete.addListener("place_changed", () =>
-      onChangeAddress(autocomplete)
-    );
+    setSuggestions(response.data);
   };
 
-  const reverseGeocode = ({ latitude: lat, longitude: lng }) => {
-    const url = `${geocodeJson}?key=${apiKey}&latlng=${lat},${lng}`;
-    searchInput.current.value = "Getting your location...";
-    fetch(url)
-      .then((response) => response.json())
-      .then((location) => {
-        const place = location.results[0];
-        const _address = extractAddress(place);
-        setAddress(_address);
-        searchInput.current.value = _address.plain();
-      });
-  };
-
-  const findMyLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        reverseGeocode(position.coords);
-      });
-    }
-  };
-
-  // load map script after mounted
   useEffect(() => {
-    initMapScript().then(() => initAutocomplete());
-  }, []);
+    if (query) {
+      fetchSuggestions(query);
+    } else {
+      setSuggestions([]);
+    }
+  }, [query]);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSuggestionSelection = (suggestion) => {
+    setQuery(suggestion.display_name);
+    setSuggestions([]);
+    setLocation([suggestion.lat, suggestion.lon]);
+  };
 
   const [error, setError] = useState("");
 
@@ -195,14 +103,12 @@ const RestaurantRegister = () => {
 
   const navigate = useNavigate();
   const signupNameRef = useRef();
-  
+
   const signupPhoneRef = useRef();
 
   const signupEmailRef = useRef();
-  const signupPincodeRef = useRef();
-  const signupCityRef = useRef();
-  const signupCountryRef = useRef();
-  const signupStateRef = useRef();
+  const signupAddressRef = useRef();
+
   const signupLicenseRef = useRef();
 
   const handleClick = async (e) => {
@@ -212,10 +118,8 @@ const RestaurantRegister = () => {
       name: signupNameRef.current.value,
       phone: signupPhoneRef.current.value,
       email: signupEmailRef.current.value,
-      city: signupCityRef.current.value,
-      pincode: signupPincodeRef.current.value,
-      state: signupStateRef.current.value,
-      country: signupCountryRef.current.value,
+      address: signupAddressRef.current.value,
+
       license: signupLicenseRef.current.value,
     };
     try {
@@ -369,69 +273,37 @@ const RestaurantRegister = () => {
                         )}
                       </div>
                       <p className='error__txt text-center'>{error}</p>
-                   
                     </Col>
                   </Row>
                   <Row>
-                    
                     <Col>
                       <div className='new__register'>
                         <label>* Restaurant Address</label>
                         <div className='search-main'>
                           <div className='search'>
                             <input
-                              ref={searchInput}
+                              value={query}
+                              onChange={handleInputChange}
                               type='text'
                               placeholder='Search location....'
+                              ref={signupAddressRef}
                             />
-                            <button onClick={findMyLocation}>
-                              <GpsFixedIcon />
-                            </button>
+                            {suggestions.length > 0 && (
+                              <ul>
+                                {suggestions.map((suggestion, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() =>
+                                      handleSuggestionSelection(suggestion)
+                                    }
+                                  >
+                                    <FmdGoodIcon /> {suggestion.display_name}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
                           </div>
                         </div>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className='new__register'>
-                        <label>City:</label>{" "}
-                        <input type='text' value={address.city} 
-                        name='city'
-                        ref={signupCityRef}
-                        required/>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className='new__register'>
-                        <label>State:</label>{" "}
-                        <input type='text'
-                        name='state'
-                         defaultValue={address.state}
-                        ref={signupStateRef}
-                        required />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className='new__register'>
-                        <label>Pincode:</label>{" "}
-                        <input type='text'
-                        name='pincode'
-                         defaultValue={address.zip} 
-                        ref={signupPincodeRef}
-                        required/>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className='new__register'>
-                        <label>Country:</label>{" "}
-                        <input type='text' 
-                        name='country'
-                        defaultValue={address.country} 
-                        ref={signupCountryRef}
-                        required />
                       </div>
                     </Col>
                   </Row>

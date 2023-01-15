@@ -26,8 +26,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import VoiceSearch from "../VoiceSearch/VoiceSearch";
-import UserLocation from "../UserLocation/UserLocation";
+
 const RestaurantUI = () => {
   const {
     transcript,
@@ -82,8 +81,7 @@ const RestaurantUI = () => {
       <div style={{ marginLeft: 35 }}>
         <Details />
       </div>
-<VoiceSearch/>
-<UserLocation/>
+
       <div className="emenu mt-5">
         <Tabs>
           <TabList>

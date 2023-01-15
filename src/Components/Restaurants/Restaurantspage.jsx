@@ -4,6 +4,7 @@ import RestaurantCard from './RestaurantCard/RestaurantCard'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import LocationBasedSearch from '../LocationBasedSearch/LocationBasedSearch';
 
 const Restaurantspage = () => {
   const [cookies, setCookie] = useCookies(null);
@@ -21,7 +22,7 @@ const Restaurantspage = () => {
     <>
     <div style={{marginLeft:80,marginRight:80}}>
       <h3 className="mt-2">Order food from your favourite restaurants</h3>
-     
+     <LocationBasedSearch/>
     {restaurantList.length !== 0 && (
         <>
           <div className="row d-flex justify-content-between ">

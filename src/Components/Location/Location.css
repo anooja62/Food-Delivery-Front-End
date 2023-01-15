@@ -43,6 +43,11 @@
   .search button:hover {
     color: #f48fb1;
   }
+  
+  .search ul li{
+    list-style: none;
+    cursor: pointer;
+  }
   .search input {
     box-sizing: border-box;
     display: block;
