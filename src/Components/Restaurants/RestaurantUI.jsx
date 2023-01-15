@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
@@ -21,21 +23,11 @@ import About from "./About/About";
 import Details from "./Details/Details";
 
 import AddReview from "./Review/AddReview";
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import SearchIcon from '@mui/icons-material/Search';
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import SearchIcon from "@mui/icons-material/Search";
+import SpeechRecognition from "react-speech-recognition";
 
 const RestaurantUI = () => {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
-
-  
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const navigate = useNavigate();
@@ -59,7 +51,7 @@ const RestaurantUI = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const searchedProduct = menuLIst.filter((item) => {
-    if (transcript.value === "") return item;
+    if (searchTerm.value === "") return item;
 
     if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
       return item;
@@ -82,7 +74,7 @@ const RestaurantUI = () => {
         <Details />
       </div>
 
-      <div className="emenu mt-5">
+      <div className='emenu mt-5'>
         <Tabs>
           <TabList>
             <Tab>
@@ -108,26 +100,27 @@ const RestaurantUI = () => {
           </TabList>
 
           <TabPanel>
-            <div className="panel-content">
+            <div className='panel-content'>
               <h4>Order Now !</h4>
-              <Col lg="6" md="6" sm="6" xs="12">
-                <div className="search__widget d-flex align-items-center justify-content-between">
-                  
-                  <input
-                    type="text"
-                  
-                    placeholder="I'm looking for....."
-                    value={searchTerm}
-                     onChange={(e) => setSearchTerm(e.target.value)}
-                   
-                  />
-                  <span>
-                  <KeyboardVoiceIcon onClick={SpeechRecognition.startListening}/>
-                   <SearchIcon/>
-                  </span>
-                </div>
-              </Col>
-              <div className="row d-flex justify-content-between ">
+              <Row>
+                <Col lg='6' md='6' sm='6' xs='12'>
+                  <div className='search__widget d-flex align-items-center justify-content-between'>
+                    <input
+                      type='text'
+                      placeholder="I'm looking for....."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <span>
+                      <SearchIcon />
+                    </span>
+                  </div>
+                </Col>
+                <Col>
+                  <KeyboardVoiceIcon />
+                </Col>
+              </Row>
+              <div className='row d-flex justify-content-between '>
                 {displayPage.map((item) => {
                   return <Menu key={item.id} menu={item} />;
                 })}
@@ -137,14 +130,13 @@ const RestaurantUI = () => {
                 onPageChange={changePage}
                 previousLabel={"Prev"}
                 nextLabel={"Next"}
-                containerClassName="paginationBttns"
+                containerClassName='paginationBttns'
               />
             </div>
           </TabPanel>
           <TabPanel>
-            <div className="panel-content ">
-           
-              <div className="row d-flex justify-content-between ">
+            <div className='panel-content '>
+              <div className='row d-flex justify-content-between '>
                 {comboList.map((u) => {
                   return <Combo key={u.id} combo={u} />;
                 })}
@@ -152,14 +144,14 @@ const RestaurantUI = () => {
             </div>
           </TabPanel>
           <TabPanel>
-            <div className="panel-content">
+            <div className='panel-content'>
               <div style={{ marginLeft: 150, marginRight: 200 }}>
                 <AddReview />
               </div>
             </div>
           </TabPanel>
           <TabPanel>
-            <div className="panel-content">
+            <div className='panel-content'>
               <About />
             </div>
           </TabPanel>

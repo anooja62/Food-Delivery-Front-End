@@ -16,26 +16,39 @@ const Charts = () => {
 
   const options = {
     xAxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     },
     yAxis: {
       title: {
-        text: "Number of Users "
-      }
+        text: "Number of Users ",
+      },
     },
     title: {
-      text: 'Users Statistics'
-  },
+      text: "Users Statistics",
+    },
     series: [
       {
-        data: [restNo, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
-      }
-    ]
+        data: [restNo, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9],
+      },
+    ],
   };
 
   return (
     <div>
-       <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
 };
