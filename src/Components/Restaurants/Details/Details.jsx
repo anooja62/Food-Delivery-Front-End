@@ -21,7 +21,7 @@ const Details = () => {
   return (
     <>
       <h2>{singleRestaurant.name}</h2>
-      <p className="text-muted"> {singleRestaurant.city},{singleRestaurant.pincode},{singleRestaurant.state},{singleRestaurant.country}</p>
+      <p className="text-muted"> {singleRestaurant.address}</p>
     </>
   );
 };

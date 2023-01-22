@@ -46,6 +46,7 @@ const restaurantSlice = createSlice({
   name: "restaurants",
   initialState: {
     list: [],
+    location:[],
     parsedRestaurant: [],
     status: null,
     singleRestaurent: {},
@@ -105,7 +106,7 @@ const restaurantSlice = createSlice({
       state.status = "loading";
     },
     [getLocationRestaurant.fulfilled]: (state, { payload }) => {
-      state.list = payload;
+      state.location = payload;
       state.status = "success";
     },
     [getLocationRestaurant.rejected]: (state, action) => {

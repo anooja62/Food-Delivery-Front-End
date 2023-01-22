@@ -13,26 +13,13 @@ const Restaurantspage = () => {
   if(!userId){
     navigate('/login')
    }
-  const restaurantList = useSelector((state) => state.restaurant.list);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getRestaurantdetails());
-  },[]);
+ 
   return (
     <>
     <div style={{marginLeft:80,marginRight:80}}>
       <h3 className="mt-2">Order food from your favourite restaurants</h3>
      <LocationBasedSearch/>
-    {restaurantList.length !== 0 && (
-        <>
-          <div className="row d-flex justify-content-between ">
-            {restaurantList.map((u) => (
-              <RestaurantCard key={u._id} restaurant={u} />
-            ))}
-          </div>
-          
-        </>
-      )}
+   
       </div>
     </>
   )

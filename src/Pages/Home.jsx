@@ -28,6 +28,7 @@ import { useFormik } from "formik";
 import { signupSchema } from "../schemas";
 import ChatBot from "../Components/ChatBot/ChatBot.jsx";
 import UserLocation from "../Components/UserLocation/UserLocation.js";
+import RestaurantsMap from "../Components/Location/Location.js";
 
 const initialValues = {
   name: "",
@@ -116,7 +117,7 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-    
+   
       <ChatBot/>
             <Col lg="6" md="6">
               <div className="hero__content">

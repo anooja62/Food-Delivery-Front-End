@@ -127,7 +127,7 @@ const Restaurantsdashboard = () => {
 
       ownername: restaurantOwnernameRef.current.value,
       ownerphone: restaurantOwnerphoneRef.current.value,
-      licensetype: restaurantLicensetypeRef.current.value,
+      
     };
     if (imageUpload === null) return;
     const imageRef = ref(storage, `restimages/${imageUpload.name + v4()}`);
