@@ -46,7 +46,7 @@ const restaurantSlice = createSlice({
   name: "restaurants",
   initialState: {
     list: [],
-    location:[],
+    location: [],
     parsedRestaurant: [],
     status: null,
     singleRestaurent: {},

@@ -30,10 +30,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
 const Menu = ({ menu, url }) => {
-  const [available, setAvailable] = useState(true);
+  console.log(menu, "menu");
+  const [available, setAvailable] = useState(menu.isAvailable);
 
   const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
+  console.log(restaurantId, "restaurantId");
   const [show, setShow] = useState(false);
   const [imageUpload, setImageUpload] = useState(null);
   const handleClose = () => setShow(false);
@@ -54,8 +56,9 @@ const Menu = ({ menu, url }) => {
   };
 
   const handleAvailability = async (id) => {
-    setAvailable(false)
-    dispatch(availableMenu(id));
+    setAvailable((prev) => !prev);
+
+    dispatch(availableMenu({ id, restaurantId, available: available }));
   };
 
   const handleShow = () => {
@@ -135,15 +138,15 @@ const Menu = ({ menu, url }) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 340 }} className='mt-5'>
+      <Card sx={{ maxWidth: 340 }} className="mt-5">
         <CardMedia
-          component='img'
-          height='180'
+          component="img"
+          height="180"
           src={menu.imgUrl}
-          alt='product'
+          alt="product"
         />
         <CardContent>
-          <Typography gutterBottom variant='h6' component='div'>
+          <Typography gutterBottom variant="h6" component="div">
             {menu.foodname}
           </Typography>
         </CardContent>
@@ -152,28 +155,28 @@ const Menu = ({ menu, url }) => {
 
         <Row>
           <Col>
-            <span className='product__price'>₹{menu.price}</span>
+            <span className="product__price">₹{menu.price}</span>
           </Col>
           <Col>
             {window.location.href.includes("admin-res") ? (
               <>
                 {" "}
-                <Stack direction='row' spacing={2}>
+                <Stack direction="row" spacing={2}>
                   <Switch
                     checked={available}
                     onChange={() => handleAvailability(menu._id)}
-                    name='loading'
-                    color='primary'
+                    name="loading"
+                    color="primary"
                   />
                   <Button
-                    variant='outlined'
+                    variant="outlined"
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDelete(menu._id)}
                   >
                     Delete
                   </Button>
                   <Button
-                    variant='contained'
+                    variant="contained"
                     endIcon={<EditIcon />}
                     onClick={handleShow}
                   >
@@ -185,57 +188,57 @@ const Menu = ({ menu, url }) => {
                     <Modal.Title>Update Menu</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <form className='mt-3' onSubmit={updateMenuData}>
-                      <div className='new__register'>
+                    <form className="mt-3" onSubmit={updateMenuData}>
+                      <div className="new__register">
                         <label>Food Name</label>
                         <input
-                          type='text'
-                          name='foodname'
+                          type="text"
+                          name="foodname"
                           ref={menuFoodNameRef}
-                          placeholder=''
+                          placeholder=""
                           required
                           defaultValue={menu.foodname}
                         />
                       </div>
 
-                      <div className='new__register'>
+                      <div className="new__register">
                         <label>Price</label>
                         <input
-                          type='number'
-                          name='price'
+                          type="number"
+                          name="price"
                           ref={menuFoodPriceRef}
-                          placeholder='Price'
+                          placeholder="Price"
                           required
                           defaultValue={menu.price}
                         />
                       </div>
 
-                      <div className='new__register'>
+                      <div className="new__register">
                         <label>Select Your Image</label>
                         <input
-                          type='file'
+                          type="file"
                           onChange={(event) => {
                             setImageUpload(event.target.files[0]);
                           }}
-                          name='photo'
-                          placeholder=''
-                          accept='image/*'
+                          name="photo"
+                          placeholder=""
+                          accept="image/*"
                         />
                       </div>
 
-                      <div className='new__register mt-2'>
-                        <label for='category'>Category : </label>
+                      <div className="new__register mt-2">
+                        <label for="category">Category : </label>
                         <select ref={menuCategoryRef}>
-                          <option value='Non-Veg'> Non-Veg</option>
-                          <option value='Veg'>Veg</option>
+                          <option value="Non-Veg"> Non-Veg</option>
+                          <option value="Veg">Veg</option>
                         </select>
                       </div>
 
-                      <div className='mt-4 text-center'>
-                        <button className='addToCart__btn' type='submit'>
+                      <div className="mt-4 text-center">
+                        <button className="addToCart__btn" type="submit">
                           Update Menu Item
                           <ToastContainer
-                            position='top-center'
+                            position="top-center"
                             autoClose={1000}
                             hideProgressBar={false}
                             newestOnTop={false}
@@ -254,14 +257,14 @@ const Menu = ({ menu, url }) => {
               </>
             ) : (
               <>
-                {menu.isAvailable === 0 ? (
+                {menu.isAvailable ? (
                   <button
-                    className='addToCart__btn'
+                    className="addToCart__btn"
                     onClick={() => handleAddItem(menu, arr, cartProducts)}
                   >
                     Add to Cart
                     <ToastContainer
-                      position='bottom-center'
+                      position="bottom-center"
                       autoClose={1000}
                       hideProgressBar={false}
                       newestOnTop={false}
