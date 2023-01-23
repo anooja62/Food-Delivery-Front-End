@@ -1,28 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-export const getMenus = createAsyncThunk(
-  `food/allMenus`,
-  async (id) => {
-    const response = await axios.get(`/food/all-menu/${id}`);
-    return response.data;
-  }
-);
+export const getMenus = createAsyncThunk(`food/allMenus`, async (id) => {
+  const response = await axios.get(`/food/all-menu/${id}`);
+  return response.data;
+});
 export const addMenu = createAsyncThunk("food/add-menu", async (menu) => {
-  const response = await axios.post("food/add-menu",menu);
+  const response = await axios.post("food/add-menu", menu);
 
   return response.data;
 });
-export const deleteMenu = createAsyncThunk(
-  "food/allMenus",
-  async (id) => {
-    const response = await axios.put(`/food/Delete/${id}`);
-    return response.data;
-  }
-);
+export const deleteMenu = createAsyncThunk("food/allMenus", async (id) => {
+  const response = await axios.put(`/food/Delete/${id}`);
+  return response.data;
+});
 export const availableMenu = createAsyncThunk(
-  "food/allMenus",
-  async (id) => {
-    const response = await axios.put(`/food/available/${id}`);
+  "food/available-menus",
+  async (ids) => {
+    const response = await axios.post(`/food/available/${ids.id}`, ids);
     return response.data;
   }
 );
@@ -38,7 +32,7 @@ const menuSlice = createSlice({
   initialState: {
     list: [],
     status: null,
-    singleMenu:{}
+    singleMenu: {},
   },
   extraReducers: {
     [getMenus.pending]: (state, action) => {

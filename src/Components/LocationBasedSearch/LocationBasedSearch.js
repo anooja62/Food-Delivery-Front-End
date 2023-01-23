@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axios";
 import "../Location/Location.css";
-
+import {Row,Col} from 'react-bootstrap'
 import RestaurantCard from "../Restaurants/RestaurantCard/RestaurantCard";
 import { getLocationRestaurant } from "../../store/shopping-cart/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +12,9 @@ const LocationBasedSearch = () => {
 
   const restaurantList = useSelector((state) => state.restaurant.location);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getLocationRestaurant());
-  }, []);
+ // useEffect(() => {
+    //dispatch(getLocationRestaurant());
+  //}, []);
   const fetchSuggestions = async (address) => {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${address}&format=json`
@@ -41,14 +41,15 @@ const LocationBasedSearch = () => {
   };
   const getRestaurants = async (e) => {
     e.preventDefault();
-    dispatch(getLocationRestaurant(address));
+    dispatch(getLocationRestaurant(address.split(",")[0]));
   };
 
   return (
     <div>
       {" "}
       <form onSubmit={getRestaurants}>
-        <input type="text" value={address} onChange={handleInputChange} />
+        <Row><Col> <div className='search-main'> 
+        <div className='search'>  <input type="text" value={address} onChange={handleInputChange} placeholder='Search location....'/>
         {suggestions.length > 0 && (
           <ul>
             {suggestions.map((suggestion, index) => (
@@ -61,7 +62,10 @@ const LocationBasedSearch = () => {
             ))}
           </ul>
         )}
-        <input type="submit" value="Search" />
+       </div></div></Col><Col> <button type="submit"  className="addToCart__btn" >Search</button></Col></Row>
+       
+      
+       
       </form>
       {restaurantList.length !== 0 && (
         <>
