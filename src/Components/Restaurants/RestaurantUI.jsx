@@ -16,7 +16,9 @@ import { getMenus } from "../../store/shopping-cart/menuSlice";
 import { getCombos } from "../../store/shopping-cart/comboSlice";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import About from "./About/About";
@@ -25,9 +27,9 @@ import Details from "./Details/Details";
 import AddReview from "./Review/AddReview";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SearchIcon from "@mui/icons-material/Search";
-import SpeechRecognition from "react-speech-recognition";
 
 const RestaurantUI = () => {
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const navigate = useNavigate();
@@ -49,11 +51,12 @@ const RestaurantUI = () => {
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const searchInput = transcript || searchTerm;
   const [pageNumber, setPageNumber] = useState(0);
   const searchedProduct = menuLIst.filter((item) => {
-    if (searchTerm.value === "") return item;
+    if (searchInput.value === "") return item;
 
-    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
+    if (item.foodname.toLowerCase().includes(searchInput.toLowerCase()))
       return item;
   });
   const productPerPage = 8;
@@ -108,7 +111,7 @@ const RestaurantUI = () => {
                     <input
                       type='text'
                       placeholder="I'm looking for....."
-                      value={searchTerm}
+                      value={searchInput}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <span>
@@ -117,9 +120,12 @@ const RestaurantUI = () => {
                   </div>
                 </Col>
                 <Col>
-                  <KeyboardVoiceIcon />
+                  <KeyboardVoiceIcon
+                    onClick={SpeechRecognition.startListening}
+                  />
                 </Col>
               </Row>
+
               <div className='row d-flex justify-content-between '>
                 {displayPage.map((item) => {
                   return <Menu key={item.id} menu={item} />;

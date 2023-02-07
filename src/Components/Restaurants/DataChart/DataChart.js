@@ -1,11 +1,11 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import axios from '../../axios'
+import axios from "../../../axios";
 import { useCookies } from "react-cookie";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-const PieChart = () => {
+const DataChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const PieChart = () => {
       type: "column"
     },
     title: {
-      text: "Orders by Month "
+      text: "Orders by Month and Restaurant"
     },
     xAxis: {
       categories: [
@@ -37,10 +37,10 @@ const PieChart = () => {
         "Nov",
         "Dec"
       ],
-     
+      crosshair: true
     },
     yAxis: {
-     
+      min: 0,
       title: {
         text: "Orders"
       }
@@ -53,10 +53,10 @@ const PieChart = () => {
     },
     series: [
       {
-        name: "Monthly Orders Count",
+        name: data.map(d => d._id.restaurantId),
         data: data.map(d => {
-        
-          return { y: d.totalOrders };
+          let month = d._id.month - 1;
+          return { y: d.totalOrders, x: month };
         })
       }
     ]
@@ -68,4 +68,4 @@ const PieChart = () => {
   );
 };
 
-export default PieChart;
+export default DataChart;

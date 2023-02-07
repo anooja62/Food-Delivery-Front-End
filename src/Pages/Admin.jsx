@@ -31,9 +31,10 @@ import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDe
 import Paper from "@mui/material/Paper";
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import Reports from "../Components/Admin/Reports/Reports";
-import Charts from "../Components/Charts/Charts";
-
+import UserChart from "../Components/Charts/UserChart";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import PieChart from "../Components/Charts/PieChart";
+import Sales from "../Components/Restaurants/Sales/Sales";
 
 const Admin = () => {
 
@@ -116,6 +117,9 @@ const Admin = () => {
             <ListGroup>
               <ListGroup.Item action href="#">
                 <DashboardOutlinedIcon /> Dashboard
+              </ListGroup.Item>
+              <ListGroup.Item action href="#sales">
+                <CurrencyRupeeIcon /> Sales Analytics
               </ListGroup.Item>
               <ListGroup.Item action href="#users">
                 <PeopleAltOutlinedIcon /> Users
@@ -203,11 +207,16 @@ const Admin = () => {
                       </div>
                     </div>
                   </div>
-                  <Row><Col> <Charts/>
+                  <Row><Col> <UserChart/>
                   </Col>
                   <Col><PieChart/></Col></Row>
                  
                 </div>
+              </Tab.Pane >
+              <Tab.Pane eventKey="#sales" >
+<div>
+  <Sales/>
+</div>
               </Tab.Pane>
               <Tab.Pane eventKey="#users">
                 <div>

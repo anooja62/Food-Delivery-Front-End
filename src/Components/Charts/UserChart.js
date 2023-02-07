@@ -1,18 +1,24 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "../../axios";
 
-import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { getRestaurants } from "../../store/shopping-cart/restaurantSlice";
-const Charts = () => {
-  const restaurantLIst = useSelector((state) => state.restaurant.list);
-  const dispatch = useDispatch();
+const UserChart = () => {
+  const [monthlyUserCount, setMonthlyUserCount] = useState([]);
+
   useEffect(() => {
-    dispatch(getRestaurants());
+    const fetchMonthlyUserCount = async () => {
+      try {
+        const response = await axios.get("/auth/monthly-user-count");
+        setMonthlyUserCount(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchMonthlyUserCount();
   }, []);
-  const restNo = restaurantLIst.length;
 
   const options = {
     xAxis: {
@@ -41,7 +47,8 @@ const Charts = () => {
     },
     series: [
       {
-        data: [restNo, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9],
+        name: "Monthly User Count",
+        data: monthlyUserCount.map((entry) => entry.count),
       },
     ],
   };
@@ -53,4 +60,4 @@ const Charts = () => {
   );
 };
 
-export default Charts;
+export default UserChart;

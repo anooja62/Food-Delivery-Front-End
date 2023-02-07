@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -30,8 +32,11 @@ import {
 } from "../../store/shopping-cart/ordersSlice";
 import { getParsedRestaurants } from "../../store/shopping-cart/restaurantSlice";
 import { useEffect } from "react";
-
+import "../Location/Location.css";
 const DeliveryStaff = () => {
+  const [address, setAddress] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [location, setLocation] = useState([]);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
@@ -42,6 +47,7 @@ const DeliveryStaff = () => {
   const deliveryboyEmailRef = useRef();
   const deliveryboyNameRef = useRef();
   const deliveryboyPhoneRef = useRef();
+  const deliveryboyLocationRef = useRef();
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState("");
   const imageListRef = ref(storage, "deliveryboyimages/");
@@ -78,6 +84,7 @@ const DeliveryStaff = () => {
       phone: deliveryboyPhoneRef.current.value,
       email: deliveryboyEmailRef.current.value,
       password: deliveryboyPasswordRef.current.value,
+      location:deliveryboyLocationRef.current.value,
     };
     if (imageUpload === null) return;
     const imageRef = ref(
@@ -146,6 +153,31 @@ const DeliveryStaff = () => {
       setError("you can upload only images");
     }
   };
+
+  const fetchSuggestions = async (address) => {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${address}&format=json`
+    );
+    setSuggestions(response.data);
+  };
+
+  useEffect(() => {
+    if (address) {
+      fetchSuggestions(address);
+    } else {
+      setSuggestions([]);
+    }
+  }, [address]);
+
+  const handleInputChange = (e) => {
+    setAddress(e.target.value);
+  };
+
+  const handleSuggestionSelection = (suggestion) => {
+    setAddress(suggestion.display_name);
+    setSuggestions([]);
+    setLocation([suggestion.lat, suggestion.lon]);
+  };
   return (
     <div>
       <DeliveryTopbar />
@@ -182,10 +214,10 @@ const DeliveryStaff = () => {
               <h5>Do you really want to logout ? </h5>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant='secondary' onClick={handleClose}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={clearCookies}>
+              <Button variant='primary' onClick={clearCookies}>
                 Logout Now
               </Button>
             </Modal.Footer>
@@ -193,7 +225,7 @@ const DeliveryStaff = () => {
         </TabList>
 
         <TabPanel>
-          <div className="panel-content">
+          <div className='panel-content'>
             <h2>Orders</h2>
             {deliveryOrderData.map((data) => {
               const lastIndex = data.length - 1;
@@ -213,7 +245,7 @@ const DeliveryStaff = () => {
                         </>
                       );
                     })}
-                    <Card.Subtitle className="mb-2 text-muted">
+                    <Card.Subtitle className='mb-2 text-muted'>
                       Customer Address
                     </Card.Subtitle>
 
@@ -239,7 +271,7 @@ const DeliveryStaff = () => {
           </div>
         </TabPanel>
         <TabPanel>
-          <div className="panel-content">
+          <div className='panel-content'>
             <h2>Delivery details</h2>
             {deliveredOrders.map((data) => {
               const lastIndex = data.length - 1;
@@ -250,7 +282,7 @@ const DeliveryStaff = () => {
                     {data.map((item) => {
                       return <></>;
                     })}
-                    <Card.Subtitle className="mb-2 text-muted">
+                    <Card.Subtitle className='mb-2 text-muted'>
                       Customer Address
                     </Card.Subtitle>
 
@@ -283,19 +315,19 @@ const DeliveryStaff = () => {
         </TabPanel>
 
         <TabPanel>
-          <div className="panel-content">
+          <div className='panel-content'>
             <div style={{ marginLeft: 150, marginRight: 200 }}>
-              <h3 className="text-center">Profile Details</h3>
+              <h3 className='text-center'>Profile Details</h3>
               <Paper elevation={3}>
-                <form className="mt-3" onSubmit={handleClick}>
+                <form className='mt-3' onSubmit={handleClick}>
                   <Row>
                     <Col>
-                      <div className="new__register ">
-                        <label for="ownername"> Name</label>
+                      <div className='new__register '>
+                        <label for='ownername'> Name</label>
                         <input
-                          type="text"
-                          name="ownername"
-                          placeholder="owner name"
+                          type='text'
+                          name='ownername'
+                          placeholder='owner name'
                           ref={deliveryboyNameRef}
                           defaultValue={deliveryboyName}
                           readOnly
@@ -303,12 +335,12 @@ const DeliveryStaff = () => {
                       </div>
                     </Col>
                     <Col>
-                      <div className="new__register">
+                      <div className='new__register'>
                         <label> Phone Number </label>
                         <input
-                          type="tel"
-                          placeholder=" Phone Number"
-                          name="number"
+                          type='tel'
+                          placeholder=' Phone Number'
+                          name='number'
                           ref={deliveryboyPhoneRef}
                           defaultValue={deliveryboyPhone}
                         ></input>
@@ -316,35 +348,65 @@ const DeliveryStaff = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
-                      <div className="new__register mt-5">
-                        <label> Profile Picture </label>
-                        <input
-                          type="file"
-                          onChange={handleImageUpload}
-                          name="photo"
-                          placeholder=""
-                          required
-                          accept="image/*"
-                        />
-                        <p>{error}</p>
+                    <div className='new__register mt-5'>
+                      <label> Profile Picture </label>
+                      <input
+                        type='file'
+                        onChange={handleImageUpload}
+                        name='photo'
+                        placeholder=''
+                        required
+                        accept='image/*'
+                      />
+                      <p>{error}</p>
+                    </div>
+                  </Row>
+                  <Row>
+                  <div className='new__register'>
+                  <label> Save your location </label>
+                    <form >
+                      <div className='search-main'>
+                        <div className='search'>
+                          {" "}
+                          <input
+                            type='text'
+                            value={address}
+                            onChange={handleInputChange}
+                            placeholder='Search location....'
+                            ref={deliveryboyLocationRef}
+                          />
+                          {suggestions.length > 0 && (
+                            <ul>
+                              {suggestions.map((suggestion, index) => (
+                                <li
+                                  key={index}
+                                  onClick={() =>
+                                    handleSuggestionSelection(suggestion)
+                                  }
+                                >
+                                  {suggestion.display_name}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </div>
-                    </Col>
-                    <Col></Col>
+                    </form>
+                    </div>
                   </Row>
 
                   <br></br>
 
-                  <h3 className="text-center mt-4">Account Settings </h3>
+                  <h3 className='text-center mt-4'>Account Settings </h3>
 
                   <Row>
                     <Col>
-                      <div className="new__register ">
-                        <label for="email">Email</label>
+                      <div className='new__register '>
+                        <label for='email'>Email</label>
                         <input
-                          type="email"
-                          name="email"
-                          placeholder="Email"
+                          type='email'
+                          name='email'
+                          placeholder='Email'
                           ref={deliveryboyEmailRef}
                           defaultValue={deliveryboyEmail}
                           disabled
@@ -352,24 +414,24 @@ const DeliveryStaff = () => {
                       </div>
                     </Col>
                     <Col>
-                      <div className="new__register">
+                      <div className='new__register'>
                         <label>Change Password </label>
                         <input
-                          type="password"
-                          placeholder="Change Password"
-                          name="password"
+                          type='password'
+                          placeholder='Change Password'
+                          name='password'
                           ref={deliveryboyPasswordRef}
                         ></input>
                       </div>
                     </Col>
                   </Row>
 
-                  <div className="mt-4 text-center">
-                    <button className="addToCart__btn" type="submit">
+                  <div className='mt-4 text-center'>
+                    <button className='addToCart__btn' type='submit'>
                       Submit
                     </button>
                     <ToastContainer
-                      position="top-center"
+                      position='top-center'
                       autoClose={3000}
                       hideProgressBar={false}
                       newestOnTop={false}
