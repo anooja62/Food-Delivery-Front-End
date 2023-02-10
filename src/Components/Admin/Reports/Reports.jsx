@@ -86,7 +86,7 @@ const Reports = () => {
                 <thead>
                   <tr>
                     <th scope="col"> ID</th>
-                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer name and address</th>
                     <th scope="col">Delivery Boy Details</th>
 
                     <th scope="col">Food Items</th>

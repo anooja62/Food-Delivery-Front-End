@@ -1,43 +1,99 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../../../axios'
+/** @format */
+
+import React, { useState, useEffect } from "react";
+import axios from "../../../axios";
 
 const Sales = () => {
   const [salesData, setSalesData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   useEffect(() => {
-    axios.get('/pay/total-amount-per-month')
-      .then(res => {
+    axios
+      .get("/pay/total-amount-per-month")
+      .then((res) => {
         if (res.status === 200) {
           setSalesData(res.data.payments);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, []);
-  
 
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
 
   return (
-    <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th>Month</th>
-          <th>Sales</th>
-        </tr>
-      </thead>
-      <tbody>
-        {salesData.map(({ month, totalAmount: sales }) => (
-          <tr key={month}>
-            <td>{month}</td>
-            <td>{sales}</td>
-          </tr>
+    <div>
+      <select
+        onChange={handleYearChange}
+        style={{ width: 200, height: 30, fontSize: 16, marginBottom: 20 }}
+      >
+        <option value={null}>Select Year</option>
+        {Array.from(new Set(salesData.map((sale) => sale.year))).map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
         ))}
-      </tbody>
-    </table>
+      </select>
+      <table className='table table-bordered'>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Sales Amount</th>
+            <th>Change in sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          {salesData
+            .filter(
+              (sale) =>
+                !selectedYear || Number(sale.year) === Number(selectedYear)
+            )
+            .map((sale, index, filteredData) => {
+              const previousMonthData =
+                index > 0 ? filteredData[index - 1] : null;
+
+              let changePercent = 0;
+              if (previousMonthData) {
+                changePercent =
+                  ((sale.totalAmount - previousMonthData.totalAmount) * 100) /
+                  previousMonthData.totalAmount;
+              }
+
+              return (
+                <tr key={sale.month + sale.year}>
+                  <td>{sale.month}</td>
+                  <td>₹ {sale.totalAmount}</td>
+                  <td>
+                    {previousMonthData ? (
+                      <>
+                        {previousMonthData.totalAmount !== 0 ? (
+                          changePercent > 0 ? (
+                            <p style={{ color: "green", fontWeight: 600 }}>
+                              {changePercent.toFixed(2)}% Increase
+                            </p>
+                          ) : (
+                            <p style={{ color: "red", fontWeight: 600 }}>
+                              {Math.abs(changePercent).toFixed(2)}% Decrease
+                            </p>
+                          )
+                        ) : (
+                          "Insufficient data"
+                        )}
+                      </>
+                    ) : (
+                      "Insufficient data"
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
   );
 };
-
 
 export default Sales;

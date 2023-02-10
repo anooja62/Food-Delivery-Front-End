@@ -46,7 +46,8 @@ import PrintIcon from "@mui/icons-material/Print";
 import DescriptionIcon from "@mui/icons-material/Description";
 import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
 import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
-import DataChart from "./DataChart/DataChart";
+
+import Recommendation from "../Recommendation/Recommendation";
 const initialValues = {
   name: "",
   phone: "",
@@ -275,7 +276,7 @@ const Restaurantsdashboard = () => {
                 </div>
               </div>
             </div>
-            <Row><Col>  <DataChart/></Col><Col></Col></Row>
+            <Row><Col> <Recommendation/> </Col><Col></Col></Row>
           
           </div>
         </TabPanel>

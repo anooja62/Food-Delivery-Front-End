@@ -47,7 +47,12 @@ const RestaurantExcel = () => {
               order[lastIndex]?.address.phone,
               order[lastIndex]?.address.pincode,
             ],
-           
+            [
+              order[lastIndex]?.deliveryBoyAddress?.name,
+
+              order[lastIndex]?.deliveryBoyAddress?.email,
+              order[lastIndex]?.deliveryBoyAddress?.phone,
+            ],
             order.map((o, index) => o.foodname),
             order[lastIndex]?.totalAmount
           );
@@ -80,8 +85,8 @@ const RestaurantExcel = () => {
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Customer Name</th>
-                   
+                    <th scope="col">Customer name and address</th>
+                    <th scope="col">Delivery Boy Details</th>
                     <th scope="col">Food Items</th>
                     <th scope="col">Total Amount</th>
                   </tr>
@@ -110,7 +115,21 @@ const RestaurantExcel = () => {
                                     {order[lastIndex]?.address.phone}
                                   </td>
                                 )}
-                               
+                                                               {index === 0 && (
+                                  <td>
+                                    {order[lastIndex]?.deliveryBoyAddress?.name}
+                                    <br />
+                                    {
+                                      order[lastIndex]?.deliveryBoyAddress
+                                        ?.email
+                                    }
+                                    <br />
+                                    {
+                                      order[lastIndex]?.deliveryBoyAddress
+                                        ?.phone
+                                    }
+                                  </td>
+                                )}
                                 {index === 0 && (
                                   <td>
                                     {order.map((o, index) => {

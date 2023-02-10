@@ -19,7 +19,7 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import { getMessages } from "../store/shopping-cart/messageSlice";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import MarkEmailUnreadOutlinedIcon from '@mui/icons-material/MarkEmailUnreadOutlined';
 import Tab from "react-bootstrap/Tab";
 import Modal from 'react-bootstrap/Modal';
@@ -35,6 +35,7 @@ import UserChart from "../Components/Charts/UserChart";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import PieChart from "../Components/Charts/PieChart";
 import Sales from "../Components/Restaurants/Sales/Sales";
+import Forecast from "../Components/Restaurants/Sales/Forecast";
 
 const Admin = () => {
 
@@ -120,6 +121,9 @@ const Admin = () => {
               </ListGroup.Item>
               <ListGroup.Item action href="#sales">
                 <CurrencyRupeeIcon /> Sales Analytics
+              </ListGroup.Item>
+              <ListGroup.Item action href="#forecast">
+                <TrendingUpIcon /> Sales Forecast
               </ListGroup.Item>
               <ListGroup.Item action href="#users">
                 <PeopleAltOutlinedIcon /> Users
@@ -216,6 +220,11 @@ const Admin = () => {
               <Tab.Pane eventKey="#sales" >
 <div>
   <Sales/>
+</div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="#forecast" >
+<div>
+  <Forecast/>
 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="#users">
