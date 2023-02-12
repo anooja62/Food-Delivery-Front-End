@@ -1,71 +1,43 @@
-/** @format */
 
-import React, { useEffect, useState } from "react";
-import axios from '../../axios'
-import { useCookies } from "react-cookie";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import React, { useState, useEffect } from 'react';
+import axios from '../../axios';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
 const PieChart = () => {
-  const [data, setData] = useState([]);
-
+  const [restaurants, setRestaurants] = useState([]);
   useEffect(() => {
-    axios
-      .get("order/by-month")
+    axios.get('/rest/top-restaurants')
       .then(response => {
-        setData(response.data);
+        setRestaurants(response.data);
+      })
+      .catch(error => {
+        console.log(error);
       });
   }, []);
-  const options = {
-    chart: {
-      type: "column"
-    },
+
+  const chartOptions = {
     title: {
-      text: "Orders by Month "
+      text: 'Top 4 Performing Restaurants'
     },
     xAxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
-     
+      categories: restaurants.map(r => r.name)
     },
     yAxis: {
-     
       title: {
-        text: "Orders"
+        text: 'Sentiment Score'
       }
     },
-    plotOptions: {
-      column: {
-        pointPadding: 0.2,
-        borderWidth: 0
-      }
-    },
-    series: [
-      {
-        name: "Monthly Orders Count",
-        data: data.map(d => {
-        
-          return { y: d.totalOrders };
-        })
-      }
-    ]
+    series: [{
+      name: 'Sentiment Score',
+      data: restaurants.map(r => r.sentimentScore)
+    }]
   };
-  return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
-  );
-};
 
-export default PieChart;
+  return (
+    
+    <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+  )
+}
+
+export default PieChart

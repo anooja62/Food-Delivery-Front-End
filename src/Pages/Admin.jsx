@@ -25,7 +25,7 @@ import Tab from "react-bootstrap/Tab";
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import MessageReply from "../Components/Admin/MessageReply/MessageReply";
+
 import Button from 'react-bootstrap/Button';
 import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDetails";
 import Paper from "@mui/material/Paper";
@@ -38,7 +38,7 @@ import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
 
 const Admin = () => {
-
+ 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -102,8 +102,10 @@ const Admin = () => {
         console.log(err);
       }
     };
+
+  
   return (
-    <div>
+    <div >   
       <Container fluid>
         <Topbar />
       </Container>

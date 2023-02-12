@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { addReview, getFoodreviews } from "../../../store/shopping-cart/reviewSlice";
 import { useCookies } from "react-cookie";
 import Review from "./Review";
+import { Row,Col } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AddReview = () => {
@@ -48,15 +49,16 @@ const AddReview = () => {
 
   return (
     <div>
-     
-      {reviewList.length !== 0 && (
+     <Row>
+      <Col>{reviewList.length !== 0 && (
         <>
           {reviewList.map((u) => (
             <Review key={u.id} foodreview={u} />
           ))}
         </>
-      )}
-      <h5 className="text-center ">Add review</h5>
+      )}</Col>
+     <Col>
+     <h5 className="text-center ">Add review</h5>
        <Paper elevation={3}>
         <form className="mt-3" onSubmit={handleReview}>
           <div className="new__register">
@@ -98,6 +100,10 @@ const AddReview = () => {
         </form>
         <br></br>
       </Paper>
+     </Col>
+     
+     </Row>
+     
     </div>
   );
 };

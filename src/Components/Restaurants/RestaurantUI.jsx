@@ -27,9 +27,11 @@ import Details from "./Details/Details";
 import AddReview from "./Review/AddReview";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SearchIcon from "@mui/icons-material/Search";
+import Dictaphone from "../DictaPhone";
 
 const RestaurantUI = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
+
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const navigate = useNavigate();
@@ -51,12 +53,16 @@ const RestaurantUI = () => {
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const searchInput = transcript || searchTerm;
+  // const searchInput = transcript || searchTerm;
   const [pageNumber, setPageNumber] = useState(0);
+  useEffect(() => {
+    setSearchTerm(transcript)
+    console.log(listening,transcript,"search")
+  }, [listening,transcript])
   const searchedProduct = menuLIst.filter((item) => {
-    if (searchInput.value === "") return item;
+    if (searchTerm === "") return item;
 
-    if (item.foodname.toLowerCase().includes(searchInput.toLowerCase()))
+    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
       return item;
   });
   const productPerPage = 8;
@@ -111,7 +117,7 @@ const RestaurantUI = () => {
                     <input
                       type='text'
                       placeholder="I'm looking for....."
-                      value={searchInput}
+                      value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <span>
@@ -127,6 +133,7 @@ const RestaurantUI = () => {
               </Row>
 
               <div className='row d-flex justify-content-between '>
+                                <p>{transcript}</p>
                 {displayPage.map((item) => {
                   return <Menu key={item.id} menu={item} />;
                 })}
