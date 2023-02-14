@@ -8,6 +8,7 @@ import {Col,Row} from 'react-bootstrap'
 import Sentiment from "sentiment";
 import { useCookies } from "react-cookie";
 import SentimentComparison from "./SentimentComparison";
+import HighDemandFoods from "../Restaurants/HighDemandFood/HighDemandFoods";
 const SentimentAnalysis = () => {
   const sentiment = new Sentiment();
   const [cookies, setCookie] = useCookies(null);
@@ -100,7 +101,7 @@ const SentimentAnalysis = () => {
       >
         <p style={{ fontWeight: 600, fontSize: 18 }}> {sentimentType}</p>
       </div>
-      <Row><Col> <SentimentComparison/></Col><Col></Col></Row>
+      <Row><Col> <SentimentComparison/></Col><Col><HighDemandFoods/></Col></Row>
      
     </div>
   );

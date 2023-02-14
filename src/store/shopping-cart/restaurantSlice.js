@@ -42,6 +42,7 @@ export const getLocationRestaurant = createAsyncThunk(
     return response.data;
   }
 );
+
 const restaurantSlice = createSlice({
   name: "restaurants",
   initialState: {

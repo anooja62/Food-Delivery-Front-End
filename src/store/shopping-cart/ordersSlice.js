@@ -47,12 +47,20 @@ export const makeDeliverd = createAsyncThunk(
     return response.data;
   }
 );
+export const mostPopularFood = createAsyncThunk(
+  `order/most-popular-foods`,
+  async (id) => {
+    const response = await axios.get(`order/most-popular-foods/${id}`);
+    return response.data;
+  }
+);
 const initialState = {
   status: "",
   orderItems: [],
   restaurantOrders: [],
   deliveryOrder: [],
-  deliveredOrders:[]
+  deliveredOrders:[],
+  mostPopularFoods:[],
 };
 const orderSlice = createSlice({
   name: "order",
@@ -126,6 +134,16 @@ const orderSlice = createSlice({
       state.status = "success";
     },
     [makeDeliverd.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [mostPopularFood.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [mostPopularFood.fulfilled]: (state, { payload }) => {
+      state.mostPopularFoods = payload;
+      state.status = "success";
+    },
+    [mostPopularFood.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

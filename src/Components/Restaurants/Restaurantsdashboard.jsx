@@ -253,6 +253,7 @@ const Restaurantsdashboard = () => {
 
         <TabPanel>
           <div className="panel-content">
+            
             <div className="row mb-3">
                 <SentimentAnalysis/>
            

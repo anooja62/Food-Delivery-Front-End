@@ -41,18 +41,18 @@ const SentimentComparison = () => {
 
   const chartData = {
     title: {
-      text: "Sentiment Comparison Chart"
+      text: "Review Score Comparison Chart"
     },
     xAxis: {
       categories: ["Restaurant Score", "Average Score"]
     },
     yAxis: {
       title: {
-        text: "Sentiment Scores"
+        text: "Review Scores"
       }
     },
     series: [{
-      name: "Sentiment Scores",
+      name: "Review Scores",
       data: [restaurantData, averageData]
     }]
   };

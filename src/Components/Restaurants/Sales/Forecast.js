@@ -1,71 +1,108 @@
 import React, { useState, useEffect } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import axios from '../../../axios';
 
 const Forecast = () => {
-    const [salesData, setSalesData] = useState([]);
-    const [forecast, setForecast] = useState(null);
+  const [salesData, setSalesData] = useState([]);
+  const [forecast, setForecast] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("pay/total-amount-per-month");
-                setSalesData(response.data.payments);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("pay/total-amount-per-month");
+        setSalesData(response.data.payments);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
-    const calculateForecast = (numMonths) => {
-        // Calculate the average monthly growth rate
-        const averageGrowthRate = (salesData[salesData.length - 1].totalAmount - salesData[0].totalAmount) / salesData.length;
-
-        // Use the average growth rate to calculate the forecast for the next n months
-        let nextMonthForecast = salesData[salesData.length - 1].totalAmount;
-        let forecastData = [];
-        for (let i = 1; i <= numMonths; i++) {
-            nextMonthForecast += averageGrowthRate;
-            forecastData.push({ month: `Forecast ${i}`, totalAmount: nextMonthForecast });
+ 
+  useEffect(() => {
+    
+    const chartOptions = {
+      title: {
+        text: 'Sales Forecast'
+      },
+      xAxis: {
+        categories: salesData.map(sale => sale.month).concat(forecast ? forecast.map(fc => fc.month) : [])
+      },
+      yAxis: {
+        title: {
+          text: 'Sales'
         }
-
-        setForecast(forecastData);
+      },
+      series: [{
+        name: 'Actual Sales',
+        data: salesData.map(sale => sale.totalAmount)
+      }, {
+        name: 'Forecasted Sales',
+        data: forecast ? forecast.map(fc => fc.totalAmount) : []
+      }]
     };
 
-    return (
-        <div>
-            <table className='table table-bordered'>
-                <thead>
-                    <tr>
-                        <th>Month</th>
-                        <th>Sales</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {salesData.map(sale => (
-                        <tr key={sale.month}>
-                            <td>{sale.month}</td>
-                            <td>{sale.totalAmount}</td>
-                        </tr>
-                    ))}
-                    {forecast && forecast.map(fc => (
-                        <tr key={fc.month}>
-                            <td>{fc.month}</td>
-                            <td>{fc.totalAmount}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <button onClick={() => calculateForecast(3)}  style={{
-                backgroundColor: 'blue',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: '5px',
-                border: 'none',
-                cursor: 'pointer',
-            }}>Calculate Forecast</button>
-        </div>
-    );
-};
+    
+    Highcharts.chart("chart", chartOptions);
+  }, [salesData, forecast]);
 
-export default Forecast;
+  const calculateForecast = (numMonths) => {
+    const salesDataLength = salesData.length;
+
+    
+    if (salesDataLength >= 2) {
+      
+      const averageGrowthRate = (salesData[salesDataLength - 1].totalAmount - salesData[0].totalAmount) / (salesDataLength - 1);
+
+     
+      let nextMonthForecast = salesData[salesDataLength - 1].totalAmount;
+      let forecastData = [];
+      for (let i = 1; i <= numMonths; i++) {
+        nextMonthForecast += averageGrowthRate;
+        forecastData.push({ month: `Forecast ${i}`, totalAmount: nextMonthForecast });
+      }
+
+      setForecast(forecastData);
+    } else {
+      alert("Not enough data to calculate forecast");
+    }
+  };
+
+  return (
+    <div>
+      <div id="chart" style={{ height: "300px" }}></div>
+      <table className='table table-bordered'>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          {salesData.map(sale => (
+            <tr key={sale.month}>
+              <td>{sale.month}</td>
+              <td>{sale.totalAmount}</td>
+            </tr>
+          ))}
+          {forecast && forecast.map(fc => (
+            <tr key={fc.month}>
+              <td>{fc.month}</td>
+              <td>{fc.totalAmount}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={() => calculateForecast(3)} style={{
+        backgroundColor: 'blue',
+        color: 'white',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+      }}>Calculate Forecast</button>
+    </div>
+  );
+    }
+    export default Forecast;
