@@ -60,16 +60,17 @@ const RestaurantUI = () => {
   const searchInput = voiceSearch ? transcript : searchTerm;
   const searchedProduct = menuList.filter((item) => {
     if (searchInput === "") return true; // return true for all items if searchInput is empty
-  
+
     return item.foodname.toLowerCase().includes(searchInput.toLowerCase());
   });
-  
 
   const productPerPage = 8;
   const visitedPage = pageNumber * productPerPage;
   const displayPage = searchedProduct.slice(
     visitedPage,
-    visitedPage + productPerPage > searchedProduct.length ? searchedProduct.length : visitedPage + productPerPage
+    visitedPage + productPerPage > searchedProduct.length
+      ? searchedProduct.length
+      : visitedPage + productPerPage
   );
 
   const pageCount = Math.ceil(menuList.length / productPerPage);
@@ -143,15 +144,13 @@ const RestaurantUI = () => {
               </Row>
 
               <div className='row d-flex justify-content-between '>
-              {displayPage.map((item) => {
-  return <Menu key={item.id} menu={item} />;
-})}
-
+                {displayPage.map((item) => {
+                  return <Menu key={item.id} menu={item} />;
+                })}
               </div>
               <ReactPaginate
                 pageCount={pageCount}
                 onPageChange={changePage}
-
                 previousLabel={"Prev"}
                 nextLabel={"Next"}
                 containerClassName='paginationBttns'

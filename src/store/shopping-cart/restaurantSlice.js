@@ -42,7 +42,13 @@ export const getLocationRestaurant = createAsyncThunk(
     return response.data;
   }
 );
-
+export const getRestaurantRating = createAsyncThunk(
+  `rest/getRestaurantRating`,
+  async (id) => {
+    const response = await axios.get(`/rest/restaurants-rating/${id}`);
+    return response.data;
+  }
+);
 const restaurantSlice = createSlice({
   name: "restaurants",
   initialState: {
@@ -51,6 +57,7 @@ const restaurantSlice = createSlice({
     parsedRestaurant: [],
     status: null,
     singleRestaurent: {},
+    restaurantRating:{},
   },
   extraReducers: {
     [getRestaurants.pending]: (state, action) => {
@@ -111,6 +118,16 @@ const restaurantSlice = createSlice({
       state.status = "success";
     },
     [getLocationRestaurant.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getRestaurantRating.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getRestaurantRating.fulfilled]: (state, { payload }) => {
+      state.restaurantRating = payload;
+      state.status = "success";
+    },
+    [getRestaurantRating.rejected]: (state, action) => {
       state.status = "failed";
     },
   },
