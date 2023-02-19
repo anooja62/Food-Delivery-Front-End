@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useRef, useEffect } from "react";
 import Helmet from "../Components/Helmet/Helmet";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,6 +9,7 @@ import ProfileCard from "../Components/Profile/ProfileCard";
 import axios from "../axios";
 import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import Address from "../Components/UI/Address/Address";
 import {
   getShippings,
@@ -34,6 +37,32 @@ const initialValues = {
   address: "",
 };
 const Profile = () => {
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [location, setLocation] = useState([]);
+
+  const fetchSuggestions = async (query) => {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${query}&format=json`
+    );
+    setSuggestions(response.data.slice(0, 4));
+  };
+  useEffect(() => {
+    if (query) {
+      fetchSuggestions(query);
+    } else {
+      setSuggestions([]);
+    }
+  }, [query]);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+  const handleSuggestionSelection = (suggestion) => {
+    setQuery(suggestion.display_name);
+    setSuggestions([]);
+    setLocation([suggestion.lat, suggestion.lon]);
+  };
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(null);
   const userId = cookies.userId;
@@ -123,12 +152,12 @@ const Profile = () => {
   };
 
   return (
-    <Helmet title="Profile">
+    <Helmet title='Profile'>
       <CommonSection title={cookies.name} />
 
       <section>
         <Container>
-          <div className="emenu">
+          <div className='emenu'>
             <Tabs>
               <TabList>
                 <Tab>
@@ -154,11 +183,9 @@ const Profile = () => {
                   <Col xs={6}>
                     <ProfileCard />
                     <br></br>
-                    
                   </Col>
                   <Col></Col>
                 </Row>
-                
               </TabPanel>
 
               <TabPanel>
@@ -167,77 +194,77 @@ const Profile = () => {
                     <Col>
                       <Paper elevation={3}>
                         <form onSubmit={handleSubmit}>
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Name</label>
                             <input
-                              type="text"
-                              name="name"
-                              placeholder="Name   (Eg. John Doe)"
+                              type='text'
+                              name='name'
+                              placeholder='Name   (Eg. John Doe)'
                               ref={signupNameRef}
                               defaultValue={user}
                               disabled
                             />
                           </div>
 
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Phone Number</label>
                             <input
-                              type="tel"
-                              placeholder="Mobile Number"
-                              name="phone"
+                              type='tel'
+                              placeholder='Mobile Number'
+                              name='phone'
                               ref={signupPhoneRef}
                               defaultValue={phone}
                               required
                             />
                           </div>
 
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Email</label>
                             <input
-                              type="email"
-                              placeholder="Email"
-                              name="email"
+                              type='email'
+                              placeholder='Email'
+                              name='email'
                               ref={signupEmailRef}
                               defaultValue={email}
                               disabled
                             />
                           </div>
 
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Password</label>
                             <input
-                              type="password"
-                              placeholder="Password"
-                              name="password"
+                              type='password'
+                              placeholder='Password'
+                              name='password'
                               ref={signupPasswordRef}
                             />
                           </div>
 
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Confirm password</label>
                             <input
-                              type="password"
-                              placeholder="Confirm Password"
-                              name="cpassword"
+                              type='password'
+                              placeholder='Confirm Password'
+                              name='cpassword'
                               ref={signupConfirmPasswordRef}
                             />
                           </div>
 
                           <br></br>
-                          <div className="text-center">
-                            <button type="submit" className="addToCart__btn">
+                          <div className='text-center'>
+                            <button type='submit' className='addToCart__btn'>
                               UPDATE CHANGES
                               <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
+                                position='top-center'
+                                autoClose={1000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                              />
                             </button>
                           </div>
                           <br></br>
@@ -250,9 +277,9 @@ const Profile = () => {
               <TabPanel>
                 <Row>
                   <Col>
-                    <button className="address__btn" onClick={handleShow}>
+                    <button className='address__btn' onClick={handleShow}>
                       <span>
-                        <i class="ri-edit-box-line"></i> Add New Address
+                        <i class='ri-edit-box-line'></i> Add New Address
                       </span>
                     </button>
                     <Modal show={show} onHide={handleClose}>
@@ -260,27 +287,27 @@ const Profile = () => {
                         <Modal.Title>Enter Your Address</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        <Stack direction="row" spacing={1}>
+                        <Stack direction='row' spacing={1}>
                           <Chip
                             icon={<HomeIcon />}
-                            label="Home"
+                            label='Home'
                             onClick={() => handleChip("Home")}
                           />
                           <Chip
                             icon={<DomainIcon />}
-                            label="Work"
-                            variant="outlined"
+                            label='Work'
+                            variant='outlined'
                             onClick={() => handleChip("Work")}
                           />
                         </Stack>
                         <form onSubmit={handleClick}>
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Name</label>
-                            <div className="new__register">
+                            <div className='new__register'>
                               <input
-                                type="text"
-                                placeholder="(Eg. John Doe)"
-                                name="name"
+                                type='text'
+                                placeholder='(Eg. John Doe)'
+                                name='name'
                                 required
                                 ref={addressNameRef}
                                 value={values.name}
@@ -288,18 +315,18 @@ const Profile = () => {
                                 onChange={handleChange}
                               />
                             </div>
-                            <div className="error_container">
+                            <div className='error_container'>
                               {errors.name && touched.name && (
-                                <p className="form_error">{errors.name}</p>
+                                <p className='form_error'>{errors.name}</p>
                               )}
                             </div>
                           </div>
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Phone Number</label>
                             <input
-                              type="tel"
-                              placeholder="Mobile Number"
-                              name="phone"
+                              type='tel'
+                              placeholder='Mobile Number'
+                              name='phone'
                               required
                               ref={addressPhoneRef}
                               value={values.phone}
@@ -307,17 +334,17 @@ const Profile = () => {
                               onChange={handleChange}
                             />
                           </div>
-                          <div className="error_container">
+                          <div className='error_container'>
                             {errors.phone && touched.phone && (
-                              <p className="form_error">{errors.phone}</p>
+                              <p className='form_error'>{errors.phone}</p>
                             )}
                           </div>
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Pincode</label>
                             <input
-                              type="text"
-                              placeholder="Pincode"
-                              name="pincode"
+                              type='text'
+                              placeholder='Pincode'
+                              name='pincode'
                               required
                               ref={addressPincodeRef}
                               value={values.pincode}
@@ -325,30 +352,41 @@ const Profile = () => {
                               onChange={handleChange}
                             />
                           </div>
-                          <div className="error_container">
+                          <div className='error_container'>
                             {errors.pincode && touched.pincode && (
-                              <p className="form_error">{errors.pincode}</p>
+                              <p className='form_error'>{errors.pincode}</p>
                             )}
                           </div>
-                          <div className="new__register">
+                          <div className='new__register'>
                             <label>Address</label>
-                            <textarea
-                              placeholder="House name and address"
-                              name="address"
-                              required
-                              ref={addressAddressRef}
-                              value={values.address}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                            />
+
+                            <div>
+                              <input
+                                value={query}
+                                onChange={handleInputChange}
+                                type='text'
+                                placeholder='Search location....'
+                                ref={addressAddressRef}
+                              />
+                              {suggestions.length > 0 && (
+                                <ul>
+                                  {suggestions.map((suggestion, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() =>
+                                        handleSuggestionSelection(suggestion)
+                                      }
+                                    >
+                                      <FmdGoodIcon /> {suggestion.display_name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
                           </div>
-                          <div className="error_container">
-                            {errors.address && touched.address && (
-                              <p className="form_error">{errors.address}</p>
-                            )}
-                          </div>
-                          <div className="text-center">
-                            <button type="submit" className="addToCart__btn ">
+
+                          <div className='text-center'>
+                            <button type='submit' className='addToCart__btn '>
                               Save Address
                             </button>
                           </div>
@@ -357,20 +395,22 @@ const Profile = () => {
                     </Modal>
                   </Col>
 
-                  <Col className="mt-5">
+                  <Col className='mt-5'>
                     {data.length === 0 && (
                       <>
-                        <div className="addresscard">
+                        <div className='addresscard'>
                           <h6> No Address Found</h6>
                         </div>
                       </>
                     )}
                     {data.length !== 0 && (
                       <>
-                        <Stack direction="row" spacing={3}>
+                        <Stack direction='row' spacing={3}>
                           {data.map((u) => (
-                            <div className="addresscard">
+                            <div className="card-container">
+                            <div className='addresscard'>
                               <Address key={u.id} shipping={u} />
+                            </div>
                             </div>
                           ))}
                         </Stack>

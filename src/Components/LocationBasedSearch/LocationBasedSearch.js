@@ -12,9 +12,7 @@ const LocationBasedSearch = () => {
 
   const restaurantList = useSelector((state) => state.restaurant.location);
   const dispatch = useDispatch();
- // useEffect(() => {
-    //dispatch(getLocationRestaurant());
-  //}, []);
+
   const fetchSuggestions = async (address) => {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${address}&format=json`
