@@ -27,11 +27,7 @@ import Details from "./Details/Details";
 import AddReview from "./Review/AddReview";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SearchIcon from "@mui/icons-material/Search";
-
-
 const RestaurantUI = () => {
-  const { transcript, listening, resetTranscript } = useSpeechRecognition();
-
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const navigate = useNavigate();
@@ -40,7 +36,7 @@ const RestaurantUI = () => {
   }
   let { id } = useParams();
 
-  const menuLIst = useSelector((state) => state.menu.list);
+  const menuList = useSelector((state) => state.menu.list);
   const comboList = useSelector((state) => state.combo.list);
 
   const cartProducts = useSelector((state) => state.cart.cartItems);
@@ -53,28 +49,37 @@ const RestaurantUI = () => {
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
-  // const searchInput = transcript || searchTerm;
   const [pageNumber, setPageNumber] = useState(0);
-  useEffect(() => {
-    setSearchTerm(transcript)
-    console.log(listening,transcript,"search")
-  }, [listening,transcript])
-  const searchedProduct = menuLIst.filter((item) => {
-    if (searchTerm === "") return item;
-
-    if (item.foodname.toLowerCase().includes(searchTerm.toLowerCase()))
-      return item;
+  const [voiceSearch, setVoiceSearch] = useState(false);
+  const { transcript, listening, resetTranscript } = useSpeechRecognition({
+    onResult: (result) => {
+      setSearchTerm(result);
+    },
   });
+
+  const searchInput = voiceSearch ? transcript : searchTerm;
+  const searchedProduct = menuList.filter((item) => {
+    if (searchInput === "") return true; // return true for all items if searchInput is empty
+  
+    return item.foodname.toLowerCase().includes(searchInput.toLowerCase());
+  });
+  
+
   const productPerPage = 8;
   const visitedPage = pageNumber * productPerPage;
   const displayPage = searchedProduct.slice(
     visitedPage,
-    visitedPage + productPerPage
+    visitedPage + productPerPage > searchedProduct.length ? searchedProduct.length : visitedPage + productPerPage
   );
 
-  const pageCount = Math.ceil(menuLIst.length / productPerPage);
+  const pageCount = Math.ceil(menuList.length / productPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    setVoiceSearch(false);
   };
 
   return (
@@ -118,29 +123,35 @@ const RestaurantUI = () => {
                       type='text'
                       placeholder="I'm looking for....."
                       value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onChange={(e) => handleSearch(e.target.value)}
                     />
                     <span>
-                      <SearchIcon />
+                      <SearchIcon onClick={() => setVoiceSearch(false)} />
                     </span>
                   </div>
                 </Col>
                 <Col>
                   <KeyboardVoiceIcon
-                    onClick={SpeechRecognition.startListening}
+                    onClick={() => {
+                      setVoiceSearch(true);
+                      resetTranscript();
+                      SpeechRecognition.startListening();
+                    }}
+                    style={{ color: voiceSearch ? "red" : "inherit" }}
                   />
                 </Col>
               </Row>
 
               <div className='row d-flex justify-content-between '>
-                                <p>{transcript}</p>
-                {displayPage.map((item) => {
-                  return <Menu key={item.id} menu={item} />;
-                })}
+              {displayPage.map((item) => {
+  return <Menu key={item.id} menu={item} />;
+})}
+
               </div>
               <ReactPaginate
                 pageCount={pageCount}
                 onPageChange={changePage}
+
                 previousLabel={"Prev"}
                 nextLabel={"Next"}
                 containerClassName='paginationBttns'

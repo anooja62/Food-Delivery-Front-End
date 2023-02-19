@@ -19,7 +19,7 @@ const LocationBasedSearch = () => {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/search.php?key=pk.de89a66c75d2c7e2838b70033a082722&q=${address}&format=json`
     );
-    setSuggestions(response.data);
+    setSuggestions(response.data.slice(0, 4));
   };
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const LocationBasedSearch = () => {
 
   const handleInputChange = (e) => {
     setAddress(e.target.value);
+    
   };
 
   const handleSuggestionSelection = (suggestion) => {

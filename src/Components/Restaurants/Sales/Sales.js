@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "../../../axios";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 const Sales = () => {
   const [salesData, setSalesData] = useState([]);
@@ -23,7 +25,28 @@ const Sales = () => {
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
-
+  const filteredSalesData = salesData.filter(
+    (sale) => !selectedYear || Number(sale.year) === Number(selectedYear)
+  );
+  const chartOptions = {
+    title: {
+      text: `Sales Data for ${selectedYear || "All Years"}`,
+    },
+    xAxis: {
+      categories: filteredSalesData.map((sale) => sale.month),
+    },
+    yAxis: {
+      title: {
+        text: "Sales Amount",
+      },
+    },
+    series: [
+      {
+        name: "Sales Amount",
+        data: filteredSalesData.map((sale) => sale.totalAmount),
+      },
+    ],
+  };
   return (
     <div>
       <select
@@ -92,6 +115,7 @@ const Sales = () => {
             })}
         </tbody>
       </table>
+      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
     </div>
   );
 };

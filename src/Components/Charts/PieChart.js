@@ -18,7 +18,7 @@ const PieChart = () => {
 
   const chartOptions = {
     title: {
-      text: 'Top 4 Performing Restaurants'
+      text: 'Top 4 Performing Restaurants Based on Customer Reviews'
     },
     xAxis: {
       categories: restaurants.map(r => r.name)
