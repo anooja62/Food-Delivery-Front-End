@@ -59,7 +59,7 @@ const RestaurantUI = () => {
 
   const searchInput = voiceSearch ? transcript : searchTerm;
   const searchedProduct = menuList.filter((item) => {
-    if (searchInput === "") return true; // return true for all items if searchInput is empty
+    if (searchInput === "") return true; 
 
     return item.foodname.toLowerCase().includes(searchInput.toLowerCase());
   });

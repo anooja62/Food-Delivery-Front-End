@@ -38,6 +38,8 @@ const LocationBasedSearch = () => {
     setSuggestions([]);
     setLocation([suggestion.lat, suggestion.lon]);
   };
+  
+  
   const getRestaurants = async (e) => {
     e.preventDefault();
     dispatch(getLocationRestaurant(address.split(",")[0]));
