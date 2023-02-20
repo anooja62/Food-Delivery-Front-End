@@ -17,6 +17,7 @@ import axios from "../../axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ComboUI from "./Combo/ComboUI";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { Row, Col } from "react-bootstrap";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
@@ -50,6 +51,7 @@ import sentiment from "sentiment";
 
 
 import SentimentAnalysis from "../Sentiment/SentimentAnalysis";
+import ChecklistAutomation from "../Admin/ChecklistAutomation/ChecklistAutomation";
 const initialValues = {
   name: "",
   phone: "",
@@ -195,7 +197,11 @@ const Restaurantsdashboard = () => {
               <LocalGroceryStoreOutlinedIcon /> Orders
             </p>
           </Tab>
-
+          <Tab>
+            <p>
+              <FactCheckIcon /> Checklist
+            </p>
+          </Tab>
           <Tab>
             <p>
               <StarHalfOutlinedIcon /> Reviews
@@ -286,7 +292,14 @@ const Restaurantsdashboard = () => {
             <Orders />
           </div>
         </TabPanel>
-
+        <TabPanel>
+          <Col>
+            <div style={{ marginLeft: 150, marginRight: 200 }}>
+             
+              <ChecklistAutomation/>
+            </div>
+          </Col>
+        </TabPanel>
         <TabPanel>
           <div
             className="panel-content"

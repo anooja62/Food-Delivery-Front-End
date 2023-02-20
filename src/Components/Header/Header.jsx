@@ -101,6 +101,7 @@ const Header = () => {
         display: "Sign Up",
         path: "/register",
       },
+    
     ];
   } else {
     nav__links = [
@@ -117,6 +118,10 @@ const Header = () => {
       {
         display: "Add restaurant",
         path: "/restaurant",
+      },
+      {
+        display: "For You",
+        path: "/foryou",
       },
     ];
   }

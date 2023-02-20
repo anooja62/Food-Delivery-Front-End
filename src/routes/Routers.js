@@ -20,6 +20,7 @@ import ComboUI from "../Components/Restaurants/Combo/ComboUI";
 import RestaurantLogin from "../Pages/RestaurantLogin";
 import DeliveryboyLogin from "../Pages/DeliveryboyLogin";
 import PaymentSuccess from "../Pages/PaymentSuccess";
+import ForYou from "../Pages/ForYou";
 
 function Routers() {
   return (
@@ -47,6 +48,7 @@ function Routers() {
       <Route path="/res-login" element={<RestaurantLogin />} />
       <Route path="/delivery-login" element={<DeliveryboyLogin />} />
       <Route path="/success" element={<PaymentSuccess />} />
+      <Route path="/foryou" element={<ForYou />} />
     </Routes>
   );
 }

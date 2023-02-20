@@ -1,11 +1,14 @@
-import React, { useEffect, useState,useRef } from "react";
-import axios from '../axios';
+/** @format */
+
+import React, { useEffect, useState, useRef } from "react";
+import axios from "../axios";
 import Topbar from "../Components/Admin/Topbar/Topbar";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
 import Manage from "../Components/Admin/Manage/Manage";
 import { ToastContainer, toast } from "react-toastify";
-import PrintIcon from '@mui/icons-material/Print';
+import PrintIcon from "@mui/icons-material/Print";
 import "react-toastify/dist/ReactToastify.css";
 import User from "../Components/Admin/User/User";
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
@@ -19,48 +22,45 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
 import { getMessages } from "../store/shopping-cart/messageSlice";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import MarkEmailUnreadOutlinedIcon from '@mui/icons-material/MarkEmailUnreadOutlined';
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import Tab from "react-bootstrap/Tab";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDetails";
 import Paper from "@mui/material/Paper";
-import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import Reports from "../Components/Admin/Reports/Reports";
 import UserChart from "../Components/Charts/UserChart";
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import PieChart from "../Components/Charts/PieChart";
 import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
+import ChecklistAutomation from "../Components/Admin/ChecklistAutomation/ChecklistAutomation";
 
 const Admin = () => {
- 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
-  
-  const singleMessage = useSelector(
-    (state) => state.message.singleMessage
-  );
+
+  const singleMessage = useSelector((state) => state.message.singleMessage);
   const restaurantLIst = useSelector((state) => state.restaurant.list);
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     dispatch(getDeliveryboys());
     dispatch(getRestaurants());
-   
+
     dispatch(getUsers());
     dispatch(getMessages());
-   
-  },[])
+  }, []);
   const deliveryboyLIst = useSelector((state) => state.deliveryboy.list);
-  
+
   const userLIst = useSelector((state) => state.user.list);
   const messageList = useSelector((state) => state.message.list);
 
@@ -69,7 +69,6 @@ const Admin = () => {
   const isAdmin = cookies.isAdmin;
   const messageReplyRef = useRef();
   const clearCookies = () => {
-    
     removeCookie("name");
     removeCookie("email");
     removeCookie("phone");
@@ -77,161 +76,168 @@ const Admin = () => {
 
     navigate("/login");
   };
- const restaurantId = singleMessage._id
+  const restaurantId = singleMessage._id;
 
   const handleClick = async (e) => {
-    e.preventDefault();  
-      const message= {
-       reply:messageReplyRef.current.value,
-     
-       
-      };
-
-      try {
-        await axios.put(`/msg/reply/${restaurantId}`, message);
-        toast.success("Reply sent Successfully", {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    e.preventDefault();
+    const message = {
+      reply: messageReplyRef.current.value,
     };
 
-  
+    try {
+      await axios.put(`/msg/reply/${restaurantId}`, message);
+      toast.success("Reply sent Successfully", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div >   
+    <div>
       <Container fluid>
         <Topbar />
       </Container>
       <br></br>
       <Tab.Container
-        id="list-group-tabs-example"
-        defaultActiveKey="#"
-        className="tab"
+        id='list-group-tabs-example'
+        defaultActiveKey='#'
+        className='tab'
       >
         <Row>
           <Col sm={2}>
             <ListGroup>
-              <ListGroup.Item action href="#">
+              <ListGroup.Item action href='#'>
                 <DashboardOutlinedIcon /> Dashboard
               </ListGroup.Item>
-              <ListGroup.Item action href="#sales">
+              <ListGroup.Item action href='#sales'>
                 <CurrencyRupeeIcon /> Sales Analytics
               </ListGroup.Item>
-              <ListGroup.Item action href="#forecast">
+              <ListGroup.Item action href='#forecast'>
                 <TrendingUpIcon /> Sales Forecast
               </ListGroup.Item>
-              <ListGroup.Item action href="#users">
+              <ListGroup.Item action href='#users'>
                 <PeopleAltOutlinedIcon /> Users
               </ListGroup.Item>
-              <ListGroup.Item action href="#restaurant">
+              <ListGroup.Item action href='#restaurant'>
                 <StorefrontOutlinedIcon /> Restaurants
               </ListGroup.Item>
-             
-              <ListGroup.Item action href="#deliveryboy">
+              <ListGroup.Item action href='#hygiene'>
+                <FactCheckIcon /> Checklist
+              </ListGroup.Item>
+
+              <ListGroup.Item action href='#deliveryboy'>
                 <DeliveryDiningOutlinedIcon /> Delivery
               </ListGroup.Item>
-             
-              <ListGroup.Item action href="#messages">
+
+              <ListGroup.Item action href='#messages'>
                 <MarkEmailUnreadOutlinedIcon /> Messages
               </ListGroup.Item>
-              <ListGroup.Item action href="#reports">
+              <ListGroup.Item action href='#reports'>
                 <PrintIcon /> Reports
               </ListGroup.Item>
-              <ListGroup.Item action onClick= {handleShow}>
+              <ListGroup.Item action onClick={handleShow}>
                 <LockOutlinedIcon /> Logout
               </ListGroup.Item>
             </ListGroup>
-           
+
             <Modal show={show} onHide={handleClose}>
-            <Modal.Header >
-          <Modal.Title><br></br></Modal.Title>
-        </Modal.Header>
-        <Modal.Body><h5>Do you really want to logout ? </h5></Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={clearCookies}>
-            Logout Now
-          </Button>
-        </Modal.Footer>
-      </Modal>
+              <Modal.Header>
+                <Modal.Title>
+                  <br></br>
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <h5>Do you really want to logout ? </h5>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant='secondary' onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button variant='primary' onClick={clearCookies}>
+                  Logout Now
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </Col>
 
           <Col sm={9}>
             <Tab.Content>
-              <Tab.Pane eventKey="#">
+              <Tab.Pane eventKey='#'>
                 <div>
-                
-                  <div className="row mb-3">
-                    <div className="col-xl-3 col-sm-6 py-2">
-                      <div className="card bg-success text-white h-100">
-                        <div className="card-body bg-success">
-                          <div className="rotate">
-                            <i class="ri-user-3-fill"></i>
+                  <div className='row mb-3'>
+                    <div className='col-xl-3 col-sm-6 py-2'>
+                      <div className='card bg-success text-white h-100'>
+                        <div className='card-body bg-success'>
+                          <div className='rotate'>
+                            <i class='ri-user-3-fill'></i>
                           </div>
-                          <h6 className="text-uppercase">Users</h6>
-                          <h1 className="display-4" style={{ color: "#fff" }}>
+                          <h6 className='text-uppercase'>Users</h6>
+                          <h1 className='display-4' style={{ color: "#fff" }}>
                             {userLIst.length}
                           </h1>
                         </div>
                       </div>
                     </div>
-              
 
-                    <div className="col-xl-3 col-sm-6 py-2">
-                      <div className="card text-white bg-danger h-100">
-                        <div className="card-body bg-danger">
-                          <div className="rotate">
-                            <i class="ri-store-2-fill"></i>
+                    <div className='col-xl-3 col-sm-6 py-2'>
+                      <div className='card text-white bg-danger h-100'>
+                        <div className='card-body bg-danger'>
+                          <div className='rotate'>
+                            <i class='ri-store-2-fill'></i>
                           </div>
-                          <h6 className="text-uppercase">Restaurants</h6>
-                          <h1 className="display-4" style={{ color: "#fff" }}>
+                          <h6 className='text-uppercase'>Restaurants</h6>
+                          <h1 className='display-4' style={{ color: "#fff" }}>
                             {restaurantLIst.length}
                           </h1>
                         </div>
                       </div>
                     </div>
-                    <div className="col-xl-3 col-sm-6 py-2">
-                      <div className="card text-white bg-warning h-100">
-                        <div className="card-body">
-                          <div className="rotate">
-                            <i class="ri-e-bike-2-fill"></i>
+                    <div className='col-xl-3 col-sm-6 py-2'>
+                      <div className='card text-white bg-warning h-100'>
+                        <div className='card-body'>
+                          <div className='rotate'>
+                            <i class='ri-e-bike-2-fill'></i>
                           </div>
-                          <h6 className="text-uppercase">Delivery Staff</h6>
-                          <h1 className="display-4" style={{ color: "#fff" }}>
+                          <h6 className='text-uppercase'>Delivery Staff</h6>
+                          <h1 className='display-4' style={{ color: "#fff" }}>
                             {deliveryboyLIst.length}
                           </h1>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <Row><Col> <UserChart/>
-                  </Col>
-                  <Col><PieChart/></Col></Row>
-                 
+                  <Row>
+                    <Col>
+                      {" "}
+                      <UserChart />
+                    </Col>
+                    <Col>
+                      <PieChart />
+                    </Col>
+                  </Row>
                 </div>
-              </Tab.Pane >
-              <Tab.Pane eventKey="#sales" >
-<div>
-  <Sales/>
-</div>
               </Tab.Pane>
-              <Tab.Pane eventKey="#forecast" >
-<div>
-  <Forecast/>
-</div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#users">
+              <Tab.Pane eventKey='#sales'>
                 <div>
-                  <table className="table table-bordered">
+                  <Sales />
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='#forecast'>
+                <div>
+                  <Forecast />
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='#users'>
+                <div>
+                  <table className='table table-bordered'>
                     <thead>
                       <tr>
                         <th> Name</th>
@@ -248,21 +254,18 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="#restaurant">
+              <Tab.Pane eventKey='#restaurant'>
                 <div>
-                  <table className="table table-bordered">
+                  <table className='table table-bordered'>
                     <thead>
                       <tr>
                         <th>Restaurant Name</th>
                         <th>Contact Info.</th>
-                        
+
                         <th>Address</th>
                         <th>FSSAI License</th>
 
                         <th>Send Mail</th>
-                        
-
-                       
                       </tr>
                     </thead>
 
@@ -272,10 +275,14 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
-            
-              <Tab.Pane eventKey="#deliveryboy">
+              <Tab.Pane eventKey='#hygiene'>
                 <div>
-                  <table className="table table-bordered">
+               <ChecklistAutomation/>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='#deliveryboy'>
+                <div>
+                  <table className='table table-bordered'>
                     <thead>
                       <tr>
                         <th> Name</th>
@@ -284,7 +291,6 @@ const Admin = () => {
                         <th>City</th>
                         <th>Driving License</th>
                         <th>Send Mail</th>
-                       
                       </tr>
                     </thead>
                     {deliveryboyLIst.map((u) => (
@@ -293,66 +299,85 @@ const Admin = () => {
                   </table>
                 </div>
               </Tab.Pane>
-             
-              <Tab.Pane eventKey="#messages">
-               <div>
-               <Row><Col>
-                {messageList.map((u) => (
-              <MessageDetails key={u._id} message={u} />
-            ))}
-          </Col><Col>
-      <Paper elevation={3}>
-        <form className="mt-3" onSubmit={handleClick}>
-          <div className="new__register">
-            <label>Restaurant Name</label>
-            <input type="text" name="foodname" placeholder="" defaultValue={singleMessage.restaurantname} disabled></input>
-           
-          </div>
-          <div className="new__register">
-          <label>Query</label>
-                        <input type='text' defaultValue={singleMessage.requestFor} disabled></input>
-                      </div>
-          <div className="new__register">
-            <label>Message</label>
-           
-          </div>
-          <div className="new__register">
-          <textarea rows={3} placeholder="Your Message" defaultValue={singleMessage.msg} disabled ></textarea>
-          </div>
-          <div className="new__register">
-            <label>Reply</label>
-           
-          </div>
-          <div className="new__register">
-          <textarea rows={3} placeholder="Reply" required ref={messageReplyRef}></textarea>
-          </div>
 
-          <div className="mt-4 text-center">
-            <button className="addToCart__btn" type="submit">
-             <ReplyOutlinedIcon/> Send Reply 
-            </button>
-            <ToastContainer
-                        position="top-center"
-                        autoClose={1000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                      />
-          </div>
-          <br></br>
-        </form>
-      </Paper>
-      </Col>
-      </Row>
+              <Tab.Pane eventKey='#messages'>
+                <div>
+                  <Row>
+                    <Col>
+                      {messageList.map((u) => (
+                        <MessageDetails key={u._id} message={u} />
+                      ))}
+                    </Col>
+                    <Col>
+                      <Paper elevation={3}>
+                        <form className='mt-3' onSubmit={handleClick}>
+                          <div className='new__register'>
+                            <label>Restaurant Name</label>
+                            <input
+                              type='text'
+                              name='foodname'
+                              placeholder=''
+                              defaultValue={singleMessage.restaurantname}
+                              disabled
+                            ></input>
+                          </div>
+                          <div className='new__register'>
+                            <label>Query</label>
+                            <input
+                              type='text'
+                              defaultValue={singleMessage.requestFor}
+                              disabled
+                            ></input>
+                          </div>
+                          <div className='new__register'>
+                            <label>Message</label>
+                          </div>
+                          <div className='new__register'>
+                            <textarea
+                              rows={3}
+                              placeholder='Your Message'
+                              defaultValue={singleMessage.msg}
+                              disabled
+                            ></textarea>
+                          </div>
+                          <div className='new__register'>
+                            <label>Reply</label>
+                          </div>
+                          <div className='new__register'>
+                            <textarea
+                              rows={3}
+                              placeholder='Reply'
+                              required
+                              ref={messageReplyRef}
+                            ></textarea>
+                          </div>
+
+                          <div className='mt-4 text-center'>
+                            <button className='addToCart__btn' type='submit'>
+                              <ReplyOutlinedIcon /> Send Reply
+                            </button>
+                            <ToastContainer
+                              position='top-center'
+                              autoClose={1000}
+                              hideProgressBar={false}
+                              newestOnTop={false}
+                              closeOnClick
+                              rtl={false}
+                              pauseOnFocusLoss
+                              draggable
+                              pauseOnHover
+                            />
+                          </div>
+                          <br></br>
+                        </form>
+                      </Paper>
+                    </Col>
+                  </Row>
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="#reports">
+              <Tab.Pane eventKey='#reports'>
                 <div>
-                 <Reports/>
+                  <Reports />
                 </div>
               </Tab.Pane>
             </Tab.Content>

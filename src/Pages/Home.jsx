@@ -29,6 +29,7 @@ import { signupSchema } from "../schemas";
 import ChatBot from "../Components/ChatBot/ChatBot.jsx";
 import UserLocation from "../Components/UserLocation/UserLocation.js";
 import RestaurantsMap from "../Components/Location/Location.js";
+import Recommendations from "../Components/Recommendations/Recommendations.js";
 
 const initialValues = {
   name: "",
@@ -162,7 +163,7 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-
+<Recommendations/>
       <section className="pt-0">
         <Category />
       </section>
