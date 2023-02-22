@@ -269,11 +269,7 @@ const Restaurantsdashboard = () => {
             
             <div className="row mb-3">
                 <SentimentAnalysis/>
-           
-
-            </div>
-          
-          
+            </div>          
           </div>
         </TabPanel>
         <TabPanel>
@@ -301,14 +297,12 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Payments</h2>
-           <Payments/>
+            <h2>Payments</h2>       
           </div>
         </TabPanel>
         <TabPanel>
           <Col>
-            <div style={{ marginLeft: 150, marginRight: 200 }}>
-             
+            <div style={{ marginLeft: 150, marginRight: 200 }}>            
               <ChecklistAutomation/>
             </div>
           </Col>

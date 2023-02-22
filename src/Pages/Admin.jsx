@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "../axios";
 import Topbar from "../Components/Admin/Topbar/Topbar";
-import FactCheckIcon from '@mui/icons-material/FactCheck';
+import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import Deliveryboy from "../Components/Admin/Deliveryboy/Deliveryboy";
 import Manage from "../Components/Admin/Manage/Manage";
@@ -13,7 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 import User from "../Components/Admin/User/User";
 import { getRestaurants } from "../store/shopping-cart/restaurantSlice";
 import { getDeliveryboys } from "../store/shopping-cart/deliverySlice";
-import { getFoodreviews } from "../store/shopping-cart/reviewSlice";
 import { getUsers } from "../store/shopping-cart/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
@@ -40,9 +39,13 @@ import PieChart from "../Components/Charts/PieChart";
 import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
 import ChecklistAutomation from "../Components/Admin/ChecklistAutomation/ChecklistAutomation";
-import NewReports from "../Components/Admin/NewReports/NewReports";
 
 const Admin = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -100,7 +103,24 @@ const Admin = () => {
       console.log(err);
     }
   };
+  const numPages = Math.ceil(userLIst.length / rowsPerPage);
 
+  const handlePageClick = (pageNum) => {
+    setCurrentPage(pageNum);
+  };
+
+  const paginationButtons = [];
+  for (let i = 1; i <= numPages; i++) {
+    paginationButtons.push(
+      <Button
+        key={i}
+        variant={i === currentPage ? "primary" : "outline-primary"}
+        onClick={() => handlePageClick(i)}
+      >
+        {i}
+      </Button>
+    );
+  }
   return (
     <div>
       <Container fluid>
@@ -241,6 +261,7 @@ const Admin = () => {
                   <table className='table table-bordered'>
                     <thead>
                       <tr>
+                        <th>SL.No</th>
                         <th> Name</th>
                         <th>Phone Number</th>
                         <th>Email</th>
@@ -249,10 +270,13 @@ const Admin = () => {
                       </tr>
                     </thead>
 
-                    {userLIst.map((u) => (
-                      <User key={u.id} user={u} />
+                    {userLIst.slice(startIndex, endIndex).map((u, index) => (
+                      <User key={u.id} slNo={startIndex + index + 1} user={u} />
                     ))}
                   </table>
+                  <div className='d-flex justify-content-center mt-4'>
+                    {paginationButtons}
+                  </div>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#restaurant'>
@@ -260,6 +284,7 @@ const Admin = () => {
                   <table className='table table-bordered'>
                     <thead>
                       <tr>
+                        <th>SL.NO</th>
                         <th>Restaurant Name</th>
                         <th>Contact Info.</th>
 
@@ -270,15 +295,15 @@ const Admin = () => {
                       </tr>
                     </thead>
 
-                    {restaurantLIst.map((u) => (
-                      <Manage key={u.id} restaurant={u} />
+                    {restaurantLIst.map((u, index) => (
+                      <Manage key={u.id} slNo={index + 1} restaurant={u} />
                     ))}
                   </table>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#hygiene'>
                 <div>
-               <ChecklistAutomation/>
+                  <ChecklistAutomation />
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#deliveryboy'>
@@ -286,6 +311,7 @@ const Admin = () => {
                   <table className='table table-bordered'>
                     <thead>
                       <tr>
+                        <th>SL.No</th>
                         <th> Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
@@ -294,8 +320,12 @@ const Admin = () => {
                         <th>Send Mail</th>
                       </tr>
                     </thead>
-                    {deliveryboyLIst.map((u) => (
-                      <Deliveryboy key={u.id} deliveryboy={u} />
+                    {deliveryboyLIst.map((u, index) => (
+                      <Deliveryboy
+                        key={u.id}
+                        slNo={index + 1}
+                        deliveryboy={u}
+                      />
                     ))}
                   </table>
                 </div>
@@ -378,8 +408,7 @@ const Admin = () => {
               </Tab.Pane>
               <Tab.Pane eventKey='#reports'>
                 <div>
-                
-                <Reports/>
+                  <Reports />
                 </div>
               </Tab.Pane>
             </Tab.Content>

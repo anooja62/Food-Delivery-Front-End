@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { rejectDeliveryboy } from "../../../store/shopping-cart/deliverySlice";
 import axios from "../../../axios";
-const Deliveryboy = ({ deliveryboy }) => {
+const Deliveryboy = ({ deliveryboy,slNo }) => {
   const dispatch = useDispatch();
   const handleReject = async (id) => {
     dispatch(rejectDeliveryboy(id));
@@ -52,6 +52,9 @@ const Deliveryboy = ({ deliveryboy }) => {
       <>
       <tbody>
       <tr>
+        <td className="text-center" style={{ paddingTop: "2%" }}>
+      {slNo}
+    </td>
         <td className="text-center" style={{ paddingTop: "2%" }}>
           {deliveryboy.name}
         </td>

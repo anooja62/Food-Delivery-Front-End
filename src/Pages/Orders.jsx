@@ -36,7 +36,7 @@ const Orders = () => {
           <Row>
             <Col lg="12">
               {currentItems.map((order) => {
-                console.log(order);
+                
                 return (
                   <table className="table table-bordered">
                     <thead>

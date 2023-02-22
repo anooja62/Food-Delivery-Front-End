@@ -54,6 +54,7 @@ export const mostPopularFood = createAsyncThunk(
     return response.data;
   }
 );
+
 const initialState = {
   status: "",
   orderItems: [],

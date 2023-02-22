@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { blockUser } from "../../../store/shopping-cart/userSlice";
 
-const User = ({ user }) => {
+const User = ({ user,slNo }) => {
   const dispatch = useDispatch();
   const handleReject = async (id) => {
     dispatch(blockUser(id));
@@ -17,6 +17,9 @@ const User = ({ user }) => {
     <>
       <tbody>
         <tr>
+           <td className="text-center" >
+      {slNo}
+    </td>
           <td className='text-center'>{user.name}</td>
           <td className='text-center'>{user.email}</td>
           <td className='text-center'>{user.phone}</td>

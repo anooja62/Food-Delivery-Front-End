@@ -1,47 +1,58 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
+import Table from "react-bootstrap/Table";
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import {
   restaurantOrder,
   orderReady,
 } from "../../../store/shopping-cart/ordersSlice";
-import { useDispatch, useSelector } from "react-redux";
+
 const Orders = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const [cookies, setCookie] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const restaurantOrders = useSelector((state) => state.order.restaurantOrders);
-  
   const dispatch = useDispatch();
+
   const handleFoodReady = (id) => {
     dispatch(orderReady({ id, restaurantId }));
-    
   };
 
   return (
-    <>
-      {restaurantOrders.map((orders) => {
-       
-        let orderId = orders[orders.length - 1];
-        
-
-        return (
-          <Card style={{ width: "18rem" }}>
-            <Card.Header>Order id : {orderId}</Card.Header>
-            <ListGroup variant="flush">
-              {orders.map((order) => {
-                console.log(order);
-                return (
-                  <>
-                    <ListGroup.Item>
-                      {order.foodname} {order.quantity}
-                    </ListGroup.Item>
-                  </>
-                );
-              })}
-              <ListGroup.Item>
+    <table className='table table-bordered '>
+      <thead>
+        <tr>
+        <th>Sl No.</th>
+          <th>Food Items</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {restaurantOrders.map((orders,index) => {
+           const slNo = index + 1;
+          const orderId = orders[orders.length - 1];
+          const foodItems = orders.map((order) => (
+            <tr key={order.id}>
+              <td>{order.foodname}</td>
+              <td>{order.quantity}</td>
+            </tr>
+          ));
+          return (
+            <tr key={slNo}>
+            <td>{slNo}</td>
+            <td>
+                <Table striped bordered>
+                  <thead>
+                    <tr>
+                      <th>Food Name</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>{foodItems}</tbody>
+                </Table>
+              </td>
+              <td>
                 <Button
                   variant="contained"
                   onClick={() => handleFoodReady(orderId)}
@@ -49,12 +60,12 @@ const Orders = () => {
                   <ThumbUpAltIcon />
                   &nbsp; FOOD READY
                 </Button>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        );
-      })}
-    </>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 

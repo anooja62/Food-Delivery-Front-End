@@ -1,10 +1,11 @@
 import React from 'react'
-import Recommendations from '../Components/Recommendations/Recommendations'
+import OnlineDeliveryExperienceForm from '../Components/OnlineDeliveryExperienceForm/OnlineDeliveryExperienceForm'
+
 
 const ForYou = () => {
   return (
     <div>
-        <Recommendations/>
+    <OnlineDeliveryExperienceForm/>
     </div>
   )
 }

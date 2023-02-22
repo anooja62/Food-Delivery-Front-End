@@ -163,7 +163,7 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-<Recommendations/>
+
       <section className="pt-0">
         <Category />
       </section>

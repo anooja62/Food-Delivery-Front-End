@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { CSVLink } from "react-csv";
 import { useSelector, useDispatch } from "react-redux";
-import { array } from "yup";
 import { deliveredOrder } from "../../../store/shopping-cart/ordersSlice";
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import Button from '@mui/material/Button';
@@ -42,14 +41,13 @@ const RestaurantExcel = () => {
           temp.push(
             order[lastIndex]?.orderId,
             [
-              order[lastIndex]?.address.name,
-              order[lastIndex]?.address.address,
-              order[lastIndex]?.address.phone,
-              order[lastIndex]?.address.pincode,
+              order[lastIndex]?.address?.name,
+              order[lastIndex]?.address?.address,
+              order[lastIndex]?.address?.phone,
+              order[lastIndex]?.address?.pincode,
             ],
             [
               order[lastIndex]?.deliveryBoyAddress?.name,
-
               order[lastIndex]?.deliveryBoyAddress?.email,
               order[lastIndex]?.deliveryBoyAddress?.phone,
             ],
@@ -107,15 +105,15 @@ const RestaurantExcel = () => {
 
                                 {index === 0 && (
                                   <td>
-                                    {order[lastIndex]?.address.name} <br />
-                                    {order[lastIndex]?.address.address}
+                                    {order[lastIndex]?.address?.name} <br />
+                                    {order[lastIndex]?.address?.address}
                                     <br />
-                                    {order[lastIndex]?.address.pincode}
+                                    {order[lastIndex]?.address?.pincode}
                                     <br />
-                                    {order[lastIndex]?.address.phone}
+                                    {order[lastIndex]?.address?.phone}
                                   </td>
                                 )}
-                                                               {index === 0 && (
+                                 {index === 0 && (
                                   <td>
                                     {order[lastIndex]?.deliveryBoyAddress?.name}
                                     <br />
