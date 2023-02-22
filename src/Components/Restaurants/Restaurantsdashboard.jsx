@@ -47,11 +47,12 @@ import PrintIcon from "@mui/icons-material/Print";
 import DescriptionIcon from "@mui/icons-material/Description";
 import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
 import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
-import sentiment from "sentiment";
 
 
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SentimentAnalysis from "../Sentiment/SentimentAnalysis";
 import ChecklistAutomation from "../Admin/ChecklistAutomation/ChecklistAutomation";
+import Payments from "./Payments/Payments";
 const initialValues = {
   name: "",
   phone: "",
@@ -193,8 +194,14 @@ const Restaurantsdashboard = () => {
             </p>
           </Tab>
           <Tab>
+          
             <p>
               <LocalGroceryStoreOutlinedIcon /> Orders
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+              <AccountBalanceWalletIcon /> Payments
             </p>
           </Tab>
           <Tab>
@@ -290,6 +297,12 @@ const Restaurantsdashboard = () => {
           <div className="panel-content">
             <h2>Orders</h2>
             <Orders />
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="panel-content">
+            <h2>Payments</h2>
+           <Payments/>
           </div>
         </TabPanel>
         <TabPanel>

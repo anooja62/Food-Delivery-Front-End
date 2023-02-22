@@ -42,10 +42,10 @@ const Reports = () => {
           temp.push(
             order[lastIndex]?.orderId,
             [
-              order[lastIndex]?.address.name,
-              order[lastIndex]?.address.address,
-              order[lastIndex]?.address.phone,
-              order[lastIndex]?.address.pincode,
+              order[lastIndex]?.address?.name,
+              order[lastIndex]?.address?.address,
+              order[lastIndex]?.address?.phone,
+              order[lastIndex]?.address?.pincode,
             ],
             [
               order[lastIndex]?.deliveryBoyAddress?.name,
@@ -109,12 +109,12 @@ const Reports = () => {
 
                                 {index === 0 && (
                                   <td>
-                                    {order[lastIndex]?.address.name} <br />
-                                    {order[lastIndex]?.address.address}
+                                    {order[lastIndex]?.address?.name} <br />
+                                    {order[lastIndex]?.address?.address}
                                     <br />
-                                    {order[lastIndex]?.address.pincode}
+                                    {order[lastIndex]?.address?.pincode}
                                     <br />
-                                    {order[lastIndex]?.address.phone}
+                                    {order[lastIndex]?.address?.phone}
                                   </td>
                                 )}
                                 {index === 0 && (

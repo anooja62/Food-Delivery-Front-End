@@ -40,6 +40,7 @@ import PieChart from "../Components/Charts/PieChart";
 import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
 import ChecklistAutomation from "../Components/Admin/ChecklistAutomation/ChecklistAutomation";
+import NewReports from "../Components/Admin/NewReports/NewReports";
 
 const Admin = () => {
   const [show, setShow] = useState(false);
@@ -377,7 +378,8 @@ const Admin = () => {
               </Tab.Pane>
               <Tab.Pane eventKey='#reports'>
                 <div>
-                  <Reports />
+                
+                <Reports/>
                 </div>
               </Tab.Pane>
             </Tab.Content>
