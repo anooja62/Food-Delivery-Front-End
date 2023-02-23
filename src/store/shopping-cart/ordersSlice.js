@@ -54,7 +54,15 @@ export const mostPopularFood = createAsyncThunk(
     return response.data;
   }
 );
-
+export const loacationBasedOrder = createAsyncThunk(
+  `order/get-order`,
+  async (address) => {
+    const response = await axios.get(
+      `order/location-based-delivery/${address}`
+    );
+    return response.data;
+  }
+);
 const initialState = {
   status: "",
   orderItems: [],
@@ -145,6 +153,16 @@ const orderSlice = createSlice({
       state.status = "success";
     },
     [mostPopularFood.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [loacationBasedOrder.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [loacationBasedOrder.fulfilled]: (state, { payload }) => {
+      state.status = "success";
+      state.deliveryOrder = payload;
+    },
+    [loacationBasedOrder.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

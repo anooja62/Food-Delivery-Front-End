@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -33,6 +31,7 @@ import {
 import { getParsedRestaurants } from "../../store/shopping-cart/restaurantSlice";
 import { useEffect } from "react";
 import "../Location/Location.css";
+import NewOrders from "./NewOrders/NewOrders";
 const DeliveryStaff = () => {
   const [address, setAddress] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -226,7 +225,8 @@ const DeliveryStaff = () => {
 
         <TabPanel>
           <div className='panel-content'>
-            <h2>Orders</h2>
+            <h2>New Orders</h2>
+            <NewOrders/>
             {deliveryOrderData.map((data) => {
               const lastIndex = data.length - 1;
 
@@ -236,6 +236,8 @@ const DeliveryStaff = () => {
                     {data.map((item) => {
                       return (
                         <>
+                         
+
                           <Card.Text>{item.foodname} </Card.Text>
                           <Card.Text>
                             {foundRestaurant(item.restaurantId).label}
@@ -251,7 +253,7 @@ const DeliveryStaff = () => {
 
                     <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.address}</Card.Title>
 
                     <Row>
                       <Col>
@@ -273,6 +275,7 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className='panel-content'>
             <h2>Delivery details</h2>
+           
             {deliveredOrders.map((data) => {
               const lastIndex = data.length - 1;
 
@@ -288,7 +291,7 @@ const DeliveryStaff = () => {
 
                     <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
                     <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.pincode}</Card.Title>
+                    <Card.Title>{data[lastIndex]?.address?.address}</Card.Title>
 
                     <Row>
                       {data[lastIndex].isDelivered === 0 ? (

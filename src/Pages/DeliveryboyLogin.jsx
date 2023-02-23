@@ -34,7 +34,7 @@ const DeliveryboyLogin = () => {
           setCookie("deliveryboyEmail", response.data.email);
           setCookie("deliveryboyPhone", response.data.phone);
           setCookie("deliveryboyProfileImg", response.data.profileImg);
-          setCookie("deliveryboyCity", response.data.city);
+          setCookie("deliveryboyLocation", response.data.location);
         
           navigate("/admin-staff");
           window.location.reload();
