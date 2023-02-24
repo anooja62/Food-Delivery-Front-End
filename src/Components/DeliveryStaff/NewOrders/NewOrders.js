@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios";
-import { loacationBasedOrder } from "../../../store/shopping-cart/ordersSlice";
+import { loacationBasedOrder,outForDelivery } from "../../../store/shopping-cart/ordersSlice";
+import { getParsedRestaurants } from "../../../store/shopping-cart/restaurantSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const NewOrders = () => {
@@ -28,6 +29,7 @@ const NewOrders = () => {
     } else {
       setSuggestions([]);
     }
+    dispatch(getParsedRestaurants());
   }, [address]);
 
   const handleInputChange = (e) => {
@@ -38,7 +40,7 @@ const NewOrders = () => {
     setAddress(suggestion.display_name);
     setSuggestions([]);
     setLocation([suggestion.lat, suggestion.lon]);
-    dispatch(loacationBasedOrder(suggestion));
+    dispatch(loacationBasedOrder(deliveryboyLocation));
   };
 
   const handleClick = async (e) => {
@@ -65,7 +67,23 @@ const NewOrders = () => {
       console.log(err);
     }
   };
+  const deliveryOrder = useSelector((state) => state.order.locationOrder);
+  const parsedRestaurents = useSelector(
+    (state) => state.restaurant.parsedRestaurant
+  );
+  const foundRestaurant = (id) => {
+    const name = parsedRestaurents.filter((item) => item.value === id)?.[0];
 
+    return name || "";
+  };
+  const handleOutForDelivery = (orderId) => {
+    dispatch(
+      outForDelivery({
+        orderId: orderId,
+       
+      })
+    );
+  };
   return (
     <>
       <div className='new__register'>
@@ -139,6 +157,57 @@ const NewOrders = () => {
           </p>{" "}
         </label>
       </div>
+      
+  <div >
+   
+    {deliveryOrder.map((data) => {
+      const lastIndex = data.length - 1;
+    
+      return (
+        <table className='table table-bordered'>
+          <thead>
+            <tr>
+              <th>Food Items</th>
+              <th>Restaurant Name</th>
+              <th>Restaurant Address</th>
+              <th>Customer Name</th>
+              <th>Customer Phone</th>
+              <th>Customer Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item) => {
+              const restaurant = foundRestaurant(item.restaurantId);
+              return (
+                <tr key={item.orderId}>
+                  <td>{item.foodname}</td>
+                  <td>
+                    {restaurant.label}
+                   </td>
+                   <td>
+                    {restaurant.address}
+                  </td>
+                  <td>{data[lastIndex]?.address?.name}</td>
+                  <td>{data[lastIndex]?.address?.phone}</td>
+                  <td>{data[lastIndex]?.address?.address}</td>
+                  <td>
+                    <button onClick={()=>handleOutForDelivery(data[lastIndex].orderId)}
+                     
+                    >
+                      Accept Order
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      );
+    })}
+  </div>
+
+
     </>
   );
 };

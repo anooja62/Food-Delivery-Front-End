@@ -70,6 +70,7 @@ const initialState = {
   deliveryOrder: [],
   deliveredOrders:[],
   mostPopularFoods:[],
+  locationOrder:[],
 };
 const orderSlice = createSlice({
   name: "order",
@@ -160,7 +161,7 @@ const orderSlice = createSlice({
     },
     [loacationBasedOrder.fulfilled]: (state, { payload }) => {
       state.status = "success";
-      state.deliveryOrder = payload;
+      state.locationOrder = payload;
     },
     [loacationBasedOrder.rejected]: (state, action) => {
       state.status = "failed";

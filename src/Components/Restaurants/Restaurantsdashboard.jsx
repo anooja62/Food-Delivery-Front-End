@@ -201,7 +201,7 @@ const Restaurantsdashboard = () => {
           </Tab>
           <Tab>
             <p>
-              <AccountBalanceWalletIcon /> Payments
+              <AccountBalanceWalletIcon /> Earnings
             </p>
           </Tab>
           <Tab>
@@ -297,7 +297,8 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           <div className="panel-content">
-            <h2>Payments</h2>       
+            <h2>Earnings</h2> 
+            <Payments/>      
           </div>
         </TabPanel>
         <TabPanel>

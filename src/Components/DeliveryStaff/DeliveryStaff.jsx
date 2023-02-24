@@ -1,8 +1,10 @@
+/** @format */
+
 import React, { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
+
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
-import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+
 import MopedIcon from "@mui/icons-material/Moped";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Row, Col } from "react-bootstrap";
@@ -83,7 +85,7 @@ const DeliveryStaff = () => {
       phone: deliveryboyPhoneRef.current.value,
       email: deliveryboyEmailRef.current.value,
       password: deliveryboyPasswordRef.current.value,
-      location:deliveryboyLocationRef.current.value,
+      location: deliveryboyLocationRef.current.value,
     };
     if (imageUpload === null) return;
     const imageRef = ref(
@@ -117,7 +119,7 @@ const DeliveryStaff = () => {
     removeCookie("deliveryboyName");
     removeCookie("deliveryboyPhone");
     removeCookie("deliveryboyProfileImg");
-
+ removeCookie("deliveryboyLocation");
     navigate("/delivery-login");
   };
   const handleOutForDelivery = (orderId) => {
@@ -226,7 +228,7 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className='panel-content'>
             <h2>New Orders</h2>
-            <NewOrders/>
+            <NewOrders />
             {deliveryOrderData.map((data) => {
               const lastIndex = data.length - 1;
 
@@ -236,8 +238,6 @@ const DeliveryStaff = () => {
                     {data.map((item) => {
                       return (
                         <>
-                         
-
                           <Card.Text>{item.foodname} </Card.Text>
                           <Card.Text>
                             {foundRestaurant(item.restaurantId).label}
@@ -275,7 +275,7 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className='panel-content'>
             <h2>Delivery details</h2>
-           
+
             {deliveredOrders.map((data) => {
               const lastIndex = data.length - 1;
 
@@ -365,36 +365,36 @@ const DeliveryStaff = () => {
                     </div>
                   </Row>
                   <Row>
-                  <div className='new__register'>
-                  <label> Save your location </label>
-                    <form >
-                      <div className='search-main'>
-                        <div className='search'>
-                          {" "}
-                          <input
-                            type='text'
-                            value={address}
-                            onChange={handleInputChange}
-                            placeholder='Search location....'
-                            ref={deliveryboyLocationRef}
-                          />
-                          {suggestions.length > 0 && (
-                            <ul>
-                              {suggestions.map((suggestion, index) => (
-                                <li
-                                  key={index}
-                                  onClick={() =>
-                                    handleSuggestionSelection(suggestion)
-                                  }
-                                >
-                                  {suggestion.display_name}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
+                    <div className='new__register'>
+                      <label> Save your location </label>
+                      <form>
+                        <div className='search-main'>
+                          <div className='search'>
+                            {" "}
+                            <input
+                              type='text'
+                              value={address}
+                              onChange={handleInputChange}
+                              placeholder='Search location....'
+                              ref={deliveryboyLocationRef}
+                            />
+                            {suggestions.length > 0 && (
+                              <ul>
+                                {suggestions.map((suggestion, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() =>
+                                      handleSuggestionSelection(suggestion)
+                                    }
+                                  >
+                                    {suggestion.display_name}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </form>
+                      </form>
                     </div>
                   </Row>
 
