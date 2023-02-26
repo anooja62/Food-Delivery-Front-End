@@ -3,7 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios";
-import { loacationBasedOrder,outForDelivery } from "../../../store/shopping-cart/ordersSlice";
+import {
+  loacationBasedOrder,
+  outForDelivery,
+} from "../../../store/shopping-cart/ordersSlice";
 import { getParsedRestaurants } from "../../../store/shopping-cart/restaurantSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +25,9 @@ const NewOrders = () => {
     );
     setSuggestions(response.data.slice(0, 4));
   };
-
+  useEffect(() => {
+    dispatch(loacationBasedOrder(deliveryboyLocation));
+  }, []);
   useEffect(() => {
     if (address) {
       fetchSuggestions(address);
@@ -40,7 +45,6 @@ const NewOrders = () => {
     setAddress(suggestion.display_name);
     setSuggestions([]);
     setLocation([suggestion.lat, suggestion.lon]);
-    dispatch(loacationBasedOrder(deliveryboyLocation));
   };
 
   const handleClick = async (e) => {
@@ -79,8 +83,7 @@ const NewOrders = () => {
   const handleOutForDelivery = (orderId) => {
     dispatch(
       outForDelivery({
-        orderId: orderId,
-       
+       orderId : orderId,
       })
     );
   };
@@ -157,57 +160,49 @@ const NewOrders = () => {
           </p>{" "}
         </label>
       </div>
-      
-  <div >
-   
-    {deliveryOrder.map((data) => {
-      const lastIndex = data.length - 1;
-    
-      return (
-        <table className='table table-bordered'>
-          <thead>
-            <tr>
-              <th>Food Items</th>
-              <th>Restaurant Name</th>
-              <th>Restaurant Address</th>
-              <th>Customer Name</th>
-              <th>Customer Phone</th>
-              <th>Customer Address</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => {
-              const restaurant = foundRestaurant(item.restaurantId);
-              return (
-                <tr key={item.orderId}>
-                  <td>{item.foodname}</td>
-                  <td>
-                    {restaurant.label}
-                   </td>
-                   <td>
-                    {restaurant.address}
-                  </td>
+
+      <div>
+        {deliveryOrder.map((data) => {
+          const lastIndex = data.length - 1;
+          console.log(data);
+          console.log(data[0].orderId);
+          return (
+            <table className='table table-bordered'>
+              <thead>
+                <tr>
+                  <th>Food Items</th>
+                  <th>Restaurant Name</th>
+                  <th>Restaurant Address</th>
+                  <th>Customer Name</th>
+                  <th>Customer Phone</th>
+                  <th>Customer Address</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{data[1].foodname}</td>
+                  <td>{foundRestaurant(data[1].restaurantId).label}</td>
+                  <td>{foundRestaurant(data[1].restaurantId).address}</td>
                   <td>{data[lastIndex]?.address?.name}</td>
                   <td>{data[lastIndex]?.address?.phone}</td>
                   <td>{data[lastIndex]?.address?.address}</td>
                   <td>
-                    <button onClick={()=>handleOutForDelivery(data[lastIndex].orderId)}
-                     
+                    <button
+                      onClick={() =>
+                        handleOutForDelivery(data[0].orderId)
+                      }
                     >
                       Accept Order
                     </button>
+                   
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      );
-    })}
-  </div>
-
-
+              </tbody>
+            </table>
+          );
+        })}
+      </div>
     </>
   );
 };

@@ -55,7 +55,7 @@ export const mostPopularFood = createAsyncThunk(
   }
 );
 export const loacationBasedOrder = createAsyncThunk(
-  `order/get-order`,
+  `order/get-loacation-order`,
   async (address) => {
     const response = await axios.get(
       `order/location-based-delivery/${address}`

@@ -1,3 +1,5 @@
+/** @format */
+
 import { configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./shopping-cart/cartSlice";
 import cartUiSlice from "./shopping-cart/cartUiSlice";
@@ -11,7 +13,7 @@ import comboSlice from "./shopping-cart/comboSlice";
 import paymentSlice from "./shopping-cart/comboSlice";
 import messageSlice from "./shopping-cart/messageSlice";
 import orderSlice from "./shopping-cart/ordersSlice";
-
+import salarySlice from "./shopping-cart/salarySlice";
 
 const store = configureStore({
   reducer: {
@@ -22,14 +24,12 @@ const store = configureStore({
     foodreview: reviewSlice.reducer,
     user: userSlice.reducer,
     shipping: addressSlice.reducer,
-    menu:menuSlice.reducer,
-    combo:comboSlice.reducer,
-    payment:paymentSlice.reducer,
-    message:messageSlice.reducer,
-    order:orderSlice.reducer,
-   
-
-
+    menu: menuSlice.reducer,
+    combo: comboSlice.reducer,
+    payment: paymentSlice.reducer,
+    message: messageSlice.reducer,
+    order: orderSlice.reducer,
+    salary: salarySlice.reducer,
   },
 });
 

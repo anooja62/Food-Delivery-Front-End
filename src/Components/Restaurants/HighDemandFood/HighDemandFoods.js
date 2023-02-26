@@ -12,7 +12,7 @@ function HighDemandingFoods() {
   useEffect(() => {
     dispatch(mostPopularFood(restaurantId));
   }, []);
-console.log(mostPopularFoodList,"modt")
+
   return (
     <div>
       <h2>Highest Demanding Foods</h2>

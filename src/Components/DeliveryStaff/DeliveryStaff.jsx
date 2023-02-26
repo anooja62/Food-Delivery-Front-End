@@ -229,47 +229,7 @@ const DeliveryStaff = () => {
           <div className='panel-content'>
             <h2>New Orders</h2>
             <NewOrders />
-            {deliveryOrderData.map((data) => {
-              const lastIndex = data.length - 1;
-
-              return (
-                <Card style={{ width: "18rem" }}>
-                  <Card.Body>
-                    {data.map((item) => {
-                      return (
-                        <>
-                          <Card.Text>{item.foodname} </Card.Text>
-                          <Card.Text>
-                            {foundRestaurant(item.restaurantId).label}
-                            <br />
-                            {foundRestaurant(item.restaurantId).address}
-                          </Card.Text>
-                        </>
-                      );
-                    })}
-                    <Card.Subtitle className='mb-2 text-muted'>
-                      Customer Address
-                    </Card.Subtitle>
-
-                    <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.address}</Card.Title>
-
-                    <Row>
-                      <Col>
-                        <Button
-                          onClick={() =>
-                            handleOutForDelivery(data[lastIndex].orderId)
-                          }
-                        >
-                          Accept Order
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              );
-            })}
+       
           </div>
         </TabPanel>
         <TabPanel>
