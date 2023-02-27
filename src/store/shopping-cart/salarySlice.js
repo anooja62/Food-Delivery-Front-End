@@ -27,7 +27,8 @@ const salarySlice = createSlice({
       state.status = "loading";
     },
     [paySalary.fulfilled]: (state, payload) => {
-      state.salarydetails = payload;
+
+      state.paysalarydetails = payload.payload;
       state.status = "success";
     },
     [paySalary.rejected]: (state, action) => {
@@ -37,7 +38,7 @@ const salarySlice = createSlice({
       state.status = "loading";
     },
     [getSalaryDetails.fulfilled]: (state, payload) => {
-      state.monthlysalarydetails = payload;
+      state.monthlysalarydetails = payload.payload;
       state.status = "success";
     },
     [getSalaryDetails.rejected]: (state, action) => {

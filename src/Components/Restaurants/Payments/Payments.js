@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-
+import axios from "../../../axios";
 import { useCookies } from "react-cookie";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import SavingsIcon from "@mui/icons-material/Savings";
@@ -14,36 +14,17 @@ import {
 const Payments = () => {
   const [cookies, setCookies] = useCookies(null);
   const restaurantId = cookies.restaurantId;
-  const [salaryData, setSalaryData] = useState([]);
-  const [statusMessage, setStatusMessage] = useState("");
   const salaryDetailss = useSelector((state) => state.salary.paysalarydetails);
+
   const monthlySalary = useSelector(
-    (state) => state.salary.monthlysalarydetails
+    (state) => state.salary.monthlysalarydetails.salaryData
   );
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(paySalary(restaurantId));
     dispatch(getSalaryDetails(restaurantId));
   }, []);
-
-  {
-    /*  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/salary/monthly-salary/${restaurantId}`
-        );
-        setSalaryData(response.data.salaryData);
-        setStatusMessage(response.data.message);
-      } catch (error) {
-        console.log(error);
-        setStatusMessage("Error occurred while fetching salary data");
-      }
-    };
-    fetchData();
-  }, []);
-*/
-  }
 
   return (
     <div>
@@ -55,15 +36,13 @@ const Payments = () => {
                 <CurrencyRupeeIcon fontSize='large' />
               </div>
               <h6 className='text-uppercase'>Total Order Amount</h6>
-              {salaryDetailss && salaryDetailss.length > 0 ? (
-                salaryDetailss.map((data, index) => (
-                  <div key={index}>
-                    <p>Total Order Amount: {data.totalOrderAmount}</p>
-                  </div>
-                ))
-              ) : (
+              <h1 className='display-4' style={{ color: "#fff" }}>
+                {salaryDetailss.totalOrderAmount}
+              </h1>
+
+              {!salaryDetailss.totalOrderAmount ? (
                 <p>No salary details available.</p>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -74,15 +53,13 @@ const Payments = () => {
                 <SavingsIcon fontSize='large' />
               </div>
               <h6 className='text-uppercase'>Total Earnings</h6>
-              {salaryDetailss && salaryDetailss.length > 0 ? (
-                salaryDetailss.map((data, index) => (
-                  <div key={index}>
-                    <p>Total Order Amount: {data.salary}</p>
-                  </div>
-                ))
-              ) : (
+              <h1 className='display-4' style={{ color: "#fff" }}>
+                {salaryDetailss.restaurantSalary}
+              </h1>
+
+              {!salaryDetailss.restaurantSalary ? (
                 <p>No salary details available.</p>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -99,7 +76,7 @@ const Payments = () => {
                 </tr>
               </thead>
               <tbody>
-                {monthlySalary.map((data) => {
+                {monthlySalary?.map((data) => {
                   // Convert month number to month name
                   const monthName = new Date(0, data.month - 1).toLocaleString(
                     "default",
@@ -109,10 +86,10 @@ const Payments = () => {
                   );
 
                   return (
-                    <tr key={data?._id}>
+                    <tr key={data._id}>
                       <td>{monthName}</td>
-                      <td>{data?.totalOrderAmount || "No order"}</td>
-                      <td>{data?.salary || "No earnings"}</td>
+                      <td>{data.totalOrderAmount || "No order"}</td>
+                      <td>{data.salary || "No earnings"}</td>
                     </tr>
                   );
                 })}
