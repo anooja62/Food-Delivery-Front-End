@@ -7,10 +7,9 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import LocalGroceryStoreOutlinedIcon from "@mui/icons-material/LocalGroceryStoreOutlined";
-import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import WhereToVoteOutlinedIcon from "@mui/icons-material/WhereToVoteOutlined";
-import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
+
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import axios from "../../axios";
@@ -318,12 +317,13 @@ const Restaurantsdashboard = () => {
             <table className="table table-bordered">
               <thead>
                 <tr>
+                  <th>SL.No</th>
                   <th> Name</th>
                   <th>Review</th>
                 </tr>
               </thead>
-              {reviewList.map((u) => (
-                <ReviewDisplay key={u.id} foodreview={u} />
+              {reviewList.map((u,index) => (
+                <ReviewDisplay key={u.id} foodreview={u} index={index + 1}/>
               ))}
             </table>
           </div>

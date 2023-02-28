@@ -18,11 +18,7 @@ const Reports = () => {
   
   const deliveredOrderss = useSelector((state) => state.order?.deliveredOrders);
 
-  const print = () => {
-    let printContents = document.getElementById("printableTable").innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-  };
+ 
 
   function generatePDF() {
     const doc = new jsPDF();

@@ -24,6 +24,7 @@
     "cookies": "^0.8.0",
     "d3": "^7.8.2",
     "emailjs": "^4.0.1",
+    "file-saver": "^2.0.5",
     "firebase": "^9.9.1",
     "formik": "^2.2.9",
     "google-map-react": "^2.2.0",
@@ -68,6 +69,7 @@
     "timeago.js": "^4.0.2",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11",
     "zxcvbn": "^4.4.2"
   },

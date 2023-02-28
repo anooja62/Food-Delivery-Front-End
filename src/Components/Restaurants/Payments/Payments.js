@@ -1,17 +1,22 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import axios from "../../../axios";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import { useCookies } from "react-cookie";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import SavingsIcon from "@mui/icons-material/Savings";
 import { Row, Col } from "react-bootstrap";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   paySalary,
   getSalaryDetails,
 } from "../../../store/shopping-cart/salarySlice";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 const Payments = () => {
+ 
   const [cookies, setCookies] = useCookies(null);
   const restaurantId = cookies.restaurantId;
   const salaryDetailss = useSelector((state) => state.salary.paysalarydetails);
@@ -25,6 +30,66 @@ const Payments = () => {
     dispatch(paySalary(restaurantId));
     dispatch(getSalaryDetails(restaurantId));
   }, []);
+  const options = {
+    title: {
+      text: "Monthly Earnings",
+    },
+    xAxis: {
+      categories: monthlySalary?.map((data) => {
+        return new Date(0, data.month - 1).toLocaleString("default", {
+          month: "long",
+        });
+      }),
+    },
+    yAxis: {
+      title: {
+        text: "Salary (in Rupee)",
+      },
+    },
+    series: [
+      {
+        name: "Earnings",
+        data: monthlySalary?.map((data) => {
+          return data.salary || 0;
+        }),
+      },
+      {
+        name: "Order Amount",
+        data: monthlySalary?.map((data) => {
+          return data.totalOrderAmount || 0;
+        }),
+      },
+    ],
+  };
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text("Monthly Earnings Report", 14, 16);
+    doc.autoTable({
+      head: [["SL.No", "Month", "Total Order Amount", "Total Earnings"]],
+      body: monthlySalary.map((data, index) => {
+        const monthName = new Date(0, data.month - 1).toLocaleString(
+          "default",
+          {
+            month: "long",
+          }
+        );
+        return [
+          index + 1,
+          monthName,
+          data.totalOrderAmount || "No order",
+          data.salary || "No earnings",
+        ];
+      }),
+      startY: 26,
+    });
+    doc.save("report.pdf");
+  };
+
+
+ 
+
+
+
 
   return (
     <div>
@@ -63,21 +128,35 @@ const Payments = () => {
             </div>
           </div>
         </div>
+        <div className='col-xl-3 col-sm-6 py-2'>
+          <button
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+            onClick={generatePDF}
+          >
+            Download Report
+          </button>
+        </div> 
       </div>
+
       <div>
         <Row>
           <Col>
             <table className='table table-bordered'>
               <thead>
                 <tr>
+                  <th>SL. No.</th>
                   <th>Month</th>
                   <th>Total Order Amount</th>
                   <th>Total Earnings</th>
                 </tr>
               </thead>
               <tbody>
-                {monthlySalary?.map((data) => {
-                  // Convert month number to month name
+                {monthlySalary?.map((data, index) => {
                   const monthName = new Date(0, data.month - 1).toLocaleString(
                     "default",
                     {
@@ -87,6 +166,7 @@ const Payments = () => {
 
                   return (
                     <tr key={data._id}>
+                      <td>{index + 1}</td>
                       <td>{monthName}</td>
                       <td>{data.totalOrderAmount || "No order"}</td>
                       <td>{data.salary || "No earnings"}</td>
@@ -96,7 +176,9 @@ const Payments = () => {
               </tbody>
             </table>
           </Col>
-          <Col></Col>
+          <Col>
+            <HighchartsReact highcharts={Highcharts} options={options} />
+          </Col>
         </Row>
       </div>
     </div>
