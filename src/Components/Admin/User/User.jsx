@@ -21,8 +21,9 @@ const User = ({ user,slNo }) => {
       {slNo}
     </td>
           <td className='text-center'>{user.name}</td>
-          <td className='text-center'>{user.email}</td>
           <td className='text-center'>{user.phone}</td>
+          <td className='text-center'>{user.email}</td>
+         
 
           <td className='text-center'>
             <Button variant='danger' onClick={() => handleReject(user._id)}>

@@ -303,7 +303,7 @@ const Admin = () => {
               </Tab.Pane>
               <Tab.Pane eventKey='#hygiene'>
                 <div>
-                  <ChecklistAutomation />
+                 
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#deliveryboy'>
@@ -315,7 +315,7 @@ const Admin = () => {
                         <th> Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
-                        <th>City</th>
+                        <th>Location</th>
                         <th>Driving License</th>
                         <th>Send Mail</th>
                       </tr>

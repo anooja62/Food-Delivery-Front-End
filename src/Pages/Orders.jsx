@@ -7,19 +7,23 @@ import { Container, Row, Col } from "react-bootstrap";
 import { userOrder } from "../store/shopping-cart/ordersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import SearchIcon from '@mui/icons-material/Search';
 import { Modal } from "react-bootstrap";
+import FilterListIcon from '@mui/icons-material/FilterList';
 import OnlineDeliveryExperienceForm from "../Components/OnlineDeliveryExperienceForm/OnlineDeliveryExperienceForm";
 const Orders = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
   const handleButtonClick = () => {
     setShowModal(true);
   };
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(null);
-  const userId = cookies.userId;
+
   const orderList = useSelector((state) => state.order.orderItems);
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -29,9 +33,16 @@ const Orders = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const filteredOrders = orderList.filter((order) =>
+    order.some(
+      (item) =>
+        item.restaurantName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedStatus === "" || item.status.toString() === selectedStatus)
+    )
+  );
 
   const pageCount = Math.ceil(orderList.length / itemsPerPage);
-  const currentItems = orderList.slice(
+  const currentItems = filteredOrders.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -41,6 +52,37 @@ const Orders = () => {
       <CommonSection title='Your Orders' />
       <section>
         <Container>
+          <Row>
+            <Col>
+              <div className='mb-3'>
+                <label htmlFor='search' style={{ fontWeight: 600 }}>
+                  Search by restaurant name 
+                </label> <SearchIcon/>
+                <input
+                  type='text'
+                  className='form-control '
+                  id='search'
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder='Search by restaurant name'
+                />
+              </div>
+            </Col>
+            <Col>
+            <label style={{ fontWeight: 600 }}>Filter by Order Status </label>  <FilterListIcon/> 
+              <select
+                className='form-select'
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+              >
+                <option value=''>All</option>
+                <option value='0'>Order Confirmed</option>
+                <option value='1'>Out for Delivery</option>
+                <option value='2'>Delivered</option>
+              </select>
+            </Col>
+            <Col></Col>
+          </Row>
+
           <Row>
             <Col lg='12'>
               <table className='table table-bordered'>
@@ -89,6 +131,7 @@ const Orders = () => {
                               Leave feedback
                             </button>
                           )}
+
                           {showModal && (
                             <Modal
                               show={showModal}
@@ -98,7 +141,9 @@ const Orders = () => {
                                 <Modal.Title>Feedback Form</Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
-                                <OnlineDeliveryExperienceForm />
+                                <OnlineDeliveryExperienceForm
+                                  restaurantId={item.restaurantId}
+                                />
                               </Modal.Body>
                             </Modal>
                           )}

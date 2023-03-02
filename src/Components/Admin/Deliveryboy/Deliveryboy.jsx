@@ -65,7 +65,7 @@ const Deliveryboy = ({ deliveryboy,slNo }) => {
           {deliveryboy.phone}
         </td>
         <td className="text-center" style={{ paddingTop: "2%" }}>
-          {deliveryboy.city}
+          {deliveryboy.location}
         </td>
         <td className="text-center" style={{ paddingTop: "2%" }}><a href={deliveryboy.imgUrl}>view License</a></td>
         <td className="text-center" style={{ paddingTop: "2%" }}>

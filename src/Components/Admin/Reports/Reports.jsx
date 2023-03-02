@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { CSVLink } from "react-csv";
