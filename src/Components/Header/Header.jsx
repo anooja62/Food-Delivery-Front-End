@@ -120,8 +120,8 @@ const Header = () => {
         path: "/restaurant",
       },
       {
-        display: "For You",
-        path: "/foryou",
+        display: "Orders",
+        path: "/orders",
       },
     ];
   }

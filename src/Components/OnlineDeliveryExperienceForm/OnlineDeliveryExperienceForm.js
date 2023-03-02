@@ -1,23 +1,48 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
+import axios from "../../axios";
+import { useCookies } from "react-cookie";
 function OnlineDeliveryExperienceForm() {
-  const [name, setName] = useState("");
+ 
   const [foodPackaging, setFoodPackaging] = useState("");
   const [foodHandling, setFoodHandling] = useState("");
   const [foodQuality, setFoodQuality] = useState("");
   const [foodTaste, setFoodTaste] = useState("");
   const [overallExperience, setOverallExperience] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
   useEffect(() => {
     const date = new Date().toISOString().substr(0, 10);
     setCurrentDate(date);
   }, []);
-
-  const handleSubmit = (e) => {
+ 
+  const foodPackagingRef = useRef();
+  const foodTasteRef = useRef();
+  const foodHandlingRef = useRef();
+  const foodQualityRef = useRef();
+  const overallExperienceRef = useRef();
+  const currentDateRef = useRef();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
+    const feedback = {
+      userId: userId,
+     
+      foodPackaging: foodPackagingRef.current.value,
+      foodHandling: foodHandlingRef.current.value,
+      foodQuality: foodQualityRef.current.value,
+      foodTaste: foodTasteRef.current.value,
+      overallExperience: overallExperienceRef.current.value,
+      currentDate: currentDateRef.current.value,
+    };
+
+    try {
+      await axios.post("/feed/feedback", feedback);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -33,25 +58,7 @@ function OnlineDeliveryExperienceForm() {
         onSubmit={handleSubmit}
         style={{ backgroundColor: "#f0f0f0", padding: "20px" }}
       >
-        <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
-          Food Delivery Hygiene and Quality Feedback Form
-        </h2>
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label
-            htmlFor='name'
-            style={{ marginBottom: "0.5rem", fontWeight: "600" }}
-          >
-            Name
-          </label>
-          <input
-            type='text'
-            id='name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ margin: "0.5rem", padding: "0.5rem", width: "100%" }}
-          />
-        </div>
+    
         <Row>
           <Col>
             <div
@@ -72,6 +79,7 @@ function OnlineDeliveryExperienceForm() {
                 value={foodPackaging}
                 onChange={(e) => setFoodPackaging(e.target.value)}
                 style={{ margin: "10px", padding: "5px", width: "250px" }}
+                ref={foodPackagingRef}
               >
                 <option value=''>--Select--</option>
                 <option value='excellent'>Excellent</option>
@@ -101,6 +109,7 @@ function OnlineDeliveryExperienceForm() {
                 value={foodHandling}
                 onChange={(e) => setFoodHandling(e.target.value)}
                 style={{ margin: "10px", padding: "5px", width: "250px" }}
+                ref={foodHandlingRef}
               >
                 <option value=''>--Select--</option>
                 <option value='excellent'>Excellent</option>
@@ -133,6 +142,7 @@ function OnlineDeliveryExperienceForm() {
                 value={foodQuality}
                 onChange={(e) => setFoodQuality(e.target.value)}
                 style={{ margin: "10px", padding: "5px", width: "250px" }}
+                ref={foodQualityRef}
               >
                 <option value=''>--Select--</option>
                 <option value='excellent'>Excellent</option>
@@ -162,6 +172,7 @@ function OnlineDeliveryExperienceForm() {
                 value={foodTaste}
                 onChange={(e) => setFoodTaste(e.target.value)}
                 style={{ margin: "10px", padding: "5px", width: "250px" }}
+                ref={foodTasteRef}
               >
                 <option value=''>--Select--</option>
                 <option value='excellent'>Excellent</option>
@@ -193,6 +204,7 @@ function OnlineDeliveryExperienceForm() {
                 value={overallExperience}
                 onChange={(e) => setOverallExperience(e.target.value)}
                 style={{ margin: "10px", padding: "5px", width: "250px" }}
+                ref={overallExperienceRef}
               >
                 <option value=''>--Select--</option>
                 <option value='excellent'>Excellent</option>
@@ -217,7 +229,12 @@ function OnlineDeliveryExperienceForm() {
               >
                 Date
               </label>
-              <input type='text' value={currentDate} disabled />
+              <input
+                type='text'
+                value={currentDate}
+                disabled
+                ref={currentDateRef}
+              />
             </div>
           </Col>
         </Row>
