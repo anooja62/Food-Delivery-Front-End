@@ -239,9 +239,7 @@ const DeliveryStaff = () => {
               </thead>
               <tbody>
                 {acceptedOrder.map((data, index) => {
-                  console.log(data);
-                  // const lastIndex = data.length - 1;
-
+                  
                   return (
                     <tr key={data[0].orderId}>
                       <td>{index + 1}</td>

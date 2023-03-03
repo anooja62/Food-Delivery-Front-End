@@ -81,11 +81,21 @@ export const OrderHistoryForDeliveryBoy = createAsyncThunk(
     return response.data;
   }
 );
+export const OrderHistoryForRestaurant = createAsyncThunk(
+  `order/resturant-order-history`,
+  async (id) => {
+    const response = await axios.get(
+      `order/resturant-order-history/${id}`
+    );
+    return response.data;
+  }
+);
 const initialState = {
   status: "",
   orderItems: [],
   restaurantOrders: [],
   orderHistoryDeliveryBoy:[],
+  orderHistoryRestaurant:[],
   deliveryOrder: [],
   acceptedOrders:[],
   deliveredOrders:[],
@@ -204,6 +214,16 @@ const orderSlice = createSlice({
       state.orderHistoryDeliveryBoy = payload;
     },
     [OrderHistoryForDeliveryBoy.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [OrderHistoryForRestaurant.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [OrderHistoryForRestaurant.fulfilled]: (state, { payload }) => {
+      state.status = "success";
+      state.orderHistoryRestaurant = payload;
+    },
+    [OrderHistoryForRestaurant.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

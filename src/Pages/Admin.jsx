@@ -39,6 +39,7 @@ import PieChart from "../Components/Charts/PieChart";
 import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
 import ChecklistAutomation from "../Components/Admin/ChecklistAutomation/ChecklistAutomation";
+import Hygiene from "../Components/Admin/Hygiene/Hygiene";
 
 const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -303,7 +304,7 @@ const Admin = () => {
               </Tab.Pane>
               <Tab.Pane eventKey='#hygiene'>
                 <div>
-                 
+                  <Hygiene />
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#deliveryboy'>

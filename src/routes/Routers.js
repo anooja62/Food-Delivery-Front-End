@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../Pages/Home";
@@ -20,35 +22,33 @@ import ComboUI from "../Components/Restaurants/Combo/ComboUI";
 import RestaurantLogin from "../Pages/RestaurantLogin";
 import DeliveryboyLogin from "../Pages/DeliveryboyLogin";
 import PaymentSuccess from "../Pages/PaymentSuccess";
-import ForYou from "../Pages/ForYou";
 
 function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/home" element={<Home />} />
+      <Route path='/' element={<Navigate to='/home' />} />
+      <Route path='/home' element={<Home />} />
 
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/login" element={<Login data-testid="child"/>} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/restaurant" element={<Restaurant />} />
+      <Route path='/cart' element={<Cart />} />
+      <Route path='/checkout' element={<Checkout />} />
+      <Route path='/login' element={<Login data-testid='child' />} />
+      <Route path='/profile' element={<Profile />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/restaurant' element={<Restaurant />} />
 
-      <Route path="/orders" element={<Orders />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/restaurantregister" element={<RestaurantRegister />} />
-      <Route path="/ordernow" element={<Restaurantspage />} />
-      <Route path="/ui/:id" element={<RestaurantUI />} />
-      <Route path="/forgot" element={<ForgotPassword />} />
-      <Route path="/newsubmit" element={<NewSubmit />} />
-      <Route path="/admin-res" element={<Restaurantsdashboard />} />
-      <Route path="/admin-staff" element={<DeliveryStaff />} />
-      <Route path="/combo" element={<ComboUI />} />
-      <Route path="/res-login" element={<RestaurantLogin />} />
-      <Route path="/delivery-login" element={<DeliveryboyLogin />} />
-      <Route path="/success" element={<PaymentSuccess />} />
-      <Route path="/foryou" element={<ForYou />} />
+      <Route path='/orders' element={<Orders />} />
+      <Route path='/admin' element={<Admin />} />
+      <Route path='/restaurantregister' element={<RestaurantRegister />} />
+      <Route path='/ordernow' element={<Restaurantspage />} />
+      <Route path='/ui/:id' element={<RestaurantUI />} />
+      <Route path='/forgot' element={<ForgotPassword />} />
+      <Route path='/newsubmit' element={<NewSubmit />} />
+      <Route path='/admin-res' element={<Restaurantsdashboard />} />
+      <Route path='/admin-staff' element={<DeliveryStaff />} />
+      <Route path='/combo' element={<ComboUI />} />
+      <Route path='/res-login' element={<RestaurantLogin />} />
+      <Route path='/delivery-login' element={<DeliveryboyLogin />} />
+      <Route path='/success' element={<PaymentSuccess />} />
     </Routes>
   );
 }
