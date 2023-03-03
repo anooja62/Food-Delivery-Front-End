@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Table from "react-bootstrap/Table";
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -14,8 +14,11 @@ const Orders = () => {
   const restaurantId = cookies.restaurantId;
   const restaurantOrders = useSelector((state) => state.order.restaurantOrders);
   const dispatch = useDispatch();
-
+useEffect(() => {
+  dispatch(restaurantOrder(restaurantId));
+}, [])
   const handleFoodReady = (id) => {
+  
     dispatch(orderReady({ id, restaurantId }));
   };
 
@@ -30,6 +33,7 @@ const Orders = () => {
       </thead>
       <tbody>
         {restaurantOrders.map((orders,index) => {
+          console.log(orders)
            const slNo = index + 1;
           const orderId = orders[orders.length - 1];
           const foodItems = orders.map((order) => (

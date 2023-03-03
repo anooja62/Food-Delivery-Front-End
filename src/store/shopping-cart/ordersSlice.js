@@ -63,11 +63,31 @@ export const loacationBasedOrder = createAsyncThunk(
     return response.data;
   }
 );
+export const deliveryboyAcceptedOrder = createAsyncThunk(
+  `order/accepted-orders-by-deliveryboy`,
+  async (id) => {
+    const response = await axios.get(
+      `order/accepted-orders-by-deliveryboy/${id}`
+    );
+    return response.data;
+  }
+);
+export const OrderHistoryForDeliveryBoy = createAsyncThunk(
+  `order/orders-history-for-deliveryboy`,
+  async (id) => {
+    const response = await axios.get(
+      `order/orders-history-for-deliveryboy/${id}`
+    );
+    return response.data;
+  }
+);
 const initialState = {
   status: "",
   orderItems: [],
   restaurantOrders: [],
+  orderHistoryDeliveryBoy:[],
   deliveryOrder: [],
+  acceptedOrders:[],
   deliveredOrders:[],
   mostPopularFoods:[],
   locationOrder:[],
@@ -164,6 +184,26 @@ const orderSlice = createSlice({
       state.locationOrder = payload;
     },
     [loacationBasedOrder.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [deliveryboyAcceptedOrder.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [deliveryboyAcceptedOrder.fulfilled]: (state, { payload }) => {
+      state.status = "success";
+      state.acceptedOrders = payload;
+    },
+    [deliveryboyAcceptedOrder.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [OrderHistoryForDeliveryBoy.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [OrderHistoryForDeliveryBoy.fulfilled]: (state, { payload }) => {
+      state.status = "success";
+      state.orderHistoryDeliveryBoy = payload;
+    },
+    [OrderHistoryForDeliveryBoy.rejected]: (state, action) => {
       state.status = "failed";
     },
   },

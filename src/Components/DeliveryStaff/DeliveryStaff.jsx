@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
-
+import HistoryIcon from "@mui/icons-material/History";
 import MopedIcon from "@mui/icons-material/Moped";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Row, Col } from "react-bootstrap";
@@ -26,7 +26,7 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deliveryOrder,
-  outForDelivery,
+  deliveryboyAcceptedOrder,
   deliveredOrder,
   makeDeliverd,
 } from "../../store/shopping-cart/ordersSlice";
@@ -34,6 +34,7 @@ import { getParsedRestaurants } from "../../store/shopping-cart/restaurantSlice"
 import { useEffect } from "react";
 import "../Location/Location.css";
 import NewOrders from "./NewOrders/NewOrders";
+import OrderHistory from "./OrderHistory/OrderHistory";
 const DeliveryStaff = () => {
   const [address, setAddress] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -61,13 +62,14 @@ const DeliveryStaff = () => {
   const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
 
   const restaurantId = cookies.restaurantId;
+  const acceptedOrder = useSelector((state) => state.order.acceptedOrders);
   const deliveryOrderData = useSelector((state) => state.order.deliveryOrder);
   const deliveredOrders = useSelector((state) => state.order.deliveredOrders);
   const parsedRestaurents = useSelector(
     (state) => state.restaurant.parsedRestaurant
   );
   useEffect(() => {
-    dispatch(deliveryOrder(restaurantId));
+    dispatch(deliveryboyAcceptedOrder(deliveryboyId));
     dispatch(getParsedRestaurants());
     dispatch(deliveredOrder());
   }, []);
@@ -119,26 +121,10 @@ const DeliveryStaff = () => {
     removeCookie("deliveryboyName");
     removeCookie("deliveryboyPhone");
     removeCookie("deliveryboyProfileImg");
- removeCookie("deliveryboyLocation");
+    removeCookie("deliveryboyLocation");
     navigate("/delivery-login");
   };
-  const handleOutForDelivery = (orderId) => {
-    dispatch(
-      outForDelivery({
-        orderId: orderId,
-        restaurantId: restaurantId,
-      })
-    );
-  };
-  const handleDeclineUsingSession = (orderId) => {
-    if (items) {
-      items.push(orderId);
-      console.log(items);
-      sessionStorage.setItem("items", JSON.stringify(items));
-      return;
-    }
-    sessionStorage.setItem("items", JSON.stringify([orderId]));
-  };
+
   const handleDelivered = (orderId) => {
     dispatch(makeDeliverd({ orderId: orderId, deliveryBoyId: deliveryboyId }));
   };
@@ -192,7 +178,12 @@ const DeliveryStaff = () => {
 
           <Tab>
             <p>
-              <MopedIcon /> Delivery
+              <MopedIcon /> Accepted Orders
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+              <HistoryIcon /> Order History
             </p>
           </Tab>
           <Tab>
@@ -229,54 +220,55 @@ const DeliveryStaff = () => {
           <div className='panel-content'>
             <h2>New Orders</h2>
             <NewOrders />
-       
           </div>
         </TabPanel>
         <TabPanel>
           <div className='panel-content'>
-            <h2>Delivery details</h2>
+            <h2>Accepted Order details</h2>
 
-            {deliveredOrders.map((data) => {
-              const lastIndex = data.length - 1;
+            <table className='table table-bordered'>
+              <thead>
+                <tr>
+                  <th>SL.No</th>
+                  <th>Customer Name</th>
+                  <th>Food Items</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Delivery Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {acceptedOrder.map((data, index) => {
+                  console.log(data);
+                  // const lastIndex = data.length - 1;
 
-              return (
-                <Card style={{ width: "18rem" }}>
-                  <Card.Body>
-                    {data.map((item) => {
-                      return <></>;
-                    })}
-                    <Card.Subtitle className='mb-2 text-muted'>
-                      Customer Address
-                    </Card.Subtitle>
-
-                    <Card.Title>{data[lastIndex]?.address?.name}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.phone}</Card.Title>
-                    <Card.Title>{data[lastIndex]?.address?.address}</Card.Title>
-
-                    <Row>
-                      {data[lastIndex].isDelivered === 0 ? (
-                        <>
-                          <Col>
-                            <Button
-                              onClick={() =>
-                                handleDelivered(data[lastIndex].orderId)
-                              }
-                            >
-                              Delivery Completed
-                            </Button>
-                          </Col>
-                        </>
-                      ) : (
-                        <p>Delivered</p>
-                      )}
-                    </Row>
-                  </Card.Body>
-                </Card>
-              );
-            })}
+                  return (
+                    <tr key={data[0].orderId}>
+                      <td>{index + 1}</td>
+                      <td>{data[2]?.address?.name}</td>
+                      <td>{data[1]?.foodname}</td>
+                      <td>{data[2]?.address?.phone}</td>
+                      <td>{data[2]?.address?.address}</td>
+                      <td>
+                        <Button
+                          onClick={() => handleDelivered(data[0].orderId)}
+                        >
+                          Delivery Completed
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </TabPanel>
-
+        <TabPanel>
+          <div className='panel-content'>
+            <h2>Order History</h2>
+            <OrderHistory />
+          </div>
+        </TabPanel>
         <TabPanel>
           <div className='panel-content'>
             <div style={{ marginLeft: 150, marginRight: 200 }}>

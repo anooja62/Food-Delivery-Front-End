@@ -164,8 +164,8 @@ const NewOrders = () => {
       <div>
         {deliveryOrder.map((data) => {
           const lastIndex = data.length - 1;
-          console.log(data);
-          console.log(data[0].orderId);
+         
+          
           return (
             <table className='table table-bordered'>
               <thead>
@@ -192,6 +192,13 @@ const NewOrders = () => {
                       onClick={() =>
                         handleOutForDelivery(data[0].orderId)
                       }
+                      style={{
+                        padding: "7px 10px",
+                        backgroundColor: "#E67E22",
+                        color: "white",
+                        fontWeight: "600",
+                        borderRadius: "5px",
+                      }}
                     >
                       Accept Order
                     </button>
