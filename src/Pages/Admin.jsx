@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import axios from "../axios";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Topbar from "../Components/Admin/Topbar/Topbar";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
@@ -27,7 +28,7 @@ import Tab from "react-bootstrap/Tab";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
+import SanitizerIcon from '@mui/icons-material/Sanitizer';
 import Button from "react-bootstrap/Button";
 import MessageDetails from "../Components/Restaurants/ContactDeliorder/MessageDetails";
 import Paper from "@mui/material/Paper";
@@ -40,6 +41,7 @@ import Sales from "../Components/Restaurants/Sales/Sales";
 import Forecast from "../Components/Restaurants/Sales/Forecast";
 import ChecklistAutomation from "../Components/Admin/ChecklistAutomation/ChecklistAutomation";
 import Hygiene from "../Components/Admin/Hygiene/Hygiene";
+import Inspection from "../Components/Admin/Inspection/Inspection";
 
 const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,7 +154,10 @@ const Admin = () => {
                 <StorefrontOutlinedIcon /> Restaurants
               </ListGroup.Item>
               <ListGroup.Item action href='#hygiene'>
-                <FactCheckIcon /> Hygiene Monitoring
+                <SanitizerIcon /> Hygiene Monitoring
+              </ListGroup.Item>
+               <ListGroup.Item action href='#Inspection'>
+                <CalendarMonthIcon /> Scheduled Inspection
               </ListGroup.Item>
 
               <ListGroup.Item action href='#deliveryboy'>
@@ -305,6 +310,11 @@ const Admin = () => {
               <Tab.Pane eventKey='#hygiene'>
                 <div>
                   <Hygiene />
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='#Inspection'>
+                <div>
+                 <Inspection/>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='#deliveryboy'>

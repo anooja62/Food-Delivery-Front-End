@@ -64,14 +64,14 @@ function ChecklistAutomation() {
         Hygiene Checklist for Online Food Delivery
       </h1>
       <div style={{ textAlign: "center" }}>
-        {today.getDay() !== 6 && (
+        {today.getDay() !== 1 && (
           <p style={{ fontWeight: 600, color: "red" }}>
             The form is only available on Mondays.
           </p>
         )}
       </div>
       <form onSubmit={handleSubmit}>
-        <fieldset disabled={today.getDay() !== 6}>
+        <fieldset disabled={today.getDay() !== 1}>
           <div
             style={{
               display: "flex",

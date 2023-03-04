@@ -2,13 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "../../../axios";
-import { Row, Col } from "react-bootstrap";
-import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import { Row, Col, Modal, Form, Button } from "react-bootstrap";
+import SearchIcon from "@mui/icons-material/Search";
+import FilterListIcon from "@mui/icons-material/FilterList";
 const Hygiene = () => {
   const [restaurantData, setRestaurantData] = useState([]);
   const [selectedHygieneLevel, setSelectedHygieneLevel] = useState("");
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [scheduledDate, setScheduledDate] = useState("");
 
   useEffect(() => {
     const fetchRestaurantData = async () => {
@@ -50,34 +53,47 @@ const Hygiene = () => {
       (searchQuery === "" ||
         data.restaurantName.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-
+  const handleScheduleClick = (data) => {
+    setSelectedRestaurant(data);
+    setShowModal(true);
+  };
+  const saveFormData = async (data) => {
+    try {
+      const response = await axios.post("/insp/schedule-inspection", data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <h2>Hygiene Prediction</h2>
       <Row>
         <Col>
-          <div className="new__register">
-            <label htmlFor="hygieneLevelSelect">Filter by hygiene level</label> <FilterListIcon/>
+          <div className='new__register'>
+            <label htmlFor='hygieneLevelSelect'>Filter by hygiene level</label>{" "}
+            <FilterListIcon />
             <select
-              className="form-control mt-3"
-              id="hygieneLevelSelect"
+              className='form-control mt-3'
+              id='hygieneLevelSelect'
               value={selectedHygieneLevel}
               onChange={handleHygieneLevelChange}
             >
-              <option value="">All</option>
-              <option value="Poor Hygiene">Poor Hygiene</option>
-              <option value="Moderate Hygiene">Moderate Hygiene</option>
-              <option value="Extremely Hygienic">Extremely Hygienic</option>
+              <option value=''>All</option>
+              <option value='Poor Hygiene'>Poor Hygiene</option>
+              <option value='Moderate Hygiene'>Moderate Hygiene</option>
+              <option value='Extremely Hygienic'>Extremely Hygienic</option>
             </select>
           </div>
         </Col>
         <Col>
-          <div className="new__register">
-            <label htmlFor="searchQuery">Search by restaurant name </label> <SearchIcon/>
+          <div className='new__register'>
+            <label htmlFor='searchQuery'>Search by restaurant name </label>{" "}
+            <SearchIcon />
             <input
-              type="text"
-              className="form-control"
-              id="searchQuery"
+              type='text'
+              className='form-control'
+              id='searchQuery'
               value={searchQuery}
               onChange={handleSearchQueryChange}
             />
@@ -85,13 +101,14 @@ const Hygiene = () => {
         </Col>
       </Row>
 
-      <table className="table table-bordered mt-4">
+      <table className='table table-bordered mt-4'>
         <thead>
           <tr>
             <th>SL.No</th>
             <th>Restaurant Name</th>
             <th>Restaurant Address</th>
-            <th>Hygiene Level </th>
+            <th>Hygiene Level</th>
+            {selectedHygieneLevel !== "Extremely Hygienic" && <th>Action</th>}
           </tr>
         </thead>
         <tbody>
@@ -106,11 +123,74 @@ const Hygiene = () => {
               >
                 {data.hygieneLevel}
               </td>
+              {selectedHygieneLevel !== "Extremely Hygienic" && (
+                <td>
+                  {data.hygieneLevel === "Moderate Hygiene" ||
+                  data.hygieneLevel === "Poor Hygiene" ? (
+                    <button
+                      className='btn btn-primary'
+                      onClick={() => handleScheduleClick(data)}
+                    >
+                      Schedule Inspection
+                    </button>
+                  ) : (
+                    <p style={{ fontWeight: 600 }}>No action needed</p>
+                  )}
+                </td>
+              )}
             </tr>
-
           ))}
         </tbody>
       </table>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Schedule Inspection</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId='restaurantName'>
+              <Form.Label>Restaurant Name</Form.Label>
+              <Form.Control
+                type='text'
+                value={selectedRestaurant.restaurantName}
+                readOnly
+              />
+            </Form.Group>
+            <Form.Group controlId='scheduledDate'>
+              <Form.Label>Inspection Date</Form.Label>
+              <Form.Control
+                type='date'
+                min={new Date().toISOString().split("T")[0]}
+                max={
+                  new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+                    .toISOString()
+                    .split("T")[0]
+                }
+                value={scheduledDate}
+                onChange={(e) => setScheduledDate(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant='primary'
+            onClick={() => {
+              saveFormData({
+                restaurantId: selectedRestaurant.restaurantId,
+                restaurantName: selectedRestaurant.restaurantName,
+                scheduledDate: scheduledDate,
+              });
+              setShowModal(false);
+            }}
+          >
+            Schedule Inspection
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
