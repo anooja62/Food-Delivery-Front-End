@@ -1,9 +1,118 @@
-import React from 'react'
+/** @format */
 
+import React, { useEffect, useState } from "react";
+import axios from "../../../axios";
+import { Row, Col } from "react-bootstrap";
+import SearchIcon from '@mui/icons-material/Search';
+import FilterListIcon from '@mui/icons-material/FilterList';
 const Hygiene = () => {
-  return (
-    <div>Hygiene</div>
-  )
-}
+  const [restaurantData, setRestaurantData] = useState([]);
+  const [selectedHygieneLevel, setSelectedHygieneLevel] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-export default Hygiene
+  useEffect(() => {
+    const fetchRestaurantData = async () => {
+      try {
+        const response = await axios.get("/feed/hygiene-prediction");
+        setRestaurantData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchRestaurantData();
+  }, []);
+
+  const mapHygieneLevelToColor = (hygieneLevel) => {
+    switch (hygieneLevel) {
+      case "Extremely Hygienic":
+        return "text-success";
+      case "Moderate Hygiene":
+        return "text-primary";
+      case "Poor Hygiene":
+        return "text-danger";
+      default:
+        return "";
+    }
+  };
+
+  const handleHygieneLevelChange = (event) => {
+    setSelectedHygieneLevel(event.target.value);
+  };
+
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredData = restaurantData.filter(
+    (data) =>
+      (selectedHygieneLevel === "" ||
+        data.hygieneLevel === selectedHygieneLevel) &&
+      (searchQuery === "" ||
+        data.restaurantName.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
+  return (
+    <div>
+      <h2>Hygiene Prediction</h2>
+      <Row>
+        <Col>
+          <div className="new__register">
+            <label htmlFor="hygieneLevelSelect">Filter by hygiene level</label> <FilterListIcon/>
+            <select
+              className="form-control mt-3"
+              id="hygieneLevelSelect"
+              value={selectedHygieneLevel}
+              onChange={handleHygieneLevelChange}
+            >
+              <option value="">All</option>
+              <option value="Poor Hygiene">Poor Hygiene</option>
+              <option value="Moderate Hygiene">Moderate Hygiene</option>
+              <option value="Extremely Hygienic">Extremely Hygienic</option>
+            </select>
+          </div>
+        </Col>
+        <Col>
+          <div className="new__register">
+            <label htmlFor="searchQuery">Search by restaurant name </label> <SearchIcon/>
+            <input
+              type="text"
+              className="form-control"
+              id="searchQuery"
+              value={searchQuery}
+              onChange={handleSearchQueryChange}
+            />
+          </div>
+        </Col>
+      </Row>
+
+      <table className="table table-bordered mt-4">
+        <thead>
+          <tr>
+            <th>SL.No</th>
+            <th>Restaurant Name</th>
+            <th>Restaurant Address</th>
+            <th>Hygiene Level </th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.map((data, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{data.restaurantName}</td>
+              <td>{data.address}</td>
+              <td
+                className={mapHygieneLevelToColor(data.hygieneLevel)}
+                style={{ fontWeight: 600 }}
+              >
+                {data.hygieneLevel}
+              </td>
+            </tr>
+
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Hygiene;

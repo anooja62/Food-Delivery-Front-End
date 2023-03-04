@@ -152,7 +152,7 @@ const Admin = () => {
                 <StorefrontOutlinedIcon /> Restaurants
               </ListGroup.Item>
               <ListGroup.Item action href='#hygiene'>
-                <FactCheckIcon /> Checklist
+                <FactCheckIcon /> Hygiene Monitoring
               </ListGroup.Item>
 
               <ListGroup.Item action href='#deliveryboy'>
