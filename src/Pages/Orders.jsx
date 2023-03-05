@@ -7,9 +7,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import { userOrder } from "../store/shopping-cart/ordersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import { Modal } from "react-bootstrap";
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListIcon from "@mui/icons-material/FilterList";
 import OnlineDeliveryExperienceForm from "../Components/OnlineDeliveryExperienceForm/OnlineDeliveryExperienceForm";
 const Orders = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,6 +23,7 @@ const Orders = () => {
   const dispatch = useDispatch();
 
   const orderList = useSelector((state) => state.order.orderItems);
+  console.log(orderList);
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -56,8 +57,9 @@ const Orders = () => {
             <Col>
               <div className='mb-3'>
                 <label htmlFor='search' style={{ fontWeight: 600 }}>
-                  Search by restaurant name 
-                </label> <SearchIcon/>
+                  Search by restaurant name
+                </label>{" "}
+                <SearchIcon />
                 <input
                   type='text'
                   className='form-control '
@@ -68,7 +70,8 @@ const Orders = () => {
               </div>
             </Col>
             <Col>
-            <label style={{ fontWeight: 600 }}>Filter by Order Status </label>  <FilterListIcon/> 
+              <label style={{ fontWeight: 600 }}>Filter by Order Status </label>{" "}
+              <FilterListIcon />
               <select
                 className='form-select'
                 value={selectedStatus}
@@ -100,7 +103,7 @@ const Orders = () => {
                 <tbody className='text-center'>
                   {currentItems.map((order) =>
                     order.map((item) => (
-                      <tr key={item.id}>
+                      <tr key={item._id}>
                         <td className='text-center cart__img-box'>
                           <img src={item.image} alt={item.foodname} />
                         </td>
@@ -114,7 +117,17 @@ const Orders = () => {
                           {item.status === 2 && "Delivered"}
                         </td>
                         <td>
-                          {item.status === 2 && (
+                          {item.isReviewed ? (
+                            <p
+                              style={{
+                                lineHeight: "1.5",
+                                textAlign: "center",
+                                fontWeight: 600,
+                              }}
+                            >
+                              Thanks for the feedback !
+                            </p>
+                          ) : item.status === 2 ? (
                             <button
                               style={{
                                 backgroundColor: "#212245",
@@ -130,6 +143,14 @@ const Orders = () => {
                             >
                               Leave feedback
                             </button>
+                          ) : (
+                            <p
+                              style={{ lineHeight: "1.5", textAlign: "center" }}
+                            >
+                              Feedback submission is only possible
+                              <br />
+                              after the item has been delivered
+                            </p>
                           )}
 
                           {showModal && (
@@ -143,6 +164,8 @@ const Orders = () => {
                               <Modal.Body>
                                 <OnlineDeliveryExperienceForm
                                   restaurantId={item.restaurantId}
+                                  orderId={item.orderId}
+                                  setShowModal={setShowModal}
                                 />
                               </Modal.Body>
                             </Modal>

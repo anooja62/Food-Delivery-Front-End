@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import axios from "../../axios";
 import { useCookies } from "react-cookie";
-function OnlineDeliveryExperienceForm({ restaurantId }) {
+function OnlineDeliveryExperienceForm({ restaurantId,orderId,setShowModal }) {
  
   const [foodPackaging, setFoodPackaging] = useState("");
   const [foodHandling, setFoodHandling] = useState("");
@@ -32,6 +32,7 @@ function OnlineDeliveryExperienceForm({ restaurantId }) {
     const feedback = {
       userId: userId,
       restaurantId:restaurantId,
+      orderId:orderId,
       foodPackaging: foodPackagingRef.current.value,
       foodHandling: foodHandlingRef.current.value,
       foodQuality: foodQualityRef.current.value,
@@ -42,6 +43,8 @@ function OnlineDeliveryExperienceForm({ restaurantId }) {
 
     try {
       await axios.post("/feed/feedback", feedback);
+      console.log("Submitting feedback...");
+    setShowModal(false);
     } catch (err) {
       console.log(err);
     }
