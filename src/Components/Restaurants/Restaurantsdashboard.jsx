@@ -9,7 +9,7 @@ import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
 import LocalGroceryStoreOutlinedIcon from "@mui/icons-material/LocalGroceryStoreOutlined";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import CleanHandsIcon from '@mui/icons-material/CleanHands';
 import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import axios from "../../axios";
@@ -52,6 +52,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SentimentAnalysis from "../Sentiment/SentimentAnalysis";
 import ChecklistAutomation from "../Admin/ChecklistAutomation/ChecklistAutomation";
 import Payments from "./Payments/Payments";
+import HygieneReport from "./HygieneReport/HygieneReport";
 const initialValues = {
   name: "",
   phone: "",
@@ -210,6 +211,11 @@ const Restaurantsdashboard = () => {
           </Tab>
           <Tab>
             <p>
+              <CleanHandsIcon /> Hygiene Report
+            </p>
+          </Tab>
+          <Tab>
+            <p>
               <StarHalfOutlinedIcon /> Reviews
             </p>
           </Tab>
@@ -306,6 +312,14 @@ const Restaurantsdashboard = () => {
               <ChecklistAutomation/>
             </div>
           </Col>
+        </TabPanel>
+        <TabPanel>
+          
+            <div className="panel-content">            
+              <h2>Hygiene Report</h2>
+              <HygieneReport/>
+            </div>
+         
         </TabPanel>
         <TabPanel>
           <div
