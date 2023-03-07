@@ -234,11 +234,7 @@ const Restaurantsdashboard = () => {
               <MarkEmailUnreadIcon /> Messages
             </p>
           </Tab>
-          <Tab>
-            <p>
-              <PrintIcon /> Bill
-            </p>
-          </Tab>
+          
           <Tab>
             <p>
               <DescriptionIcon /> Reports
@@ -543,14 +539,7 @@ const Restaurantsdashboard = () => {
             </div>
           </div>
         </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <div>
-              <h2 className="text-center">Bill Generation</h2>
-              <RestaurantBarcode />
-            </div>
-          </div>
-        </TabPanel>
+      
         <TabPanel>
           <div className="panel-content">
             <div>

@@ -216,7 +216,8 @@ function OnlineDeliveryExperienceForm({ restaurantId,orderId,setShowModal }) {
                 <option value='good'>Good</option>
                 <option value='average'>Average</option>
                 <option value='poor'>Poor</option>
-                <option value='very-poor'>Very Poor</option>
+                <option value='veryPoor'>Very Poor</option>
+
               </select>
             </div>
           </Col>
