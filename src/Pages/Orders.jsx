@@ -13,13 +13,16 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import OnlineDeliveryExperienceForm from "../Components/OnlineDeliveryExperienceForm/OnlineDeliveryExperienceForm";
 const Orders = () => {
   const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
-  const handleButtonClick = () => {
+  const handleButtonClick = (restaurantId, orderId) => {
     setShowModal(true);
+    setSelectedItem({ restaurantId, orderId });
   };
+  
   const dispatch = useDispatch();
 
   const orderList = useSelector((state) => state.order.orderItems);
@@ -101,79 +104,103 @@ const Orders = () => {
                   </tr>
                 </thead>
                 <tbody className='text-center'>
-                  {currentItems.map((order) =>
-                    order.map((item) => (
+                  {currentItems.map((group) => {
+                    const rowspan = group.length;
+                    return group.map((item, index) => (
                       <tr key={item._id}>
-                        <td className='text-center cart__img-box'>
-                          <img src={item.image} alt={item.foodname} />
-                        </td>
-                        <td>{item.foodname}</td>
-                        <td>{item.restaurantName}</td>
+                        {index === 0 && (
+                          <>
+                            <td className='text-center cart__img-box'>
+                              <img src={item.image} alt={item.foodname} />
+                            </td>
+                            <td> {item.foodname}</td>
+                            <td rowSpan={rowspan}>{item.restaurantName}</td>
+                          </>
+                        )}
+                        {index > 0 && (
+                          <>
+                            <td className='text-center cart__img-box'>
+                              <img src={item.image} alt={item.foodname} />
+                            </td>
+                            <td> {item.foodname}</td>
+                          </>
+                        )}
                         <td>{item.price}</td>
                         <td>{item.quantity}</td>
-                        <td style={{ fontWeight: 600 }}>
-                          {item.status === 0 && "Order Confirmed"}
-                          {item.status === 1 && "Out for delivery"}
-                          {item.status === 2 && "Delivered"}
-                        </td>
-                        <td>
-                          {item.isReviewed ? (
-                            <p
-                              style={{
-                                lineHeight: "1.5",
-                                textAlign: "center",
-                                fontWeight: 600,
-                              }}
-                            >
-                              Thanks for the feedback !
-                            </p>
-                          ) : item.status === 2 ? (
-                            <button
-                              style={{
-                                backgroundColor: "#212245",
-                                border: "none",
-                                color: "white",
-                                padding: "10px 20px",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                                margin: "0 auto",
-                                display: "block",
-                              }}
-                              onClick={handleButtonClick}
-                            >
-                              Leave feedback
-                            </button>
-                          ) : (
-                            <p
-                              style={{ lineHeight: "1.5", textAlign: "center" }}
-                            >
-                              Feedback submission is only possible
-                              <br />
-                              after the item has been delivered
-                            </p>
-                          )}
+                        {index === 0 && (
+                          <>
+                            <td style={{ fontWeight: 600 }} rowSpan={rowspan}>
+                              {item?.status === 0 && "Order Confirmed"}
 
-                          {showModal && (
-                            <Modal
-                              show={showModal}
-                              onHide={() => setShowModal(false)}
-                            >
-                              <Modal.Header closeButton>
-                                <Modal.Title>Feedback Form</Modal.Title>
-                              </Modal.Header>
-                              <Modal.Body>
-                                <OnlineDeliveryExperienceForm
-                                  restaurantId={item.restaurantId}
-                                  orderId={item.orderId}
-                                  setShowModal={setShowModal}
-                                />
-                              </Modal.Body>
-                            </Modal>
-                          )}
-                        </td>
+                              {item?.status === 1 && "Out for delivery"}
+                              {item?.status === 2 && "Delivered"}
+                              {item?.status === 3 &&
+                                `${item.restaurantName} accepted your order`}
+                            </td>
+                            <td rowSpan={rowspan}>
+                              {item?.isReviewed ? (
+                                <p
+                                  style={{
+                                    lineHeight: "1.5",
+                                    textAlign: "center",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  Thanks for the feedback !
+                                </p>
+                              ) : item?.status === 2 ? (
+                                <button
+                                  style={{
+                                    backgroundColor: "#212245",
+                                    border: "none",
+                                    color: "white",
+                                    padding: "10px 20px",
+                                    borderRadius: "5px",
+                                    cursor: "pointer",
+                                    margin: "0 auto",
+                                    display: "block",
+                                  }}
+                                  onClick={() => handleButtonClick(item.restaurantId, item.orderId)}
+
+                                >
+                                  Leave feedback
+                                </button>
+                              ) : (
+                                <p
+                                  style={{
+                                    lineHeight: "1.5",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Feedback submission is only possible
+                                  <br />
+                                  after the item has been delivered
+                                </p>
+                              )}
+
+                              {showModal && (
+                                <Modal
+                                  show={showModal}
+                                  onHide={() => setShowModal(false)}
+                                >
+                                  <Modal.Header closeButton>
+                                    <Modal.Title>Feedback Form</Modal.Title>
+                                  </Modal.Header>
+                                  <Modal.Body>
+                                    <OnlineDeliveryExperienceForm
+                                      restaurantId={selectedItem.restaurantId}
+                                      orderId={selectedItem.orderId}
+                                      setShowModal={setShowModal}
+                                    />
+                                  </Modal.Body>
+                                </Modal>
+                              )}
+                            </td>
+                          </>
+                        )}
                       </tr>
-                    ))
-                  )}
+                    ));
+                  })}
                 </tbody>
               </table>
 
