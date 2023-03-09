@@ -50,11 +50,12 @@ const Orders = () => {
     );
     doc.setFontSize(9);
     doc.text(
-      `Date: ${new Date().toLocaleDateString()}`,
+      `Generated on: ${new Date().toLocaleString()}`,
       doc.internal.pageSize.width / 2,
       50,
       { align: "center" }
     );
+    
     
 
     doc.autoTable({
@@ -98,7 +99,7 @@ const Orders = () => {
 
     doc.setFontSize(14);
     doc.text(
-      `Total Amount: ${totalAmount}`,
+      `Total Amount: Rs. ${totalAmount}`,
       doc.internal.pageSize.width - 14,
       doc.autoTable.previous.finalY + 10,
       { align: "right" }

@@ -60,6 +60,10 @@ const DeliveryStaff = () => {
   const deliveryboyPhone = cookies.deliveryboyPhone;
   const deliveryboyEmail = cookies.deliveryboyEmail;
   const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
+ 
+  const [orderIds, setOrderIds] = useState([]);
+  
+
 
   const restaurantId = cookies.restaurantId;
   const acceptedOrder = useSelector((state) => state.order.acceptedOrders);
@@ -261,6 +265,7 @@ const DeliveryStaff = () => {
             </table>
           </div>
         </TabPanel>
+
         <TabPanel>
           <div className='panel-content'>
             <h2>Order History</h2>

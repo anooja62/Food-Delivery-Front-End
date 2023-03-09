@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "../../../axios";
-import jsPDF from "jspdf";
 import { Modal, Button } from "react-bootstrap";
 
 const Inspection = () => {
   const [scheduledInspections, setScheduledInspections] = useState([]);
+
   useEffect(() => {
     axios
       .get("/insp/scheduled-restaurants")
@@ -24,47 +24,26 @@ const Inspection = () => {
     inspectorName: "",
     inspectionDate: "",
     inspectionResults: "",
+    inspectionRating: "",
   });
 
-  const handleGenerateReport = () => {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.width;
-    const pageHeight = doc.internal.pageSize.height;
-  
-    // Add border
-    doc.setLineWidth(1);
-    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
-  
-    // Add main title
-    const restaurantName = "Restaurant Name";
-    const titleFontSize = 20;
-    const titleWidth = doc.widthOfString(restaurantName, { fontSize: titleFontSize });
-    doc.setFontSize(titleFontSize);
-    doc.text(restaurantName, (pageWidth - titleWidth) / 2, 30);
-  
-    // Add inspector name and inspection date
-    doc.setFontSize(12);
-    doc.text(`Inspector Name: ${inspectionInfo.inspectorName}`, 10, 50);
-    doc.text(`Inspection Date: ${inspectionInfo.inspectionDate}`, 10, 60);
-  
-    // Add inspection results
-    doc.text(`Inspection Results: ${inspectionInfo.inspectionResults}`, 10, 80);
-  
-    // Add generated date and time in footer
-    const generatedDate = new Date().toLocaleString();
-    const footerFontSize = 10;
-    const footerText = `Generated on ${generatedDate}`;
-    const footerWidth = doc.widthOfString(footerText, { fontSize: footerFontSize });
-    doc.setFontSize(footerFontSize);
-    doc.text(footerText, (pageWidth - footerWidth) / 2, pageHeight - 20);
-  
-    doc.save("inspection-report.pdf");
-    setShowModal(false);
-  };
-  
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
-
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    axios
+      .put(
+        `insp/update-inspection-report/${inspectionInfo._id}`,
+        inspectionInfo
+      )
+      .then((response) => {
+        handleClose();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <h2>Scheduled Inspections</h2>
@@ -136,6 +115,13 @@ const Inspection = () => {
                       }}
                       onClick={() => {
                         setShowModal(true);
+                        setInspectionInfo({
+                          inspectorName: "",
+                          inspectionDate: "",
+                          inspectionResults: "",
+                          inspectionRating: "",
+                          _id: inspection._id,
+                        });
                       }}
                     >
                       Report
@@ -152,14 +138,7 @@ const Inspection = () => {
           <Modal.Title>Generate Report</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form
-            onSubmit={handleGenerateReport}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <form>
             <div style={{ display: "inline-flex", marginBottom: "1rem" }}>
               <label style={{ fontWeight: 600 }}>
                 Inspector Name:
@@ -193,7 +172,24 @@ const Inspection = () => {
               </label>
             </div>
             <label style={{ marginBottom: "1rem", fontWeight: 600 }}>
-              Inspection Results:
+              Rating Out of 5:
+              <input
+                type='number'
+                value={inspectionInfo.rating}
+                onChange={(e) =>
+                  setInspectionInfo({
+                    ...inspectionInfo,
+                    inspectionRating: Math.min(parseInt(e.target.value), 5),
+                  })
+                }
+                min='0'
+                max='5'
+                style={{ marginLeft: "0.5rem" }}
+              />
+            </label>
+
+            <label style={{ marginBottom: "1rem", fontWeight: 600 }}>
+              Comments:
               <textarea
                 value={inspectionInfo.inspectionResults}
                 onChange={(e) =>
@@ -204,31 +200,19 @@ const Inspection = () => {
                 }
                 style={{
                   marginLeft: "0.5rem",
-                  height: "10rem",
-                  width: "30rem",
+
+                  height: "5rem",
+                  width: "20rem",
                 }}
               />
             </label>
-            <button
-              type='submit'
-              style={{
-                backgroundColor: "blue",
-                color: "white",
-                padding: "0.5rem 1rem",
-                border: "none",
-                borderRadius: "0.3rem",
-              }}
-             
-            >
-              Save Report
-            </button>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleGenerateReport}>
+          <Button variant='primary' onClick={handleUpdate}>
             Download Report
           </Button>
         </Modal.Footer>

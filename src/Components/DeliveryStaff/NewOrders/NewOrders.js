@@ -83,7 +83,7 @@ const NewOrders = () => {
   const handleOutForDelivery = (orderId) => {
     dispatch(
       outForDelivery({
-       orderId : orderId,
+        orderId: orderId,
       })
     );
   };
@@ -162,53 +162,60 @@ const NewOrders = () => {
       </div>
 
       <div>
-        {deliveryOrder.map((data) => {
-          const lastIndex = data.length - 1;
-         
-          
-          return (
-            <table className='table table-bordered'>
-              <thead>
-                <tr>
-                  <th>Food Items</th>
-                  <th>Restaurant Name</th>
-                  <th>Restaurant Address</th>
-                  <th>Customer Name</th>
-                  <th>Customer Phone</th>
-                  <th>Customer Address</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{data[1].foodname}</td>
-                  <td>{foundRestaurant(data[1].restaurantId).label}</td>
-                  <td>{foundRestaurant(data[1].restaurantId).address}</td>
-                  <td>{data[lastIndex]?.address?.name}</td>
-                  <td>{data[lastIndex]?.address?.phone}</td>
-                  <td>{data[lastIndex]?.address?.address}</td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleOutForDelivery(data[0].orderId)
-                      }
-                      style={{
-                        padding: "7px 10px",
-                        backgroundColor: "#E67E22",
-                        color: "white",
-                        fontWeight: "600",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Accept Order
-                    </button>
-                   
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          );
-        })}
+        <table className='table table-bordered'>
+          <thead>
+            <tr>
+              <th>SL.No</th>
+              <th>Food Items</th>
+              <th>Restaurant Name</th>
+              <th>Restaurant Address</th>
+              <th>Customer Name</th>
+              <th>Customer Phone</th>
+              <th>Customer Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {deliveryOrder.map((data, index) => {
+              const lastIndex = data.length - 1;
+              return (
+                <>
+                  {data.map((item, itemIndex) => (
+                    <tr key={`${index}-${itemIndex}`}>
+                      {itemIndex === 0 && (
+                        <td rowSpan={data.length}>{index + 1}</td>
+                      )}
+                      <td>{item.foodname}</td>
+
+                      {itemIndex === 0 && (
+                        <>
+                          <td rowSpan={data.length}>{foundRestaurant(item.restaurantId).label}</td>
+                          <td rowSpan={data.length}>{foundRestaurant(item.restaurantId).address}</td>
+                          <td rowSpan={data.length}>{data[lastIndex]?.address?.name}</td>
+                          <td rowSpan={data.length}>{data[lastIndex]?.address?.phone}</td>
+                          <td rowSpan={data.length}>{data[lastIndex]?.address?.address}</td>
+                          <td rowSpan={data.length}>
+                            <button
+                              onClick={() => handleOutForDelivery(item.orderId)}
+                              style={{
+                                backgroundColor: "blue",
+                                color: "white",
+                                padding: "10px",
+                                borderRadius: "5px",
+                              }}
+                            >
+                              Accept Order
+                            </button>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  ))}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );
