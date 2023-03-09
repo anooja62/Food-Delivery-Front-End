@@ -213,7 +213,7 @@ const Inspection = () => {
             Close
           </Button>
           <Button variant='primary' onClick={handleUpdate}>
-            Download Report
+            Save Report
           </Button>
         </Modal.Footer>
       </Modal>

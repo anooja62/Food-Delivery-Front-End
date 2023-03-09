@@ -42,7 +42,7 @@ import {
   deliveryOrder,
   deliveredOrder,
 } from "../../store/shopping-cart/ordersSlice";
-import PrintIcon from "@mui/icons-material/Print";
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import DescriptionIcon from "@mui/icons-material/Description";
 import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
 import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
@@ -53,6 +53,7 @@ import SentimentAnalysis from "../Sentiment/SentimentAnalysis";
 import ChecklistAutomation from "../Admin/ChecklistAutomation/ChecklistAutomation";
 import Payments from "./Payments/Payments";
 import HygieneReport from "./HygieneReport/HygieneReport";
+import InspectionReport from "./InspectionReport/InspectionReport";
 const initialValues = {
   name: "",
   phone: "",
@@ -206,12 +207,17 @@ const Restaurantsdashboard = () => {
           </Tab>
           <Tab>
             <p>
-              <FactCheckIcon /> Checklist
+              <FactCheckIcon />Hygiene Checklist
             </p>
           </Tab>
           <Tab>
             <p>
-              <CleanHandsIcon /> Hygiene Report
+              <CleanHandsIcon /> Inspection Report
+            </p>
+          </Tab>
+          <Tab>
+            <p>
+              <ThumbsUpDownIcon /> Feedback Report
             </p>
           </Tab>
           <Tab>
@@ -311,8 +317,16 @@ const Restaurantsdashboard = () => {
         </TabPanel>
         <TabPanel>
           
+          <div className="panel-content">            
+            <h2>Hygiene Inspection Report</h2>
+           <InspectionReport/>
+          </div>
+       
+      </TabPanel>
+        <TabPanel>
+          
             <div className="panel-content">            
-              <h2>Hygiene Report</h2>
+              <h2>Customer Feedback Report</h2>
               <HygieneReport/>
             </div>
          

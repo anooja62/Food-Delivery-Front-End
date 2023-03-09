@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../../../axios';
+
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { mostPopularFood } from '../../../store/shopping-cart/ordersSlice';
