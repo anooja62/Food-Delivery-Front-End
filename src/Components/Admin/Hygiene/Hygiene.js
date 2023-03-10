@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 const Hygiene = () => {
   const [restaurantData, setRestaurantData] = useState([]);
+  const [accuracy, setAccuracy] = useState(null);
   const [selectedHygieneLevel, setSelectedHygieneLevel] = useState("");
   const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,6 +24,18 @@ const Hygiene = () => {
       }
     };
     fetchRestaurantData();
+    const fetchAccuracy = async () => {
+      try {
+        const response = await axios.get("/feed/accuracy");
+        console.log("accuracy response:", response.data);
+        const accuracy = response.data.accuracy;
+        setAccuracy(accuracy);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAccuracy();
   }, []);
 
   const mapHygieneLevelToColor = (hygieneLevel) => {
@@ -67,7 +80,30 @@ const Hygiene = () => {
   };
   return (
     <div>
-      <h2>Hygiene Prediction</h2>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h2>Hygiene Prediction</h2>
+        <div
+          style={{
+            textAlign: "right",
+            color: "green",
+            fontSize: "20px",
+            fontWeight: "600",
+          }}
+        >
+          <div
+            style={{
+              color: "green",
+              fontSize: "20px",
+              border: "1px solid black",
+              padding: "10px",
+            }}
+          >
+            {accuracy === 1 && <p>Accuracy of prediction : {accuracy} , all predictions were correct</p>}
+            {accuracy !== 1 && <p>Accuracy: {accuracy.toFixed(2)}</p>}
+          </div>
+        </div>
+      </div>
+
       <Row>
         <Col>
           <div className='new__register'>

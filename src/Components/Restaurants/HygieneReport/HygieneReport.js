@@ -95,8 +95,8 @@ const HygieneReport = () => {
     <div>
       <Row>
         <Col>
-          <table className='table table-bordered mt-4'>
-            <thead>
+          <table className='table table-bordered mt-4' style={{ border: '2px solid black' }}>
+          <thead style={{ backgroundColor: '#f0f0f0' }}>
               <tr>
                 <th>Feature</th>
                 <th>Value</th>

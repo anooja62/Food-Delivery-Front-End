@@ -4,6 +4,12 @@
 .table td {
     text-align: center;
 }
+.table{
+    border: '2px solid black'
+  }
+  .table thead{
+    background: '#f0f0f0'
+  }
 .cart__img-box {
     width: 80px;
 }

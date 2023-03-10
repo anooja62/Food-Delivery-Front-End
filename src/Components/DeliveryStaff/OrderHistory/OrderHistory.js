@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import Button from "react-bootstrap/Button";
 const OrderHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
+  const rowsPerPage = 3;
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const [cookies, removeCookie] = useCookies(null);
@@ -40,15 +40,17 @@ const OrderHistory = () => {
   }
   return (
     <div>
-      <table className='table table-bordered'>
-        <thead>
+      <table
+        className='table table-bordered mt-4'
+        style={{ border: "2px solid black" }}
+      >
+        <thead style={{ backgroundColor: "#f0f0f0" }}>
           <tr>
             <th>SL.No</th>
             <th>Customer Name</th>
             <th>Food Items</th>
 
             <th>Address</th>
-           
           </tr>
         </thead>
         <tbody>
@@ -67,7 +69,6 @@ const OrderHistory = () => {
                         <td rowSpan={data.length}>{customerName}</td>
                         <td>{item.foodname}</td>
                         <td rowSpan={data.length}>{address}</td>
-                       
                       </>
                     )}
                     {subIndex > 0 && (

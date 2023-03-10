@@ -6,7 +6,12 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+table{
+  border: '2px solid black'
+}
+table thead{
+  background: '#f0f0f0'
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

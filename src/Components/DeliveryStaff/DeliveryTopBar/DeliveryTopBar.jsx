@@ -1,14 +1,15 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import "./deliverytopbar.css";
 import { useCookies } from "react-cookie";
-
-export default function DeliveryTopbar() {
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Badge from "@mui/material/Badge";
+export default function DeliveryTopbar({ orderCount }) {
   const [cookies, setCookie] = useCookies(null);
   const deliveryboyName = cookies.deliveryboyName;
   const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
-
+  const [openNotification, setOpenNotification] = useState(false);
   const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -18,22 +19,58 @@ export default function DeliveryTopbar() {
     second: "numeric",
     hour12: true,
   });
-
+  const handleNotificationIconClick = () => {
+    setOpenNotification(!openNotification);
+  };
   return (
-    <div className='topbar'>
+    <div className='topbar' style={{ backgroundColor: "white" }}>
       <div className='topbarWrapper'>
         <div className='topLeft'>
           <div className='logo'></div>
           <h1>{deliveryboyName}</h1>
         </div>
 
-        <div className='topRight'>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <div className='dateTime'>{currentDate}</div>
-          <div className='topAvatar'>
-            <img src={deliveryboyProfileImg} alt='' />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "1rem",
+            }}
+          >
+            <Badge badgeContent={orderCount} color='error'>
+              <NotificationsIcon
+                fontSize='large'
+                onClick={handleNotificationIconClick}
+              />
+            </Badge>
+            <img
+              className='topAvatar'
+              src={deliveryboyProfileImg}
+              alt=''
+              style={{ marginLeft: "1rem" }}
+            />
           </div>
         </div>
       </div>
+      {openNotification && (
+        <div
+          className='notificationPanel'
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            color: "black",
+            padding: "10px",
+            position: "absolute",
+            top: "60px",
+            right: "10px",
+            borderRadius: "5px",
+            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <p>You Have {orderCount} new Orders!</p>
+        </div>
+      )}
     </div>
   );
 }

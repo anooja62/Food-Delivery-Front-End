@@ -163,8 +163,9 @@ const NewOrders = () => {
       </div>
 
       <div>
-        <table className='table table-bordered'>
-          <thead>
+      <table className='table table-bordered mt-4' style={{ border: '2px solid black' }}>
+      <thead style={{ backgroundColor: '#f0f0f0' }}>
+
             <tr>
               <th>SL.No</th>
               <th>Food Items</th>

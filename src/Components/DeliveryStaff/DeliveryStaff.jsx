@@ -8,7 +8,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import MopedIcon from "@mui/icons-material/Moped";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Row, Col, Container } from "react-bootstrap";
-
+import SavingsIcon from '@mui/icons-material/Savings';
 import Paper from "@mui/material/Paper";
 import { useCookies } from "react-cookie";
 import { storage } from "../../Pages/firebase";
@@ -27,6 +27,7 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deliveryOrder,
+  loacationBasedOrder,
   deliveryboyAcceptedOrder,
   deliveredOrder,
   makeDeliverd,
@@ -36,6 +37,7 @@ import { useEffect } from "react";
 import "../Location/Location.css";
 import NewOrders from "./NewOrders/NewOrders";
 import OrderHistory from "./OrderHistory/OrderHistory";
+import Wages from "./Wages/Wages";
 const DeliveryStaff = () => {
   const [address, setAddress] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -58,6 +60,7 @@ const DeliveryStaff = () => {
   const [cookies, removeCookie] = useCookies(null);
   const deliveryboyId = cookies.deliveryboyId;
   const deliveryboyName = cookies.deliveryboyName;
+  const deliveryboyLocation = cookies.deliveryboyLocation;
   const deliveryboyPhone = cookies.deliveryboyPhone;
   const deliveryboyEmail = cookies.deliveryboyEmail;
   const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
@@ -66,11 +69,14 @@ const DeliveryStaff = () => {
   const acceptedOrder = useSelector((state) => state.order.acceptedOrders);
   const deliveryOrderData = useSelector((state) => state.order.deliveryOrder);
   const deliveredOrders = useSelector((state) => state.order.deliveredOrders);
+  const newOrderLength = deliveredOrders.length;
   const parsedRestaurents = useSelector(
     (state) => state.restaurant.parsedRestaurant
   );
+  const deliveryOrder = useSelector((state) => state.order.locationOrder);
   useEffect(() => {
     dispatch(deliveryboyAcceptedOrder(deliveryboyId));
+    dispatch(loacationBasedOrder(deliveryboyLocation));
     dispatch(getParsedRestaurants());
     dispatch(deliveredOrder());
   }, []);
@@ -168,7 +174,7 @@ const DeliveryStaff = () => {
   };
   return (
     <>
-      <DeliveryTopbar />
+      <DeliveryTopbar orderCount={newOrderLength}/>
       <section>
         <Container>
           <Tabs>
@@ -182,6 +188,11 @@ const DeliveryStaff = () => {
               <Tab>
                 <p>
                   <MopedIcon /> Accepted Orders
+                </p>
+              </Tab>
+              <Tab>
+                <p>
+                  <SavingsIcon /> My Earnings
                 </p>
               </Tab>
               <Tab>
@@ -228,8 +239,9 @@ const DeliveryStaff = () => {
             <TabPanel>
               <div className='panel-content'>
                 <h2>Accepted Order details</h2>
-                <table className='table table-bordered mt-4'>
-                  <thead>
+                <table className='table table-bordered mt-4' style={{ border: '2px solid black' }}>
+                <thead style={{ backgroundColor: '#f0f0f0' }}>
+
                     <tr>
                       <th>SL.No</th>
                       <th>Customer Name</th>
@@ -280,7 +292,12 @@ const DeliveryStaff = () => {
                 </table>
               </div>
             </TabPanel>
-
+            <TabPanel>
+              <div className='panel-content'>
+                <h2>My Earnings</h2>
+                <Wages/>
+              </div>
+            </TabPanel>
             <TabPanel>
               <div className='panel-content'>
                 <h2>Order History</h2>

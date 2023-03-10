@@ -27,7 +27,7 @@ const Orders = () => {
 
   const orderList = useSelector((state) => state.order.orderItems);
   console.log(orderList);
-  const itemsPerPage = 3;
+  const itemsPerPage = 2;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -91,8 +91,8 @@ const Orders = () => {
 
           <Row>
             <Col lg='12'>
-              <table className='table table-bordered'>
-                <thead>
+            <table className='table table-bordered mt-4' style={{ border: '2px solid black' }}>
+            <thead style={{ backgroundColor: '#f0f0f0' }}>
                   <tr>
                     <th>SL.No</th>
                     <th>Image</th>
@@ -109,7 +109,7 @@ const Orders = () => {
                     const rowspan = group.length;
                     let counter = 0;
                     return group.map((item, index) => {
-                      // Only increment counter for the first item in the group
+                      
                       if (index === 0) {
                         counter =
                           (currentPage - 1) * itemsPerPage + groupIndex + 1;
