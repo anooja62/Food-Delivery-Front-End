@@ -1,24 +1,15 @@
-/** @format */
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./top.css";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Badge from "@mui/material/Badge";
 import { useCookies } from "react-cookie";
-import { useDispatch, useSelector } from "react-redux";
-import { restaurantOrder } from "../../../store/shopping-cart/ordersSlice";
 
 export default function Top({ orderCount }) {
   const [cookies, setCookie] = useCookies(null);
 
-  const restaurantId = cookies.restaurantId;
   const restaurantName = cookies.restaurantName;
-  const dispatch = useDispatch();
-  const orders = useSelector((state) => state.order.restaurantOrders);
 
-  useEffect(() => {
-    dispatch(restaurantOrder(restaurantId));
-  }, []);
+  const [openNotification, setOpenNotification] = useState(false);
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -29,6 +20,10 @@ export default function Top({ orderCount }) {
     second: "numeric",
     hour12: true,
   });
+
+  const handleNotificationIconClick = () => {
+    setOpenNotification(!openNotification);
+  };
 
   return (
     <div className='topbar' style={{ backgroundColor: "white" }}>
@@ -43,11 +38,31 @@ export default function Top({ orderCount }) {
           </div>
           <div className='topAvatar'>
             <Badge badgeContent={orderCount} color='error'>
-              <NotificationsIcon fontSize='large' />
+              <NotificationsIcon
+                fontSize='large'
+                onClick={handleNotificationIconClick}
+              />
             </Badge>
           </div>
         </div>
       </div>
+      {openNotification && (
+        <div
+          className='notificationPanel'
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            color: "black",
+            padding: "10px",
+            position: "absolute",
+            top: "60px",
+            right: "10px",
+            borderRadius: "5px",
+            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <p>You Have {orderCount} new Orders!</p>
+        </div>
+      )}
     </div>
   );
 }
