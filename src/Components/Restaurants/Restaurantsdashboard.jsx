@@ -18,7 +18,7 @@ import Modal from "react-bootstrap/Modal";
 import ComboUI from "./Combo/ComboUI";
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import FastfoodIcon from "@mui/icons-material/Fastfood";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col,Container } from "react-bootstrap";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
@@ -44,7 +44,7 @@ import {
 } from "../../store/shopping-cart/ordersSlice";
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import DescriptionIcon from "@mui/icons-material/Description";
-import RestaurantBarcode from "./RestaurantBarcode/RestaurantBarcode";
+
 import RestaurantExcel from "./RestaurantExcel/RestaurantExcel";
 
 
@@ -63,8 +63,8 @@ const initialValues = {
 };
 
 const Restaurantsdashboard = () => {
-  const [sentimentScore, setSentimentScore] = useState(0);
-  const [sentimentType, setSentimentType] = useState("");
+  const restaurantOrders = useSelector((state) => state.order.restaurantOrders);
+  const restaurantOrderLength = restaurantOrders.length;
   const reviewList = useSelector((state) => state.foodreview.list);
   const messageList = useSelector((state) => state.message.list);
 
@@ -125,7 +125,7 @@ const Restaurantsdashboard = () => {
 
 
 
-  //update details
+  
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -176,7 +176,10 @@ const Restaurantsdashboard = () => {
   };
   return (
     <div>
-      <Top />
+      <Top orderCount={restaurantOrderLength} />
+
+      <section>
+        <Container>
       <Tabs>
         <TabList>
           <Tab>
@@ -562,6 +565,8 @@ const Restaurantsdashboard = () => {
           </div>
         </TabPanel>
       </Tabs>
+      </Container>
+      </section>
     </div>
   );
 };

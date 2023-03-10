@@ -1,19 +1,27 @@
 import React from "react";
 import "./topbar.css";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
 
 export default function Topbar() {
- 
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  });
   return (
-    <div className="topbar">
+    <div className="topbar" style={{ backgroundColor: 'blue' }}>
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">Admin</span>
+          <span className="logo" style={{ color: 'white' }}>Admin</span>
         </div>
         <div className="topRight">
          
-         
-          <AdminPanelSettingsIcon fontSize="large"/>
+        <div className='dateTime' style={{color:'white'}}>{currentDate}</div>
+          
         </div>
       </div>
     </div>

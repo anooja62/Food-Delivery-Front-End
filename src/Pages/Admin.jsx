@@ -126,17 +126,18 @@ const Admin = () => {
   }
   return (
     <div>
-      <Container fluid>
+     
         <Topbar />
-      </Container>
-      <br></br>
+     
+      <section>
+        <Container>
       <Tab.Container
         id='list-group-tabs-example'
         defaultActiveKey='#'
         className='tab'
       >
         <Row>
-          <Col sm={2}>
+          <Col >
             <ListGroup>
               <ListGroup.Item action href='#'>
                 <DashboardOutlinedIcon /> Dashboard
@@ -426,6 +427,8 @@ const Admin = () => {
           </Col>
         </Row>
       </Tab.Container>
+      </Container>
+      </section>
     </div>
   );
 };

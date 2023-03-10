@@ -23,7 +23,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import About from "./About/About";
 import Details from "./Details/Details";
-
+import { Container } from "react-bootstrap";
 import AddReview from "./Review/AddReview";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SearchIcon from "@mui/icons-material/Search";
@@ -84,8 +84,9 @@ const RestaurantUI = () => {
   };
 
   return (
-    <div>
-      <div style={{ marginLeft: 35 }}>
+    <section>
+   <Container>
+      <div >
         <Details />
       </div>
 
@@ -180,7 +181,8 @@ const RestaurantUI = () => {
           </TabPanel>
         </Tabs>
       </div>
-    </div>
+      </Container>
+    </section>
   );
 };
 

@@ -1,12 +1,13 @@
 .topbar {
     width: 100%;
     height: 90px;
-    background-color: white;
+    background-color: #E67E22;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 99999;
+    box-shadow: 2px 2px 2px 2px #2b231b9f;
   }
-  
+ 
   .topbarWrapper {
     height: 100%;
     padding: 0px 20px;
@@ -22,7 +23,7 @@
 .dateTime {
     margin-right: 10px;
     font-size: 1.2rem;
-    color: #555;
+    color: #110101;
 }
 
 .topbarIconContainer {

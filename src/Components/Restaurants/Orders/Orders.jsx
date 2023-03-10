@@ -20,6 +20,7 @@ const Orders = () => {
   const restaurantId = cookies.restaurantId;
   const restaurantName = cookies.restaurantName;
   const restaurantOrders = useSelector((state) => state.order.restaurantOrders);
+  
 
   const dispatch = useDispatch();
   const tableRef = useRef(null);
