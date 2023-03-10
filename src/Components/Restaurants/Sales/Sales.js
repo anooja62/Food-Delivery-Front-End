@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-
+import {Row,Col} from 'react-bootstrap';
 const Sales = () => {
   const [salesData, setSalesData] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
@@ -60,7 +60,9 @@ const Sales = () => {
           </option>
         ))}
       </select>
-      <table className='table table-bordered'>
+      <Row>
+        <Col>
+        <table className='table table-bordered'>
         <thead>
           <tr>
             <th>Month</th>
@@ -115,7 +117,13 @@ const Sales = () => {
             })}
         </tbody>
       </table>
-      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+        </Col>
+        <Col>
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+        </Col>
+      </Row>
+     
+     
     </div>
   );
 };

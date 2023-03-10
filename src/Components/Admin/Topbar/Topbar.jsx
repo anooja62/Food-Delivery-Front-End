@@ -16,7 +16,7 @@ export default function Topbar() {
     <div className="topbar" style={{ backgroundColor: 'blue' }}>
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo" style={{ color: 'white' }}>Admin</span>
+          <span className="logo" style={{ color: 'white' }}>DELIORDER ADMIN</span>
         </div>
         <div className="topRight">
          

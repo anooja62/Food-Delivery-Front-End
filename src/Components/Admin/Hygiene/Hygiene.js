@@ -99,7 +99,7 @@ const Hygiene = () => {
             }}
           >
             {accuracy === 1 && <p>Accuracy of prediction : {accuracy} , all predictions were correct</p>}
-            {accuracy !== 1 && <p>Accuracy: {accuracy.toFixed(2)}</p>}
+           
           </div>
         </div>
       </div>
