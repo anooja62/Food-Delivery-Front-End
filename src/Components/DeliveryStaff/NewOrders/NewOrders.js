@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../axios";
+import BeenhereIcon from "@mui/icons-material/Beenhere";
 import {
   loacationBasedOrder,
   outForDelivery,
@@ -172,7 +173,7 @@ const NewOrders = () => {
               <th>Customer Name</th>
               <th>Customer Phone</th>
               <th>Customer Address</th>
-              <th>Action</th>
+              <th>Accept Order</th>
             </tr>
           </thead>
           <tbody>
@@ -189,23 +190,25 @@ const NewOrders = () => {
 
                       {itemIndex === 0 && (
                         <>
-                          <td rowSpan={data.length}>{foundRestaurant(item.restaurantId).label}</td>
-                          <td rowSpan={data.length}>{foundRestaurant(item.restaurantId).address}</td>
-                          <td rowSpan={data.length}>{data[lastIndex]?.address?.name}</td>
-                          <td rowSpan={data.length}>{data[lastIndex]?.address?.phone}</td>
-                          <td rowSpan={data.length}>{data[lastIndex]?.address?.address}</td>
                           <td rowSpan={data.length}>
-                            <button
+                            {foundRestaurant(item.restaurantId).label}
+                          </td>
+                          <td rowSpan={data.length}>
+                            {foundRestaurant(item.restaurantId).address}
+                          </td>
+                          <td rowSpan={data.length}>
+                            {data[lastIndex]?.address?.name}
+                          </td>
+                          <td rowSpan={data.length}>
+                            {data[lastIndex]?.address?.phone}
+                          </td>
+                          <td rowSpan={data.length}>
+                            {data[lastIndex]?.address?.address}
+                          </td>
+                          <td rowSpan={data.length} className='text-center'>
+                            <BeenhereIcon
                               onClick={() => handleOutForDelivery(item.orderId)}
-                              style={{
-                                backgroundColor: "blue",
-                                color: "white",
-                                padding: "10px",
-                                borderRadius: "5px",
-                              }}
-                            >
-                              Accept Order
-                            </button>
+                            />
                           </td>
                         </>
                       )}

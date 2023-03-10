@@ -21,7 +21,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import DeliveryTopbar from "./DeliveryTopBar/DeliveryTopBar";
-import Card from "react-bootstrap/Card";
+import DomainVerificationIcon from "@mui/icons-material/DomainVerification";
+
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -60,10 +61,6 @@ const DeliveryStaff = () => {
   const deliveryboyPhone = cookies.deliveryboyPhone;
   const deliveryboyEmail = cookies.deliveryboyEmail;
   const deliveryboyProfileImg = cookies.deliveryboyProfileImg;
- 
-  const [orderIds, setOrderIds] = useState([]);
-  
-
 
   const restaurantId = cookies.restaurantId;
   const acceptedOrder = useSelector((state) => state.order.acceptedOrders);
@@ -229,36 +226,49 @@ const DeliveryStaff = () => {
         <TabPanel>
           <div className='panel-content'>
             <h2>Accepted Order details</h2>
-
             <table className='table table-bordered'>
               <thead>
                 <tr>
                   <th>SL.No</th>
                   <th>Customer Name</th>
-                  <th>Food Items</th>
                   <th>Phone Number</th>
+                  <th>Food Items</th>
                   <th>Address</th>
-                  <th>Delivery Status</th>
+                  <th>Delivery Done</th>
                 </tr>
               </thead>
               <tbody>
                 {acceptedOrder.map((data, index) => {
-                  
+                  const orderID = data[0]?.orderId;
+                  const customerName = data[1]?.address?.name;
+                  const address = data[1]?.address?.address;
+                  const phone = data[1]?.address?.phone;
+
                   return (
-                    <tr key={data[0].orderId}>
-                      <td>{index + 1}</td>
-                      <td>{data[2]?.address?.name}</td>
-                      <td>{data[1]?.foodname}</td>
-                      <td>{data[2]?.address?.phone}</td>
-                      <td>{data[2]?.address?.address}</td>
-                      <td>
-                        <Button
-                          onClick={() => handleDelivered(data[0].orderId)}
-                        >
-                          Delivery Completed
-                        </Button>
-                      </td>
-                    </tr>
+                    <React.Fragment key={`${orderID}-header`}>
+                      {data.map((item, subIndex) => (
+                        <tr key={`${orderID}-${subIndex}`}>
+                          {subIndex === 0 && (
+                            <>
+                              <td rowSpan={data.length}>{index + 1}</td>
+                              <td rowSpan={data.length}>{customerName}</td>
+                              <td rowSpan={data.length}>{phone}</td>
+                            </>
+                          )}
+                          <td>{item.foodname}</td>
+                          {subIndex === 0 && (
+                            <>
+                              <td rowSpan={data.length}>{address}</td>
+                              <td className='text-center' rowSpan={data.length}>
+                                <DomainVerificationIcon
+                                  onClick={() => handleDelivered(orderID)}
+                                />
+                              </td>
+                            </>
+                          )}
+                        </tr>
+                      ))}
+                    </React.Fragment>
                   );
                 })}
               </tbody>

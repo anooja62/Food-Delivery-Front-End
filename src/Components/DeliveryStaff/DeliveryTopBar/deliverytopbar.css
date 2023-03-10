@@ -14,7 +14,31 @@
     align-items: center;
     justify-content: space-between;
   }
-  
+  .topRight {
+    display: flex;
+    align-items: center;
+}
+
+.dateTime {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.topbarIconContainer {
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #555;
+}
+
+.topAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
   .logo {
    
     
@@ -27,11 +51,7 @@
     border-radius: 50%;
     cursor: pointer;
 }
-  .topRight{
-      display: flex;
-      align-items: center;
-     
-  }
+ 
   .topbar i{
     font-size: 1.3rem;
   }

@@ -48,20 +48,36 @@ const OrderHistory = () => {
             <th>Food Items</th>
 
             <th>Address</th>
-            <th>Status</th>
+           
           </tr>
         </thead>
         <tbody>
           {OrderHistorys.slice(startIndex, endIndex).map((data, index) => {
-            return (
-              <tr key={data[0].orderId}>
-                <td>{startIndex + index + 1}</td>
-                <td>{data[2]?.address?.name}</td>
-                <td>{data[1]?.foodname}</td>
+            const orderID = data[0].orderId;
+            const customerName = data[2]?.address?.name;
+            const address = data[2]?.address?.address;
 
-                <td>{data[2]?.address?.address}</td>
-                <td style={{ fontWeight: 600, color: "green" }}>Completed</td>
-              </tr>
+            return (
+              <React.Fragment key={`${orderID}-header`}>
+                {data.map((item, subIndex) => (
+                  <tr key={`${orderID}-${subIndex}`}>
+                    {subIndex === 0 && (
+                      <>
+                        <td rowSpan={data.length}>{startIndex + index + 1}</td>
+                        <td rowSpan={data.length}>{customerName}</td>
+                        <td>{item.foodname}</td>
+                        <td rowSpan={data.length}>{address}</td>
+                       
+                      </>
+                    )}
+                    {subIndex > 0 && (
+                      <>
+                        <td>{item.foodname}</td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+              </React.Fragment>
             );
           })}
         </tbody>
