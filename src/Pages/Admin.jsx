@@ -119,6 +119,7 @@ const Admin = () => {
         key={i}
         variant={i === currentPage ? "primary" : "outline-primary"}
         onClick={() => handlePageClick(i)}
+         style={{ marginRight: "5px" }}
       >
         {i}
       </Button>
