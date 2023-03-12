@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useEffect, useState } from "react";
 import axios from "../../../axios";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
