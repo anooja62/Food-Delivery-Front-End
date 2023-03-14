@@ -40,7 +40,7 @@ const RestaurantCard = ({ restaurant }) => {
   );
   return (
     <>
-      <Card sx={{ maxWidth: 345 }} className='mt-5'>
+      <Card sx={{ maxWidth: 345 }} className='mt-5'  onClick={() => handleSingleRestaurent(restaurant._id)}>
         <CardActionArea>
           <CardMedia
             component='img'

@@ -163,9 +163,11 @@ const NewOrders = () => {
       </div>
 
       <div>
-      <table className='table table-bordered mt-4' style={{ border: '2px solid black' }}>
-      <thead style={{ backgroundColor: '#f0f0f0' }}>
-
+        <table
+          className='table table-bordered mt-4'
+          style={{ border: "2px solid black" }}
+        >
+          <thead style={{ backgroundColor: "#f0f0f0" }}>
             <tr>
               <th>SL.No</th>
               <th>Food Items</th>
@@ -180,33 +182,33 @@ const NewOrders = () => {
           <tbody>
             {deliveryOrder.map((data, index) => {
               const lastIndex = data.length - 1;
+              const rowSpan = data.length;
               return (
                 <>
                   {data.map((item, itemIndex) => (
                     <tr key={`${index}-${itemIndex}`}>
                       {itemIndex === 0 && (
-                        <td rowSpan={data.length}>{index + 1}</td>
+                        <td rowSpan={rowSpan}>{index + 1}</td>
                       )}
                       <td>{item.foodname}</td>
-
                       {itemIndex === 0 && (
                         <>
-                          <td rowSpan={data.length}>
+                          <td rowSpan={rowSpan}>
                             {foundRestaurant(item.restaurantId).label}
                           </td>
-                          <td rowSpan={data.length}>
+                          <td rowSpan={rowSpan}>
                             {foundRestaurant(item.restaurantId).address}
                           </td>
-                          <td rowSpan={data.length}>
+                          <td rowSpan={rowSpan}>
                             {data[lastIndex]?.address?.name}
                           </td>
-                          <td rowSpan={data.length}>
+                          <td rowSpan={rowSpan}>
                             {data[lastIndex]?.address?.phone}
                           </td>
-                          <td rowSpan={data.length}>
+                          <td rowSpan={rowSpan}>
                             {data[lastIndex]?.address?.address}
                           </td>
-                          <td rowSpan={data.length} className='text-center'>
+                          <td rowSpan={rowSpan} className='text-center'>
                             <BeenhereIcon
                               onClick={() => handleOutForDelivery(item.orderId)}
                             />
