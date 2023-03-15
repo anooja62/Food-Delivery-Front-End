@@ -27,13 +27,13 @@ const InspectionReport = () => {
     fetchInspections();
   }, []);
 
-  const downloadPDF = () => {
+  const downloadPDF = (inspection) => {
     const doc = new jsPDF();
 
     doc.setTextColor(0, 0, 0);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(30);
-    doc.text(`${restaurantName}`, doc.internal.pageSize.width / 2, 30, {
+    doc.setFontSize(20);
+    doc.text(`${restaurantName} Hygiene Inspection Report`, doc.internal.pageSize.width / 2, 30, {
       align: "center",
     });
 
@@ -42,67 +42,60 @@ const InspectionReport = () => {
     const leftMargin = 10;
     const rightMargin = 190;
 
-    inspections.forEach((inspection, index) => {
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(12);
-      doc.text(
-        `Inspection Date: ${new Date(inspection.updatedAt).toLocaleDateString(
-          "en-US",
-          {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          }
-        )}`,
-        leftMargin,
-        startY + index * lineSpacing
-      );
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    const inspectionDate = inspection.updatedAt
+      ? new Date(inspection.updatedAt)
+      : new Date();
+    doc.text(
+      `Inspection Date: ${new Date(inspection.updatedAt).toLocaleDateString(
+        "en-US",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }
+      )}`,
+      leftMargin,
+      startY
+    );
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(12);
-      doc.text(
-        `Inspector Name: ${inspection.inspectorName}`,
-        rightMargin,
-        startY + index * lineSpacing,
-        { align: "right" }
-      );
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(
+      `Inspector Name: ${inspection.inspectorName}`,
+      rightMargin,
+      startY,
+      { align: "right" }
+    );
 
-      let recommendation = "";
-      if (inspection.inspectionRating === 5) {
-        recommendation =
-          "The restaurant is already maintaining high hygiene standards. However, it is always important to keep up with the practices and make sure that the staff is following all the protocols regularly.";
-      } else if (inspection.inspectionRating === 4) {
-        recommendation =
-          "The restaurant is doing well, but there is still scope for improvement. The staff should be trained and educated on maintaining good hygiene practices, and the restaurant should continue to monitor and improve their hygiene standards.";
-      } else if (inspection.inspectionRating === 3) {
-        recommendation =
-          "The restaurant needs to work on improving its hygiene practices. This could include proper training for the staff, regular cleaning schedules, and monitoring hygiene levels regularly.";
-      } else if (inspection.inspectionRating === 2) {
-        recommendation =
-          "The restaurant needs immediate attention to improve its hygiene practices. They should be given proper training and education, and the restaurant should take all necessary steps to maintain cleanliness and hygiene.";
-      } else {
-        recommendation =
-          "The restaurant needs to be closed temporarily until they can improve their hygiene standards. They should undergo a thorough cleaning and sanitization process and receive proper training and education before reopening.";
-      }
+    let recommendation = "";
+    if (inspection.inspectionRating === 5) {
+      recommendation =
+        "The restaurant is already maintaining high hygiene standards. However, it is always important to keep up with the practices and make sure that the staff is following all the protocols regularly.";
+    } else if (inspection.inspectionRating === 4) {
+      recommendation =
+        "The restaurant is doing well, but there is still scope for improvement. The staff should be trained and educated on maintaining good hygiene practices, and the restaurant should continue to monitor and improve their hygiene standards.";
+    } else if (inspection.inspectionRating === 3) {
+      recommendation =
+        "The restaurant needs to work on improving its hygiene practices. This could include proper training for the staff, regular cleaning schedules, and monitoring hygiene levels regularly.";
+    } else if (inspection.inspectionRating === 2) {
+      recommendation =
+        "The restaurant needs immediate attention to improve its hygiene practices. They should be given proper training and education, and the restaurant should take all necessary steps to maintain cleanliness and hygiene.";
+    } else {
+      recommendation =
+        "The restaurant needs to be closed temporarily until they can improve their hygiene standards. They should undergo a thorough cleaning and sanitization process and receive proper training and education before reopening.";
+    }
 
-      const recommendationLines = doc.splitTextToSize(recommendation, 190);
+    const recommendationLines = doc.splitTextToSize(recommendation, 190);
 
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(12);
-      doc.text(
-        `Recommendation:`,
-        leftMargin,
-        startY + (index + 3) * lineSpacing
-      );
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text(`Recommendation:`, leftMargin, startY + 3 * lineSpacing);
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(12);
-      doc.text(
-        recommendationLines,
-        leftMargin,
-        startY + (index + 4) * lineSpacing
-      );
-    });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(recommendationLines, leftMargin, startY + 4 * lineSpacing);
 
     doc.save(`${restaurantName}-HygieneInspectionReport.pdf`);
   };
@@ -136,7 +129,9 @@ const InspectionReport = () => {
               <td>{inspection.inspectionResults}</td>
               <td>{inspection.inspectionRating}</td>
               <td>
-                <DownloadForOfflineIcon onClick={downloadPDF} />
+                <DownloadForOfflineIcon
+                  onClick={() => downloadPDF(inspection)}
+                />
               </td>
             </tr>
           ))}

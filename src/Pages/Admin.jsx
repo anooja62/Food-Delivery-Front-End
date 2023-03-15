@@ -25,6 +25,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import Tab from "react-bootstrap/Tab";
+
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -44,6 +45,9 @@ import Hygiene from "../Components/Admin/Hygiene/Hygiene";
 import Inspection from "../Components/Admin/Inspection/Inspection";
 
 const Admin = () => {
+ 
+  
+
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -53,7 +57,7 @@ const Admin = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const navigate = useNavigate();
+  
 
   const singleMessage = useSelector((state) => state.message.singleMessage);
   const restaurantLIst = useSelector((state) => state.restaurant.list);
@@ -72,8 +76,11 @@ const Admin = () => {
   const messageList = useSelector((state) => state.message.list);
 
   const [cookies, removeCookie] = useCookies(null);
-
+  const navigate = useNavigate();
   const isAdmin = cookies.isAdmin;
+  if (!isAdmin) {
+    navigate("/login");
+  }
   const messageReplyRef = useRef();
   const clearCookies = () => {
     removeCookie("name");
