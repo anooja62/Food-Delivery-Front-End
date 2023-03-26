@@ -32,7 +32,7 @@ const Wages = () => {
     y: salary.salary,
   }));
 
-  // Define the Highcharts configuration options
+  
   const chartOptions = {
     chart: {
       type: "column",

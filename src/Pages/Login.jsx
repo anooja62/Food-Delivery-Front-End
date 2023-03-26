@@ -48,7 +48,10 @@ const Login = () => {
       }
     } catch (err) {
       console.log(err);
-      setError(err.response.data, "user response");
+      const errorMessage = (err && err.response?.data) ?? "An unknown error occurred";
+      setError(errorMessage.toString());
+      
+
     }
   };
   const signIn = () => {
