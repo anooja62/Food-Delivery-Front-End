@@ -38,7 +38,7 @@ const RestaurantLogin = () => {
         setCookie("restaurantAbout", response.data.about);
         setCookie("restaurantOwnername", response.data.ownername);
         setCookie("restaurantOwnerphone", response.data.ownerphone);
-        navigate("/admin-res");
+        navigate("https://deliorder.onrender.com/admin-res");
         window.location.reload();
       }
     } catch (err) {
