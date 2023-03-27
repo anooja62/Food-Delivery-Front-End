@@ -29,15 +29,15 @@ const RestaurantLogin = () => {
       const response = await axios.post("/rest/rest-login", restaurant);
       console.log(response);
       if (response.status === 200) {
-        setCookie("restaurantId", response.data._id, { path: '/' });
-        setCookie("restaurantName", response.data.name, { path: '/' });
-        setCookie("restaurantEmail", response.data.email, { path: '/' });
-        setCookie("restaurantPhone", response.data.phone, { path: '/' });
-        setCookie("restaurantLicense", response.data.license, { path: '/' });
-        setCookie("restaurantimgUrl", response.data.imgUrl, { path: '/' });
-        setCookie("restaurantAbout", response.data.about, { path: '/' });
-        setCookie("restaurantOwnername", response.data.ownername, { path: '/' });
-        setCookie("restaurantOwnerphone", response.data.ownerphone, { path: '/' });
+        setCookie("restaurantId", response.data._id);
+        setCookie("restaurantName", response.data.name);
+        setCookie("restaurantEmail", response.data.email);
+        setCookie("restaurantPhone", response.data.phone);
+        setCookie("restaurantLicense", response.data.license);
+        setCookie("restaurantimgUrl", response.data.imgUrl);
+        setCookie("restaurantAbout", response.data.about);
+        setCookie("restaurantOwnername", response.data.ownername);
+        setCookie("restaurantOwnerphone", response.data.ownerphone);
         navigate("/admin-res");
        
       }
