@@ -39,7 +39,7 @@ const RestaurantLogin = () => {
         setCookie("restaurantOwnername", response.data.ownername, { path: '/' });
         setCookie("restaurantOwnerphone", response.data.ownerphone, { path: '/' });
         navigate("/admin-res");
-        window.location.reload();
+       
       }
     } catch (err) {
       console.log(err);
