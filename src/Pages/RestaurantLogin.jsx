@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
 const RestaurantLogin = () => {
-  const [cookies, setCookie] = useCookies(null);
+  const [cookies, setCookie] = useCookies(['restaurantId', 'restaurantName', 'restaurantEmail', 'restaurantPhone', 'restaurantLicense', 'restaurantimgUrl', 'restaurantAbout', 'restaurantOwnername', 'restaurantOwnerphone'], '/')
   const [error, setError] = useState("");
   const loginEmailRef = useRef();
   const loginPasswordRef = useRef();
@@ -29,15 +29,15 @@ const RestaurantLogin = () => {
       const response = await axios.post("/rest/rest-login", restaurant);
       console.log(response);
       if (response.status === 200) {
-        setCookie("restaurantId", response.data._id);
-        setCookie("restaurantName", response.data.name);
-        setCookie("restaurantEmail", response.data.email);
-        setCookie("restaurantPhone", response.data.phone);
-        setCookie("restaurantLicense", response.data.license);
-        setCookie("restaurantimgUrl", response.data.imgUrl);
-        setCookie("restaurantAbout", response.data.about);
-        setCookie("restaurantOwnername", response.data.ownername);
-        setCookie("restaurantOwnerphone", response.data.ownerphone);
+        setCookie("restaurantId", response.data._id,{ secure: true });
+        setCookie("restaurantName", response.data.name,{ secure: true });
+        setCookie("restaurantEmail", response.data.email,{ secure: true });
+        setCookie("restaurantPhone", response.data.phone,{ secure: true });
+        setCookie("restaurantLicense", response.data.license,{ secure: true });
+        setCookie("restaurantimgUrl", response.data.imgUrl,{ secure: true });
+        setCookie("restaurantAbout", response.data.about,{ secure: true });
+        setCookie("restaurantOwnername", response.data.ownername,{ secure: true });
+        setCookie("restaurantOwnerphone", response.data.ownerphone,{ secure: true });
         navigate("/admin-res");
        
       }
