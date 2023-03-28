@@ -28,17 +28,18 @@ const RestaurantLogin = () => {
     try {
       const response = await axios.post("/rest/rest-login", restaurant, { withCredentials: true });
       console.log(response);
+      
       if (response.status === 200) {
-        setCookie("restaurantdummy", "hyyy", { secure: true, sameSite: "none" });
-        setCookie("restaurantid", response.data._id, { secure: true, sameSite: "none" });
-        setCookie("restaurantname", response.data.name, { secure: true, sameSite: "none" });
-        setCookie("restaurantemail", response.data.email, { secure: true, sameSite: "none" });
-        setCookie("restaurantphone", response.data.phone, { secure: true, sameSite: "none" });
-        setCookie("restaurantlicense", response.data.license, { secure: true, sameSite: "none" });
-        setCookie("restaurantimgurl", response.data.imgUrl, { secure: true, sameSite: "none" });
-        setCookie("restaurantabout", response.data.about, { secure: true, sameSite: "none" });
-        setCookie("restaurantownername", response.data.ownername, { secure: true, sameSite: "none" });
-        setCookie("restaurantownerphone", response.data.ownerphone, { secure: true, sameSite: "none" });
+       
+        setCookie("restaurantId", response.data._id, { secure: true, sameSite: "none" });
+        setCookie("restaurantName", response.data.name, { secure: true, sameSite: "none" });
+        setCookie("restaurantEmail", response.data.email, { secure: true, sameSite: "none" });
+        setCookie("restaurantPhone", response.data.phone, { secure: true, sameSite: "none" });
+        setCookie("restaurantLicense", response.data.license, { secure: true, sameSite: "none" });
+        setCookie("restaurantImgUrl", response.data.imgUrl, { secure: true, sameSite: "none" });
+        setCookie("restaurantAbout", response.data.about, { secure: true, sameSite: "none" });
+        setCookie("restaurantOwnername", response.data.ownername, { secure: true, sameSite: "none" });
+        setCookie("restaurantOwnerphone", response.data.ownerphone, { secure: true, sameSite: "none" });
         navigate("/admin-res");
        
       }
