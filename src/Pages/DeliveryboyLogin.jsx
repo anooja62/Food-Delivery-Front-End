@@ -37,7 +37,7 @@ const DeliveryboyLogin = () => {
           setCookie("deliveryboyLocation", response.data.location);
         
           navigate("/admin-staff");
-          window.location.reload();
+         
         }
       } catch (err) {
         console.log(err);
