@@ -29,6 +29,7 @@ const RestaurantLogin = () => {
       const response = await axios.post("/rest/rest-login", restaurant, { withCredentials: true });
       console.log(response);
       if (response.status === 200) {
+        setCookie("restaurantdummy", "hyyy", { secure: true, sameSite: "none" });
         setCookie("restaurantId", response.data._id, { secure: true, sameSite: "none" });
         setCookie("restaurantName", response.data.name, { secure: true, sameSite: "none" });
         setCookie("restaurantEmail", response.data.email, { secure: true, sameSite: "none" });
