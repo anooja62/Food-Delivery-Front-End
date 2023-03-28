@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
 const RestaurantLogin = () => {
-  const [cookies, setCookie] = useCookies(['restaurantId', 'restaurantName', 'restaurantEmail', 'restaurantPhone', 'restaurantLicense', 'restaurantimgUrl', 'restaurantAbout', 'restaurantOwnername', 'restaurantOwnerphone'], '/')
+  const [cookies, setCookie] = useCookies(null);
   const [error, setError] = useState("");
   const loginEmailRef = useRef();
   const loginPasswordRef = useRef();
