@@ -29,15 +29,15 @@ const RestaurantLogin = () => {
       const response = await axios.post("/rest/rest-login", restaurant, { withCredentials: true });
       console.log(response);
       if (response.status === 200) {
-        setCookie("restaurantId", response.data._id,{ secure: true });
-        setCookie("restaurantName", response.data.name,{ secure: true });
-        setCookie("restaurantEmail", response.data.email,{ secure: true });
-        setCookie("restaurantPhone", response.data.phone,{ secure: true });
-        setCookie("restaurantLicense", response.data.license,{ secure: true });
-        setCookie("restaurantimgUrl", response.data.imgUrl,{ secure: true });
-        setCookie("restaurantAbout", response.data.about,{ secure: true });
-        setCookie("restaurantOwnername", response.data.ownername,{ secure: true });
-        setCookie("restaurantOwnerphone", response.data.ownerphone,{ secure: true });
+        setCookie("restaurantId", response.data._id, { secure: true, sameSite: "none" });
+        setCookie("restaurantName", response.data.name, { secure: true, sameSite: "none" });
+        setCookie("restaurantEmail", response.data.email, { secure: true, sameSite: "none" });
+        setCookie("restaurantPhone", response.data.phone, { secure: true, sameSite: "none" });
+        setCookie("restaurantLicense", response.data.license, { secure: true, sameSite: "none" });
+        setCookie("restaurantimgUrl", response.data.imgUrl, { secure: true, sameSite: "none" });
+        setCookie("restaurantAbout", response.data.about, { secure: true, sameSite: "none" });
+        setCookie("restaurantOwnername", response.data.ownername, { secure: true, sameSite: "none" });
+        setCookie("restaurantOwnerphone", response.data.ownerphone, { secure: true, sameSite: "none" });
         navigate("/admin-res");
        
       }
