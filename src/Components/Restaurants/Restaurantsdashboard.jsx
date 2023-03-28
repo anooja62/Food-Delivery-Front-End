@@ -79,12 +79,12 @@ const Restaurantsdashboard = () => {
   });
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(null);
-  const restaurantId = cookies.restaurantid;
-  const restaurantName = cookies.restaurantname;
-  const restaurantPhone = cookies.restaurantphone;
-  const restaurantEmail = cookies.restaurantemail;
-  const restaurantLicense = cookies.restaurantlicense;
-  const restaurantimgUrl = cookies.restaurantimgurl;
+  const restaurantId = cookies.restaurantId;
+  const restaurantName = cookies.restaurantName;
+  const restaurantPhone = cookies.restaurantPhone;
+  const restaurantEmail = cookies.restaurantEmail;
+  const restaurantLicense = cookies.restaurantLicense;
+  const restaurantimgUrl = cookies.restaurantimgUrl;
 
   const restaurantAbout = cookies.restaurantAbout;
   const restaurantOwnername = cookies.restaurantOwnername;
