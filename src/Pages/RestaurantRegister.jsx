@@ -131,7 +131,7 @@ const RestaurantRegister = () => {
           const response = await axios.post("/rest/add-restaurent", {
             ...restaurant,
             imgUrl,
-          });
+          } ,{ withCredentials: true });
           console.log(response);
           toast.success("Registeration Success", {
             position: "top-center",
