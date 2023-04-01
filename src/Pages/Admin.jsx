@@ -45,9 +45,6 @@ import Hygiene from "../Components/Admin/Hygiene/Hygiene";
 import Inspection from "../Components/Admin/Inspection/Inspection";
 
 const Admin = () => {
- 
-  
-
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -57,7 +54,6 @@ const Admin = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
 
   const singleMessage = useSelector((state) => state.message.singleMessage);
   const restaurantLIst = useSelector((state) => state.restaurant.list);
@@ -126,7 +122,7 @@ const Admin = () => {
         key={i}
         variant={i === currentPage ? "primary" : "outline-primary"}
         onClick={() => handlePageClick(i)}
-         style={{ marginRight: "5px" }}
+        style={{ marginRight: "5px" }}
       >
         {i}
       </Button>

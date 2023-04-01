@@ -40,7 +40,7 @@ const Login = () => {
         setTimeout(() => {
           if (response.data.isAdmin) {
             navigate("/admin");
-            window.location.reload();
+           
           } else {
             navigate("/home");
           }
