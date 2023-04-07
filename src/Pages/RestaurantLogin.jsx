@@ -5,11 +5,12 @@ import Helmet from "../Components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
 import axios from ".././axios";
 import { useCookies } from "react-cookie";
-
+import Footer from "../Components/Footer/Footer";
 import { Link } from "react-router-dom";
 
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
+import Header from "../Components/Header/Header";
 const RestaurantLogin = () => {
   const [cookies, setCookie] = useCookies(null);
   const [error, setError] = useState("");
@@ -51,6 +52,7 @@ const RestaurantLogin = () => {
 
   return (
     <Helmet title="Login">
+      <Header/>
       <CommonSection title="Welcome back!" />
 
       <section>
@@ -98,6 +100,7 @@ const RestaurantLogin = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

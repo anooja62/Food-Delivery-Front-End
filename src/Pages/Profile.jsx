@@ -30,6 +30,8 @@ import DomainIcon from "@mui/icons-material/Domain";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const initialValues = {
   name: "",
   phone: "",
@@ -153,6 +155,7 @@ const Profile = () => {
 
   return (
     <Helmet title='Profile'>
+      <Header/>
       <CommonSection title={cookies.name} />
 
       <section>
@@ -422,6 +425,7 @@ const Profile = () => {
             </Tabs>
           </div>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

@@ -23,6 +23,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import "../Components/Location/Location.css";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 
 const steps = [
   {
@@ -150,6 +152,7 @@ const RestaurantRegister = () => {
 
   return (
     <Helmet title='Restaurant-Register'>
+      <Header/>
       <CommonSection title='Register your resturant on Deliorder' />
       <section>
         <Container>
@@ -381,6 +384,7 @@ const RestaurantRegister = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

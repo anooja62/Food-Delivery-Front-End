@@ -8,6 +8,8 @@ import "../styles/formerror.css";
 import Paper from "@mui/material/Paper";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 
 const initialValues = {
   name: "",
@@ -59,6 +61,7 @@ const Register = () => {
 
   return (
     <Helmet title="Register">
+      <Header/>
       <CommonSection title="Welcome to Deliorder" />
       <section>
         <Container>
@@ -184,6 +187,7 @@ const Register = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

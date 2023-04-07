@@ -5,6 +5,8 @@ import CommonSection from "../Components/UI/common-section/CommonSection";
 import Helmet from "../Components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const ForgotPassword = () => {
   const forgotEmailRef = useRef();
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const ForgotPassword = () => {
 
   return (
     <Helmet title="forgot-password">
+      <Header/>
       <CommonSection title="Reset your Password!" />
 
       <section>
@@ -61,6 +64,7 @@ const ForgotPassword = () => {
             </Col>
           </Row>
         </div>
+        <Footer/>
       </section>
     </Helmet>
   );

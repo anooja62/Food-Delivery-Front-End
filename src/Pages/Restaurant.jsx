@@ -8,9 +8,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const Restaurant = () => {
   return (
     <Helmet title="Restaurant-Register">
+      <Header/>
       <CommonSection title="Register your resturant on Deliorder" />
       <section>
         <Container>
@@ -144,6 +147,7 @@ const Restaurant = () => {
             </Row>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

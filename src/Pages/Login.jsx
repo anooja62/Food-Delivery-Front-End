@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const Login = () => {
   const [cookies, setCookie] = useCookies(null);
   const [error, setError] = useState("");
@@ -65,6 +67,7 @@ const Login = () => {
 
   return (
     <Helmet title="Login" >
+      <Header/>
       <CommonSection title="Welcome back!" />
 
       <section>
@@ -119,6 +122,7 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

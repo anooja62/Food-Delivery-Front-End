@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
+import Header from "../Components/Header/Header";
 
 const DeliveryboyLogin = () => {
     const [cookies, setCookie] = useCookies(null);
@@ -47,6 +48,7 @@ const DeliveryboyLogin = () => {
   return (
     <div>
  <Helmet title="Deliveryboy Login">
+  <Header/>
       <CommonSection title="Welcome back!" />
 
       <section>
@@ -94,6 +96,7 @@ const DeliveryboyLogin = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   

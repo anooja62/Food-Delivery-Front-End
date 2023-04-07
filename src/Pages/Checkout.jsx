@@ -15,6 +15,8 @@ import { getShippings } from "../store/shopping-cart/addressSlice";
 import { addOrder } from "../store/shopping-cart/cartSlice";
 import Address from "../Components/UI/Address/Address";
 import { cartActions } from "../store/shopping-cart/cartSlice";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const Checkout = () => {
   const [labelAdd, setLabelAdd] = useState("");
   const [cookies, setCookie] = useCookies(null);
@@ -120,6 +122,7 @@ const Checkout = () => {
   };
   return (
     <Helmet title="Checkout">
+      <Header/>
       <CommonSection title="Checkout" />
       <section>
         <Container>
@@ -237,7 +240,9 @@ const Checkout = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
+      
     </Helmet>
   );
 };

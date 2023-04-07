@@ -11,6 +11,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Modal } from "react-bootstrap";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import OnlineDeliveryExperienceForm from "../Components/OnlineDeliveryExperienceForm/OnlineDeliveryExperienceForm";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const Orders = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -53,6 +55,7 @@ const Orders = () => {
 
   return (
     <Helmet title='Orders'>
+      <Header/>
       <CommonSection title='Your Orders' />
       <section>
         <Container>
@@ -251,6 +254,7 @@ const Orders = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );

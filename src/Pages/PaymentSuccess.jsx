@@ -4,6 +4,8 @@ import Helmet from "../Components/Helmet/Helmet";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 const PaymentSuccess = () => {
   const [cookies, setCookie] = useCookies(null);
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ const PaymentSuccess = () => {
   }
   return (
     <Helmet title="Success">
+      <Header/>
       <CommonSection />
       <section>
         <Container>
@@ -33,6 +36,7 @@ const PaymentSuccess = () => {
             </Col>
           </Row>
         </Container>
+        <Footer/>
       </section>
     </Helmet>
   );
