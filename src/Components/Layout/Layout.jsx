@@ -18,7 +18,7 @@ function Layout() {
       {showCart && <Carts />}
 
       <div>
-        {isAdminPage ? <Routes /> : null}
+        <Routes /> 
       </div>
 
       {!isAdminPage && <Footer />}
