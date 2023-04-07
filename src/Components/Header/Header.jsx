@@ -123,6 +123,10 @@ const Header = () => {
         display: "Orders",
         path: "/orders",
       },
+      {
+        display: "Profile",
+        path: "/profile",
+      },
     ];
   }
 
@@ -181,42 +185,12 @@ const Header = () => {
           <div className="navbar__right d-flex align-items-center gap-4">
             {user && (
               <div className="user">
-                <span onClick={() => setToggle(!toggle)}>
+                <span >
                   <img src={userimg} alt=""></img> {user}{" "}
                 </span>
               </div>
             )}
-            {user && toggle && (
-              <div className="profile">
-                <ul>
-                  <Link to="./profile">
-                    {" "}
-                    <li>
-                      <img src={userpic} alt=""></img>Profile
-                    </li>
-                  </Link>
-                  <Link to="./orders">
-                    {" "}
-                    <li>
-                      <img src={bag} alt=""></img>Orders
-                    </li>
-                  </Link>
-                 
-                  <Link
-                    to="/home"
-                    className={(navClass) =>
-                      navClass.isActive ? "active__menu" : ""
-                    }
-                    onClick={() => clearCookies()}
-                  >
-                    {" "}
-                    <li>
-                      <img src={logout} alt=""></img>Logout
-                    </li>
-                  </Link>
-                </ul>
-              </div>
-            )}
+         
 
             <span className="cart_icon" onClick={toggleCart}>
               <i class="ri-shopping-basket-fill"></i>
