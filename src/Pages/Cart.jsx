@@ -8,6 +8,8 @@ import {cartActions} from '../store/shopping-cart/cartSlice'
 import {Link} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import Header from '../Components/Header/Header'
+import Footer from '../Components/Footer/Footer'
 
 const Cart=()=> {
    
@@ -21,6 +23,7 @@ const Cart=()=> {
   const cartItems = useSelector((state)=>state.cart.cartItems)
   const totalAmount = useSelector((state)=>state.cart.totalAmount)
   return <Helmet title='Cart'>
+    <Header/>
     <CommonSection title='Your Cart'/>
     <section>
       <Container>
@@ -66,6 +69,7 @@ const Cart=()=> {
         </Row>
       </Container>
     </section>
+    <Footer/>
   </Helmet>
 }
 

@@ -30,6 +30,8 @@ import ChatBot from "../Components/ChatBot/ChatBot.jsx";
 import UserLocation from "../Components/UserLocation/UserLocation.js";
 import RestaurantsMap from "../Components/Location/Location.js";
 import Recommendations from "../Components/Recommendations/Recommendations.js";
+import Header from "../Components/Header/Header.jsx";
+import Footer from "../Components/Footer/Footer.jsx";
 
 const initialValues = {
   name: "",
@@ -115,6 +117,7 @@ const Home = () => {
 
   return (
     <Helmet title="Home">
+      <Header/>
       <section>
         <Container>
           <Row>
@@ -479,7 +482,9 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
+        
       </section>
+      <Footer/>
     </Helmet>
   );
 };

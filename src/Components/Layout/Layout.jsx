@@ -13,15 +13,14 @@ function Layout() {
 
   return (
     <div role="parent">
-      {!isAdminPage && <Header />}
-
+     
       {showCart && <Carts />}
 
       <div>
         <Routes /> 
       </div>
 
-      {!isAdminPage && <Footer />}
+     
     </div>
   );
 }
