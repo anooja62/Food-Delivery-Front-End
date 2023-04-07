@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from ".././axios";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-
+import Footer from "../Components/Footer/Footer";
 import "../styles/login.css";
 import Paper from "@mui/material/Paper";
 import Header from "../Components/Header/Header";
