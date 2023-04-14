@@ -9,9 +9,10 @@ import FoodBankIcon from "@mui/icons-material/FoodBank";
 import Menu from "./Menu/Menu";
 import Combo from "./Combo/Combo";
 import ReactPaginate from "react-paginate";
-import "../../styles/all-foods.css";
+import "../../styles/all-foods.css"
 import "../../styles/pagination.css";
 import "../../styles/restaurantui.css";
+import Header from '../Header/Header'
 import { getMenus } from "../../store/shopping-cart/menuSlice";
 import { getCombos } from "../../store/shopping-cart/comboSlice";
 import { useCookies } from "react-cookie";
@@ -84,8 +85,12 @@ const RestaurantUI = () => {
   };
 
   return (
+    <>
+     <Header/>
     <section>
+       
    <Container>
+  
       <div >
         <Details />
       </div>
@@ -183,6 +188,8 @@ const RestaurantUI = () => {
       </div>
       </Container>
     </section>
+    </>
+   
   );
 };
 

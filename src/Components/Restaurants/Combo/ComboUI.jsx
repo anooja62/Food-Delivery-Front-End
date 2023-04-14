@@ -88,11 +88,10 @@ const ComboUI = () => {
     const checkedListArr = (list) => {
       
       list.forEach((values) => {
-        console.log(values)
         const CheckedItemList = menuLIst.filter(
           (item) => {
             console.log(item)
-           return item.foodname+item._id === values}
+           return item.foodname === values}
         );
 
         checkedFinalItems.push(...CheckedItemList);
@@ -134,7 +133,7 @@ const ComboUI = () => {
               return (
                 <div key={index}>
                   <input
-                    value={item.foodname+item._id}
+                    value={item.foodname}
                     type="checkbox"
                     onChange={handleCheck}
                     

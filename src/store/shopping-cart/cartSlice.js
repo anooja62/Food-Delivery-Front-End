@@ -69,8 +69,10 @@ const cartSlice = createSlice({
       const newItem = action.payload;
       
       const existingItem = state.cartItems.find(
-        (item) => item.id !== newItem.id
+        (item) => item._id === newItem._id
       );
+
+      console.log("first",existingItem)
       state.totalQuantity++;
       state.dbUpdated = false;
       state.apiCallRequired = true;

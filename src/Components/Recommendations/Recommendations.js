@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import axios from '../../axios';
-import { useCookies } from 'react-cookie'
-function Recommendations() {
-    const [cookies, setCookie] = useCookies(null)
-    const userId = cookies.userId
-  const [recommendations, setRecommendations] = useState([]);
+/** @format */
 
- 
+import React, { useState } from "react";
+import axios from "../../axios";
+import { useCookies } from "react-cookie";
+function Recommendations() {
+  const [cookies, setCookie] = useCookies(null);
+  const userId = cookies.userId;
+  const [recommendations, setRecommendations] = useState([]);
 
   const handleGetRecommendations = async () => {
     try {
@@ -19,7 +19,6 @@ function Recommendations() {
 
   return (
     <div>
-     
       <button onClick={handleGetRecommendations}>Get Recommendations</button>
       {recommendations.length > 0 && (
         <ul>

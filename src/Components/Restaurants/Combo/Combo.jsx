@@ -47,6 +47,7 @@ const Combo = ({ combo, url }) => {
       });
   };
   const lastIndex = combo.foodname.length -1
+
   return (
     <>
       <Card style={{ maxWidth: 345}} className="mt-5">

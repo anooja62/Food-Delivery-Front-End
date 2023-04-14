@@ -31,7 +31,7 @@ const comboSlice = createSlice({
       state.status = "loading";
     },
     [getCombos.fulfilled]: (state, { payload }) => {
-      state.list = payload;
+      state.list = payload[0];
       state.status = "success";
     },
     [getCombos.rejected]: (state, action) => {
