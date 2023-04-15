@@ -1,6 +1,8 @@
+/** @format */
+
 import React from "react";
 
-import {  Button,Row,Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import Card from "@mui/material/Card";
@@ -8,14 +10,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { deleteCombo } from "../../../store/shopping-cart/comboSlice";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 import { useCookies } from "react-cookie";
 
-
 const Combo = ({ combo, url }) => {
-  console.log(combo)
+  console.log(combo);
   const [cookies, setCookie] = useCookies(null);
   const userId = cookies.userId;
   const cartProducts = useSelector((state) => state.cart.cartItems);
@@ -32,9 +33,7 @@ const Combo = ({ combo, url }) => {
     },
   ];
 
-  
   const handleAddItem = (combo, arr, cartProducts) => {
- 
     dispatch(cartActions.addItem(combo));
     toast.success("Item Added to cart", {
       position: "bottom-center",
@@ -44,58 +43,60 @@ const Combo = ({ combo, url }) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
   };
-  const lastIndex = combo.foodname.length -1
+  const lastIndex = combo.foodname.length - 1;
 
   return (
     <>
-      <Card style={{ maxWidth: 345}} className="mt-5">
-      <CardMedia
-          component="img"
-          height="140"
+      <Card style={{ maxWidth: 345 }} className='mt-5'>
+        <CardMedia
+          component='img'
+          height='140'
           src={combo.imgUrl}
-          alt="product"
+          alt='product'
         />
         <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
-          
-           {
-           combo.foodname.map((item,index) =><><p>{item} </p>{index!==lastIndex  &&<p>+</p>}</>) }
-            
+          <Typography gutterBottom variant='h6' component='div'>
+            {combo.foodname.map((item, index) => (
+              <>
+                <p>{item} </p>
+                {index !== lastIndex && <p>+</p>}
+              </>
+            ))}
           </Typography>
         </CardContent>
-          <p>{combo.category}</p>
-         <Row>
-         <Col>
-            <span className="product__price">₹{combo.price}</span>
+        <p>{combo.category}</p>
+        <Row>
+          <Col>
+            <span className='product__price'>₹{combo.price}</span>
           </Col>
           <Col>
             {window.location.href.includes("admin-res") ? (
               <Button
-                variant="danger"
-                className=" text-center"
+                variant='danger'
+                className=' text-center'
                 onClick={() => handleDelete(combo._id)}
               >
                 Delete
               </Button>
             ) : (
               <button
-                className="addToCart__btn"
+                className='addToCart__btn'
                 onClick={() => handleAddItem(combo, arr, cartProducts)}
               >
                 Add to Cart
                 <ToastContainer
-position="bottom-center"
-autoClose={1000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
+                  position='bottom-center'
+                  autoClose={1000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
               </button>
             )}
           </Col>
@@ -103,7 +104,7 @@ pauseOnHover
         <br></br>
       </Card>
       <br></br>
-      </>
+    </>
   );
 };
 export default Combo;

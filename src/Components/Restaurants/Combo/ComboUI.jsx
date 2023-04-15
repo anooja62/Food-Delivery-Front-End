@@ -1,5 +1,7 @@
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
-import Combo from './Combo'
+import Combo from "./Combo";
 import { getCombos } from "../../../store/shopping-cart/comboSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,7 +36,7 @@ const ComboUI = () => {
   }, []);
 
   const handleChange = (event) => {};
- 
+
   const menuFoodPriceRef = useRef();
   const menuCategoryRef = useRef();
 
@@ -53,8 +55,7 @@ const ComboUI = () => {
     uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then(async (imgUrl) => {
         setImageList(imgUrl);
-        await axios.post("/comb/add-combo", { ...combo, imgUrl })
-        .then(() => {
+        await axios.post("/comb/add-combo", { ...combo, imgUrl }).then(() => {
           dispatch(getCombos());
         });
         toast.success("Item Added to Combo List", {
@@ -66,11 +67,9 @@ const ComboUI = () => {
           draggable: true,
           progress: undefined,
         });
-        setChecked([])
-        setTotalPrice('')
+        setChecked([]);
+        setTotalPrice("");
       });
-
-     
     });
   };
 
@@ -86,13 +85,11 @@ const ComboUI = () => {
 
   useEffect(() => {
     const checkedListArr = (list) => {
-      
       list.forEach((values) => {
-        const CheckedItemList = menuLIst.filter(
-          (item) => {
-            console.log(item)
-           return item.foodname === values}
-        );
+        const CheckedItemList = menuLIst.filter((item) => {
+          console.log(item);
+          return item.foodname === values;
+        });
 
         checkedFinalItems.push(...CheckedItemList);
         return CheckedItemList;
@@ -103,29 +100,29 @@ const ComboUI = () => {
 
   useEffect(() => {
     const sum = checkedFinalItems.reduce((accumulator, object) => {
-      
       return Number(accumulator) + Number(object.price);
     }, 0);
     setTotalPrice(sum);
-    
   }, [checked]);
   const handleImageUpload = (event) => {
-    console.log(event.target.files[0].name.includes("png"))
-    if( event.target.files[0].name.includes("png") || event.target.files[0].name.includes("jpg")){
+    console.log(event.target.files[0].name.includes("png"));
+    if (
+      event.target.files[0].name.includes("png") ||
+      event.target.files[0].name.includes("jpg")
+    ) {
       setImageUpload(event.target.files[0]);
-      setError("")
-    }else{
-      setError("you can upload only images")
-   
+      setError("");
+    } else {
+      setError("you can upload only images");
     }
-  }
-   
+  };
+
   return (
     <>
-      <h1 className="text-center">Add Combo Items</h1>
+      <h1 className='text-center'>Add Combo Items</h1>
       <Paper elevation={3}>
-        <form className="mt-3" onSubmit={addComboData}>
-          <div className="new__register">
+        <form className='mt-3' onSubmit={addComboData}>
+          <div className='new__register'>
             <label> Select Combo</label>
           </div>{" "}
           <div style={{ paddingLeft: 50 }}>
@@ -134,9 +131,8 @@ const ComboUI = () => {
                 <div key={index}>
                   <input
                     value={item.foodname}
-                    type="checkbox"
+                    type='checkbox'
                     onChange={handleCheck}
-                    
                   />
 
                   <span> {item.foodname}</span>
@@ -146,26 +142,25 @@ const ComboUI = () => {
           </div>
           <Row>
             <Col>
-              <div className="new__register">
+              <div className='new__register'>
                 <label>Original Price</label>
                 <input
-                  type="number"
-                  name="price"
+                  type='number'
+                  name='price'
                   value={totalPrice}
-                  
-                  placeholder="Price"
+                  placeholder='Price'
                   required
                 />
               </div>
             </Col>
             <Col>
-              <div className="new__register">
+              <div className='new__register'>
                 <label>Combo Price</label>
                 <input
-                  type="number"
-                  name="comboprice"
-                   ref={menuFoodPriceRef}
-                  placeholder="Price"
+                  type='number'
+                  name='comboprice'
+                  ref={menuFoodPriceRef}
+                  placeholder='Price'
                   required
                 />
               </div>
@@ -173,37 +168,34 @@ const ComboUI = () => {
           </Row>
           <Row>
             <Col>
-              <div className="new__register">
+              <div className='new__register'>
                 <label>Select Your Image</label>
                 <input
-                  type="file"
-                  onChange={
-                 handleImageUpload
-                  }
-                  name="photo"
-                  placeholder=""
+                  type='file'
+                  onChange={handleImageUpload}
+                  name='photo'
+                  placeholder=''
                   required
-                  accept="image/*"
+                  accept='image/*'
                 />
-                <p style={{color:"red",fontWeight:600}}>{error}</p>
+                <p style={{ color: "red", fontWeight: 600 }}>{error}</p>
               </div>
-              
             </Col>
             <Col>
-              <div className="new__register mt-5">
-                <label for="category">Category : </label>
+              <div className='new__register mt-5'>
+                <label for='category'>Category : </label>
                 <select ref={menuCategoryRef}>
-                  <option value="Non-Veg"> Non-Veg</option>
-                  <option value="Veg">Veg</option>
+                  <option value='Non-Veg'> Non-Veg</option>
+                  <option value='Veg'>Veg</option>
                 </select>
               </div>
             </Col>
           </Row>
-          <div className="mt-4 text-center">
-            <button className="addToCart__btn" type="submit">
+          <div className='mt-4 text-center'>
+            <button className='addToCart__btn' type='submit'>
               Submit
               <ToastContainer
-                position="top-center"
+                position='top-center'
                 autoClose={1000}
                 hideProgressBar={false}
                 newestOnTop={false}
@@ -217,12 +209,11 @@ const ComboUI = () => {
           </div>
           <br></br>
         </form>
-        
       </Paper>
-      <br/>
+      <br />
       {comboList.length !== 0 && (
         <>
-          <div className="row d-flex justify-content-between ">
+          <div className='row d-flex justify-content-between '>
             {comboList.map((u) => (
               <Combo key={u.id} combo={u} />
             ))}
