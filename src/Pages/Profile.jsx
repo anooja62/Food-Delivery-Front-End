@@ -425,8 +425,9 @@ const Profile = () => {
             </Tabs>
           </div>
         </Container>
-        <Footer/>
+       
       </section>
+      <Footer/>
     </Helmet>
   );
 };
