@@ -427,7 +427,7 @@ const Profile = () => {
         </Container>
        
       </section>
-      <Footer/>
+     
     </Helmet>
   );
 };
