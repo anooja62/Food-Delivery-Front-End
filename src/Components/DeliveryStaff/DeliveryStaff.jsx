@@ -306,7 +306,7 @@ const DeliveryStaff = () => {
             </TabPanel>
             <TabPanel>
               <div className='panel-content'>
-                <div style={{ marginLeft: 150, marginRight: 200 }}>
+                <div >
                   <h3 className='text-center'>Profile Details</h3>
                   <Paper elevation={3}>
                     <form className='mt-3' onSubmit={handleClick}>

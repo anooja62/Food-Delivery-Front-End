@@ -27,7 +27,7 @@ const PaymentSuccess = () => {
               {" "}
               <div className="cart__page-btn">
                 <button className="addToCart__btn me-4">
-                  <Link to="/ordernow">Continue Shopping</Link>
+                  <Link to="/ordernow">Grab your favourite foods</Link>
                 </button>
                 <button className="addToCart__btn">
                   <Link to="/orders">View Orders</Link>
