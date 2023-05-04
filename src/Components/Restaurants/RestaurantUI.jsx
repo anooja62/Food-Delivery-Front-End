@@ -172,7 +172,7 @@ const RestaurantUI = () => {
               </TabPanel>
               <TabPanel>
                 <div className='panel-content'>
-                  <div style={{ marginLeft: 150, marginRight: 200 }}>
+                  <div >
                     <AddReview />
                   </div>
                 </div>
